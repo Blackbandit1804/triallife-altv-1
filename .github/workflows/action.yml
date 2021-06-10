@@ -16,13 +16,9 @@
 # For more information on GitHub Actions for Azure, refer to https://github.com/Azure/Actions
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
 on:
-  release:
-    types: [created]
-
-env:
-  AZURE_WEBAPP_NAME: Authentication System  # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'            # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '16.x'                      # set this to the node version to use
+  push:
+    branches:
+     - master
 
 jobs:
   build:
@@ -34,16 +30,9 @@ jobs:
           - macos-latest
           - windows-latest
         node_version:
-          - 10
-          - 12
-          - 14
+          - 16
         architecture:
           - x64
-        # an extra windows-x86 run:
-        include:
-          - os: windows-2016
-            node_version: 12
-            architecture: x86
     name: Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
