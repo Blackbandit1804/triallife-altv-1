@@ -5,11 +5,10 @@ import fs from 'fs';
 import path from 'path';
 import { Database, onReady } from 'simplymongo';
 import { SYSTEM_EVENTS } from '../shared/utility/enums';
-import { getVersionIdentifier } from './auth/getRequests';
-import { PostController } from './auth/postRequests';
+import { getAzureURL } from './auth/getRequests';
 import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
-import { setAzureEndpoint } from './utility/encryption';
+import { getPublicKey } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, TLRP } from './utility/tlrpLoader';
 
 env.config();
@@ -18,7 +17,6 @@ const startTime = Date.now();
 const name = 'tlrp';
 const data = [];
 const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
-const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/tlrp.wasm');
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
 alt.on('playerConnect', handleEarlyConnect);
@@ -36,24 +34,10 @@ async function handleFinish() {
 }
 
 async function runBooter() {
-    getVersionIdentifier().then((version) => {
-        if (!version) {
-            console.error(new Error(`Failed to contact Authentification Service endpoint.`));
-            process.exit(0);
-        }
-        logger.info(`Version: ${process.env.ATHENA_VERSION}`);
-        if (version !== process.env.ATHENA_VERSION) {
-            logger.warning(`--- Version Warning ---`);
-            logger.warning(`Your server may be out of date. Please update your server.`);
-            logger.warning(`Please pull down the latest changes from the official repository.`);
-            logger.warning(`Try merging from the master branch or from the upstream branch of your choice.`);
-        }
-    });
-
-    const buffer: any = fs.readFileSync(fPath);
-    const starterFns = await TLRP.load<InjectedStarter>(buffer);
-    alt.once(starterFns.getEvent(), handleEvent);
-    starterFns.deploy();
+    if (process.env.PORTLESS) {
+        alt.log(`[3L:RP] Running in Portless Authentication Mode.`);
+        alt.log(`[3L:RP] Requires users to click one additional button after authentication.`);
+    }
 }
 
 async function handleEvent(value: number) {
@@ -87,10 +71,6 @@ async function handleEvent(value: number) {
         alt.once(`${ext.getFinishName()}`, handleFinish);
         ext.isDoneLoading();
     });
-
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD)
-        new Database(mongoURL, TLRP.getHelpers().__getString(ext.getDatabaseName()), collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
-    else new Database(mongoURL, TLRP.getHelpers().__getString(ext.getDatabaseName()), collections);
 }
 
 function handleEntryToggle() {
@@ -98,11 +78,6 @@ function handleEntryToggle() {
     logger.info(`Server Warmup Complete. Now accepting connections.`);
 }
 
-/**
- * Prevent early connections until server is warmed up.
- * @param {alt.Player} player
- * @return {*}  {void}
- */
 function handleEarlyConnect(player: alt.Player): void {
     if (!(player instanceof alt.Player) || !player || !player.valid) return;
     try {

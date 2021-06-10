@@ -69,43 +69,26 @@ export class TLRP {
     }
 
     static async load<T>(buffer: Buffer = null): Promise<T | null> {
-        const { exports }: any | null = await loader
-            .instantiate(buffer, {
-                index: WASM.imports
-            })
-            .catch((err) => {
-                console.error(err);
-                return null;
-            });
-
-        if (!exports) {
+        const { exports }: any | null = await loader.instantiate(buffer, { index: TLRP.imports }).catch((err) => {
+            console.error(err);
             return null;
-        }
-
+        });
+        if (!exports) return null;
         const functions: { [key: string]: any } = { ...exports } as { [key: string]: Function };
         const name = exports.__getString(functions.getName());
         Object.keys(functions).forEach((key) => {
-            if (!functions[key]) {
-                return;
-            }
-
+            if (!functions[key]) return;
             if (key.includes('_')) {
                 helpers[key] = functions[key];
                 return;
             }
-
             if (key === 'memory') {
                 memory = new Uint8Array(functions[key].memory);
                 return;
             }
-
-            if (!injections[name]) {
-                injections[name] = {};
-            }
-
+            if (!injections[name]) injections[name] = {};
             injections[name][key] = functions[key];
         });
-
         return injections[name] as T;
     }
 }

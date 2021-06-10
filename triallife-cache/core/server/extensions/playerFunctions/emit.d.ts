@@ -1,0 +1,32 @@
+/// <reference types="@altv/types-server" />
+import * as alt from 'alt-server';
+import { AnimationFlags } from '../../../shared/flags/animation';
+import { AudioStream } from '../../../shared/interfaces/audio';
+import { Particle } from '../../../shared/interfaces/particle';
+import { ProgressBar } from '../../../shared/interfaces/progress-bar';
+import { Task, TaskCallback } from '../../../shared/interfaces/task-timeline';
+declare function animation(player: alt.Player, dictionary: string, name: string, flags: AnimationFlags, duration?: number): void;
+declare function audioStream(stream: AudioStream): void;
+declare function meta(player: alt.Player, key: string, value: any): void;
+declare function notification(player: alt.Player, message: string): void;
+declare function particle(player: alt.Player, particle: Particle, emitToNearbyPlayers?: boolean): void;
+declare function createProgressBar(player: alt.Player, progressbar: ProgressBar): void;
+declare function removeProgressBar(player: alt.Player, uid: string): void;
+declare function sound2D(player: alt.Player, audioName: string, volume?: number): void;
+declare function sound3D(player: alt.Player, audioName: string, target: alt.Entity): void;
+declare function soundFrontend(player: alt.Player, audioName: string, ref: string): void;
+declare function taskTimeline(player: alt.Player, tasks: Array<Task | TaskCallback>): void;
+declare const _default: {
+    animation: typeof animation;
+    audioStream: typeof audioStream;
+    createProgressBar: typeof createProgressBar;
+    meta: typeof meta;
+    notification: typeof notification;
+    particle: typeof particle;
+    removeProgressBar: typeof removeProgressBar;
+    sound2D: typeof sound2D;
+    sound3D: typeof sound3D;
+    soundFrontend: typeof soundFrontend;
+    taskTimeline: typeof taskTimeline;
+};
+export default _default;

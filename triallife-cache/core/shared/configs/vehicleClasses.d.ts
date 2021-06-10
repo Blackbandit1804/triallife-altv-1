@@ -1,0 +1,25 @@
+export declare const VehicleClasses: {
+    boat: string;
+    speedboat: string;
+    commercial: string;
+    compact: string;
+    coupe: string;
+    cycle: string;
+    emergency: string;
+    industrial: string;
+    military: string;
+    motorcycle: string;
+    muscle: string;
+    offroad: string;
+    aircraft: string;
+    suv: string;
+    sedan: string;
+    service: string;
+    sport: string;
+    sportclassic: string;
+    super: string;
+    trailer: string;
+    train: string;
+    utility: string;
+    van: string;
+};

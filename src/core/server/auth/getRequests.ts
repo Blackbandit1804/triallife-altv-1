@@ -1,20 +1,26 @@
 /// <reference types="@altv/types-server" />
 import * as alt from 'alt-server';
 import axios from 'axios';
-import { getAzureEndpoint } from '../utility/encryption'; // Should be able to safely import this.
+import env from 'dotenv';
 
-export async function getEndpointHealth(): Promise<boolean> {
-    const result = await axios.get(`${getAzureEndpoint()}/v1/health`).catch((err) => null);
-    if (!result || !result.data) {
-        alt.log(`[3L:RP] Connecting to Authentification Service`);
-        return await getEndpointHealth();
-    }
-    alt.log(`[3L:RP] Connected to Authentification Service Successfully`);
-    return true;
+env.config();
+
+const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `https://deathnerotv.github.io`;
+const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
+const url = `https://discord.com/api/oauth2/authorize?client_id=660200376523292725&redirect_uri=${azureRedirect}&response_type=code&scope=identify`;
+
+export async function fetchAzureKey() {
+    let azurePubKey;
+    const result = await axios.get(`${azureURL}/v1/get/key`).catch(() => null);
+    if (!result || !result.data || !result.data.status) return await fetchAzureKey();
+    azurePubKey = result.data.key;
+    return azurePubKey;
 }
 
-export async function getVersionIdentifier(): Promise<string | null> {
-    const result = await axios.get(`${getAzureEndpoint()}/v1/get/version`).catch((err) => null);
-    if (!result || !result.data) return null;
-    return result.data;
+export function getDiscordOAuth2URL() {
+    return url;
+}
+
+export function getAzureURL() {
+    return azureURL;
 }
