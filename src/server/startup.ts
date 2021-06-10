@@ -4,8 +4,18 @@ import dotenv from 'dotenv';
 import { encryptData, getPublicKey, sha256Random } from './utility/encryption';
 import { getDiscordOAuth2URL } from './auth/getRequest';
 import './systems/authServer';
+import { Database, onReady } from 'simplymongo';
+import { Collections } from './utility/enums';
 
 dotenv.config();
+const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
+
+let db = new Database(process.env.MONGO_URL, 'altv', collections);
+
+onReady(() => {
+    import('./systems/options').then((res) => res.default());
+    import('./systems/discord').then((res) => res.default());
+});
 
 alt.on('playerConnect', handlePlayerConnect);
 
