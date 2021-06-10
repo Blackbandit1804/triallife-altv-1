@@ -1,12 +1,12 @@
 import * as alt from 'alt-server';
-import { Vehicle_Behavior, Vehicle_State } from '../../../shared/enums/vehicle';
+import { BehaviorTypes, VehicleStates } from '../../../shared/utility/enums';
 import { Vehicle } from '../../../shared/interfaces/Vehicle';
 import { ATHENA_EVENTS_VEHICLE } from '../../enums/athena';
 import { sha256Random } from '../../utility/encryption';
 import { playerFuncs } from '../player';
 
-const ownershipBehavior = Vehicle_Behavior.CONSUMES_FUEL | Vehicle_Behavior.NEED_KEY_TO_START;
-const tmpBehavior = Vehicle_Behavior.NO_KEY_TO_LOCK | Vehicle_Behavior.NO_KEY_TO_START | Vehicle_Behavior.UNLIMITED_FUEL | Vehicle_Behavior.NO_SAVE;
+const ownershipBehavior = BehaviorTypes.CONSUMES_FUEL | BehaviorTypes.NEED_KEY_TO_START;
+const tmpBehavior = BehaviorTypes.NO_KEY_TO_LOCK | BehaviorTypes.NO_KEY_TO_START | BehaviorTypes.UNLIMITED_FUEL | BehaviorTypes.NO_SAVE;
 
 /**
  * Add a vehicle to a player's data.
@@ -87,7 +87,7 @@ function tempVehicle(player: alt.Player, model: string, pos: alt.IVector3, rot: 
     vehicle.player_id = player.id;
     vehicle.behavior = tmpBehavior;
     vehicle.numberPlateText = 'TEMP';
-    vehicle.setStreamSyncedMeta(Vehicle_State.OWNER, vehicle.player_id);
+    vehicle.setStreamSyncedMeta(VehicleStates.OWNER, vehicle.player_id);
     return vehicle;
 }
 
@@ -140,7 +140,7 @@ function spawn(player: alt.Player, data: Vehicle): alt.Vehicle {
     vehicle.numberPlateText = vehicle.data.uid.substring(0, 8);
 
     // Synchronize Ownership
-    vehicle.setStreamSyncedMeta(Vehicle_State.OWNER, vehicle.player_id);
+    vehicle.setStreamSyncedMeta(VehicleStates.OWNER, vehicle.player_id);
     alt.emit(ATHENA_EVENTS_VEHICLE.SPAWNED, vehicle);
     return vehicle;
 }

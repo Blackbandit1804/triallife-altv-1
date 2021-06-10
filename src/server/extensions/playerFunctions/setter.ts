@@ -62,10 +62,10 @@ function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
 function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {
     p.spawn(p.pos.x, p.pos.y, p.pos.z, 0);
 
-    if (!p.data.isDead) {
-        p.data.isDead = true;
-        emit.meta(p, 'isDead', true);
-        save.field(p, 'isDead', true);
+    if (!p.data.isUnconscious) {
+        p.data.isUnconscious = true;
+        emit.meta(p, 'isUnconscious', true);
+        save.field(p, 'isUnconscious', true);
         alt.log(`(${p.id}) ${p.data.name} has died.`);
     }
 
@@ -124,9 +124,9 @@ function frozen(p: alt.Player, value: boolean): void {
  */
 function respawned(p: alt.Player, position: alt.Vector3 = null): void {
     p.nextDeathSpawn = null;
-    p.data.isDead = false;
-    emit.meta(p, 'isDead', false);
-    save.field(p, 'isDead', false);
+    p.data.isUnconscious = false;
+    emit.meta(p, 'isUnconscious', false);
+    save.field(p, 'isUnconscious', false);
 
     let nearestHopsital = position;
     if (!position) {

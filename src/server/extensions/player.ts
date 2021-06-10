@@ -19,10 +19,10 @@ declare module 'alt-server' {
         discordToken?: string;
         needsQT?: boolean;
         hasModel?: boolean;
-        currentCharacters: Array<Character>;
-        pendingCharacterEdit?: boolean;
-        pendingNewCharacter?: boolean;
-        pendingCharacterSelect?: boolean;
+        characters: Array<Character>;
+        pendingCharEdit?: boolean;
+        pendingCharCreate?: boolean;
+        pendingCharSelect?: boolean;
 
         account?: Partial<Account>;
         discord?: DiscordUser;

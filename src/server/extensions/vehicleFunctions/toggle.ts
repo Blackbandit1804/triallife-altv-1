@@ -1,76 +1,47 @@
 import * as alt from 'alt-server';
-import { Vehicle_Behavior, Vehicle_Lock_State, Vehicle_Lock_States, Vehicle_State } from '../../../shared/enums/vehicle';
+import { BehaviorTypes, LockTypes, LockType, VehicleStates } from '../../../shared/utility/enums';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleController } from '../../../shared/locale/locale';
-import { isFlagEnabled } from '../../../shared/utility/flags';
-import { ATHENA_EVENTS_VEHICLE } from '../../enums/athena';
+import { isFlagEnabled } from '../../../shared/utility/usefull';
+import { EVENTS_VEHICLE } from '../../utility/enums';
 import { playerFuncs } from '../player';
 import getter from './getter';
 import keys from './keys';
 import setter from './setter';
 
-function lock(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = false): Vehicle_Lock_State {
-    if (!bypass) {
-        if (!getter.isOwner(vehicle, player) && !keys.has(vehicle, player)) {
-            return vehicle.athenaLockState;
-        }
+function lock(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = false): LockTypes {
+    if (!bypass) if (!getter.isOwner(vehicle, player) && !keys.has(vehicle, player)) return vehicle.lockStatus;
+    if (vehicle.lockStatus === null || vehicle.lockStatus === undefined) {
+        vehicle.lockStatus = LockTypes.UNLOCKED;
+        for (let i = 0; i < 6; i++) setter.doorOpen(vehicle, player, i, false);
+        vehicle.setStreamSyncedMeta(VehicleStates.LOCK_STATE, vehicle.lockStatus);
+        return vehicle.lockStatus;
     }
-
-    if (vehicle.athenaLockState === null || vehicle.athenaLockState === undefined) {
-        vehicle.athenaLockState = Vehicle_Lock_State.UNLOCKED;
-
-        for (let i = 0; i < 6; i++) {
-            setter.doorOpen(vehicle, player, i, false);
-        }
-
-        vehicle.setStreamSyncedMeta(Vehicle_State.LOCK_STATE, vehicle.athenaLockState);
-        return vehicle.athenaLockState;
-    }
-
-    let index = Vehicle_Lock_States.findIndex((x) => x === vehicle.athenaLockState);
-    if (index + 1 === Vehicle_Lock_States.length) {
-        index = -1;
-    }
-
-    vehicle.athenaLockState = Vehicle_Lock_States[index + 1];
-    vehicle.setStreamSyncedMeta(Vehicle_State.LOCK_STATE, vehicle.athenaLockState);
-
-    // Automatically Close All Doors in Locked State
-    if (vehicle.athenaLockState === Vehicle_Lock_State.LOCKED) {
-        for (let i = 0; i < 6; i++) {
-            setter.doorOpen(vehicle, player, i, false);
-        }
-    }
-
-    alt.emit(ATHENA_EVENTS_VEHICLE.LOCK_STATE_CHANGE, vehicle);
-    return vehicle.athenaLockState;
+    let index = LockType.findIndex((x) => x === vehicle.lockStatus);
+    if (index + 1 === LockType.length) index = -1;
+    vehicle.lockStatus = VehicleStates[index + 1];
+    vehicle.setStreamSyncedMeta(VehicleStates.LOCK_STATE, vehicle.lockStatus);
+    if (vehicle.lockStatus === LockTypes.LOCKED) for (let i = 0; i < 6; i++) setter.doorOpen(vehicle, player, i, false);
+    alt.emit(EVENTS_VEHICLE.LOCK_STATE_CHANGE, vehicle);
+    return vehicle.lockStatus;
 }
 
 function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = false): void {
-    if (isFlagEnabled(vehicle.behavior, Vehicle_Behavior.NEED_KEY_TO_START) && !bypass) {
-        if (!getter.isOwner(vehicle, player) && !keys.has(vehicle, player)) {
-            return;
-        }
-    }
-
+    if (isFlagEnabled(vehicle.behavior, BehaviorTypes.NEED_KEY_TO_START) && !bypass) if (!getter.isOwner(vehicle, player) && !keys.has(vehicle, player)) return;
     if (!getter.hasFuel(vehicle)) {
         vehicle.engineStatus = false;
-        vehicle.setStreamSyncedMeta(Vehicle_State.ENGINE, vehicle.engineStatus);
+        vehicle.setStreamSyncedMeta(VehicleStates.ENGINE, vehicle.engineStatus);
         playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.VEHICLE_NO_FUEL));
         return;
     }
-
     vehicle.engineStatus = !vehicle.engineStatus;
-    vehicle.setStreamSyncedMeta(Vehicle_State.ENGINE, vehicle.engineStatus);
-
+    vehicle.setStreamSyncedMeta(VehicleStates.ENGINE, vehicle.engineStatus);
     if (player) {
         const status = vehicle.engineStatus ? LocaleController.get(LOCALE_KEYS.LABEL_ON) : LocaleController.get(LOCALE_KEYS.LABEL_OFF);
-
         const fullMessage = `${LocaleController.get(LOCALE_KEYS.LABEL_ENGINE)} ~y~ ${status}`;
         playerFuncs.emit.notification(player, fullMessage);
     }
-
-    alt.emit(ATHENA_EVENTS_VEHICLE.ENGINE_STATE_CHANGE, vehicle);
+    alt.emit(EVENTS_VEHICLE.ENGINE_STATE_CHANGE, vehicle);
 }
 
 export default {

@@ -1,8 +1,8 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import { Vehicle_Behavior } from '../../../shared/enums/vehicle';
+import { BehaviorTypes } from '../../../shared/utility/enums';
 import { Vehicle } from '../../../shared/interfaces/Vehicle';
-import { isFlagEnabled } from '../../../shared/utility/flags';
+import { isFlagEnabled } from '../../../shared/utility/usefull';
 import { playerFuncs } from '../player';
 
 const db: Database = getDatabase();
@@ -15,7 +15,7 @@ const db: Database = getDatabase();
  * @memberof SavePrototype
  */
 async function data(owner: alt.Player, vehicle: alt.Vehicle): Promise<void> {
-    if (isFlagEnabled(vehicle.behavior, Vehicle_Behavior.NO_SAVE)) {
+    if (isFlagEnabled(vehicle.behavior, BehaviorTypes.NO_SAVE)) {
         return;
     }
 

@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { Vehicle_Behavior, Vehicle_Lock_State } from '../../shared/enums/vehicle';
+import { BehaviorTypes, LockTypes } from '../../shared/enums/vehicle';
 import getter from './vehicleFunctions/getter';
 import keys from './vehicleFunctions/keys';
 import newRef from './vehicleFunctions/new';
@@ -16,12 +16,12 @@ import * as IVeh from '../../shared/interfaces/Vehicle';
 
 declare module 'alt-server' {
     export interface Vehicle {
-        lockStatus: Vehicle_Lock_State;
+        lockStatus: LockTypes;
         engineStatus: boolean;
         keys?: Array<string>;
         fuel?: number;
         player_id?: number;
-        behavior?: Vehicle_Behavior;
+        behavior?: BehaviorTypes;
         data?: Partial<IVeh.Vehicle>; // Special Vehicle Information
         nextSave?: number;
         nextUpdate?: number;

@@ -12,15 +12,17 @@ export interface Character {
     name: string;
     cash: number;
     bank: number;
-    health: number;
+    blood: number;
     armour: number;
-    food: number;
-    water: number;
-    isDead: boolean;
+    hunger: number;
+    thirst: number;
+    mood: number;
+    voice: number;
+    isUnconscious: boolean;
     hours: number;
     interior: string | null;
     exterior: Partial<Vector3>;
-    appearance: Partial<Design>;
+    design: Partial<Design>;
     info: Partial<CharacterInfo>;
     inventory: Array<Array<Partial<Item>>>;
     equipment: Array<Partial<Item>>;
@@ -37,12 +39,13 @@ export const CharacterDefaults: Partial<Character> = {
     pos: DEFAULT_CONFIG.PLAYER_NEW_SPAWN_POS as Vector3,
     cash: DEFAULT_CONFIG.PLAYER_CASH,
     bank: DEFAULT_CONFIG.PLAYER_BANK,
-    appearance: {},
+    design: {},
     info: {},
-    food: 100,
-    water: 100,
-    isDead: false,
-    health: 199,
+    hunger: 0,
+    thirst: 0,
+    mood: 0,
+    isUnconscious: false,
+    blood: 7500,
     armour: 0,
     hours: 0,
     vehicles: []

@@ -17,15 +17,9 @@ import utility from './utility';
  * @return {*}  {void}
  * @memberof EmitPrototype
  */
-function animation(
-    p: alt.Player,
-    dictionary: string,
-    name: string,
-    flags: AnimationFlags,
-    duration: number = -1
-): void {
-    if (p.data.isDead) {
-        alt.logWarning(`[Athena] Cannot play ${dictionary}@${name} while player is dead.`);
+function animation(p: alt.Player, dictionary: string, name: string, flags: AnimationFlags, duration: number = -1): void {
+    if (p.data.isUnconscious) {
+        alt.logWarning(`[3L:RP] Cannot play ${dictionary}@${name} while player is dead.`);
         return;
     }
 
