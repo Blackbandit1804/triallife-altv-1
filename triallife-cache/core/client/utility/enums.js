@@ -1,7 +1,0 @@
-export var CLIENT_VEHICLE_EVENTS;
-(function (CLIENT_VEHICLE_EVENTS) {
-    CLIENT_VEHICLE_EVENTS["TOGGLE_SEAT"] = "client:Vehicle:Seat";
-    CLIENT_VEHICLE_EVENTS["TOGGLE_DOOR"] = "client:Vehicle:Door";
-    CLIENT_VEHICLE_EVENTS["TOGGLE_ENGINE"] = "client:Vehicle:Engine";
-    CLIENT_VEHICLE_EVENTS["TOGGLE_LOCK"] = "client:Vehicle:Lock";
-})(CLIENT_VEHICLE_EVENTS || (CLIENT_VEHICLE_EVENTS = {}));
