@@ -57,7 +57,7 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         alt.emit(SYSTEM_EVENTS.VOICE_ADD, p);
         alt.emit(EVENTS_PLAYER.SELECTED_CHARACTER, p);
     }, 500);
-    delete p.currentCharacters;
+    delete p.characters;
 }
 
 export default {
