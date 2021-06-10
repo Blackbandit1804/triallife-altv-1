@@ -63,5 +63,6 @@
         "semi": true,
         "arrowParens": "always",
         "trailingComma": "none"
-    }
+    },
+    "type": "module"
 }
