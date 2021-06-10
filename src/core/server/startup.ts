@@ -87,6 +87,7 @@ async function handleEvent(value: number) {
         alt.once(`${ext.getFinishName()}`, handleFinish);
         ext.isDoneLoading();
     });
+    new Database(mongoURL, TLRP.getHelpers().__getString(ext.getDatabaseName()), collections);
 }
 
 function handleEntryToggle() {

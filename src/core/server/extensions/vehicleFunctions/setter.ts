@@ -5,7 +5,7 @@ import keys from './keys';
 import toggle from './toggle';
 import { DEFAULT_CONFIG } from '../../tlrp/config';
 import { isFlagEnabled } from '../../../shared/utility/flags';
-import { vehicleFuncs } from '../Vehicle';
+import { vehicleFuncs } from '../vehicle';
 import { TlrpFunctions, TLRP } from '../../utility/tlrpLoader';
 
 const tlrp = TLRP.getFunctions<TlrpFunctions>('tlrp');
