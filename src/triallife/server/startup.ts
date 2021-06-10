@@ -1,6 +1,8 @@
 /// <reference types="@altv/types-server" />
 import * as alt from 'alt-server';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 import { encryptData, getPublicKey, sha256Random } from './utility/encryption';
 import { getDiscordOAuth2URL } from './auth/getRequest';
 import './systems/authServer';
@@ -9,6 +11,7 @@ import { Collections } from './utility/enums';
 
 dotenv.config();
 let isReady = false;
+const data = [];
 const startTime: number = Date.now();
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 

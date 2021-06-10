@@ -50,7 +50,7 @@ async function buildPipeline() {
     }
 
     // Handle Source Copy
-    console.log(`[3L:RP] Copy Compiled Content`);
+    console.log(`[3L:RP] Copy Compiled Content (Filecount: ${SourceFiles.length})`);
     for (let i = 0; i < SourceFiles.length; i++) {
         const oldPath = SourceFiles[i];
         const newPath = SourceFiles[i].replace('src', 'resources');

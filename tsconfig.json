@@ -12,7 +12,7 @@
         "experimentalDecorators": true,
         "module": "ESNext",
         "target": "ESNext",
-        "outDir": "E:\\Alt-V\\server\\resources\\triallife",
+        "outDir": "./tlrp-cache",
         "rootDir": "./src",
         "allowSyntheticDefaultImports": true,
         "composite": true
