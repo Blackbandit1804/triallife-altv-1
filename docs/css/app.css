@@ -1,0 +1,93 @@
+body,
+html {
+    overflow: hidden !important;
+    background: url(../img/background.png) no-repeat 50% fixed !important;
+    background-size: cover;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.v-application {
+    background: transparent !important;
+}
+.main {
+    width: 100vw;
+    height: 100vh;
+}
+.context {
+    position: fixed;
+    bottom: 5vh;
+}
+.fadein {
+    -webkit-animation: fadein 2s;
+    animation: fadein 2s;
+}
+@-webkit-keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.lds-ring {
+    display: inline-block;
+    position: relative;
+}
+.lds-ring,
+.lds-ring div {
+    width: 150px;
+    height: 150px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:first-child {
+    -webkit-animation-delay: -0.45s;
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    -webkit-animation-delay: -0.3s;
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    -webkit-animation-delay: -0.15s;
+    animation-delay: -0.15s;
+}
+@-webkit-keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
