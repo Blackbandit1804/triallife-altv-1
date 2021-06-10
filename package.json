@@ -5,17 +5,8 @@
     "author": "DeathNeroTV",
     "type": "module",
     "scripts": {
-        "build": "node ./utility/copy-helper.js",
-        "core-reload": "node ./utility/manager.js",
-        "clean": "node ./utility/cleaner.js",
-        "update": "altv-pkg d release && git pull origin master && npm install && git submodule update --force --init --recursive --remote",
-        "windows": "npm run build && altv-server.exe",
-        "linux": "npm run build && ./start.sh",
-        "build-watching": "node ./utility/copy-helper.js -- WATCHING",
-        "watch-windows": "tsc-watch --onSuccess \"npm run watch-handle-windows\"",
-        "watch-linux": "tsc-watch --onSuccess \"npm run watch-handle-linux\"",
-        "watch-handle-windows": "npm run build-watching && npm run core-reload",
-        "watch-handle-linux": "npm run build-watching && npm run core-reload"
+        "start": "altv-server.exe",
+        "update": "altv-pkg d release"
     },
     "devDependencies": {
         "@altv/types-client": "latest",
