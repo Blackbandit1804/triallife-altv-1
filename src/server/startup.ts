@@ -8,6 +8,8 @@ import { Database, onReady } from 'simplymongo';
 import { Collections } from './utility/enums';
 
 dotenv.config();
+let isReady = false;
+const startTime: number = Date.now();
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
 let db = new Database(process.env.MONGO_URL, 'altv', collections);
@@ -15,12 +17,18 @@ let db = new Database(process.env.MONGO_URL, 'altv', collections);
 onReady(() => {
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
+    alt.log('Loaded all files and starting server');
+    isReady = true;
 });
 
 alt.on('playerConnect', handlePlayerConnect);
 
 async function handlePlayerConnect(player: alt.Player): Promise<void> {
     if (!player || !player.valid) return;
+    if (!isReady) {
+        player.kick('Server is warming up...');
+        return;
+    }
     const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     player.discordToken = sha256Random(uniquePlayerData);
     const encryptionFormatObject = { token: player.discordToken };
