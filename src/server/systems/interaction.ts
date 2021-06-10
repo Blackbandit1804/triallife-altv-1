@@ -208,13 +208,13 @@ export class InteractionController {
         });
 
         if (!closestInteraction) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.INTERACTION_TOO_FAR_AWAY));
+            playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.INTERACTION_TOO_FAR_AWAY));
             return;
         }
 
         const interaction = InteractionController.InteractionTypes[type];
         if (!interaction) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT));
+            playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT));
             return;
         }
 

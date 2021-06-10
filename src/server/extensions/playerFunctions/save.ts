@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import { Character } from '../../../shared/interfaces/Character';
-import { Collections } from '../../interface/DatabaseCollections';
+import { Collections } from '../../utility/enums';
 
 const db: Database = getDatabase();
 
@@ -48,12 +48,15 @@ async function partial(p: alt.Player, dataObject: Partial<Character>): Promise<v
 async function onTick(p: alt.Player): Promise<void> {
     // Update Server Data First
     p.data.pos = p.pos;
-    p.data.health = p.health;
     p.data.armour = p.armour;
 
     // Update Database
     saveField(p, 'pos', p.data.pos);
-    saveField(p, 'health', p.data.health);
+    saveField(p, 'blood', p.data.blood);
+    saveField(p, 'hunger', p.data.hunger);
+    saveField(p, 'thirst', p.data.thirst);
+    saveField(p, 'mood', p.data.mood);
+    saveField(p, 'voice', p.data.voice);
     saveField(p, 'armour', p.data.armour);
 }
 

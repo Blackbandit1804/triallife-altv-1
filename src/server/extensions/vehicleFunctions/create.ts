@@ -1,19 +1,13 @@
 import * as alt from 'alt-server';
 import { BehaviorTypes, VehicleStates } from '../../../shared/utility/enums';
-import { Vehicle } from '../../../shared/interfaces/Vehicle';
-import { ATHENA_EVENTS_VEHICLE } from '../../enums/athena';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
+import { EVENTS_VEHICLE } from '../../utility/enums';
 import { sha256Random } from '../../utility/encryption';
 import { playerFuncs } from '../player';
 
 const ownershipBehavior = BehaviorTypes.CONSUMES_FUEL | BehaviorTypes.NEED_KEY_TO_START;
 const tmpBehavior = BehaviorTypes.NO_KEY_TO_LOCK | BehaviorTypes.NO_KEY_TO_START | BehaviorTypes.UNLIMITED_FUEL | BehaviorTypes.NO_SAVE;
 
-/**
- * Add a vehicle to a player's data.
- * @param {alt.Player} player
- * @param {Partial<Vehicle>} data
- * @return {*}  {alt.Vehicle}
- */
 function add(player: alt.Player, data: Partial<Vehicle>): alt.Vehicle {
     data.uid = sha256Random(JSON.stringify(player.data));
 
@@ -29,12 +23,6 @@ function add(player: alt.Player, data: Partial<Vehicle>): alt.Vehicle {
     return spawn(player, data as Vehicle);
 }
 
-/**
- * Try to remove vehicle from a player's vehicle list.
- * @param {alt.Player} player
- * @param {string} uid
- * @return {*}  {boolean}
- */
 function remove(player: alt.Player, uid: string): boolean {
     if (!player.data.vehicles) {
         return false;
@@ -51,11 +39,6 @@ function remove(player: alt.Player, uid: string): boolean {
     return true;
 }
 
-/**
- * Despawns a vehicle based on the id given.
- * @param {number} id
- * @return {boolean}  {boolean}
- */
 function despawn(id: number, player: alt.Player = null): boolean {
     const vehicle = alt.Vehicle.all.find((v) => v.id === id);
     if (!vehicle) {
@@ -63,7 +46,7 @@ function despawn(id: number, player: alt.Player = null): boolean {
     }
 
     if (vehicle.valid && vehicle.destroy) {
-        alt.emit(ATHENA_EVENTS_VEHICLE.DESPAWNED, vehicle);
+        alt.emit(EVENTS_VEHICLE.DESPAWNED, vehicle);
         vehicle.destroy();
     }
 
@@ -74,14 +57,6 @@ function despawn(id: number, player: alt.Player = null): boolean {
     return true;
 }
 
-/**
- * Creates a temporary vehicle.
- * @param {alt.Player} player
- * @param {string} model
- * @param {alt.IVector3} position
- * @param {alt.IVector3} rotation
- * @return {alt.Vehicle}  {alt.Vehicle}
- */
 function tempVehicle(player: alt.Player, model: string, pos: alt.IVector3, rot: alt.IVector3): alt.Vehicle {
     const vehicle = new alt.Vehicle(model, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z);
     vehicle.player_id = player.id;
@@ -91,11 +66,6 @@ function tempVehicle(player: alt.Player, model: string, pos: alt.IVector3, rot: 
     return vehicle;
 }
 
-/**
- * Used to spawn a player owned vehicle.
- * @param {alt.Player} player
- * @param {Vehicle} data
- */
 function spawn(player: alt.Player, data: Vehicle): alt.Vehicle {
     // Destroy previous vehicle
     if (player.lastVehicleID !== null && player.lastVehicleID !== undefined) {
@@ -124,24 +94,17 @@ function spawn(player: alt.Player, data: Vehicle): alt.Vehicle {
 
     let color;
 
-    if (!data.color) {
-        color = new alt.RGBA(255, 255, 255, 255);
-    } else {
-        color = new alt.RGBA(data.color.r, data.color.g, data.color.b, 255);
-    }
-
+    if (!data.color) color = new alt.RGBA(255, 255, 255, 255);
+    else color = new alt.RGBA(data.color.r, data.color.g, data.color.b, 255);
     // Primary
     vehicle.customPrimaryColor = color;
-
     // Secondary
     vehicle.customSecondaryColor = color;
-
     // Process mods, plates, etc.
     vehicle.numberPlateText = vehicle.data.uid.substring(0, 8);
-
     // Synchronize Ownership
     vehicle.setStreamSyncedMeta(VehicleStates.OWNER, vehicle.player_id);
-    alt.emit(ATHENA_EVENTS_VEHICLE.SPAWNED, vehicle);
+    alt.emit(EVENTS_VEHICLE.SPAWNED, vehicle);
     return vehicle;
 }
 

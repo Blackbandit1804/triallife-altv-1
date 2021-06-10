@@ -5,7 +5,7 @@ import currency from './playerFunctions/economy';
 import dataUpdater from './playerFunctions/dataUpdater';
 import emit from './playerFunctions/emit';
 import inventory from './playerFunctions/inventory';
-import createNew from './playerFunctions/new';
+import createNew from './playerFunctions/create';
 import safe from './playerFunctions/safe';
 import save from './playerFunctions/save';
 import select from './playerFunctions/select';

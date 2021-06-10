@@ -1,52 +1,35 @@
 import * as alt from 'alt-server';
-import { Account } from '../../interface/Account';
-import { Permissions } from '../../../shared/flags/permissions';
+import { Account } from '../../interface/account';
 import { getUniquePlayerHash } from '../../utility/encryption';
 import { Database, getDatabase } from 'simplymongo';
-import { DEFAULT_CONFIG } from '../../athena/main';
+import { DEFAULT_CONFIG } from '../../configs/settings';
 import { distance2d } from '../../../shared/utility/vector';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SYSTEM_EVENTS, Permissions } from '../../../shared/utility/enums';
 import emit from './emit';
 import save from './save';
 import dataUpdater from './dataUpdater';
 import safe from './safe';
 import sync from './sync';
-import { ATHENA_EVENTS_PLAYER } from '../../enums/athena';
+import { EVENTS_PLAYER } from '../../utility/enums';
 import { ActionMenu } from '../../../shared/interfaces/Actions';
 import { playerFuncs } from '../player';
-import { Collections } from '../../interface/DatabaseCollections';
+import { Collections } from '../../utility/enums';
 
 const db: Database = getDatabase();
 
-/**
- * Set the current account data for this player.
- * @param {Partial<Account>} accountData
- * @return {*}  {Promise<void>}
- * @memberof SetPrototype
- */
 async function account(p: alt.Player, accountData: Partial<Account>): Promise<void> {
     if (!accountData.permissionLevel) {
         accountData.permissionLevel = Permissions.None;
         db.updatePartialData(accountData._id, { permissionLevel: Permissions.None }, Collections.Accounts);
     }
-
     if (!accountData.quickToken || Date.now() > accountData.quickTokenExpiration || p.needsQT) {
-        const qt: string = getUniquePlayerHash(p, p.discord.id);
-
-        db.updatePartialData(
-            accountData._id,
-            {
-                quickToken: qt,
-                quickTokenExpiration: Date.now() + 60000 * 60 * 48 // 48 Hours
-            },
-            Collections.Accounts
-        );
-
+        const quickToken: string = getUniquePlayerHash(p, p.discord.id);
+        const quickTokenExpiration: number = Date.now() + 60000 * 60 * 48;
+        db.updatePartialData(accountData._id, { quickToken, quickTokenExpiration }, Collections.Accounts);
         alt.emitClient(p, SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, p.discord.id);
     }
-
     emit.meta(p, 'permissionLevel', accountData.permissionLevel);
-    p.accountData = accountData;
+    p.account = accountData;
 }
 
 function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
@@ -68,12 +51,11 @@ function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null):
         save.field(p, 'isUnconscious', true);
         alt.log(`(${p.id}) ${p.data.name} has died.`);
     }
-
     if (!p.nextDeathSpawn) {
         p.nextDeathSpawn = Date.now() + DEFAULT_CONFIG.RESPAWN_TIME;
     }
 
-    alt.emit(ATHENA_EVENTS_PLAYER.DIED, p);
+    alt.emit(EVENTS_PLAYER.UNCONSCIOUS, p);
 }
 
 /**
@@ -156,11 +138,11 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
 
     alt.nextTick(() => {
         p.clearBloodDamage();
-        safe.addHealth(p, DEFAULT_CONFIG.RESPAWN_HEALTH, true);
+        safe.addBlood(p, DEFAULT_CONFIG.RESPAWN_HEALTH);
         safe.addArmour(p, DEFAULT_CONFIG.RESPAWN_ARMOUR, true);
     });
 
-    alt.emit(ATHENA_EVENTS_PLAYER.SPAWNED, p);
+    alt.emit(EVENTS_PLAYER.SPAWNED, p);
 }
 
 export default {

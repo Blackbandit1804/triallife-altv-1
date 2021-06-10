@@ -14,7 +14,7 @@ export enum EVENTS_VEHICLE {
 }
 
 export enum EVENTS_PLAYER {
-    DIED = 'tlrp:PlayerDied',
+    UNCONSCIOUS = 'tlrp:PlayerUnconscious',
     DROPPED_ITEM = 'tlrp:PlayerDroppedItem',
     SELECTED_CHARACTER = 'tlrp:SelectedCharacter',
     SPAWNED = 'tlrp:PlayerSpawned'

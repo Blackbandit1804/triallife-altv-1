@@ -15,7 +15,7 @@ import save from './save';
 
 async function selectCharacter(p: alt.Player, characterData: Partial<Character>): Promise<void> {
     p.data = { ...characterData };
-    sync.appearance(p);
+    sync.design(p);
     alt.emitClient(p, SYSTEM_EVENTS.TICKS_START);
     p.dimension = 0;
     setter.frozen(p, true);

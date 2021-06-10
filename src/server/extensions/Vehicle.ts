@@ -1,18 +1,13 @@
 import * as alt from 'alt-server';
-import { BehaviorTypes, LockTypes } from '../../shared/enums/vehicle';
+import { BehaviorTypes, LockTypes } from '../../shared/utility/enums';
 import getter from './vehicleFunctions/getter';
 import keys from './vehicleFunctions/keys';
-import newRef from './vehicleFunctions/new';
+import create from './vehicleFunctions/create';
 import save from './vehicleFunctions/save';
 import setter from './vehicleFunctions/setter';
 import toggle from './vehicleFunctions/toggle';
 import utility from './vehicleFunctions/utility';
 import * as IVeh from '../../shared/interfaces/Vehicle';
-
-/**
- * Overwrites the default functionality of vehicles.
- * Uses stream synced meta to fix vehicle controls.
- */
 
 declare module 'alt-server' {
     export interface Vehicle {
@@ -35,7 +30,7 @@ export default function onLoad() {
 export const vehicleFuncs = {
     getter,
     setter,
-    new: newRef,
+    create,
     keys,
     save,
     toggle,

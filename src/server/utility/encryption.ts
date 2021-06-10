@@ -70,3 +70,7 @@ export async function getAzureKey(): Promise<string> {
     if (!azurePubKey) azurePubKey = await fetchAzureKey();
     return azurePubKey;
 }
+
+export function getUniquePlayerHash(player: alt.Player, discord: string): string {
+    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialID}`));
+}
