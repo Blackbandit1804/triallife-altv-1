@@ -12,12 +12,12 @@ let isReady = false;
 const startTime: number = Date.now();
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
-let db = new Database(process.env.MONGO_URL, 'altv', collections);
+new Database(process.env.MONGO_URL, 'altv', collections);
 
 onReady(() => {
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
-    alt.log('Loaded all files and starting server');
+    alt.log(`3L:RP is Ready with warm up | Boot time: ${Date.now() - startTime}ms`);
     isReady = true;
 });
 
