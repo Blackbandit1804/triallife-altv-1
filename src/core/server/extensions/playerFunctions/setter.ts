@@ -2,10 +2,11 @@
 import * as alt from 'alt-server';
 import { Account } from '../../interface/entities';
 import { Database, getDatabase } from 'simplymongo';
+import { Permissions } from '../../../shared/flags/permissions';
 import { getUniquePlayerHash } from '../../utility/encryption';
 import { DEFAULT_CONFIG } from '../../tlrp/config';
 import { distance2d } from '../../../shared/utility/vector';
-import { SYSTEM_EVENTS, TeamType } from '../../../shared/utility/enums';
+import { SYSTEM_EVENTS } from '../../../shared/utility/enums';
 import { EVENTS_PLAYER } from '../../enums';
 import { ActionMenu } from '../../../shared/interfaces/actions';
 import { playerFuncs } from '../player';
@@ -15,13 +16,12 @@ import save from './save';
 import updater from './updater';
 import safe from './safe';
 import sync from './sync';
-
 const db: Database = getDatabase();
 
 async function account(player: alt.Player, account: Partial<Account>): Promise<void> {
-    if (!account.team) {
-        account.team = TeamType.NONE;
-        db.updatePartialData(account._id, { team: TeamType.NONE }, Collections.Accounts);
+    if (!account.permissionLevel) {
+        account.permissionLevel = Permissions.None;
+        db.updatePartialData(account._id, { permissionLevel: Permissions.None }, Collections.Accounts);
     }
     if (!account.quickToken || Date.now() > account.quickTokenExpiration || player.needsQT) {
         const quickToken: string = getUniquePlayerHash(player, player.discord.id);
@@ -29,7 +29,7 @@ async function account(player: alt.Player, account: Partial<Account>): Promise<v
         db.updatePartialData(account._id, { quickToken, quickTokenExpiration }, Collections.Accounts);
         alt.emitClient(player, SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, player.discord.id);
     }
-    emit.meta(player, 'team', account.team);
+    emit.meta(player, 'permissionLevel', account.permissionLevel);
     player.account = account;
 }
 

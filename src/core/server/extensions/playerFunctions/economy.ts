@@ -1,6 +1,6 @@
 /// <reference types="@altv/types-server" />
 import * as alt from 'alt-server';
-import { EconomyTypes } from '../../../shared/enums/economy';
+import { EconomyTypes } from '../../../shared/utility/enums';
 import { TlrpFunctions, TLRP } from '../../utility/tlrpLoader';
 import save from './save';
 import emit from './emit';

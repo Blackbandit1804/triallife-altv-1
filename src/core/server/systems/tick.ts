@@ -1,22 +1,14 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
-import { DEFAULT_CONFIG } from '../athena/main';
-import { playerFuncs } from '../extensions/Player';
-import { vehicleFuncs } from '../extensions/Vehicle';
+import { SYSTEM_EVENTS } from '../../shared/utility/enums';
+import { DEFAULT_CONFIG } from '../tlrp/config';
+import { playerFuncs } from '../extensions/player';
+import { vehicleFuncs } from '../extensions/vehicle';
 import { InventoryController } from '../views/inventory';
 
 const timeBetweenPings = 4950;
 
 alt.onClient(SYSTEM_EVENTS.PLAYER_TICK, handlePing);
 
-/**
- * This is a tick event that is sent up from the player.
- * This tick event is then used to process specific player events.
- * This varies from player revival, coordinate processing, etc.
- * Helps push the load onto the server, rather than the player.
- * @param {alt.Player} player
- * @return {*}
- */
 function handlePing(player: alt.Player): void {
     if (!player.nextPingTime) {
         player.nextPingTime = Date.now() + timeBetweenPings;
