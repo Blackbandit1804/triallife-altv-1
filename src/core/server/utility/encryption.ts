@@ -1,4 +1,5 @@
 /// <reference types="@altv/types-server" />
+import * as alt from 'alt-server';
 import { TlrpFunctions, TLRP } from './tlrpLoader';
 import sjcl from 'sjcl';
 import ecc from 'elliptic';
@@ -62,4 +63,8 @@ export async function getSharedSecret(): Promise<string> {
 export async function getAzureKey(): Promise<string> {
     if (!azurePubKey) azurePubKey = await fetchAzureKey();
     return azurePubKey;
+}
+
+export function getUniquePlayerHash(player: alt.Player, discord: string): string {
+    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialId}`));
 }

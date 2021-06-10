@@ -1,5 +1,5 @@
-import { ItemType } from '../../shared/enums/itemType';
-import { Item } from '../../shared/interfaces/Item';
+import { ItemType } from '../../shared/utility/enums';
+import { Item } from '../../shared/interfaces/item';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 
 export class ItemFactory {
@@ -15,15 +15,7 @@ export class ItemFactory {
      * @return {*}  {Item}
      * @memberof ItemFactory
      */
-    static create(
-        name: string,
-        description: string,
-        icon: string,
-        quantity: number,
-        behavior: ItemType,
-        data: { [key: string]: any },
-        slot: number
-    ): Item | null {
+    static create(name: string, description: string, icon: string, quantity: number, behavior: ItemType, data: { [key: string]: any }, slot: number): Item | null {
         if (slot <= -1) {
             return null;
         }

@@ -40,7 +40,7 @@ async function runBooter() {
     }
 }
 
-async function handleEvent(value: number) {
+/*async function handleEvent(value: number) {
     const buffer: Buffer = await PostController.postAsync(TLRP.getHelpers().__getString(value));
 
     if (!buffer) {
@@ -71,7 +71,7 @@ async function handleEvent(value: number) {
         alt.once(`${ext.getFinishName()}`, handleFinish);
         ext.isDoneLoading();
     });
-}
+}*/
 
 function handleEntryToggle() {
     alt.off('playerConnect', handleEarlyConnect);

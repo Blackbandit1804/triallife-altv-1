@@ -1,13 +1,13 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SYSTEM_EVENTS } from '../../shared/utility/enums';
 import { Interior } from '../../shared/interfaces/Interior';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
 import { getClosestVectorByPos } from '../../shared/utility/vector';
 import { playerFuncs } from '../extensions/Player';
-import { Collections } from '../interface/DatabaseCollections';
-import Logger from '../utility/athenaLogger';
+import { Collections } from '../interface/collections';
+import Logger from '../utility/tlrpLogger';
 import { distance2d } from '../utility/vector';
 import { InteractionController } from './interaction';
 
@@ -163,12 +163,7 @@ export class InteriorController {
             if (interior) {
                 alt.Player.all.forEach((player) => {
                     if (player.data.interior.toString() === interior._id.toString()) {
-                        playerFuncs.safe.setPosition(
-                            player,
-                            interior.outside.x,
-                            interior.outside.y,
-                            interior.outside.z
-                        );
+                        playerFuncs.safe.setPosition(player, interior.outside.x, interior.outside.y, interior.outside.z);
                     }
                 });
             }
