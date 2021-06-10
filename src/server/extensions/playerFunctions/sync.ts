@@ -1,38 +1,25 @@
 import * as alt from 'alt-server';
-import { View_Events_Creator } from '../../../shared/enums/views';
-import { CurrencyTypes } from '../../../shared/enums/currency';
+import { ViewEventsCreator, EconomyTypes, SYSTEM_EVENTS } from '../../../shared/utility/enums';
 import { World } from '../../systems/world';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
 import emit from './emit';
-import { DEFAULT_CONFIG } from '../../athena/main';
+import { DEFAULT_CONFIG } from '../../configs/settings';
 import { playerFuncs } from '../player';
 import save from './save';
 
-/**
- * Synchronize currency data like bank, cash, etc.
- * @memberof SyncPrototype
- */
 function currencyData(p: alt.Player): void {
-    const keys: (keyof typeof CurrencyTypes)[] = <(keyof typeof CurrencyTypes)[]>Object.keys(CurrencyTypes);
+    const keys: (keyof typeof EconomyTypes)[] = <(keyof typeof EconomyTypes)[]>Object.keys(EconomyTypes);
     for (const key of keys) {
-        const currencyName: string = CurrencyTypes[key];
+        const currencyName: string = EconomyTypes[key];
         emit.meta(p, currencyName, p.data[currencyName]);
     }
 }
-/**
- * Synchronize player appearance.
- * @memberof SyncPrototype
- */
-function appearance(p: alt.Player): void {
-    if (p.data.appearance.sex === 0) {
-        p.model = 'mp_f_freemode_01';
-    } else {
-        p.model = 'mp_m_freemode_01';
-    }
 
+function design(p: alt.Player): void {
+    if (p.data.design.sex === 0) p.model = 'mp_f_freemode_01';
+    else p.model = 'mp_m_freemode_01';
     p.setSyncedMeta('Name', p.data.name);
-    emit.meta(p, 'appearance', p.data.appearance);
-    alt.emitClient(p, View_Events_Creator.Sync, p.data.appearance);
+    emit.meta(p, 'appearance', p.data.design);
+    alt.emitClient(p, ViewEventsCreator.Sync, p.data.design);
 }
 
 function inventory(p: alt.Player): void {
@@ -42,42 +29,22 @@ function inventory(p: alt.Player): void {
             p.data.inventory[i] = [];
         }
     }
-
-    if (!p.data.toolbar) {
-        p.data.toolbar = [];
-    }
-
-    if (!p.data.equipment) {
-        p.data.equipment = [];
-    }
-
+    if (!p.data.toolbar) p.data.toolbar = [];
+    if (!p.data.equipment) p.data.equipment = [];
     emit.meta(p, 'inventory', p.data.inventory);
     emit.meta(p, 'equipment', p.data.equipment);
     emit.meta(p, 'toolbar', p.data.toolbar);
 }
 
-/**
- * Updates synced meta for the current player.
- * Basically updates data that may not be fully accessible everywhere.
- * @memberof SyncPrototype
- */
 function syncedMeta(p: alt.Player): void {
-    p.setSyncedMeta('Ping', p.ping);
-    p.setSyncedMeta('Position', p.pos);
+    p.setSyncedMeta('ping', p.ping);
+    p.setSyncedMeta('position', p.pos);
 }
 
-/**
- * Update the player's time to match server time.
- * @memberof SyncPrototype
- */
 function time(p: alt.Player): void {
     alt.emitClient(p, SYSTEM_EVENTS.WORLD_UPDATE_TIME, World.hour, World.minute);
 }
 
-/**
- * Update the player's weather to match server weather based on grid space.
- * @memberof SyncPrototype
- */
 function weather(p: alt.Player): void {
     p.gridSpace = World.getGridSpace(p);
     p.currentWeather = World.getWeatherByGrid(p.gridSpace);
@@ -86,32 +53,27 @@ function weather(p: alt.Player): void {
 }
 
 function playTime(p: alt.Player): void {
-    if (!p.data.hours) {
-        p.data.hours = 0;
-    }
-
+    if (!p.data.hours) p.data.hours = 0;
     p.data.hours += 0.0166666666666667;
     save.field(p, 'hours', p.data.hours);
 }
 
 function food(p: alt.Player): void {
-    if (p.data.isUnconscious && p.data.food <= 0) {
-        p.data.food = 100;
-        emit.meta(p, 'food', p.data.food);
+    if (p.data.isUnconscious && p.data.hunger >= 100) {
+        p.data.hunger = 0;
+        emit.meta(p, 'hunger', p.data.hunger);
         return;
     }
-
-    playerFuncs.safe.addFood(p, -DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
+    playerFuncs.safe.addFood(p, DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
 }
 
 function water(p: alt.Player): void {
-    if (p.data.isUnconscious && p.data.water <= 0) {
-        p.data.water = 100;
-        emit.meta(p, 'water', p.data.water);
+    if (p.data.isUnconscious && p.data.thirst >= 100) {
+        p.data.thirst = 0;
+        emit.meta(p, 'thirst', p.data.thirst);
         return;
     }
-
-    playerFuncs.safe.addWater(p, -DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
+    playerFuncs.safe.addWater(p, DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
 }
 
 function vehicles(p: alt.Player): void {
@@ -119,12 +81,11 @@ function vehicles(p: alt.Player): void {
         emit.meta(p, 'vehicles', []);
         return;
     }
-
     emit.meta(p, 'vehicles', p.data.vehicles);
 }
 
 export default {
-    appearance,
+    design,
     currencyData,
     food,
     inventory,
