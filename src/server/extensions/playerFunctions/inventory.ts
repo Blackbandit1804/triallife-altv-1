@@ -1,11 +1,9 @@
 import * as alt from 'alt-server';
-import { EquipmentType } from '../../../shared/enums/equipment';
-import { InventoryType } from '../../../shared/enums/inventoryTypes';
-import { ItemType } from '../../../shared/enums/itemType';
-import { Item, ItemSpecial } from '../../../shared/interfaces/Item';
-import { deepCloneObject } from '../../../shared/utility/deepCopy';
+import { EquipmentTypes, InventoryTypes, ItemTypes } from '../../../shared/utility/enums';
+import { Item, ItemSpecial } from '../../../shared/interfaces/item';
+import { deepCloneObject } from '../../../shared/utility/deep-copy';
 import { isFlagEnabled } from '../../../shared/utility/usefull';
-import { CategoryData } from '../../interface/CategoryData';
+import { CategoryData } from '../../interface/category-data';
 import { stripCategory } from '../../utility/category';
 import emit from './emit';
 import save from './save';
@@ -87,7 +85,7 @@ function hasWeapon(player: alt.Player): Item | null {
                 continue;
             }
 
-            if (!isFlagEnabled(inventoryItem.behavior, ItemType.IS_WEAPON)) {
+            if (!isFlagEnabled(inventoryItem.behavior, ItemTypes.IS_WEAPON)) {
                 continue;
             }
 
@@ -109,7 +107,7 @@ function hasWeapon(player: alt.Player): Item | null {
             continue;
         }
 
-        if (!isFlagEnabled(item.behavior, ItemType.IS_WEAPON)) {
+        if (!isFlagEnabled(item.behavior, ItemTypes.IS_WEAPON)) {
             continue;
         }
 
@@ -278,7 +276,7 @@ function isInEquipment(p: alt.Player, item: Partial<Item>): { index: number } | 
  * @return {*}  {boolean}
  * @memberof InventoryPrototype
  */
-function isEquipmentSlotFree(p: alt.Player, slot: EquipmentType): boolean {
+function isEquipmentSlotFree(p: alt.Player, slot: EquipmentTypes): boolean {
     if (slot >= 11) {
         return false;
     }
@@ -388,7 +386,7 @@ function inventoryRemove(p: alt.Player, slot: number, tab: number): boolean {
  * @return {*}  {boolean}
  * @memberof InventoryPrototype
  */
-function equipmentRemove(p: alt.Player, slot: EquipmentType): boolean {
+function equipmentRemove(p: alt.Player, slot: EquipmentTypes): boolean {
     if (slot >= 11) {
         return false;
     }
@@ -408,7 +406,7 @@ function equipmentRemove(p: alt.Player, slot: EquipmentType): boolean {
  * @param {EquipmentType} slot Is the 'item.slot' the item will go to.
  * @return {*}
  */
-function isEquipmentSlotValid(item: Item, slot: EquipmentType) {
+function isEquipmentSlotValid(item: Item, slot: EquipmentTypes) {
     if (slot >= 11) {
         return false;
     }
@@ -431,7 +429,7 @@ function isEquipmentSlotValid(item: Item, slot: EquipmentType) {
  * @return {*}  {boolean}
  * @memberof InventoryPrototype
  */
-function equipmentAdd(p: alt.Player, item: Item, slot: EquipmentType): boolean {
+function equipmentAdd(p: alt.Player, item: Item, slot: EquipmentTypes): boolean {
     if (slot >= 11) {
         return false;
     }
@@ -734,8 +732,8 @@ function handleSwapOrStack(player: alt.Player, selectedSlot: string, endSlot: st
     const isSelectInventory = selectedSlotName.includes('inventory');
     const isEndInventory = endSlotName.includes('inventory');
 
-    const isSelectEquipment = isFlagEnabled(selectItem.item.behavior, ItemType.IS_EQUIPMENT);
-    const isEndEquipment = isFlagEnabled(endItem.item.behavior, ItemType.IS_EQUIPMENT);
+    const isSelectEquipment = isFlagEnabled(selectItem.item.behavior, ItemTypes.IS_EQUIPMENT);
+    const isEndEquipment = isFlagEnabled(endItem.item.behavior, ItemTypes.IS_EQUIPMENT);
 
     // Check if equipment types are compatible...
     if (isSelectEquipment || isEndEquipment) {
@@ -775,8 +773,8 @@ function handleSwapOrStack(player: alt.Player, selectedSlot: string, endSlot: st
         endArray[endIndex].slot = newSelectSlot;
     } else {
         // Handle Stacking
-        const isSelectStackable = isFlagEnabled(selectItem.item.behavior, ItemType.CAN_STACK);
-        const isEndStackable = isFlagEnabled(endItem.item.behavior, ItemType.CAN_STACK);
+        const isSelectStackable = isFlagEnabled(selectItem.item.behavior, ItemTypes.CAN_STACK);
+        const isEndStackable = isFlagEnabled(endItem.item.behavior, ItemTypes.CAN_STACK);
 
         // Handle Stacking
         if (!isSelectStackable || !isEndStackable) {
@@ -833,22 +831,22 @@ function allItemRulesValid(player: alt.Player, item: Item, endSlot: CategoryData
 
     if (endSlot) {
         // Not droppable but trying to drop on ground.
-        if (!isFlagEnabled(item.behavior, ItemType.CAN_DROP) && endSlot.name === InventoryType.GROUND) {
+        if (!isFlagEnabled(item.behavior, ItemTypes.CAN_DROP) && endSlot.name === InventoryTypes.GROUND) {
             return false;
         }
 
         // Not equipment but going into equipment.
-        if (!isFlagEnabled(item.behavior, ItemType.IS_EQUIPMENT) && endSlot.name === InventoryType.EQUIPMENT) {
+        if (!isFlagEnabled(item.behavior, ItemTypes.IS_EQUIPMENT) && endSlot.name === InventoryTypes.EQUIPMENT) {
             return false;
         }
 
         // Not a toolbar item but going into toolbar.
-        if (!isFlagEnabled(item.behavior, ItemType.IS_TOOLBAR) && endSlot.name === InventoryType.TOOLBAR) {
+        if (!isFlagEnabled(item.behavior, ItemTypes.IS_TOOLBAR) && endSlot.name === InventoryTypes.TOOLBAR) {
             return false;
         }
 
         // Is equipment and is going into an equipment slot.
-        if (isFlagEnabled(item.behavior, ItemType.IS_EQUIPMENT) && endSlot.name === InventoryType.EQUIPMENT) {
+        if (isFlagEnabled(item.behavior, ItemTypes.IS_EQUIPMENT) && endSlot.name === InventoryTypes.EQUIPMENT) {
             if (!isEquipmentSlotValid(item, endSlotIndex)) {
                 return false;
             }
@@ -930,7 +928,7 @@ function stackInventoryItem(player: alt.Player, item: Item): boolean {
  */
 function getAllWeapons(player: alt.Player): Array<Item> {
     const weapons = getAllItems(player).filter((item) => {
-        return isFlagEnabled(item.behavior, ItemType.IS_WEAPON);
+        return isFlagEnabled(item.behavior, ItemTypes.IS_WEAPON);
     });
 
     if (weapons.length <= 0) {
@@ -949,7 +947,7 @@ function getAllWeapons(player: alt.Player): Array<Item> {
  */
 function removeAllWeapons(player: alt.Player): Array<Item> {
     const weapons = getAllItems(player).filter((item) => {
-        return isFlagEnabled(item.behavior, ItemType.IS_WEAPON);
+        return isFlagEnabled(item.behavior, ItemTypes.IS_WEAPON);
     });
 
     if (weapons.length <= 0) {
@@ -1011,11 +1009,3 @@ export default {
 import('../../views/inventory').catch((err) => {
     throw err;
 });
-
-if (process.env.TEST) {
-    import('../../zTests/inventory')
-        .catch((err) => {
-            throw err;
-        })
-        .then((res) => res.default());
-}
