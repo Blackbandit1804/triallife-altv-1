@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { WASM, TlrpFunctions } from './wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
     if (vector1 === undefined || vector2 === undefined) {
@@ -43,12 +43,7 @@ export function isBetweenVectors(pos, vector1, vector2): boolean {
     return validX && validY ? true : false;
 }
 
-export function getClosestEntity<T>(
-    playerPosition: alt.Vector3,
-    rot: alt.Vector3,
-    entities: Array<{ pos: alt.Vector3; valid?: boolean }>,
-    distance: number
-): T | null {
+export function getClosestEntity<T>(playerPosition: alt.Vector3, rot: alt.Vector3, entities: Array<{ pos: alt.Vector3; valid?: boolean }>, distance: number): T | null {
     const fwdVector = getForwardVector(rot);
     const position = {
         x: wasm.TlrpMath.add(playerPosition.x, wasm.TlrpMath.multiply(fwdVector.x, distance)),

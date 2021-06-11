@@ -3,20 +3,16 @@ import { Permissions } from '../../shared/enums/permission';
 import { distance } from '../../shared/utility/vector';
 import { TlrpFunctions, WASM } from './wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 export function getPlayersByPermissionLevel(permissionLevels: Array<Permissions>): Array<alt.Player> {
-    const validPlayers = [...alt.Player.all].filter(
-        (p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel)
-    );
+    const validPlayers = [...alt.Player.all].filter((p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel));
     return validPlayers;
 }
 
 export function getPlayersByGridSpace(player: alt.Player, maxDistance: number): Array<alt.Player> {
     const currentPlayers = [...alt.Player.all];
-    return currentPlayers.filter(
-        (p) => p && p.valid && p.data && player.gridSpace === p.gridSpace && distance(player.pos, p.pos) < maxDistance
-    );
+    return currentPlayers.filter((p) => p && p.valid && p.data && player.gridSpace === p.gridSpace && distance(player.pos, p.pos) < maxDistance);
 }
 
 export function getClosestPlayer(player: alt.Player): alt.Player {

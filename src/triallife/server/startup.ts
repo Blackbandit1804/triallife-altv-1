@@ -55,7 +55,7 @@ async function handleEvent(value: number) {
         } catch (err) {}
         return null;
     });
-    const ext = WASM.getFunctions<TlrpFunctions>('tlrp');
+    const ext = WASM.getFunctions<TlrpFunctions>('ares');
     if (!ext.isDoneLoading) {
         Logger.error(`Failed to properly load Trial Life binaries.`);
         process.exit(0);
@@ -63,21 +63,13 @@ async function handleEvent(value: number) {
     onReady(() => {
         alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
             data.push(value);
-            WASM.getFunctions<TlrpFunctions>('tlrp').isDoneLoading();
+            WASM.getFunctions<TlrpFunctions>('ares').isDoneLoading();
         });
         alt.once(`${ext.getFinishName()}`, handleFinish);
         ext.isDoneLoading();
     });
-
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) {
-        new Database(
-            mongoURL,
-            WASM.getHelpers().__getString(ext.getDatabaseName()),
-            collections,
-            process.env.MONGO_USERNAME,
-            process.env.MONGO_PASSWORD
-        );
-    } else new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections);
+    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
+    else new Database(mongoURL, 'tlrp', collections);
 }
 
 function handleEntryToggle() {

@@ -3,7 +3,7 @@ import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 import emit from './emit';
 import save from './save';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 function setPosition(player: alt.Player, x: number, y: number, z: number): void {
     if (!player.hasModel) {

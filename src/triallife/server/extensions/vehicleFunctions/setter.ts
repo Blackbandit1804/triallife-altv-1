@@ -8,7 +8,7 @@ import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../vehicle';
 import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 function lock(v: alt.Vehicle, player: alt.Player, lockStatus: LockState): boolean {
     if (!isFlagEnabled(v.behavior, Behavior.NO_KEY_TO_LOCK)) {

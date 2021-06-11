@@ -4,7 +4,7 @@ import save from './save';
 import emit from './emit';
 import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 function add(player: alt.Player, type: EconomyType, amount: number): boolean {
     if (wasm.TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {

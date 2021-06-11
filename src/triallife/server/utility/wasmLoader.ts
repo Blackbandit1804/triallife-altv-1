@@ -1,7 +1,7 @@
 import alt from 'alt-server';
 import loader from '@assemblyscript/loader';
 
-const TlrpFunctionsName = 'tlrp;';
+const TlrpFunctionsName = 'ares;';
 const injections: any = {};
 const helpers: Assembly = {};
 let memory: any = [];
