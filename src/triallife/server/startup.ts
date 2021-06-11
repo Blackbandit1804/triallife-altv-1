@@ -97,7 +97,7 @@ function handleEarlyConnect(player: alt.Player): void {
 try {
     const result = fs.readFileSync('package.json').toString();
     const data = JSON.parse(result);
-    process.env.ATHENA_VERSION = data.version;
+    process.env.TLRP_VERSION = data.version;
     runBooter();
 } catch (err) {
     logger.error(`[3L:RP] Could not fetch version from package.json. Is there a package.json?`);
