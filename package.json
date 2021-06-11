@@ -15,16 +15,7 @@
     },
     "scripts": {
         "build": "node ./utility/copy-helper.mjs",
-        "core-reload": "node ./utility/manager.mjs",
-        "clean": "node ./utility/cleaner.mjs",
-        "update": "altv-pkg d release && git pull origin master && npm install",
-        "windows": "npm run build && altv-server.exe",
-        "linux": "npm run build && ./start.sh",
-        "build-watching": "node ./utility/copy-helper.mjs -- WATCHING",
-        "watch-windows": "tsc-watch --onSuccess \"npm run watch-handle-windows\"",
-        "watch-linux": "tsc-watch --onSuccess \"npm run watch-handle-linux\"",
-        "watch-handle-windows": "npm run build-watching && npm run core-reload",
-        "watch-handle-linux": "npm run build-watching && npm run core-reload"
+        "clean": "node ./utility/cleaner.mjs"
     },
     "devDependencies": {
         "@altv/types-client": "^1.6.1",

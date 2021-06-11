@@ -11,6 +11,7 @@ import { Collections } from './interfaces/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
+import { isConsoleOpen } from 'alt-client';
 env.config();
 
 setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800/auth/redirect');
@@ -36,6 +37,20 @@ async function handleFinish() {
 }
 
 async function runBooter() {
+    getVersionIdentifier().then((version) => {
+        alt.log(`athena version: ${version}`);
+        if (!version) {
+            console.error(new Error(`Failed to contact Ares endpoint.`));
+            process.exit(0);
+        }
+        logger.info(`Version: ${process.env.TLRP_VERSION}`);
+        if (version !== process.env.TLRP_VERSION) {
+            logger.warning(`--- Version Warning ---`);
+            logger.warning(`Your server may be out of date. Please update your server.`);
+            logger.warning(`Please pull down the latest changes from the official repository.`);
+            logger.warning(`Try merging from the master branch or from the upstream branch of your choice.`);
+        }
+    });
     const buffer: any = fs.readFileSync(fPath);
     const starterFns = await WASM.load<InjectedStarter>(buffer);
     alt.once(starterFns.getEvent(), handleEvent);
