@@ -20,7 +20,7 @@ This is a framework and not a out-of-the-box full-featured script. This framewor
 -   Character Editor
 -   Character Selection
 -   Character Info Support
--   Character Appearance Synchronization
+-   Character Design Synchronization
 -   Discord System
     -   Login / Authentication
     -   Discord Role / Bot Integration

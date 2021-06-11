@@ -1,0 +1,30 @@
+import * as alt from 'alt-server';
+import { Character, CharacterDefaults, CharacterInfo } from '../../../shared/interfaces/Character';
+import { Database, getDatabase } from 'simplymongo';
+import { Design } from '../../../shared/interfaces/design';
+import select from './select';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
+import { Collections } from '../../interfaces/collections';
+
+const db: Database = getDatabase();
+
+async function character(
+    p: alt.Player,
+    design: Partial<Design>,
+    info: Partial<CharacterInfo>,
+    name: string
+): Promise<void> {
+    const newDocument: Partial<Character> = { ...CharacterDefaults };
+    newDocument.design = design;
+    newDocument.info = info;
+    newDocument.account_id = p.accountData._id;
+    newDocument.name = name;
+
+    const document = await db.insertData(newDocument, Collections.Characters, true);
+    document._id = document._id.toString();
+    select.character(p, document);
+}
+
+export default {
+    character
+};
