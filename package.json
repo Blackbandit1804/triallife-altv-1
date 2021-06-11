@@ -17,7 +17,7 @@
         "build": "node ./utility/copy-helper.mjs",
         "core-reload": "node ./utility/manager.mjs",
         "clean": "node ./utility/cleaner.mjs",
-        "update": "altv-pkg d release && git pull origin master && npm install && git submodule update --force --init --recursive --remote",
+        "update": "altv-pkg d release && git pull origin master && npm install",
         "windows": "npm run build && altv-server.exe",
         "linux": "npm run build && ./start.sh",
         "build-watching": "node ./utility/copy-helper.mjs -- WATCHING",

@@ -11,7 +11,6 @@ import { Collections } from './interfaces/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
-
 env.config();
 
 setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'https://ares.stuyk.com');
