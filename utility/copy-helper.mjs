@@ -14,7 +14,7 @@ let copiedFiles = 0;
 let compilationPromise;
 
 async function buildPipeline() {
-    console.log(`[Athena] Starting Compilation`);
+    console.log(`[3L:RP] Starting Compilation`);
 
     if (!process.argv.includes('WATCHING')) {
         // Remove old resource files.
@@ -31,7 +31,7 @@ async function buildPipeline() {
             });
         }
 
-        console.log(`[Athena] Compiling Typescript`);
+        console.log(`[3L:RP] Compiling Typescript`);
         compilationPromise = exec('tsc', { cwd: MainPath }).catch((err) => {
             if (err.stdout) {
                 console.log('\r\n');
@@ -50,7 +50,7 @@ async function buildPipeline() {
     }
 
     // Handle Source Copy
-    console.log(`[Athena] Copy Compiled Content`);
+    console.log(`[3L:RP] Copy Compiled Content`);
     for (let i = 0; i < SourceFiles.length; i++) {
         const oldPath = SourceFiles[i];
         const newPath = SourceFiles[i].replace('src', 'resources');
@@ -65,9 +65,9 @@ async function buildPipeline() {
     }
 
     // Copy Addon-Resources
-    console.log(`[Athena] Copying Addon Resources`);
+    console.log(`[3L:RP] Copying Addon Resources`);
     fs.copySync(path.join(MainPath, 'addon-resources'), path.join(MainPath, 'resources'), { recursive: true });
-    console.log(`[Athena] Copied ${copiedFiles} Extra Files for Athena`);
+    console.log(`[3L:RP] Copied ${copiedFiles} Extra Files for Athena`);
 
     if (compilationPromise) {
         await compilationPromise;
@@ -86,9 +86,9 @@ async function buildPipeline() {
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
-   
-    console.log(`[Athena] Build Time: ${Date.now() - StartTime}ms`);
-    console.log(`[Athena] Attempting to Boot Server...`);
+
+    console.log(`[3L:RP] Build Time: ${Date.now() - StartTime}ms`);
+    console.log(`[3L:RP] Attempting to Boot Server...`);
 }
 
 buildPipeline();

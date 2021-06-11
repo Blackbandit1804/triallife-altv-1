@@ -5,10 +5,10 @@ import { getAzureEndpoint } from '../utility/encryption';
 export async function getEndpointHealth(): Promise<boolean> {
     const result = await axios.get(`${getAzureEndpoint()}/v1/health`).catch((err) => null);
     if (!result || !result.data) {
-        alt.log(`[Athena] Connecting to Ares`);
+        alt.log(`[3L:RP] Connecting to Ares`);
         return await getEndpointHealth();
     }
-    alt.log(`[Athena] Connected to Ares Successfully`);
+    alt.log(`[3L:RP] Connected to Ares Successfully`);
     return true;
 }
 

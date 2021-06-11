@@ -37,11 +37,11 @@ export class PostController {
     static validateResponse(response: any): boolean {
         if (!response || !response.data || !response.status) {
             if (response.message && response.message.includes('expired')) {
-                alt.logError(`[Athena] ${response.message}`);
+                alt.logError(`[3L:RP] ${response.message}`);
                 process.exit(0);
             }
             if (response.message) {
-                alt.logError(`[Athena] ${response.message}`);
+                alt.logError(`[3L:RP] ${response.message}`);
                 process.exit(0);
             }
             return false;

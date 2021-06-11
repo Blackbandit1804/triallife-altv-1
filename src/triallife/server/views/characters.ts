@@ -60,7 +60,7 @@ export async function handleSelectCharacter(player: Player, id: string): Promise
     }
 
     if (!player.currentCharacters) {
-        alt.logWarning(`[Athena] Failed to get characters for a player. Sending them to character select again.`);
+        alt.logWarning(`[3L:RP] Failed to get characters for a player. Sending them to character select again.`);
         goToCharacterSelect(player);
         return;
     }

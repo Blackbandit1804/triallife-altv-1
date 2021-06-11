@@ -75,7 +75,7 @@ export class InteractionController {
                 });
             });
         });
-        alt.log(`[Athena] Generated ${count} Interaction Points`);
+        alt.log(`[3L:RP] Generated ${count} Interaction Points`);
     }
 
     static addInteraction(

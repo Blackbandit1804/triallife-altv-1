@@ -31,9 +31,9 @@ export class LoginController {
             }
         }
         player.setMeta('Athena:Discord:Info', data);
-        if (data.username) alt.log(`[Athena] (${player.id}) ${data.username} has authenticated.`);
+        if (data.username) alt.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);
         if (account && account.discord)
-            alt.log(`[Athena] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
+            alt.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
         const currentPlayers = [...alt.Player.all];
         const index = currentPlayers.findIndex((p) => p.discord && p.discord.id === data.id && p.id !== player.id);
         if (index >= 1) {
