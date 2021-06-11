@@ -55,11 +55,7 @@ async function buildPipeline() {
         const oldPath = SourceFiles[i];
         const newPath = SourceFiles[i].replace('src', 'resources');
         const dirName = path.dirname(newPath).normalize();
-
-        if (!fs.existsSync(dirName)) {
-            fs.mkdirSync(dirName, { recursive: true });
-        }
-
+        if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true });
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
@@ -67,22 +63,14 @@ async function buildPipeline() {
     // Copy Addon-Resources
     console.log(`[3L:RP] Copying Addon Resources`);
     fs.copySync(path.join(MainPath, 'addon-resources'), path.join(MainPath, 'resources'), { recursive: true });
-    console.log(`[3L:RP] Copied ${copiedFiles} Extra Files for Athena`);
-
-    if (compilationPromise) {
-        await compilationPromise;
-    }
-
-    const CompiledFiles = new glob.GlobSync('./athena-cache/**/*.!(ts)').found;
+    console.log(`[3L:RP] Copied ${copiedFiles} Extra Files for Trial Life`);
+    if (compilationPromise) await compilationPromise;
+    const CompiledFiles = new glob.GlobSync('./tlrp-cache/**/*.!(ts)').found;
     for (let i = 0; i < CompiledFiles.length; i++) {
         const oldPath = CompiledFiles[i];
-        const newPath = CompiledFiles[i].replace('athena-cache', 'resources');
+        const newPath = CompiledFiles[i].replace('tlrp-cache', 'resources');
         const dirName = path.dirname(newPath).normalize();
-
-        if (!fs.existsSync(dirName)) {
-            fs.mkdirSync(dirName, { recursive: true });
-        }
-
+        if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true });
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
