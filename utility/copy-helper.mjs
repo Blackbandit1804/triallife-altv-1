@@ -74,7 +74,6 @@ async function buildPipeline() {
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
-
     console.log(`[3L:RP] Build Time: ${Date.now() - StartTime}ms`);
     console.log(`[3L:RP] Attempting to Boot Server...`);
 }
