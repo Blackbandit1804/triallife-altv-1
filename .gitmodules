@@ -1,0 +1,3 @@
+[submodule "addon-resources/discord-login"]
+	path = addon-resources/discord-login
+	url = https://github.com/deathnerotv/discord-login
