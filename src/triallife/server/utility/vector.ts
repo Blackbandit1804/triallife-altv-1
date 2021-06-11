@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { WASM, TlrpFunctions } from './wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
     if (vector1 === undefined || vector2 === undefined) {

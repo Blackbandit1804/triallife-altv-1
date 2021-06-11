@@ -5,7 +5,7 @@ import axios from 'axios';
 import { TlrpFunctions, WASM } from './wasmLoader';
 
 const elliptic = new ecc.ec('curve25519');
-let wasm = WASM.getFunctions<TlrpFunctions>('ares');
+let wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 let azureEndpoint: string;
 let privateKey: string;
@@ -34,7 +34,7 @@ export function sha256(data: string): string {
 }
 
 export function sha256Random(data: string): string {
-    if (!wasm) wasm = WASM.getFunctions<TlrpFunctions>('ares');
+    if (!wasm) wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
     const randomValue = wasm.TlrpMath.random(0, Number.MAX_SAFE_INTEGER);
     return sha256(`${data} + ${randomValue}`);
 }
