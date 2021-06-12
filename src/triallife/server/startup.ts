@@ -33,29 +33,39 @@ async function runBooter() {
 
 async function LoadFiles(): Promise<void> {
     const folders: string[] = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), '/server/'));
-    const filterFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
-    for (let i = 0; i < filterFolders.length; i++) {
-        const folder = filterFolders[i];
-        const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
-        const filterFiles = files.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
-        for (let f = 0; f < filterFiles.length; f++) {
-            const newPath = `./${folder}/${filterFiles[f]}`;
-            import(newPath)
-                .catch((err) => {
-                    alt.log(err);
-                    alt.log(`\r\n --> File that couldn't load: ${newPath}`);
-                    alt.log('\r\n\x1b[31mKilling process; failed to load a file. \r\n');
-                    process.exit(1);
-                })
-                .then((loadedResult) => {
-                    if (!loadedResult) {
-                        alt.log(`Failed to load: ${newPath}`);
-                        alt.log('Killing process; failed to load a file.');
-                        process.exit(1);
-                    }
-                });
+    const firstFilteredFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
+    const filteredFiles: string[] = [];
+    for (let i = 0; i < firstFilteredFolders.length; i++) {
+        const folder1 = firstFilteredFolders[i];
+        const secondFilteredFolders: string[] = fs
+            .readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`))
+            .filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
+        for (let j = 0; j < secondFilteredFolders.length; j++) {
+            const folder2 = secondFilteredFolders[j];
+            const files2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}/${folder2}`));
+            const filtered2 = files2.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+            filtered2.forEach((file) => filteredFiles.push(`./${folder1}/${folder2}/${file}`));
         }
+        const files1 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`));
+        const filtered1 = files1.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+        filtered1.forEach((file) => filteredFiles.push(`./${folder1}/${file}`));
     }
+    filteredFiles.forEach((path) => {
+        import(path)
+            .catch((err) => {
+                alt.log(err);
+                alt.log(`\r\n --> File that couldn't load: ${path}`);
+                alt.log('\r\n\x1b[31mKilling process; failed to load a file. \r\n');
+                process.exit(1);
+            })
+            .then((loadedResult) => {
+                if (!loadedResult) {
+                    alt.log(`Failed to load: ${path}`);
+                    alt.log('Killing process; failed to load a file.');
+                    process.exit(1);
+                }
+            });
+    });
 }
 
 function handleEntryToggle(): void {

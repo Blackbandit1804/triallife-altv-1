@@ -14,11 +14,6 @@ alt.onClient(ViewCreator.Done, handleCreatorDone);
 alt.onClient(ViewCreator.AwaitModel, handleAwaitModel);
 alt.onClient(ViewCreator.AwaitName, handleAwaitNameValid);
 
-/**
- * Called when a player pushes up Character Creator data.
- * @param  {alt.Player} player
- * @param  {Design} design
- */
 function handleCreatorDone(player: alt.Player, design: Design, info: CharacterInfo, name: string): void {
     if (!player.pendingCharacterEdit) {
         alt.log(`${player.name} | Attempted to edit a character when no edit was requested.`);
@@ -44,7 +39,7 @@ function handleCreatorDone(player: alt.Player, design: Design, info: CharacterIn
 
     if (player.pendingNewCharacter) {
         player.pendingNewCharacter = false;
-        playerFuncs.createNew.character(player, design, info, name);
+        playerFuncs.create.character(player, design, info, name);
         return;
     }
 
