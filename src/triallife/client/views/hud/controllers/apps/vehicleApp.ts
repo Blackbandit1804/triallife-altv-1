@@ -1,8 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { BaseHUD } from '../../hud';
-import { SYSTEM_EVENTS } from '../../../../../shared/enums/system';
-import { ChatController } from '../chatController';
+import { SystemEvent } from '../../../../../shared/enums/system';
 
 let vehicles = [];
 
@@ -19,7 +18,7 @@ export class VehicleAppController {
             return;
         }
 
-        alt.emitServer(SYSTEM_EVENTS.VEHICLES_VIEW_SPAWN, index);
+        alt.emitServer(SystemEvent.VEHICLES_VIEW_SPAWN, index);
     }
 
     static populate() {
@@ -43,14 +42,10 @@ export class VehicleAppController {
         blip['routeColor'] = new alt.RGBA(255, 0, 0, 255);
         blip.route = true;
 
-        ChatController.appendMessage(`Vehicle Located. Blip will be active for {00FFFF}30s`);
-
-        alt.setTimeout(() => {
-            blip.destroy();
-        }, 30000);
+        alt.setTimeout(() => blip.destroy(), 30000);
     }
 
     static despawn() {
-        alt.emitServer(SYSTEM_EVENTS.VEHICLES_VIEW_DESPAWN);
+        alt.emitServer(SystemEvent.VEHICLES_VIEW_DESPAWN);
     }
 }

@@ -1,9 +1,7 @@
 import * as alt from 'alt-server';
-import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
+import * as TlrpMath from '../../utility/math';
 import emit from './emit';
 import save from './save';
-
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 function setPosition(player: alt.Player, x: number, y: number, z: number): void {
     if (!player.hasModel) {
@@ -21,12 +19,12 @@ function addArmour(p: alt.Player, value: number, exactValue: boolean = false): v
         p.armour = value;
         return;
     }
-    if (wasm.TlrpMath.add(p.armour, value) > 100) {
+    if (TlrpMath.add(p.armour, value) > 100) {
         p.acArmour = 100;
         p.armour = 100;
         return;
     }
-    p.acArmour = wasm.TlrpMath.add(p.armour, value);
+    p.acArmour = TlrpMath.add(p.armour, value);
     p.armour = p.acArmour;
 }
 
@@ -53,8 +51,8 @@ function adjustAttribute(player: alt.Player, value: number, name: string, exact:
     if (notExist) player.data[name] = name === 'blood' ? 7500 : 100;
     if (exact) player.data[name] = value;
     else player.data[name] += value;
-    if (wasm.TlrpMath.isLesser(player.data[name], minValue)) player.data[name] = minValue;
-    if (wasm.TlrpMath.isGreater(player.data[name], maxValue)) player.data[name] = maxValue;
+    if (TlrpMath.isLesser(player.data[name], minValue)) player.data[name] = minValue;
+    if (TlrpMath.isGreater(player.data[name], maxValue)) player.data[name] = maxValue;
     emit.meta(player, name, player.data[name]);
     save.field(player, name, player.data[name]);
 }

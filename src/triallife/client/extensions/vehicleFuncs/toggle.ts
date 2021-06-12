@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { Vehicle_Door_List } from '../../../shared/enums/vehicle';
+import { DoorList } from '../../../shared/enums/vehicle';
 
 /**
  * Toggle a local vehicle's door state.
@@ -8,7 +8,7 @@ import { Vehicle_Door_List } from '../../../shared/enums/vehicle';
  * @param {number} door
  * @memberof Vehicle
  */
-function door(v: alt.Vehicle, door: Vehicle_Door_List): void {
+function door(v: alt.Vehicle, door: DoorList): void {
     if (!v.doorStates) {
         v.doorStates = {};
     }

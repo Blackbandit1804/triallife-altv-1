@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
-import { PhoneEvents } from '../../../../../shared/enums/phoneEvents';
-import { SYSTEM_EVENTS } from '../../../../../shared/enums/system';
+import { PhoneEvents } from '../../../../../shared/enums/phoneEvent';
+import { SystemEvent } from '../../../../../shared/enums/system';
 import { BaseHUD } from '../../hud';
 
-alt.on(SYSTEM_EVENTS.META_CHANGED, handleChange);
+alt.on(SystemEvent.META_CHANGED, handleChange);
 
 export class BankAppController {
     static init() {

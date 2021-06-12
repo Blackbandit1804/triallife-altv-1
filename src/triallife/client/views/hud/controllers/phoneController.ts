@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { BaseHUD } from '../hud';
-import { PhoneEventList, PhoneEvents } from '../../../../shared/enums/phoneEvents';
+import { PhoneEventList, PhoneEvents } from '../../../../shared/enums/phoneEvent';
 import { isAnyMenuOpen } from '../../../utility/menus';
 import { VehicleAppController } from './apps/vehicleApp';
 import { BankAppController } from './apps/bankApp';

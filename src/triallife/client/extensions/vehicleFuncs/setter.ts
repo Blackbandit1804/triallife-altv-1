@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { Vehicle_Door_List, Vehicle_Lock_State } from '../../../shared/enums/vehicle';
+import { DoorList, LockState } from '../../../shared/enums/vehicle';
 import { BaseHUD, HudEventNames } from '../../views/hud/hud';
 
 /**
@@ -35,7 +35,7 @@ function allDoorsClosed(v: alt.Vehicle): void {
         this.doorStates = {};
     }
 
-    for (let doorIndex in Vehicle_Door_List) {
+    for (let doorIndex in DoorList) {
         v.doorStates[doorIndex] = false;
 
         if (!native.isVehicleDoorFullyOpen(v.scriptID, parseInt(doorIndex))) {
@@ -48,11 +48,11 @@ function allDoorsClosed(v: alt.Vehicle): void {
 
 /**
  * Set the door state. True is open.
- * @param {Vehicle_Door_List} door
+ * @param {DoorList} door
  * @param {boolean} value
  * @memberof Vehicle
  */
-function doorState(v: alt.Vehicle, door: Vehicle_Door_List, value: boolean): void {
+function doorState(v: alt.Vehicle, door: DoorList, value: boolean): void {
     if (!v.doorStates) {
         v.doorStates = {};
     }
@@ -66,7 +66,7 @@ function doorState(v: alt.Vehicle, door: Vehicle_Door_List, value: boolean): voi
     native.setVehicleDoorOpen(v.scriptID, door, false, false);
 }
 
-function lockStatus(v: alt.Vehicle, status: Vehicle_Lock_State | number) {
+function lockStatus(v: alt.Vehicle, status: LockState | number) {
     v.lockStatus = status;
 }
 

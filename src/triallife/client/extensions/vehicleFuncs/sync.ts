@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { Vehicle_State } from '../../../shared/enums/vehicle';
+import { VehicleDoorState } from '../../../shared/enums/vehicle';
 
 function update(v: alt.Vehicle): void {
     // Synchronize All States for Local Data
@@ -9,16 +9,16 @@ function update(v: alt.Vehicle): void {
         v.doorStates = {};
     }
 
-    v.engineStatus = v.getStreamSyncedMeta(Vehicle_State.ENGINE);
-    v.doorStates[0] = v.getStreamSyncedMeta(Vehicle_State.DOOR_DRIVER);
-    v.doorStates[1] = v.getStreamSyncedMeta(Vehicle_State.DOOR_PASSENGER);
-    v.doorStates[2] = v.getStreamSyncedMeta(Vehicle_State.DOOR_DRIVER_REAR);
-    v.doorStates[3] = v.getStreamSyncedMeta(Vehicle_State.DOOR_PASSENGER_REAR);
-    v.doorStates[4] = v.getStreamSyncedMeta(Vehicle_State.DOOR_HOOD);
-    v.doorStates[5] = v.getStreamSyncedMeta(Vehicle_State.DOOR_TRUNK);
-    v.lockStatus = v.getStreamSyncedMeta(Vehicle_State.LOCK_STATE);
-    v.fuel = v.getStreamSyncedMeta(Vehicle_State.FUEL);
-    v.owner = v.getStreamSyncedMeta(Vehicle_State.OWNER);
+    v.engineStatus = v.getStreamSyncedMeta(VehicleDoorState.ENGINE);
+    v.doorStates[0] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_DRIVER);
+    v.doorStates[1] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_PASSENGER);
+    v.doorStates[2] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_DRIVER_REAR);
+    v.doorStates[3] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_PASSENGER_REAR);
+    v.doorStates[4] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_HOOD);
+    v.doorStates[5] = v.getStreamSyncedMeta(VehicleDoorState.DOOR_TRUNK);
+    v.lockStatus = v.getStreamSyncedMeta(VehicleDoorState.LOCK_STATE);
+    v.fuel = v.getStreamSyncedMeta(VehicleDoorState.FUEL);
+    v.owner = v.getStreamSyncedMeta(VehicleDoorState.OWNER);
 
     native.setVehicleEngineOn(v.scriptID, v.engineStatus, false, false);
 

@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../../../shared/enums/system';
+import { SystemEvent } from '../../../../shared/enums/system';
 import { Action, ActionMenu } from '../../../../shared/interfaces/Actions';
 import { handleFrontendSound } from '../../../systems/sound';
 import { BaseHUD } from '../hud';
@@ -86,4 +86,4 @@ export class ActionsController {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.SET_ACTION_MENU, ActionsController.set);
+alt.onServer(SystemEvent.SET_ACTION_MENU, ActionsController.set);

@@ -1,8 +1,8 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, showNotification);
+alt.onServer(SystemEvent.PLAYER_EMIT_NOTIFICATION, showNotification);
 
 export function showNotification(text: string): void {
     native.beginTextCommandThefeedPost('STRING');

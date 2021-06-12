@@ -1,6 +1,6 @@
-import { Appearance } from '../../shared/interfaces/Appearance';
-import { Item } from '../../shared/interfaces/Item';
-import { Vehicle } from '../../shared/interfaces/Vehicle';
+import { Design } from '../../shared/interfaces/design';
+import { Item } from '../../shared/interfaces/item';
+import { Vehicle } from '../../shared/interfaces/vehicle';
 
 export interface Meta {
     permissionLevel: number; // Used to determine the player's current permissionLevel as a player..
@@ -16,7 +16,7 @@ export interface Meta {
     water: number;
 
     // Player Info
-    appearance: Appearance;
+    design: Design;
 
     // Inventory
     inventory: Array<Array<Partial<Item>>>;

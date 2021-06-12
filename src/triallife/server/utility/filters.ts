@@ -1,9 +1,7 @@
 import * as alt from 'alt-server';
 import { Permissions } from '../../shared/enums/permission';
 import { distance } from '../../shared/utility/vector';
-import { TlrpFunctions, WASM } from './wasmLoader';
-
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+import * as TlrpMath from './math';
 
 export function getPlayersByPermissionLevel(permissionLevels: Array<Permissions>): Array<alt.Player> {
     const validPlayers = [...alt.Player.all].filter((p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel));
@@ -24,7 +22,7 @@ export function getClosestPlayer(player: alt.Player): alt.Player {
         if (!players[i] || !players[i].data) continue;
         if (players[i] === player) continue;
         if (players[i].gridSpace !== player.gridSpace) continue;
-        if (wasm.TlrpMath.isGreater(dist, newDistance)) continue;
+        if (TlrpMath.isGreater(dist, newDistance)) continue;
         dist = newDistance;
         targetPlayer = players[i];
     }

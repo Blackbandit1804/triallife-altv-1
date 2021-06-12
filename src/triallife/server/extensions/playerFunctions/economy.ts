@@ -2,21 +2,19 @@ import * as alt from 'alt-server';
 import { EconomyType } from '../../../shared/enums/economyTypes';
 import save from './save';
 import emit from './emit';
-import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
-
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+import * as TlrpMath from '../../utility/math';
 
 function add(player: alt.Player, type: EconomyType, amount: number): boolean {
-    if (wasm.TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
+    if (TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
         amount = Number.MAX_SAFE_INTEGER - 1;
     }
 
     try {
         const originalValue = player.data[type];
-        player.data[type] = parseFloat(wasm.TlrpMath.add(player.data[type], amount).toFixed(2));
+        player.data[type] = parseFloat(TlrpMath.add(player.data[type], amount).toFixed(2));
 
         // Verify that the value was updated.
-        if (wasm.TlrpMath.isGreater(originalValue, player.data[type])) {
+        if (TlrpMath.isGreater(originalValue, player.data[type])) {
             player.data[type] = originalValue;
             return false;
         }
@@ -30,16 +28,16 @@ function add(player: alt.Player, type: EconomyType, amount: number): boolean {
 }
 
 function sub(player: alt.Player, type: EconomyType, amount: number): boolean {
-    if (wasm.TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
+    if (TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
         amount = Number.MAX_SAFE_INTEGER - 1;
     }
 
     try {
         const originalValue = player.data[type];
-        player.data[type] = parseFloat(wasm.TlrpMath.sub(player.data[type], amount).toFixed(2));
+        player.data[type] = parseFloat(TlrpMath.sub(player.data[type], amount).toFixed(2));
 
         // Verify that the value was updated.
-        if (!wasm.TlrpMath.isLesser(player.data[type], originalValue)) {
+        if (!TlrpMath.isLesser(player.data[type], originalValue)) {
             player.data[type] = originalValue;
             return false;
         }
@@ -53,7 +51,7 @@ function sub(player: alt.Player, type: EconomyType, amount: number): boolean {
 }
 
 function set(player: alt.Player, type: EconomyType, amount: number): boolean {
-    if (wasm.TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
+    if (TlrpMath.isGreater(amount, Number.MAX_SAFE_INTEGER)) {
         amount = Number.MAX_SAFE_INTEGER - 1;
     }
 
@@ -68,22 +66,22 @@ function set(player: alt.Player, type: EconomyType, amount: number): boolean {
 }
 
 function subAllCurrencies(player: alt.Player, amount: number): boolean {
-    if (wasm.TlrpMath.add(player.data.cash, player.data.bank) < amount) {
+    if (TlrpMath.add(player.data.cash, player.data.bank) < amount) {
         return false;
     }
 
     let amountLeft = amount;
 
-    if (wasm.TlrpMath.sub(player.data.cash, amountLeft) <= -1) {
-        amountLeft = wasm.TlrpMath.sub(amountLeft, player.data.cash);
+    if (TlrpMath.sub(player.data.cash, amountLeft) <= -1) {
+        amountLeft = TlrpMath.sub(amountLeft, player.data.cash);
         player.data.cash = 0;
     } else {
-        player.data.cash = wasm.TlrpMath.sub(player.data.cash, amountLeft);
+        player.data.cash = TlrpMath.sub(player.data.cash, amountLeft);
         amountLeft = 0;
     }
 
     if (amountLeft >= 1) {
-        player.data.bank = wasm.TlrpMath.sub(player.data.bank, amountLeft);
+        player.data.bank = TlrpMath.sub(player.data.bank, amountLeft);
     }
 
     save.field(player, EconomyType.CASH, player.data[EconomyType.CASH]);

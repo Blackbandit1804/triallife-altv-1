@@ -60,7 +60,7 @@ export function handleEquipment(items: Array<Item>) {
     }
 
     // Default Components
-    if (alt.Player.local.meta.appearance.sex === 0) {
+    if (alt.Player.local.meta.design.sex === 0) {
         native.setPedComponentVariation(alt.Player.local.scriptID, 1, 0, 0, 0); // mask
         native.setPedComponentVariation(alt.Player.local.scriptID, 3, 15, 0, 0); // arms
         native.setPedComponentVariation(alt.Player.local.scriptID, 4, 14, 0, 0); // pants

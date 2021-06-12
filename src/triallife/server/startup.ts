@@ -5,74 +5,62 @@ import path from 'path';
 
 import { Database, onReady } from 'simplymongo';
 import { SystemEvent } from '../shared/enums/system';
-import { PostController } from './auth/postRequests';
 import { Collections } from './interfaces/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
-import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
 
 env.config();
 
 setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
 const startTime = Date.now();
-const name = 'app';
-const data = [];
-const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
-const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/tlrp.wasm');
+const mongoURL = process.env.MONGO_URL || `mongodb://localhost:27017`;
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
 alt.on('playerConnect', handleEarlyConnect);
 alt.on(SystemEvent.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
 
-async function handleFinish() {
-    const tmpPath = path.join(alt.getResourcePath(alt.resourceName), `/server/${name}.js`);
-    if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
-    for (let i = 0; i < data.length; i++) fs.appendFileSync(tmpPath, `import '${data[i]}'; \r\n`);
-    import(`./${name}`).then(() => fs.unlinkSync(tmpPath));
-    import('./system/options').then((res) => res.default());
-    import('./system/discord').then((res) => res.default());
-    import('../plugins/imports').then((res) => res.default(startTime));
-}
-
 async function runBooter() {
-    const buffer: any = fs.readFileSync(fPath);
-    const starterFns = await WASM.load<InjectedStarter>(buffer);
-    alt.once(starterFns.getEvent(), handleEvent);
-    starterFns.deploy();
+    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
+    else new Database(mongoURL, 'tlrp', collections);
+    onReady(() =>
+        LoadFiles().then(() => {
+            import('./system/options').then((res) => res.default());
+            import('./system/discord').then((res) => res.default());
+            import('../plugins/imports').then((res) => res.default(startTime));
+        })
+    );
 }
 
-async function handleEvent(value: number) {
-    const buffer: Buffer = await PostController.postAsync(WASM.getHelpers().__getString(value));
-    if (!buffer) {
-        logger.error(`Unable to boot. Potentially invalid license.`);
-        process.exit(0);
+async function LoadFiles(): Promise<void> {
+    let filesLoaded = 0;
+    const folders: string[] = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), '/server/'));
+    const filterFolders: string[] = folders.filter((x) => !x.includes('.js'));
+    for (let i = 0; i < filterFolders.length; i++) {
+        const folder = filterFolders[i];
+        const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
+        const filterFiles = files.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+        for (let f = 0; f < filterFiles.length; f++) {
+            const newPath = `./${folder}/${filterFiles[f]}`;
+            import(newPath)
+                .catch((err) => {
+                    alt.log(err);
+                    alt.log(`\r\n --> File that couldn't load: ${newPath}`);
+                    alt.log('\r\n\x1b[31mKilling process; failed to load a file. \r\n');
+                    process.exit(1);
+                })
+                .then((loadedResult) => {
+                    if (loadedResult) filesLoaded += 1;
+                    else {
+                        alt.log(`Failed to load: ${newPath}`);
+                        alt.log('Killing process; failed to load a file.');
+                        process.exit(1);
+                    }
+                });
+        }
     }
-    await WASM.load<TlrpFunctions>(buffer).catch((err) => {
-        try {
-            const data = JSON.parse(buffer.toString());
-            logger.error(`Status: ${data.status} | Error: ${data.message}`);
-        } catch (err) {}
-        return null;
-    });
-    const ext = WASM.getFunctions<TlrpFunctions>('tlrp');
-    if (!ext.isDoneLoading) {
-        Logger.error(`Failed to properly load Trial Life binaries.`);
-        process.exit(0);
-    }
-    onReady(() => {
-        alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
-            data.push(value);
-            WASM.getFunctions<TlrpFunctions>('tlrp').isDoneLoading();
-        });
-        alt.once(`${ext.getFinishName()}`, handleFinish);
-        ext.isDoneLoading();
-    });
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD)
-        new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
-    else new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections);
 }
 
-function handleEntryToggle() {
+function handleEntryToggle(): void {
     alt.off('playerConnect', handleEarlyConnect);
     logger.info(`Server Warmup Complete. Now accepting connections.`);
 }
