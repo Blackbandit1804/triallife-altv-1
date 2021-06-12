@@ -23,7 +23,7 @@ async function runBooter() {
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
     onReady(() =>
-        LoadFiles().then(() => {
+        LoadFiles().then((res) => {
             import('./system/options').then((res) => res.default());
             import('./system/discord').then((res) => res.default());
             import('../plugins/imports').then((res) => res.default(startTime));
