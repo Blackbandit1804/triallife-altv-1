@@ -40,11 +40,13 @@ async function LoadFiles(): Promise<void> {
         const secondFilteredFolders: string[] = fs
             .readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`))
             .filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
-        for (let j = 0; j < secondFilteredFolders.length; j++) {
-            const folder2 = secondFilteredFolders[j];
-            const files2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}/${folder2}`));
-            const filtered2 = files2.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
-            filtered2.forEach((file) => filteredFiles.push(`./${folder1}/${folder2}/${file}`));
+        if (secondFilteredFolders && secondFilteredFolders.length >= 1) {
+            for (let j = 0; j < secondFilteredFolders.length; j++) {
+                const folder2 = secondFilteredFolders[j];
+                const files2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}/${folder2}`));
+                const filtered2 = files2.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+                filtered2.forEach((file) => filteredFiles.push(`./${folder1}/${folder2}/${file}`));
+            }
         }
         const files1 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`));
         const filtered1 = files1.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
