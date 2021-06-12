@@ -37,9 +37,7 @@ async function LoadFiles(): Promise<void> {
     for (let i = 0; i < filterFolders.length; i++) {
         const folder = filterFolders[i];
         const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
-        const filterFiles = files.filter(
-            (x) => x.includes('.js') && !x.includes('options.js') && !x.includes('options.d.ts') && !x.includes('discord.js') && !x.includes('discord.d.ts')
-        );
+        const filterFiles = files.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
         for (let f = 0; f < filterFiles.length; f++) {
             const newPath = `./${folder}/${filterFiles[f]}`;
             import(newPath)
