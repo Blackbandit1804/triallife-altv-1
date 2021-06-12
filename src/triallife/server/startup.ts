@@ -32,13 +32,14 @@ async function runBooter() {
 }
 
 async function LoadFiles(): Promise<void> {
-    let filesLoaded = 0;
     const folders: string[] = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), '/server/'));
-    const filterFolders: string[] = folders.filter((x) => !x.includes('.js'));
+    const filterFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts'));
     for (let i = 0; i < filterFolders.length; i++) {
         const folder = filterFolders[i];
         const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
-        const filterFiles = files.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+        const filterFiles = files.filter(
+            (x) => x.includes('.js') && !x.includes('options.js') && !x.includes('options.d.ts') && !x.includes('discord.js') && !x.includes('discord.d.ts')
+        );
         for (let f = 0; f < filterFiles.length; f++) {
             const newPath = `./${folder}/${filterFiles[f]}`;
             import(newPath)

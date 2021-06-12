@@ -25,7 +25,6 @@ async function buildPipeline() {
                         console.log(err);
                         return;
                     }
-
                     resolve();
                 });
             });
