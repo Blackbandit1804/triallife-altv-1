@@ -32,8 +32,7 @@ export class LoginController {
         }
         player.setMeta('Athena:Discord:Info', data);
         if (data.username) alt.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);
-        if (account && account.discord)
-            alt.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
+        if (account && account.discord) alt.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
         const currentPlayers = [...alt.Player.all];
         const index = currentPlayers.findIndex((p) => p.discord && p.discord.id === data.id && p.id !== player.id);
         if (index >= 1) {
@@ -43,11 +42,7 @@ export class LoginController {
         player.discord = data as DiscordUser;
         alt.emitClient(player, ViewDiscord.Close);
         if (!account) {
-            let accountData: Partial<Account> | null = await db.fetchData<Account>(
-                'discord',
-                data.id,
-                Collections.Accounts
-            );
+            let accountData: Partial<Account> | null = await db.fetchData<Account>('discord', data.id, Collections.Accounts);
             if (!accountData) {
                 const newDocument: Partial<Account> = {
                     discord: player.discord.id,
@@ -69,8 +64,7 @@ export class LoginController {
 
     static tryDisconnect(player: alt.Player, reason: string): void {
         if (!player || !player.valid || !player.data) return;
-        if (player.lastVehicleID !== null && player.lastVehicleID !== undefined)
-            vehicleFuncs.new.despawn(player.lastVehicleID);
+        if (player.lastVehicleID !== null && player.lastVehicleID !== undefined) vehicleFuncs.create.despawn(player.lastVehicleID);
         alt.log(`${player.data.name} has logged out.`);
         playerFuncs.save.onTick(player);
     }
@@ -78,11 +72,7 @@ export class LoginController {
     static async tryDiscordQuickToken(player: alt.Player, discord: string): Promise<void> {
         if (!discord) return;
         const hashToken: string = getUniquePlayerHash(player, discord);
-        const account: Partial<Account> | null = await db.fetchData<Account>(
-            'quickToken',
-            hashToken,
-            Collections.Accounts
-        );
+        const account: Partial<Account> | null = await db.fetchData<Account>('quickToken', hashToken, Collections.Accounts);
         if (!account) {
             player.needsQT = true;
             return;

@@ -40,19 +40,10 @@ function handleCycleLock(player: alt.Player, vehicle: alt.Vehicle): void {
     if (!player || !player.valid) return;
     if (!vehicle || !vehicle.valid) return;
     const lockState = vehicleFuncs.toggle.lock(vehicle, player, false);
-    playerFuncs.emit.notification(
-        player,
-        LocaleController.get(LOCALE_KEYS.VEHICLE_LOCK_SET_TO, LockState[lockState].replace('_', ' '))
-    );
+    playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.VEHICLE_LOCK_SET_TO, LockState[lockState].replace('_', ' ')));
     if (lockState !== LockState.LOCKED && lockState !== LockState.UNLOCKED) return;
     if (!player.vehicle) {
-        playerFuncs.emit.animation(
-            player,
-            `anim@mp_player_intmenu@key_fob@`,
-            'fob_click_fp',
-            AnimationFlag.UPPERBODY_ONLY | AnimationFlag.ENABLE_PLAYER_CONTROL,
-            -1
-        );
+        playerFuncs.emit.animation(player, `anim@mp_player_intmenu@key_fob@`, 'fob_click_fp', AnimationFlag.UPPERBODY_ONLY | AnimationFlag.ENABLE_PLAYER_CONTROL, -1);
     }
     const soundName = lockState === LockState.UNLOCKED ? 'car_unlock' : 'car_lock';
     const playersNearPlayer = getPlayersByGridSpace(player, 8);
@@ -73,7 +64,7 @@ function handleSpawn(player: alt.Player, index: number) {
     if (index >= player.data.vehicles.length) return;
     const vehicleData = player.data.vehicles[index];
     if (!vehicleData) return;
-    vehicleFuncs.new.spawn(player, vehicleData as Vehicle);
+    vehicleFuncs.create.spawn(player, vehicleData as Vehicle);
 }
 
 function handleDespawn(player: alt.Player) {
@@ -81,5 +72,5 @@ function handleDespawn(player: alt.Player) {
     if (player.lastVehicleID === null || player.lastVehicleID === undefined) return;
     const vehicle = alt.Vehicle.all.find((veh) => veh && veh.id === player.lastVehicleID);
     if (!vehicle) return;
-    vehicleFuncs.new.despawn(vehicle.id, player);
+    vehicleFuncs.create.despawn(vehicle.id, player);
 }

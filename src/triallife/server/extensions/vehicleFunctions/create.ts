@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { Behavior, VehicleDoorState } from '../../../shared/enums/vehicle';
-import { Vehicle } from '../../../shared/interfaces/Vehicle';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { TlrpVehicleEvent } from '../../enums/tlrp';
 import { sha256Random } from '../../utility/encryption';
 import { playerFuncs } from '../player';
@@ -95,15 +95,7 @@ function spawn(player: alt.Player, data: Vehicle): alt.Vehicle {
     }
 
     // Create the new vehicle.
-    const vehicle = new alt.Vehicle(
-        data.model,
-        data.position.x,
-        data.position.y,
-        data.position.z,
-        data.rotation.x,
-        data.rotation.y,
-        data.rotation.z
-    );
+    const vehicle = new alt.Vehicle(data.model, data.position.x, data.position.y, data.position.z, data.rotation.x, data.rotation.y, data.rotation.z);
 
     player.lastVehicleID = vehicle.id;
 

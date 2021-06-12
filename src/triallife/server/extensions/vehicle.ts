@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { Behavior, LockState } from '../../shared/enums/vehicle';
 import getter from './vehicleFunctions/getter';
 import keys from './vehicleFunctions/keys';
-import newRef from './vehicleFunctions/create';
+import createRef from './vehicleFunctions/create';
 import save from './vehicleFunctions/save';
 import setter from './vehicleFunctions/setter';
 import toggle from './vehicleFunctions/toggle';
@@ -30,7 +30,7 @@ export default function onLoad() {
 export const vehicleFuncs = {
     getter,
     setter,
-    new: newRef,
+    create: createRef,
     keys,
     save,
     toggle,

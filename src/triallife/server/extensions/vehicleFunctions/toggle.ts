@@ -35,7 +35,6 @@ function lock(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = false)
     vehicle.lockStatus = LockStates[index + 1];
     vehicle.setStreamSyncedMeta(VehicleDoorState.LOCK_STATE, vehicle.lockStatus);
 
-    // Automatically Close All Doors in Locked State
     if (vehicle.lockStatus === LockState.LOCKED) {
         for (let i = 0; i < 6; i++) {
             setter.doorOpen(vehicle, player, i, false);
@@ -64,14 +63,10 @@ function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = fals
     vehicle.setStreamSyncedMeta(VehicleDoorState.ENGINE, vehicle.engineStatus);
 
     if (player) {
-        const status = vehicle.engineStatus
-            ? LocaleController.get(LOCALE_KEYS.LABEL_ON)
-            : LocaleController.get(LOCALE_KEYS.LABEL_OFF);
-
+        const status = vehicle.engineStatus ? LocaleController.get(LOCALE_KEYS.LABEL_ON) : LocaleController.get(LOCALE_KEYS.LABEL_OFF);
         const fullMessage = `${LocaleController.get(LOCALE_KEYS.LABEL_ENGINE)} ~y~ ${status}`;
         playerFuncs.emit.notification(player, fullMessage);
     }
-
     alt.emit(TlrpVehicleEvent.ENGINE_STATE_CHANGE, vehicle);
 }
 

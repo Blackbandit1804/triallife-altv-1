@@ -8,6 +8,7 @@ import { SystemEvent } from '../shared/enums/system';
 import { Collections } from './interfaces/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
+import { isConsoleOpen } from 'alt-client';
 
 env.config();
 
@@ -33,37 +34,34 @@ async function runBooter() {
 
 async function LoadFiles(): Promise<void> {
     const folders: string[] = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), '/server/'));
-    const firstFilteredFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
+    const filteredFolders: string[] = folders.filter((x) => !x.includes('.'));
     const filteredFiles: string[] = [];
-    for (let i = 0; i < firstFilteredFolders.length; i++) {
-        const folder1 = firstFilteredFolders[i];
-        const secondFilteredFolders: string[] = fs
-            .readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`))
-            .filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
-        if (secondFilteredFolders && secondFilteredFolders.length >= 1) {
-            for (let j = 0; j < secondFilteredFolders.length; j++) {
-                const folder2 = secondFilteredFolders[j];
-                const files2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}/${folder2}`));
-                const filtered2 = files2.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
-                filtered2.forEach((file) => filteredFiles.push(`./${folder1}/${folder2}/${file}`));
-            }
+    for (let i = 0; i < filteredFolders.length; i++) {
+        const folder = filteredFolders[i];
+        const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
+        const folders2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`)).filter((x) => !x.includes('.') && x.includes('Functions'));
+        for (let j = 0; j < folders2.length; j++) {
+            const folder2 = folders2[j];
+            const files2 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}/${folder2}`));
+            const filtered2 = files2.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+            filtered2.forEach((file) => filteredFiles.push(`./${folder}/${folder2}/${file}`));
         }
-        const files1 = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder1}`));
-        const filtered1 = files1.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
-        filtered1.forEach((file) => filteredFiles.push(`./${folder1}/${file}`));
+        const filtered = files.filter((x) => x.includes('.js') && !x.includes('options.js') && !x.includes('discord.js'));
+        filtered.forEach((file) => filteredFiles.push(`./${folder}/${file}`));
     }
     filteredFiles.forEach((path) => {
+        alt.log(path);
         import(path)
             .catch((err) => {
                 alt.log(err);
-                alt.log(`\r\n --> File that couldn't load: ${path}`);
-                alt.log('\r\n\x1b[31mKilling process; failed to load a file. \r\n');
+                alt.log(`~r~File that couldn't load: ~b~${path}`);
+                alt.log('~r~Killing process; failed to load a file.');
                 process.exit(1);
             })
             .then((loadedResult) => {
                 if (!loadedResult) {
-                    alt.log(`Failed to load: ${path}`);
-                    alt.log('Killing process; failed to load a file.');
+                    alt.log(`~r~Failed to load: ~b~${path}`);
+                    alt.log('~r~Killing process; failed to load a file.');
                     process.exit(1);
                 }
             });
