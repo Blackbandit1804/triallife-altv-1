@@ -33,7 +33,7 @@ async function runBooter() {
 
 async function LoadFiles(): Promise<void> {
     const folders: string[] = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), '/server/'));
-    const filterFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts'));
+    const filterFolders: string[] = folders.filter((x) => !x.includes('.js') && !x.includes('.d.ts') && !x.includes('.md'));
     for (let i = 0; i < filterFolders.length; i++) {
         const folder = filterFolders[i];
         const files = fs.readdirSync(path.join(alt.getResourcePath(alt.resourceName), `/server/${folder}`));
