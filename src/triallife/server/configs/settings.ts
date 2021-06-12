@@ -1,8 +1,8 @@
 import { SharedConfig } from '../../shared/configs/settings';
 
 export const DefaultConfig = {
-    WHITELIST: false,
-    USE_DISCORD_BOT: false,
+    WHITELIST: true,
+    USE_DISCORD_BOT: true,
     VOICE_ON: SharedConfig.VOICE_ON,
     VOICE_MAX_DISTANCE: 35,
     CHARACTER_SELECT_POS: { x: 36.19486618041992, y: 859.3850708007812, z: 197.71343994140625 },
@@ -33,19 +33,7 @@ export const DefaultConfig = {
         { x: -677.0172119140625, y: 311.7821350097656, z: 83.601806640625 },
         { x: 1151.2904052734375, y: -1529.903564453125, z: 36.3017578125 }
     ],
-    WEATHER_ROTATION: [
-        'EXTRASUNNY',
-        'EXTRASUNNY',
-        'CLEAR',
-        'CLOUDS',
-        'OVERCAST',
-        'RAIN',
-        'THUNDER',
-        'RAIN',
-        'FOGGY',
-        'OVERCAST',
-        'CLEARING'
-    ],
+    WEATHER_ROTATION: ['EXTRASUNNY', 'EXTRASUNNY', 'CLEAR', 'CLOUDS', 'OVERCAST', 'RAIN', 'THUNDER', 'RAIN', 'FOGGY', 'OVERCAST', 'CLEARING'],
     TIME_BETWEEN_VEHICLE_UPDATES: 10000,
     TIME_BETWEEN_VEHICLE_SAVES: 30000,
     FUEL_LOSS_PER_PLAYER_TICK: 0.15,

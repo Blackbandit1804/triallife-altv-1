@@ -11,7 +11,7 @@ export class PostController {
 
     static async getSecret(): Promise<string | boolean> {
         const sharedSecret = await getSharedSecret();
-        if (!sharedSecret) throw new Error(`Could not get shared secret from Ares. Try rebooting.`);
+        if (!sharedSecret) throw new Error(`Could not get shared secret from Authentication System. Try rebooting.`);
         return sharedSecret;
     }
 

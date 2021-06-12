@@ -3,7 +3,7 @@ import { Permissions } from '../../shared/enums/permission';
 import { distance } from '../../shared/utility/vector';
 import { TlrpFunctions, WASM } from './wasmLoader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 export function getPlayersByPermissionLevel(permissionLevels: Array<Permissions>): Array<alt.Player> {
     const validPlayers = [...alt.Player.all].filter((p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel));

@@ -5,19 +5,17 @@ import path from 'path';
 
 import { Database, onReady } from 'simplymongo';
 import { SystemEvent } from '../shared/enums/system';
-import { getVersionIdentifier } from './auth/getRequests';
 import { PostController } from './auth/postRequests';
 import { Collections } from './interfaces/collections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
-import { isConsoleOpen } from 'alt-client';
+
 env.config();
 
-setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800/auth/redirect');
-
+setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
 const startTime = Date.now();
-const name = 'wasm';
+const name = 'app';
 const data = [];
 const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
 const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/tlrp.wasm');
@@ -37,20 +35,6 @@ async function handleFinish() {
 }
 
 async function runBooter() {
-    getVersionIdentifier().then((version) => {
-        alt.log(`athena version: ${version}`);
-        if (!version) {
-            console.error(new Error(`Failed to contact Ares endpoint.`));
-            process.exit(0);
-        }
-        logger.info(`Version: ${process.env.TLRP_VERSION}`);
-        if (version !== process.env.TLRP_VERSION) {
-            logger.warning(`--- Version Warning ---`);
-            logger.warning(`Your server may be out of date. Please update your server.`);
-            logger.warning(`Please pull down the latest changes from the official repository.`);
-            logger.warning(`Try merging from the master branch or from the upstream branch of your choice.`);
-        }
-    });
     const buffer: any = fs.readFileSync(fPath);
     const starterFns = await WASM.load<InjectedStarter>(buffer);
     alt.once(starterFns.getEvent(), handleEvent);
@@ -70,7 +54,7 @@ async function handleEvent(value: number) {
         } catch (err) {}
         return null;
     });
-    const ext = WASM.getFunctions<TlrpFunctions>('ares');
+    const ext = WASM.getFunctions<TlrpFunctions>('tlrp');
     if (!ext.isDoneLoading) {
         Logger.error(`Failed to properly load Trial Life binaries.`);
         process.exit(0);
@@ -78,13 +62,14 @@ async function handleEvent(value: number) {
     onReady(() => {
         alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
             data.push(value);
-            WASM.getFunctions<TlrpFunctions>('ares').isDoneLoading();
+            WASM.getFunctions<TlrpFunctions>('tlrp').isDoneLoading();
         });
         alt.once(`${ext.getFinishName()}`, handleFinish);
         ext.isDoneLoading();
     });
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
-    else new Database(mongoURL, 'tlrp', collections);
+    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD)
+        new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
+    else new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections);
 }
 
 function handleEntryToggle() {

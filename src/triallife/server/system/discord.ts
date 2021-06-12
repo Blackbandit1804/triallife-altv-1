@@ -66,9 +66,7 @@ export class DiscordController {
 export default function loader() {
     if (DefaultConfig.USE_DISCORD_BOT) {
         if (!process.env.DISCORD_BOT) {
-            Logger.error(
-                `.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`
-            );
+            Logger.error(`.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`);
             return;
         }
         DiscordController.populateEndpoints();

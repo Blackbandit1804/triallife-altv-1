@@ -3,19 +3,19 @@ import chalk from 'chalk';
 
 export default class Logger {
     static log(message: string): void {
-        alt.log(`${chalk.blueBright('[3L:RP]')} ${chalk.whiteBright(message)}`);
+        alt.log(`${chalk.greenBright('[3L:RP]')} ${chalk.whiteBright(message)}`);
     }
 
     static warning(message: string): void {
-        alt.log(`${chalk.blueBright('[3L:RP]')} ${chalk.yellowBright(message)}`);
+        alt.log(`${chalk.greenBright('[3L:RP]')} ${chalk.yellowBright(message)}`);
     }
 
     static error(message: string): void {
-        alt.log(`${chalk.blueBright('[3L:RP]')} ${chalk.redBright(message)}`);
+        alt.log(`${chalk.greenBright('[3L:RP]')} ${chalk.redBright(message)}`);
     }
 
     static info(message: string): void {
-        alt.log(`${chalk.blueBright('[3L:RP]')} ${chalk.blueBright(message)}`);
+        alt.log(`${chalk.greenBright('[3L:RP]')} ${chalk.blueBright(message)}`);
     }
 
     static clearLastLine() {
