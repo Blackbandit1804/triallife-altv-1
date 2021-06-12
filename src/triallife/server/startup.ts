@@ -50,8 +50,7 @@ async function LoadFiles(): Promise<void> {
                     process.exit(1);
                 })
                 .then((loadedResult) => {
-                    if (loadedResult) filesLoaded += 1;
-                    else {
+                    if (!loadedResult) {
                         alt.log(`Failed to load: ${newPath}`);
                         alt.log('Killing process; failed to load a file.');
                         process.exit(1);
