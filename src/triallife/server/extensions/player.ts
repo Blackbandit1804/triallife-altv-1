@@ -5,7 +5,7 @@ import economy from './playerFunctions/economy';
 import updater from './playerFunctions/updater';
 import emit from './playerFunctions/emit';
 import inventory from './playerFunctions/inventory';
-import createNew from './playerFunctions/create';
+import create from './playerFunctions/create';
 import safe from './playerFunctions/safe';
 import save from './playerFunctions/save';
 import select from './playerFunctions/select';
@@ -56,7 +56,7 @@ export const playerFuncs = {
     updater,
     emit,
     inventory,
-    createNew,
+    create,
     safe,
     save,
     select,
