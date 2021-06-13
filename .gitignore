@@ -19,3 +19,6 @@ cdn_upload
 tsconfig.tsbuildinfo
 tlrp-cache/
 .vs
+/src/core/core.csproj
+/src/core/Properties
+/src/core/obj
