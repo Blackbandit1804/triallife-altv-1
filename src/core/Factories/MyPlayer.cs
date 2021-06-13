@@ -3,7 +3,7 @@ using AltV.Net.Elements.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace roleplay.Factories {
+namespace core.Factories {
 	public class MyPlayer : Player {
 		public bool LoggedIn { get; set; }
 		public int CharID { get; set; }

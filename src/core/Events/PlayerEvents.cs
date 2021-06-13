@@ -1,9 +1,9 @@
 ﻿using AltV.Net;
 using AltV.Net.Enums;
-using roleplay.Factories;
+using core.Factories;
 using System;
 
-namespace roleplay.Events {
+namespace core.Events {
 	class PlayerEvents : IScript {
 
 		[ScriptEvent(ScriptEventType.PlayerConnect)]

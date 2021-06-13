@@ -1,12 +1,12 @@
 ﻿using AltV.Net.Data;
 using AltV.Net.Enums;
-using roleplay.Usefull;
+using core.Usefull;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static roleplay.Enums.Enums;
+using static core.Enums.Enums;
 
-namespace roleplay.Database {
+namespace core.Database {
 	public class Account {
 		[Key]
 		public int id { get; set; }

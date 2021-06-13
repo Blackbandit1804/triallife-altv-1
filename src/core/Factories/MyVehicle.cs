@@ -2,9 +2,9 @@
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
 using System;
-using static roleplay.Enums.Enums;
+using static core.Enums.Enums;
 
-namespace roleplay.Factories {
+namespace core.Factories {
     public class MyVehicle : Vehicle {
         public static double MaxFuel = 60.0f;
         public FuelType FuelType { get; set; }

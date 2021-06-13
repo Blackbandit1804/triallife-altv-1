@@ -2,14 +2,14 @@
 using AltV.Net.Enums;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using roleplay.Usefull;
+using core.Usefull;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using static roleplay.Enums.Enums;
+using static core.Enums.Enums;
 
-namespace roleplay.Database {
+namespace core.Database {
 	public class TlrpEntities : DbContext {
 		private static string connectionString;
 

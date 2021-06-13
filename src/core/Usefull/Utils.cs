@@ -1,7 +1,7 @@
 ﻿using AltV.Net.Data;
 using System;
 
-namespace roleplay.Usefull {
+namespace core.Usefull {
 	public static class Utils {
 
 		public static Position GetRandomPositionInRange(Position position, float range) {

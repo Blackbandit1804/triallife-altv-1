@@ -1,10 +1,10 @@
 ﻿using AltV.Net;
 using AltV.Net.Elements.Entities;
-using roleplay.Database;
-using roleplay.Factories;
+using core.Database;
+using core.Factories;
 using System;
 
-namespace roleplay {
+namespace core {
 	class Main : Resource {
 
 		public override void OnStart() {

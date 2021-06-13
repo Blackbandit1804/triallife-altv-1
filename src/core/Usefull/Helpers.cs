@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace roleplay.Usefull {
+namespace core.Usefull {
 	public class Handy {
 		public bool power { get; set; }
 		public Dictionary<int, object> contacts { get; set; }

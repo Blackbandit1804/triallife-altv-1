@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace roleplay {
+namespace core {
 	static class Logger {
 		private static string LogData;
 
