@@ -1,36 +1,48 @@
 ﻿using AltV.Net;
 using AltV.Net.Data;
 using AltV.Net.Elements.Entities;
+using core.configs;
+using core.Usefull;
 using System;
-using static core.Enums.Enums;
+using System.Collections.Generic;
+using static core.Usefull.Enums;
 
 namespace core.Factories {
-    public class MyVehicle : Vehicle {
-        public static double MaxFuel = 60.0f;
-        public FuelType FuelType { get; set; }
-        public double Fuel { get; set; }
+    public class MyVehicle : AltV.Net.Elements.Entities.Vehicle {
+        public LockState tlrpLockState { get; set; }
+        public bool engineStatus { get; set; }
+        public List<string> keys { get; set; }
+        public double fuel { get; set; }
+        public int playerId { get; set; }
+        public VehicleBehavior behavior { get; set; }
+        public Database.Vehicle data { get; set; }
+        public long nextSave { get; set; }
+        public long nextUpdate { get; set; }
         public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id) {
-            FuelType = FuelType.None;
-        }
-
-        public MyVehicle(uint model, Position position, Rotation rotation, FuelType fuelType = FuelType.None) : base(model, position, rotation) {
-            FuelType = fuelType;
-            Fuel = 0;
+            tlrpLockState = Enums.LockState.LOCKED;
+            engineStatus = false;
+            keys = new List<string>();
+            fuel = 100.0;
+            playerId = 0;
+            behavior = VehicleBehavior.UNLIMITED_FUEL;
+            this.data = data;
+            nextSave = DateTime.Now.AddMilliseconds(DefaultConfig.TIME_BETWEEN_VEHICLE_SAVES).Ticks;
+            nextUpdate = DateTime.Now.AddMilliseconds(DefaultConfig.TIME_BETWEEN_VEHICLE_UPDATES).Ticks;
             ManualEngineControl = true;
         }
 
-        public void ToggleEngine() {
-            if (!EngineOn && FuelType != FuelType.None && Fuel == 0.0) {
-                return;
-            }
-            EngineOn = !EngineOn;
-		}
-
-        public void ToggleRepair() {
-            if (NetworkOwner == null) return;
-            Fuel = MaxFuel;
-            Repair();
-		}
+        public MyVehicle(uint model, Position position, Rotation rotation, Database.Vehicle data = null) : base(model, position, rotation) {
+            tlrpLockState = Enums.LockState.LOCKED;
+            engineStatus = false;
+            keys = new List<string>();
+            fuel = 100.0;
+            playerId = 0;
+            behavior = VehicleBehavior.CONSUMES_FUEL;
+            this.data = data;
+            nextSave = DateTime.Now.AddMilliseconds(DefaultConfig.TIME_BETWEEN_VEHICLE_SAVES).Ticks;
+            nextUpdate = DateTime.Now.AddMilliseconds(DefaultConfig.TIME_BETWEEN_VEHICLE_UPDATES).Ticks;
+            ManualEngineControl = true;
+        }
     }
 
 	public class MyVehicleFactory : IEntityFactory<IVehicle> {
