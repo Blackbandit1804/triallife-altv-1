@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { Player } from 'alt-server';
 import { Character } from '../../shared/interfaces/character';
 import { View_Events_Characters, View_Events_Creator } from '../../shared/enums/views';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import * as sm from 'simplymongo';
 import './clothing';
@@ -38,10 +38,10 @@ export async function goToCharacterSelect(player: Player): Promise<void> {
         characters[i]._id = characters[i]._id.toString();
     }
 
-    const pos = { ...DEFAULT_CONFIG.CHARACTER_SELECT_POS };
+    const pos = { ...DefaultConfig.CHARACTER_SELECT_POS };
 
     player.currentCharacters = characters;
-    player.rot = { ...DEFAULT_CONFIG.CHARACTER_SELECT_ROT } as alt.Vector3;
+    player.rot = { ...DefaultConfig.CHARACTER_SELECT_ROT } as alt.Vector3;
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
 
     alt.setTimeout(() => {
@@ -115,7 +115,7 @@ async function handleDelete(player: Player, id: string): Promise<void> {
         characters[i]._id = characters[i]._id.toString();
     }
 
-    const pos = { ...DEFAULT_CONFIG.CHARACTER_SELECT_POS };
+    const pos = { ...DefaultConfig.CHARACTER_SELECT_POS };
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
 
     player.currentCharacters = characters;
@@ -128,7 +128,7 @@ async function handleDelete(player: Player, id: string): Promise<void> {
  */
 export function handleNewCharacter(player: Player): void {
     // Prevent more than 3 characters per account.
-    if (player.currentCharacters && player.currentCharacters.length >= DEFAULT_CONFIG.PLAYER_MAX_CHARACTER_SLOTS) {
+    if (player.currentCharacters && player.currentCharacters.length >= DefaultConfig.PLAYER_MAX_CHARACTER_SLOTS) {
         alt.log(`${player.name} | Attempted to create a new character when max characters was exceeded.`);
         return;
     }
@@ -143,13 +143,13 @@ export function handleNewCharacter(player: Player): void {
         return;
     }
 
-    const pos = { ...DEFAULT_CONFIG.CHARACTER_CREATOR_POS };
+    const pos = { ...DefaultConfig.CHARACTER_CREATOR_POS };
 
     player.pendingCharacterSelect = false;
     player.pendingCharacterEdit = true;
     player.pendingNewCharacter = true;
 
-    player.rot = { ...DEFAULT_CONFIG.CHARACTER_CREATOR_ROT } as alt.Vector3;
+    player.rot = { ...DefaultConfig.CHARACTER_CREATOR_ROT } as alt.Vector3;
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
     alt.emitClient(player, View_Events_Characters.Done);
 

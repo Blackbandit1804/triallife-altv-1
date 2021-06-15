@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 import { drawText2D } from '../utility/text';
 
@@ -24,7 +24,7 @@ function handleSingleMetaChange(key: string, newValue: any, oldValue: any): void
     if (newValue) {
         if (!interval) {
             interval = alt.setInterval(handleDeathMovement, 0);
-            deathTime = Date.now() + SHARED_CONFIG.RESPAWN_TIME;
+            deathTime = Date.now() + SharedConfig.RESPAWN_TIME;
         }
         return;
     }

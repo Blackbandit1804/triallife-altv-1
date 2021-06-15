@@ -1,11 +1,11 @@
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 
-export const DEFAULT_CONFIG = {
+export const DefaultConfig = {
     // Whitelisting
     WHITELIST: false,
     USE_DISCORD_BOT: false,
     // Use Voice
-    VOICE_ON: SHARED_CONFIG.VOICE_ON,
+    VOICE_ON: SharedConfig.VOICE_ON,
     VOICE_MAX_DISTANCE: 35,
     // Character Selection View
     CHARACTER_SELECT_POS: { x: 36.19486618041992, y: 859.3850708007812, z: 197.71343994140625 },
@@ -22,7 +22,7 @@ export const DEFAULT_CONFIG = {
     CHAT_ENABLED: true, // Turn off messaging. Chat still works for commands.
     CHAT_DISTANCE: 35,
     // Death / Respawn Properties
-    RESPAWN_TIME: SHARED_CONFIG.RESPAWN_TIME, // 30s in Milliseconds
+    RESPAWN_TIME: SharedConfig.RESPAWN_TIME, // 30s in Milliseconds
     RESPAWN_LOSE_WEAPONS: true, // Removes player weapons on death.
     RESPAWN_HEALTH: 200, // Health is 100 - 200. 99 is dead.
     RESPAWN_ARMOUR: 0, // Lose weapons when you respawn

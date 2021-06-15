@@ -1,11 +1,11 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 
 let mainChannel: alt.VoiceChannel;
 
-if (DEFAULT_CONFIG.VOICE_ON) {
+if (DefaultConfig.VOICE_ON) {
     alt.on('playerDisconnect', handleDisconnect);
     alt.on(SystemEvent.VOICE_ADD, addToGlobalVoice);
 
@@ -18,7 +18,7 @@ if (DEFAULT_CONFIG.VOICE_ON) {
  * @return {*}
  */
 function handleDisconnect(player: alt.Player) {
-    if (!DEFAULT_CONFIG.VOICE_ON || !player || !player.valid) {
+    if (!DefaultConfig.VOICE_ON || !player || !player.valid) {
         return;
     }
 

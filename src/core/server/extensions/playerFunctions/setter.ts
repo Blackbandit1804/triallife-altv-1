@@ -3,7 +3,7 @@ import { Account } from '../../interface/Account';
 import { Permissions } from '../../../shared/flags/permissions';
 import { getUniquePlayerHash } from '../../utility/encryption';
 import { Database, getDatabase } from 'simplymongo';
-import { DEFAULT_CONFIG } from '../../tlrp/main';
+import { DefaultConfig } from '../../configs/settings';
 import { distance2d } from '../../../shared/utility/vector';
 import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
@@ -70,7 +70,7 @@ function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null):
     }
 
     if (!p.nextDeathSpawn) {
-        p.nextDeathSpawn = Date.now() + DEFAULT_CONFIG.RESPAWN_TIME;
+        p.nextDeathSpawn = Date.now() + DefaultConfig.RESPAWN_TIME;
     }
 
     alt.emit(TLRP_EVENTS_PLAYER.DIED, p);
@@ -90,7 +90,7 @@ async function firstConnect(p: alt.Player): Promise<void> {
         return;
     }
 
-    const pos = { ...DEFAULT_CONFIG.CHARACTER_SELECT_POS };
+    const pos = { ...DefaultConfig.CHARACTER_SELECT_POS };
 
     p.dimension = p.id + 1; // First ID is 0. We add 1 so everyone gets a unique dimension.
     p.pendingLogin = true;
@@ -130,7 +130,7 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
 
     let nearestHopsital = position;
     if (!position) {
-        const hospitals = [...DEFAULT_CONFIG.VALID_HOSPITALS];
+        const hospitals = [...DefaultConfig.VALID_HOSPITALS];
         let index = 0;
         let lastDistance = distance2d(p.pos, hospitals[0]);
 
@@ -146,7 +146,7 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
 
         nearestHopsital = hospitals[index] as alt.Vector3;
 
-        if (DEFAULT_CONFIG.RESPAWN_LOSE_WEAPONS) {
+        if (DefaultConfig.RESPAWN_LOSE_WEAPONS) {
             playerFuncs.inventory.removeAllWeapons(p);
         }
     }
@@ -156,8 +156,8 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
 
     alt.nextTick(() => {
         p.clearBloodDamage();
-        safe.addHealth(p, DEFAULT_CONFIG.RESPAWN_HEALTH, true);
-        safe.addArmour(p, DEFAULT_CONFIG.RESPAWN_ARMOUR, true);
+        safe.addHealth(p, DefaultConfig.RESPAWN_HEALTH, true);
+        safe.addArmour(p, DefaultConfig.RESPAWN_ARMOUR, true);
     });
 
     alt.emit(TLRP_EVENTS_PLAYER.SPAWNED, p);

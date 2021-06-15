@@ -3,7 +3,7 @@ import { View_Events_Chat } from '../../shared/enums/views';
 import { Command } from '../../shared/interfaces/Command';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { getClosestTypes } from '../../shared/utility/vector';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { emitAll } from '../utility/emit-helper';
 import { Permissions } from '../../shared/flags/permissions';
 import { SystemEvent } from '../../shared/enums/system';
@@ -105,7 +105,7 @@ export default class ChatManager {
             return;
         }
 
-        if (!DEFAULT_CONFIG.CHAT_ENABLED) {
+        if (!DefaultConfig.CHAT_ENABLED) {
             return;
         }
 
@@ -117,7 +117,7 @@ export default class ChatManager {
         const closestPlayers: Array<alt.Player> = getClosestTypes<alt.Player>(
             player.pos,
             alt.Player.all,
-            DEFAULT_CONFIG.CHAT_DISTANCE,
+            DefaultConfig.CHAT_DISTANCE,
             ['discord'] // Used to check if they're logged in.
         );
 

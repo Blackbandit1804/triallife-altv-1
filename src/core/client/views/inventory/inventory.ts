@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SHARED_CONFIG } from '../../../shared/configs/settings';
+import { SharedConfig } from '../../../shared/configs/settings';
 import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Inventory } from '../../../shared/enums/views';
 import { DroppedItem } from '../../../shared/interfaces/Item';
@@ -159,7 +159,7 @@ export class InventoryManager {
 
     static processClosestGroundItems() {
         let itemsNearPlayer = lastDroppedItems.filter(
-            (item) => distance2d(item.position, alt.Player.local.pos) <= SHARED_CONFIG.MAX_PICKUP_RANGE
+            (item) => distance2d(item.position, alt.Player.local.pos) <= SharedConfig.MAX_PICKUP_RANGE
         );
 
         if (alt.Player.local.vehicle) {

@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 
 alt.onServer(SystemEvent.TICKS_START, toggleOn);
@@ -20,8 +20,8 @@ function disableDefaultBehavior(): void {
     }
 
     if (
-        alt.Player.local.meta.food <= SHARED_CONFIG.FOOD_FATIGUE ||
-        alt.Player.local.meta.water <= SHARED_CONFIG.WATER_FATIGUE
+        alt.Player.local.meta.food <= SharedConfig.FOOD_FATIGUE ||
+        alt.Player.local.meta.water <= SharedConfig.WATER_FATIGUE
     ) {
         native.disableControlAction(0, 21, true);
     }

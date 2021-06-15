@@ -3,7 +3,7 @@ import * as sm from 'simplymongo';
 import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Discord } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import { Account } from '../interface/Account';
 import { DiscordUser } from '../interface/DiscordUser';
@@ -27,7 +27,7 @@ export class LoginManager {
         delete player.discordToken;
 
         // Whitelist Handling
-        if (DEFAULT_CONFIG.WHITELIST) {
+        if (DefaultConfig.WHITELIST) {
             if (!OptionsManager.isWhitelisted(data.id)) {
                 player.kick(`You are not currently whitelisted.`);
                 return;

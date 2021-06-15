@@ -1,5 +1,5 @@
 import Discord from 'discord.js';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import Logger from '../utility/tlrp-logger';
 import { OptionsManager } from './options';
 
@@ -20,7 +20,7 @@ export class DiscordManager {
     static ready() {
         Logger.info(`Discord Bot Connected Successfully`);
 
-        if (DEFAULT_CONFIG.WHITELIST && !DiscordManager.whitelistRole) {
+        if (DefaultConfig.WHITELIST && !DiscordManager.whitelistRole) {
             Logger.error(`.env file is missing WHITELIST_ROLE identifaction for auto-whitelist.`);
             return;
         }
@@ -83,7 +83,7 @@ export class DiscordManager {
 }
 
 export default function loader() {
-    if (DEFAULT_CONFIG.USE_DISCORD_BOT) {
+    if (DefaultConfig.USE_DISCORD_BOT) {
         if (!process.env.DISCORD_BOT) {
             Logger.error(
                 `.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`

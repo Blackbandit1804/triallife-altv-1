@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 import { AudioStreamData } from '../../shared/interfaces/audio';
 import { distance } from '../../shared/utility/vector';
@@ -52,7 +52,7 @@ export function playClosestStream() {
     }
 
     const relevantStreams = audioStreams.filter((stream) => {
-        if (distance(stream.position, alt.Player.local.pos) <= SHARED_CONFIG.MAX_AUDIO_STREAM_DISTANCE) {
+        if (distance(stream.position, alt.Player.local.pos) <= SharedConfig.MAX_AUDIO_STREAM_DISTANCE) {
             return true;
         }
 
@@ -79,7 +79,7 @@ export function playClosestStream() {
         closestStream = stream;
     }
 
-    const volume = SHARED_CONFIG.MAX_AUDIO_STREAM_DISTANCE - closestDistance;
+    const volume = SharedConfig.MAX_AUDIO_STREAM_DISTANCE - closestDistance;
     const timeLeft = closestStream.duration - (closestStream.endTime - Date.now());
 
     if (timeLeft <= 1000) {

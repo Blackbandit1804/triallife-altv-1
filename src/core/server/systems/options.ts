@@ -1,5 +1,5 @@
 import { Database, getDatabase } from 'simplymongo';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { Collections } from '../interface/DatabaseCollections';
 import { defaultOptions, DiscordID, Options } from '../interface/Options';
 import Logger from '../utility/tlrp-logger';
@@ -25,7 +25,7 @@ export class OptionsManager {
             OptionsManager.data = await OptionsManager.db.insertData(OptionsManager.data, Collections.Options, true);
         }
 
-        if (DEFAULT_CONFIG.WHITELIST) {
+        if (DefaultConfig.WHITELIST) {
             Logger.info(`Whitelisted Users: ${OptionsManager.data.whitelist.length}`);
         }
     }

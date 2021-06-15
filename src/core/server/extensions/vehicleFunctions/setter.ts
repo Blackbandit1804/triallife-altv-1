@@ -3,7 +3,7 @@ import getter from './getter';
 import { Vehicle_Behavior, Vehicle_Door_List, Vehicle_Lock_State, Vehicle_State } from '../../../shared/enums/vehicle';
 import keys from './keys';
 import toggle from './toggle';
-import { DEFAULT_CONFIG } from '../../tlrp/main';
+import { DefaultConfig } from '../../configs/settings';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../Vehicle';
 import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
@@ -72,7 +72,7 @@ function updateFuel(v: alt.Vehicle) {
         v.data.fuel = 100;
     }
 
-    v.fuel = wasm.AthenaMath.sub(v.fuel, DEFAULT_CONFIG.FUEL_LOSS_PER_PLAYER_TICK);
+    v.fuel = wasm.AthenaMath.sub(v.fuel, DefaultConfig.FUEL_LOSS_PER_PLAYER_TICK);
 
     if (v.fuel < 0) {
         v.fuel = 0;

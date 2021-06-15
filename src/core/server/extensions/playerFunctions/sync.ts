@@ -4,7 +4,7 @@ import { CurrencyTypes } from '../../../shared/enums/economy';
 import { World } from '../../systems/world';
 import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
-import { DEFAULT_CONFIG } from '../../tlrp/main';
+import { DefaultConfig } from '../../configs/settings';
 import { playerFuncs } from '../Player';
 import save from './save';
 
@@ -101,7 +101,7 @@ function food(p: alt.Player): void {
         return;
     }
 
-    playerFuncs.safe.addFood(p, -DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
+    playerFuncs.safe.addFood(p, -DefaultConfig.FOOD_REMOVAL_RATE);
 }
 
 function water(p: alt.Player): void {
@@ -111,7 +111,7 @@ function water(p: alt.Player): void {
         return;
     }
 
-    playerFuncs.safe.addWater(p, -DEFAULT_CONFIG.FOOD_REMOVAL_RATE);
+    playerFuncs.safe.addWater(p, -DefaultConfig.FOOD_REMOVAL_RATE);
 }
 
 function vehicles(p: alt.Player): void {

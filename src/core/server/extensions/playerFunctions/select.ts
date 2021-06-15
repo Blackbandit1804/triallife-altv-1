@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
-import { DEFAULT_CONFIG } from '../../tlrp/main';
+import { DefaultConfig } from '../../configs/settings';
 import { BlipManager } from '../../systems/blip';
 import ChatManager from '../../systems/chat';
 import { InteractionManager } from '../../systems/interaction';
@@ -35,9 +35,9 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         } else {
             safe.setPosition(
                 p,
-                DEFAULT_CONFIG.PLAYER_NEW_SPAWN_POS.x,
-                DEFAULT_CONFIG.PLAYER_NEW_SPAWN_POS.y,
-                DEFAULT_CONFIG.PLAYER_NEW_SPAWN_POS.z
+                DefaultConfig.PLAYER_NEW_SPAWN_POS.x,
+                DefaultConfig.PLAYER_NEW_SPAWN_POS.y,
+                DefaultConfig.PLAYER_NEW_SPAWN_POS.z
             );
         }
 

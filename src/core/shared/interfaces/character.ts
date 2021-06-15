@@ -1,5 +1,5 @@
 import { Vector3 } from 'alt-server';
-import { DEFAULT_CONFIG } from '../../server/configs/settings';
+import { DefaultConfig } from '../../server/configs/settings';
 import { Appearance } from './design';
 import { Item } from './item';
 import { Vehicle } from './vehicle';
@@ -28,9 +28,9 @@ export interface Character {
 }
 
 export const CharacterDefaults: Partial<Character> = {
-    pos: DEFAULT_CONFIG.PLAYER_NEW_SPAWN_POS as Vector3,
-    cash: DEFAULT_CONFIG.PLAYER_CASH,
-    bank: DEFAULT_CONFIG.PLAYER_BANK,
+    pos: DefaultConfig.PLAYER_NEW_SPAWN_POS as Vector3,
+    cash: DefaultConfig.PLAYER_CASH,
+    bank: DefaultConfig.PLAYER_BANK,
     appearance: {},
     info: {},
     food: 100,

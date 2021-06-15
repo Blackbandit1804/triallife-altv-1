@@ -1,4 +1,4 @@
-export const SHARED_CONFIG = {
+export const SharedConfig = {
     // Default Respawn Time for Player
     RESPAWN_TIME: 25000,
     // Blips

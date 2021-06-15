@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 
 /* -- Top of Map --
  * 0 - Weather at Index 0
@@ -24,8 +24,8 @@ const minY = -4000;
 
 export class World {
     static minMaxGroups: Array<{ minY: number; maxY: number }>;
-    static hour: number = DEFAULT_CONFIG.BOOTUP_HOUR;
-    static minute: number = DEFAULT_CONFIG.BOOTUP_MINUTE;
+    static hour: number = DefaultConfig.BOOTUP_HOUR;
+    static minute: number = DefaultConfig.BOOTUP_MINUTE;
 
     /**
      * Generates a reference grid for weather and objects.
@@ -50,13 +50,13 @@ export class World {
     }
 
     static updateWorldTime(): void {
-        World.minute += DEFAULT_CONFIG.MINUTES_PER_MINUTE;
+        World.minute += DefaultConfig.MINUTES_PER_MINUTE;
         if (World.minute >= 60) {
             World.minute = 0;
             World.hour += 1;
 
-            const endElement = DEFAULT_CONFIG.WEATHER_ROTATION.pop();
-            DEFAULT_CONFIG.WEATHER_ROTATION.unshift(endElement);
+            const endElement = DefaultConfig.WEATHER_ROTATION.pop();
+            DefaultConfig.WEATHER_ROTATION.unshift(endElement);
         }
 
         if (World.hour >= 24) {
@@ -73,7 +73,7 @@ export class World {
     }
 
     static getWeatherByGrid(gridIndex: number): string {
-        return DEFAULT_CONFIG.WEATHER_ROTATION[gridIndex];
+        return DefaultConfig.WEATHER_ROTATION[gridIndex];
     }
 }
 

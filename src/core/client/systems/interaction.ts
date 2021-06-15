@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 import { ActionMenu, Action } from '../../shared/interfaces/actions';
 import { Interaction } from '../../shared/interfaces/Interaction';

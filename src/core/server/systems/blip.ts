@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
 import { Blip } from '../../shared/interfaces/blip';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import Logger from '../utility/tlrp-logger';
 import { sha256Random } from '../utility/encryption';
 
@@ -59,7 +59,7 @@ export class BlipManager {
     }
 }
 
-DEFAULT_CONFIG.VALID_HOSPITALS.forEach((position) => {
+DefaultConfig.VALID_HOSPITALS.forEach((position) => {
     const hash = sha256Random(JSON.stringify(position));
     BlipManager.append({
         text: 'Hospital',

@@ -3,7 +3,7 @@ import { View_Events_Chat } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import ChatManager from '../systems/chat';
 import { emitAll } from '../utility/emit-helper';
@@ -46,12 +46,12 @@ function handleCommandOOC(player: alt.Player, ...args): void {
     }
 
     const fullMessage = args.join(' ');
-    const closestPlayers = getPlayersByGridSpace(player, DEFAULT_CONFIG.COMMAND_OOC_DISTANCE);
+    const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_OOC_DISTANCE);
 
     emitAll(
         closestPlayers,
         View_Events_Chat.Append,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_OOC_COLOR}${player.data.name}: (( ${fullMessage} ))`
+        `${DefaultConfig.CHAT_ROLEPLAY_OOC_COLOR}${player.data.name}: (( ${fullMessage} ))`
     );
 }
 
@@ -62,12 +62,12 @@ function handleCommandMe(player: alt.Player, ...args): void {
     }
 
     const fullMessage = args.join(' ');
-    const closestPlayers = getPlayersByGridSpace(player, DEFAULT_CONFIG.COMMAND_ME_DISTANCE);
+    const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_ME_DISTANCE);
 
     emitAll(
         closestPlayers,
         View_Events_Chat.Append,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_COLOR}${player.data.name} ${fullMessage}`
+        `${DefaultConfig.CHAT_ROLEPLAY_COLOR}${player.data.name} ${fullMessage}`
     );
 }
 
@@ -78,12 +78,12 @@ function handleCommandDo(player: alt.Player, ...args): void {
     }
 
     const fullMessage = args.join(' ');
-    const closestPlayers = getPlayersByGridSpace(player, DEFAULT_CONFIG.COMMAND_DO_DISTANCE);
+    const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_DO_DISTANCE);
 
     emitAll(
         closestPlayers,
         View_Events_Chat.Append,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_COLOR}* ${fullMessage} ((${player.data.name}))`
+        `${DefaultConfig.CHAT_ROLEPLAY_COLOR}* ${fullMessage} ((${player.data.name}))`
     );
 }
 
@@ -94,12 +94,12 @@ function handleCommandLow(player: alt.Player, ...args): void {
     }
 
     const fullMessage = args.join(' ');
-    const closestPlayers = getPlayersByGridSpace(player, DEFAULT_CONFIG.COMMAND_LOW_DISTANCE);
+    const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_LOW_DISTANCE);
 
     emitAll(
         closestPlayers,
         View_Events_Chat.Append,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_LOW_COLOR}${player.data.name} ${fullMessage}`
+        `${DefaultConfig.CHAT_ROLEPLAY_LOW_COLOR}${player.data.name} ${fullMessage}`
     );
 }
 
@@ -126,7 +126,7 @@ function handleCommandWhisper(player: alt.Player, id: string, ...args) {
         return;
     }
 
-    if (distance2d(target.pos, player.pos) > DEFAULT_CONFIG.COMMAND_WHISPER_DISTANCE) {
+    if (distance2d(target.pos, player.pos) > DefaultConfig.COMMAND_WHISPER_DISTANCE) {
         playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.PLAYER_IS_TOO_FAR));
         return;
     }
@@ -134,11 +134,11 @@ function handleCommandWhisper(player: alt.Player, id: string, ...args) {
     const fullMessage = args.join(' ');
     playerFuncs.emit.message(
         player,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_WHISPER_COLOR}You whisper: '${fullMessage}' to ${target.data.name}`
+        `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}You whisper: '${fullMessage}' to ${target.data.name}`
     );
 
     playerFuncs.emit.message(
         target,
-        `${DEFAULT_CONFIG.CHAT_ROLEPLAY_WHISPER_COLOR}${player.data.name} whispers: ${fullMessage}`
+        `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}${player.data.name} whispers: ${fullMessage}`
     );
 }

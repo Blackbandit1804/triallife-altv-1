@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { CurrencyTypes } from '../../shared/enums/economy';
 import { SystemEvent } from '../../shared/enums/system';
 import { Vehicle_Behavior, Vehicle_State } from '../../shared/enums/vehicle';
@@ -72,12 +72,12 @@ function handleFuel(player: alt.Player, pos: alt.IVector3) {
 
     const currentFuel = lastVehicle.fuel;
     let missingFuel = maximumFuel - currentFuel;
-    let maximumCost = missingFuel * SHARED_CONFIG.FUEL_PRICE;
+    let maximumCost = missingFuel * SharedConfig.FUEL_PRICE;
 
     // re-calculate based on what the player can afford.
     if (player.data.cash < maximumCost) {
-        maximumCost = SHARED_CONFIG.FUEL_PRICE * player.data.cash;
-        missingFuel = missingFuel - SHARED_CONFIG.FUEL_PRICE * player.data.cash;
+        maximumCost = SharedConfig.FUEL_PRICE * player.data.cash;
+        missingFuel = missingFuel - SharedConfig.FUEL_PRICE * player.data.cash;
 
         if (missingFuel <= 2) {
             playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
@@ -86,7 +86,7 @@ function handleFuel(player: alt.Player, pos: alt.IVector3) {
     }
 
     const missingFuelPct = (missingFuel / maximumFuel) * 100;
-    let maximumTime = (SHARED_CONFIG.FUEL_TIME / 100) * missingFuelPct;
+    let maximumTime = (SharedConfig.FUEL_TIME / 100) * missingFuelPct;
     if (maximumTime < 3000) {
         maximumTime = 3000;
     }
@@ -150,9 +150,9 @@ function handleFinishFuel(player: alt.Player, fuelStatus: FuelStatus) {
     }
 
     const timeRemaining = fuelStatus.endTime - Date.now();
-    const pctFuelTaken = timeRemaining / SHARED_CONFIG.FUEL_TIME;
+    const pctFuelTaken = timeRemaining / SharedConfig.FUEL_TIME;
     const totalFuel = pctFuelTaken * fuelStatus.difFuel;
-    const totalCost = totalFuel * SHARED_CONFIG.FUEL_PRICE;
+    const totalCost = totalFuel * SharedConfig.FUEL_PRICE;
 
     playerFuncs.emit.removeProgressBar(player, `FUEL-${player.data._id.toString()}`);
 

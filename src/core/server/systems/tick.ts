@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 import { InventoryManager } from '../views/inventory';
@@ -36,13 +36,13 @@ function handlePing(player: alt.Player): void {
 
     // Updates Items on Ground for Player
     if (!player.nextItemSync || Date.now() > player.nextItemSync) {
-        player.nextItemSync = Date.now() + DEFAULT_CONFIG.TIME_BETWEEN_INVENTORY_UPDATES;
+        player.nextItemSync = Date.now() + DefaultConfig.TIME_BETWEEN_INVENTORY_UPDATES;
         InventoryManager.updateDroppedItemsAroundPlayer(player, false);
     }
 
     // Updates Food & Water
     if (!player.nextFoodSync || Date.now() > player.nextFoodSync) {
-        player.nextFoodSync = Date.now() + DEFAULT_CONFIG.TIME_BETWEEN_FOOD_UPDATES;
+        player.nextFoodSync = Date.now() + DefaultConfig.TIME_BETWEEN_FOOD_UPDATES;
         playerFuncs.sync.food(player);
         playerFuncs.sync.water(player);
     }
@@ -54,12 +54,12 @@ function handlePing(player: alt.Player): void {
 
     if (player.vehicle) {
         if (!player.vehicle.nextUpdate || Date.now() > player.vehicle.nextUpdate) {
-            player.vehicle.nextUpdate = Date.now() + DEFAULT_CONFIG.TIME_BETWEEN_VEHICLE_UPDATES;
+            player.vehicle.nextUpdate = Date.now() + DefaultConfig.TIME_BETWEEN_VEHICLE_UPDATES;
             vehicleFuncs.setter.updateFuel(player.vehicle);
         }
 
         if (!player.vehicle.nextSave || Date.now() > player.vehicle.nextSave) {
-            player.vehicle.nextSave = Date.now() + DEFAULT_CONFIG.TIME_BETWEEN_VEHICLE_SAVES;
+            player.vehicle.nextSave = Date.now() + DefaultConfig.TIME_BETWEEN_VEHICLE_SAVES;
             const owner = alt.Player.all.find((p) => p.id === player.vehicle.player_id);
             if (owner) {
                 vehicleFuncs.save.data(owner, player.vehicle);

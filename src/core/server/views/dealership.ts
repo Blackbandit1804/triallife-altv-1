@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { PhoneEvents } from '../../shared/enums/phone-events';
 import { VehicleData } from '../../shared/configs/vehicle-data';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 
@@ -26,7 +26,7 @@ function handlePurchase(player: alt.Player, model: string, color: alt.RGBA) {
         return;
     }
 
-    if (!DEFAULT_CONFIG.VEHICLE_DEALERSHIP_SPAWNS[vehicleData.class]) {
+    if (!DefaultConfig.VEHICLE_DEALERSHIP_SPAWNS[vehicleData.class]) {
         playerFuncs.emit.message(player, `Notify Admin that vehicle class... ${vehicleData.class} has no spawn point.`);
         return;
     }
@@ -39,7 +39,7 @@ function handlePurchase(player: alt.Player, model: string, color: alt.RGBA) {
     vehicleFuncs.new.add(player, {
         model: vehicleData.name,
         fuel: 100,
-        position: DEFAULT_CONFIG.VEHICLE_DEALERSHIP_SPAWNS[vehicleData.class],
+        position: DefaultConfig.VEHICLE_DEALERSHIP_SPAWNS[vehicleData.class],
         rotation: { x: 0, y: 0, z: 0 },
         color
     });

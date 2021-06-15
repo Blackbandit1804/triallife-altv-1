@@ -6,7 +6,7 @@ import { Blip } from '../../shared/interfaces/blip';
 import { Interaction } from '../../shared/interfaces/Interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { DEFAULT_CONFIG } from '../tlrp/main';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import { distance2d } from '../utility/vector';
 import '../views/atm';
@@ -214,7 +214,7 @@ export class InteractionManager {
         }
 
         const closestInteraction = InteractionManager.Interactions[type].find((interaction) => {
-            if (distance2d(interaction.pos, player.pos) <= DEFAULT_CONFIG.MAX_INTERACTION_DISTANCE) {
+            if (distance2d(interaction.pos, player.pos) <= DefaultConfig.MAX_INTERACTION_DISTANCE) {
                 return true;
             }
 

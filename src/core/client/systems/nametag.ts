@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SHARED_CONFIG } from '../../shared/configs/settings';
+import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 import { distance2d } from '../../shared/utility/vector';
 import { drawText2D } from '../utility/text';
@@ -15,7 +15,7 @@ alt.onServer(SystemEvent.TICKS_START, handleStart);
 
 function handleStart() {
     interval = alt.setInterval(drawNametags, 0);
-    shouldScreenShake = SHARED_CONFIG.FORCE_SCREEN_SHAKE;
+    shouldScreenShake = SharedConfig.FORCE_SCREEN_SHAKE;
 }
 
 /**
@@ -44,7 +44,7 @@ function drawNametags() {
         }, 0);
     }
 
-    if (SHARED_CONFIG.VOICE_ON && alt.Player.local.isTalking) {
+    if (SharedConfig.VOICE_ON && alt.Player.local.isTalking) {
         drawText2D('Microphone On', { x: 0.5, y: 0.05 }, 0.4, new alt.RGBA(255, 255, 255, 255));
     }
 
