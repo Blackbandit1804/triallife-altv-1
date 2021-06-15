@@ -6,7 +6,7 @@ import { Permissions } from '../../shared/flags/permissions';
 import { Item } from '../../shared/interfaces/item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { deepCloneObject } from '../../shared/utility/deepCopy';
+import { deepCloneObject } from '../../shared/utility/deep-copy';
 
 const teleporterItem: Item = {
     name: `Teleporter`,

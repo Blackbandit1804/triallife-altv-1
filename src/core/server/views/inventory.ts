@@ -13,7 +13,7 @@ import { TLRP_EVENTS_PLAYER } from '../enums/tlrp';
 import { distance2d } from '../utility/vector';
 import { stripCategory } from '../utility/category';
 import { CategoryData } from '../interface/CategoryData';
-import { deepCloneObject } from '../../shared/utility/deepCopy';
+import { deepCloneObject } from '../../shared/utility/deep-copy';
 
 /**
  * Let's talk about Inventory Logic! Woo!

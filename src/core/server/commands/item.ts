@@ -5,8 +5,8 @@ import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
 import { playerFuncs } from '../extensions/Player';
 import { EquipmentType } from '../../shared/enums/equipment';
-import { deepCloneObject } from '../../shared/utility/deepCopy';
-import { getFromRegistry, ItemRegistry } from '../../shared/items/itemRegistry';
+import { deepCloneObject } from '../../shared/utility/deep-copy';
+import { getFromRegistry, ItemRegistry } from '../../shared/items/item-registry';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 

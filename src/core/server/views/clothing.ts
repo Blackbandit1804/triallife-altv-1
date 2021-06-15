@@ -5,7 +5,7 @@ import { playerFuncs } from '../extensions/Player';
 import { ClothingComponent } from '../../shared/interfaces/clothing';
 import { Item } from '../../shared/interfaces/item';
 import { ItemType } from '../../shared/enums/item-type';
-import { deepCloneObject } from '../../shared/utility/deepCopy';
+import { deepCloneObject } from '../../shared/utility/deep-copy';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 

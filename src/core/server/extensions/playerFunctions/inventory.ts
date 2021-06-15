@@ -3,7 +3,7 @@ import { EquipmentType } from '../../../shared/enums/equipment';
 import { InventoryType } from '../../../shared/enums/inventory-type';
 import { ItemType } from '../../../shared/enums/item-type';
 import { Item, ItemSpecial } from '../../../shared/interfaces/item';
-import { deepCloneObject } from '../../../shared/utility/deepCopy';
+import { deepCloneObject } from '../../../shared/utility/deep-copy';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { CategoryData } from '../../interface/CategoryData';
 import { stripCategory } from '../../utility/category';
