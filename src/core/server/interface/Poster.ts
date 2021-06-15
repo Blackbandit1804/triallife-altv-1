@@ -9,7 +9,7 @@ export interface PosterFormat {
 }
 
 /**
- * The unencrypted poster data for ares to process.
+ * The unencrypted poster data for tlrp to process.
  * @export
  * @interface Poster
  */
