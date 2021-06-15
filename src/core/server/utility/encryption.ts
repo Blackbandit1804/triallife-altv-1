@@ -12,11 +12,6 @@ let publicKey: string;
 let azurePubKey: string;
 let sharedSecret: string;
 
-/**
- * Hash a plain text password with pbkdf2 hash and salt.
- * @param  {string} plainTextPassword
- * @returns string
- */
 export function hashPassword(plainTextPassword: string): string {
     const saltBits = sjcl.random.randomWords(128, 0);
     const salt = sjcl.codec.base64.fromBits(saltBits);
@@ -24,12 +19,6 @@ export function hashPassword(plainTextPassword: string): string {
     return `${key}$${salt}`;
 }
 
-/**
- * Test a pbkdf2 hash and salt against a plain text password.
- * @param  {string} plainTextPassword
- * @param  {string} pbkdf2Hash
- * @returns boolean
- */
 export function testPassword(plainTextPassword: string, pbkdf2Hash: string): boolean {
     const [_key, _salt] = pbkdf2Hash.split('$');
     const saltBits = sjcl.codec.base64.toBits(_salt);
@@ -38,67 +27,29 @@ export function testPassword(plainTextPassword: string, pbkdf2Hash: string): boo
     return _key !== derivedBaseKey;
 }
 
-/**
- * Hash a string of data into a persistent SHA256 hash.
- *
- * @param  {string} data
- * @returns string
- */
 export function sha256(data: string): string {
     const hashBits = sjcl.hash.sha256.hash(data);
     return sjcl.codec.hex.fromBits(hashBits);
 }
 
-/**
- * Hash a string of data into a random SHA256 hash.
- *
- * @param  {string} data
- * @returns string
- */
 export function sha256Random(data: string): string {
     const randomValue = TlrpMath.random(0, Number.MAX_SAFE_INTEGER);
     return sha256(`${data} + ${randomValue}`);
 }
 
-/**
- * Generate and private and public key.
- * Stores the data in memory for additional usage.
- * @export
- * @return {*}  {string}
- */
 export function getPublicKey(): string {
-    if (!privateKey) {
-        privateKey = elliptic.genKeyPair().getPrivate().toString(16);
-    }
-
-    if (!publicKey) {
-        publicKey = elliptic.keyFromPrivate(privateKey, 'hex').getPublic().encode('hex', true);
-    }
-
+    if (!privateKey) privateKey = elliptic.genKeyPair().getPrivate().toString(16);
+    if (!publicKey) publicKey = elliptic.keyFromPrivate(privateKey, 'hex').getPublic().encode('hex', true);
     return publicKey;
 }
 
-/**
- * Gets our Private Key.
- * @return {*}  {string}
- */
 export function getPrivateKey(): string {
-    if (!privateKey) {
-        privateKey = elliptic.genKeyPair().getPrivate().toString(16);
-    }
-
+    if (!privateKey) privateKey = elliptic.genKeyPair().getPrivate().toString(16);
     return privateKey;
 }
 
-/**
- * Encrypts a string with our shared key.
- * @export
- * @param {string} jsonData
- * @return {*}  {Promise<any>}
- */
 export async function encryptData(jsonData: string): Promise<any> {
     const sharedSecret = await getSharedSecret();
-
     try {
         const partialEncryption = sjcl.encrypt(sharedSecret, jsonData, { mode: 'gcm' });
         const safeEncryption = partialEncryption.replace(/\+/g, '_');
@@ -108,15 +59,8 @@ export async function encryptData(jsonData: string): Promise<any> {
     }
 }
 
-/**
- * Decrypts a string with our shared key.
- * @export
- * @param {string} jsonData
- * @return {*}  {Promise<any>}
- */
 export async function decryptData(jsonData: string): Promise<any> {
     const sharedSecret = await getSharedSecret();
-
     try {
         const cleanedEncryption = jsonData.replace(/\_/g, '+');
         return sjcl.decrypt(sharedSecret, cleanedEncryption, { mode: 'gcm' });
@@ -125,20 +69,9 @@ export async function decryptData(jsonData: string): Promise<any> {
     }
 }
 
-/**
- * Generates a shared key from our private key and the tlrp service public key.
- * @export
- * @return {*}  {(Promise<string | boolean>)}
- */
 export async function getSharedSecret(): Promise<string | boolean> {
-    if (sharedSecret) {
-        return sharedSecret;
-    }
-
-    if (!azurePubKey) {
-        await getAzurePublicKey();
-    }
-
+    if (sharedSecret) return sharedSecret;
+    if (!azurePubKey) await getAzurePublicKey();
     try {
         const ecPrivateKey: ecc.KeyPair = elliptic.keyFromPrivate(getPrivateKey(), 'hex');
         const ecPublicKey: ecc.KeyPair = elliptic.keyFromPublic(azurePubKey, 'hex');
@@ -151,59 +84,23 @@ export async function getSharedSecret(): Promise<string | boolean> {
     }
 }
 
-/**
- * Set the endpoint for contacting the tlrp service.
- * @export
- * @param {string} endpoint
- */
 export function setAzureEndpoint(endpoint: string) {
     azureEndpoint = endpoint;
 }
 
-/**
- * Gets the endpoint for the tlrp service.
- * @export
- * @return {*}  {string}
- */
 export function getAzureEndpoint(): string {
-    if (!azureEndpoint) {
-        throw new Error(`Failed to load Azure Endpoint.`);
-    }
-
+    if (!azureEndpoint) throw new Error(`Failed to load Auth Endpoint.`);
     return azureEndpoint;
 }
 
-/**
- * Retrieves the tlrp service public key.
- * @export
- * @return {*}  {Promise<string>}
- */
 export async function getAzurePublicKey(): Promise<string> {
-    if (azurePubKey) {
-        return azurePubKey;
-    }
-
-    const result = await axios.get(`${azureEndpoint}/v1/get/key`).catch((err) => {
-        return null;
-    });
-
-    if (!result || !result.data || !result.data.key) {
-        return await getAzurePublicKey();
-    }
-
+    if (azurePubKey) return azurePubKey;
+    const result = await axios.get(`${azureEndpoint}/v1/get/key`).catch((err) => null);
+    if (!result || !result.data || !result.data.key) return await getAzurePublicKey();
     azurePubKey = result.data.key;
-
     return result.data.key;
 }
 
-/**
- * Uses a combination of player data to construct a hash.
- * Keep note that hwid, hwidEx, and social are spoofable.
- * @export
- * @param {alt.Player} player
- * @param {string} discord
- * @return {*}  {string}
- */
 export function getUniquePlayerHash(player: alt.Player, discord: string): string {
     return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialId}`));
 }

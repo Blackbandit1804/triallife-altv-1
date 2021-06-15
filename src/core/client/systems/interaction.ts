@@ -57,7 +57,7 @@ export class InteractionManager {
             return;
         }
 
-        if (alt.Player.local.meta.isDead) {
+        if (alt.Player.local.meta.isUnconscious) {
             InteractionManager.pressedKey = false;
             dynamicActionMenu = {};
             return;
@@ -108,19 +108,9 @@ export class InteractionManager {
 
         if (alt.Player.local.closestInteraction && alt.Player.local.closestInteraction.position) {
             // Show this when interactions available is populated.
-            HelpManager.updateHelpText(
-                alt.Player.local.closestInteraction.position,
-                KEY_BINDS.INTERACT,
-                alt.Player.local.closestInteraction.text,
-                null
-            );
+            HelpManager.updateHelpText(alt.Player.local.closestInteraction.position, KEY_BINDS.INTERACT, alt.Player.local.closestInteraction.text, null);
         } else if (alt.Player.local.otherInteraction) {
-            HelpManager.updateHelpText(
-                alt.Player.local.otherInteraction.position,
-                null,
-                alt.Player.local.otherInteraction.short,
-                alt.Player.local.otherInteraction.long
-            );
+            HelpManager.updateHelpText(alt.Player.local.otherInteraction.position, null, alt.Player.local.otherInteraction.short, alt.Player.local.otherInteraction.long);
         }
 
         // Open the Dynamic Menu

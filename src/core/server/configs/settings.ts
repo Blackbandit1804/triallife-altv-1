@@ -2,8 +2,8 @@ import { SharedConfig } from '../../shared/configs/settings';
 
 export const DefaultConfig = {
     // Whitelisting
-    WHITELIST: false,
-    USE_DISCORD_BOT: false,
+    WHITELIST: true,
+    USE_DISCORD_BOT: true,
     // Use Voice
     VOICE_ON: SharedConfig.VOICE_ON,
     VOICE_MAX_DISTANCE: 35,
@@ -18,9 +18,6 @@ export const DefaultConfig = {
     PLAYER_NEW_SPAWN_POS: { x: -867.1437377929688, y: -172.6201934814453, z: 37.799232482910156 },
     PLAYER_CASH: 100,
     PLAYER_BANK: 100,
-    // Chat Properties
-    CHAT_ENABLED: true, // Turn off messaging. Chat still works for commands.
-    CHAT_DISTANCE: 35,
     // Death / Respawn Properties
     RESPAWN_TIME: SharedConfig.RESPAWN_TIME, // 30s in Milliseconds
     RESPAWN_LOSE_WEAPONS: true, // Removes player weapons on death.
@@ -56,19 +53,7 @@ export const DefaultConfig = {
         { x: -677.0172119140625, y: 311.7821350097656, z: 83.601806640625 },
         { x: 1151.2904052734375, y: -1529.903564453125, z: 36.3017578125 }
     ],
-    WEATHER_ROTATION: [
-        'EXTRASUNNY',
-        'EXTRASUNNY',
-        'CLEAR',
-        'CLOUDS',
-        'OVERCAST',
-        'RAIN',
-        'THUNDER',
-        'RAIN',
-        'FOGGY',
-        'OVERCAST',
-        'CLEARING'
-    ],
+    WEATHER_ROTATION: ['EXTRASUNNY', 'EXTRASUNNY', 'CLEAR', 'CLOUDS', 'OVERCAST', 'RAIN', 'THUNDER', 'RAIN', 'FOGGY', 'OVERCAST', 'CLEARING'],
     // Vehicle Properties
     TIME_BETWEEN_VEHICLE_UPDATES: 10000, // 10s
     TIME_BETWEEN_VEHICLE_SAVES: 30000, // 30s

@@ -95,7 +95,7 @@ function playTime(p: alt.Player): void {
 }
 
 function food(p: alt.Player): void {
-    if (p.data.isDead && p.data.food <= 0) {
+    if (p.data.isUnconscious && p.data.food <= 0) {
         p.data.food = 100;
         emit.meta(p, 'food', p.data.food);
         return;
@@ -105,7 +105,7 @@ function food(p: alt.Player): void {
 }
 
 function water(p: alt.Player): void {
-    if (p.data.isDead && p.data.water <= 0) {
+    if (p.data.isUnconscious && p.data.water <= 0) {
         p.data.water = 100;
         emit.meta(p, 'water', p.data.water);
         return;

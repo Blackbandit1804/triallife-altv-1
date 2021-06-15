@@ -177,7 +177,7 @@ export class Job {
         }
 
         if (isFlagEnabled(objective.criteria, JobEnums.ObjectiveCriteria.NO_DYING)) {
-            if (this.player && this.player.data.isDead) {
+            if (this.player && this.player.data.isUnconscious) {
                 this.quit(`Died while on the job.`);
                 return false;
             }

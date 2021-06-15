@@ -74,7 +74,7 @@ function handleDrawTextlabels() {
         return;
     }
 
-    if (alt.Player.local.meta.isDead) {
+    if (alt.Player.local.meta.isUnconscious) {
         return;
     }
 

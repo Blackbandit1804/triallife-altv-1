@@ -4,13 +4,9 @@ import Logger from '../utility/tlrp-logger';
 import { OptionsManager } from './options';
 
 export class DiscordManager {
-    static client: Discord.Client = new Discord.Client({
-        ws: { intents: new Discord.Intents(Discord.Intents.ALL) }
-    });
-
+    static client: Discord.Client = new Discord.Client({ ws: { intents: new Discord.Intents(Discord.Intents.ALL) } });
     static whitelistRole = process.env.WHITELIST_ROLE ? process.env.WHITELIST_ROLE : null;
     static guild: Discord.Guild;
-
     static populateEndpoints() {
         DiscordManager.client.on('ready', DiscordManager.ready);
         DiscordManager.client.on('guildMemberUpdate', DiscordManager.userUpdate);
@@ -19,7 +15,6 @@ export class DiscordManager {
 
     static ready() {
         Logger.info(`Discord Bot Connected Successfully`);
-
         if (DefaultConfig.WHITELIST && !DiscordManager.whitelistRole) {
             Logger.error(`.env file is missing WHITELIST_ROLE identifaction for auto-whitelist.`);
             return;
@@ -85,9 +80,7 @@ export class DiscordManager {
 export default function loader() {
     if (DefaultConfig.USE_DISCORD_BOT) {
         if (!process.env.DISCORD_BOT) {
-            Logger.error(
-                `.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`
-            );
+            Logger.error(`.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`);
             return;
         }
 

@@ -19,7 +19,6 @@ alt.on('enable:Entry', () => {
             player.kick('Core resource has been restarted.');
             return;
         }
-
         alt.emit('Discord:Login', player, data);
     });
 });

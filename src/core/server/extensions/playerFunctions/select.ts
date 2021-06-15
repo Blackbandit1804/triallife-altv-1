@@ -33,12 +33,7 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         if (p.data.pos) {
             safe.setPosition(p, p.data.pos.x, p.data.pos.y, p.data.pos.z);
         } else {
-            safe.setPosition(
-                p,
-                DefaultConfig.PLAYER_NEW_SPAWN_POS.x,
-                DefaultConfig.PLAYER_NEW_SPAWN_POS.y,
-                DefaultConfig.PLAYER_NEW_SPAWN_POS.z
-            );
+            safe.setPosition(p, DefaultConfig.PLAYER_NEW_SPAWN_POS.x, DefaultConfig.PLAYER_NEW_SPAWN_POS.y, DefaultConfig.PLAYER_NEW_SPAWN_POS.z);
         }
 
         // Save immediately after using exterior login.
@@ -63,13 +58,13 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         }
 
         // Resets their death status and logs them in as dead.
-        if (p.data.isDead) {
+        if (p.data.isUnconscious) {
             p.nextDeathSpawn = Date.now() + 30000;
-            p.data.isDead = false;
+            p.data.isUnconscious = false;
             safe.addHealth(p, 0, true);
             emit.meta(p, 'isDead', true);
         } else {
-            p.data.isDead = false;
+            p.data.isUnconscious = false;
             emit.meta(p, 'isDead', false);
         }
 

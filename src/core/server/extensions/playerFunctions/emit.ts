@@ -18,7 +18,7 @@ import utility from './utility';
  * @memberof EmitPrototype
  */
 function animation(p: alt.Player, dictionary: string, name: string, flags: AnimationFlags, duration: number = -1): void {
-    if (p.data.isDead) {
+    if (p.data.isUnconscious) {
         alt.logWarning(`[3L:RP] Cannot play ${dictionary}@${name} while player is dead.`);
         return;
     }

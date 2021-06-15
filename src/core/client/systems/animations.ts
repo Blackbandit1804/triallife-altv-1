@@ -43,18 +43,13 @@ async function loadAnimation(dict: string, count: number = 0): Promise<boolean> 
  * @param {AnimationFlags} [flags=AnimationFlags.CANCELABLE] A combination of flags. ie. (AnimationFlags.CANCELABLE | AnimationFlags.UPPERBODY_ONLY)
  * @return {Promise<void>}  {Promise<void>}
  */
-export async function playAnimation(
-    dict: string,
-    name: string,
-    flags: AnimationFlags = AnimationFlags.CANCELABLE,
-    duration: number = -1
-): Promise<void> {
+export async function playAnimation(dict: string, name: string, flags: AnimationFlags = AnimationFlags.CANCELABLE, duration: number = -1): Promise<void> {
     const isReadyToPlay = await loadAnimation(dict);
     if (!isReadyToPlay) {
         return;
     }
 
-    if (alt.Player.local.meta.isDead) {
+    if (alt.Player.local.meta.isUnconscious) {
         return;
     }
 

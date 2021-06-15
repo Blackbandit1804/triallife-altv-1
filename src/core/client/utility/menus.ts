@@ -9,7 +9,7 @@ export function isAnyMenuOpen(): boolean {
         return true;
     }
 
-    if (alt.Player.local.meta.isDead) {
+    if (alt.Player.local.meta.isUnconscious) {
         return true;
     }
 
