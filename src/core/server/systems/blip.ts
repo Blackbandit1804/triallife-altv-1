@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
 import { Blip } from '../../shared/interfaces/blip';
 import { DEFAULT_CONFIG } from '../tlrp/main';
-import Logger from '../utility/tlrpLogger';
+import Logger from '../utility/tlrp-logger';
 import { sha256Random } from '../utility/encryption';
 
 const globalBlips: Array<Blip> = [];

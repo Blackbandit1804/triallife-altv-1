@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { WASM, TlrpFunctions } from './wasmLoader';
+import { WASM, TlrpFunctions } from './wasm-loader';
 
 const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 

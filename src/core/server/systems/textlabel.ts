@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
 import { TextLabel } from '../../shared/interfaces/TextLabel';
-import Logger from '../utility/tlrpLogger';
+import Logger from '../utility/tlrp-logger';
 
 const globalTextLabels: Array<TextLabel> = [];
 

@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import logger from '../utility/tlrpLogger';
+import logger from '../utility/tlrp-logger';
 
 export async function executeTest<T>(description: string, callback: Function, ...args: any[]): Promise<T> {
     alt.log(`[Test] ${description}`);

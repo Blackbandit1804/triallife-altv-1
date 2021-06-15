@@ -9,7 +9,7 @@ import { playerFuncs } from '../extensions/Player';
 import { sha256Random } from '../utility/encryption';
 import '../effects/heal';
 import '../effects/vehicleRepair';
-import { ATHENA_EVENTS_PLAYER } from '../enums/tlrp';
+import { TLRP_EVENTS_PLAYER } from '../enums/tlrp';
 import { distance2d } from '../utility/vector';
 import { stripCategory } from '../utility/category';
 import { CategoryData } from '../interface/CategoryData';
@@ -284,7 +284,7 @@ export class InventoryController {
 
         this.updateDroppedItemsAroundPlayer(player, true);
         playerFuncs.emit.animation(player, 'random@mugging4', 'pickup_low', 33, 1200);
-        alt.emit(ATHENA_EVENTS_PLAYER.DROPPED_ITEM, player, itemClone);
+        alt.emit(TLRP_EVENTS_PLAYER.DROPPED_ITEM, player, itemClone);
     }
 
     static getDroppedItemsByGridSpace(gridSpace: number): Array<DroppedItem> {

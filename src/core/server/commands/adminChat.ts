@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import ChatController from '../systems/chat';
 import { getPlayersByPermissionLevel } from '../utility/filters';
 import { Permissions } from '../../shared/flags/permissions';
-import { emitAll } from '../utility/emitHelper';
+import { emitAll } from '../utility/emit-helper';
 import { View_Events_Chat } from '../../shared/enums/views';
 import { playerFuncs } from '../extensions/Player';
 import { LocaleController } from '../../shared/locale/locale';

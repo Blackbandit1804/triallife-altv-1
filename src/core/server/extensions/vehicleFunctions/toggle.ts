@@ -8,7 +8,7 @@ import {
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleController } from '../../../shared/locale/locale';
 import { isFlagEnabled } from '../../../shared/utility/flags';
-import { ATHENA_EVENTS_VEHICLE } from '../../enums/tlrp';
+import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { playerFuncs } from '../Player';
 import getter from './getter';
 import keys from './keys';
@@ -47,7 +47,7 @@ function lock(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = false)
         }
     }
 
-    alt.emit(ATHENA_EVENTS_VEHICLE.LOCK_STATE_CHANGE, vehicle);
+    alt.emit(TLRP_EVENTS_VEHICLE.LOCK_STATE_CHANGE, vehicle);
     return vehicle.tlrpLockState;
 }
 
@@ -77,7 +77,7 @@ function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = fals
         playerFuncs.emit.notification(player, fullMessage);
     }
 
-    alt.emit(ATHENA_EVENTS_VEHICLE.ENGINE_STATE_CHANGE, vehicle);
+    alt.emit(TLRP_EVENTS_VEHICLE.ENGINE_STATE_CHANGE, vehicle);
 }
 
 export default {

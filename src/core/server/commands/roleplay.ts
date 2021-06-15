@@ -6,7 +6,7 @@ import { LocaleController } from '../../shared/locale/locale';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import ChatController from '../systems/chat';
-import { emitAll } from '../utility/emitHelper';
+import { emitAll } from '../utility/emit-helper';
 import { getPlayersByGridSpace } from '../utility/filters';
 import { distance2d } from '../utility/vector';
 

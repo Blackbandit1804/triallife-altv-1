@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import sjcl from 'sjcl';
 import ecc from 'elliptic';
 import axios from 'axios';
-import { TlrpFunctions, WASM } from './wasmLoader';
+import { TlrpFunctions, WASM } from './wasm-loader';
 
 const elliptic = new ecc.ec('curve25519');
 let wasm = WASM.getFunctions<TlrpFunctions>('ares');

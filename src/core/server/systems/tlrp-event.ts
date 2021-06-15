@@ -1,12 +1,12 @@
 import * as alt from 'alt-server';
-import { ATHENA_EVENTS_PLAYER, ATHENA_EVENTS_VEHICLE } from '../enums/tlrp';
+import { TLRP_EVENTS_PLAYER, TLRP_EVENTS_VEHICLE } from '../enums/tlrp';
 
 const events: { [key: string]: Array<any> } = {};
 
 type playerCallback = (result: alt.Player, ...args: any) => void;
 type vehicleCallback = (result: alt.Vehicle, ...args: any) => void;
 
-function on(eventName: ATHENA_EVENTS_PLAYER | ATHENA_EVENTS_VEHICLE, callback: playerCallback | vehicleCallback) {
+function on(eventName: TLRP_EVENTS_PLAYER | TLRP_EVENTS_VEHICLE, callback: playerCallback | vehicleCallback) {
     if (!events[eventName]) {
         events[eventName] = [];
     }
@@ -23,22 +23,22 @@ export class EventController {
     /**
      * Subscribe to an Athena Player event.
      * @static
-     * @param {ATHENA_EVENTS_PLAYER} eventName
+     * @param {TLRP_EVENTS_PLAYER} eventName
      * @param {playerCallback} callback
      * @memberof EventController
      */
-    static onPlayer(eventName: ATHENA_EVENTS_PLAYER, callback: playerCallback) {
+    static onPlayer(eventName: TLRP_EVENTS_PLAYER, callback: playerCallback) {
         on(eventName, callback);
     }
 
     /**
      * Subscribe to an Athena Vehicle event.
      * @static
-     * @param {ATHENA_EVENTS_VEHICLE} eventName
+     * @param {TLRP_EVENTS_VEHICLE} eventName
      * @param {vehicleCallback} callback
      * @memberof EventController
      */
-    static onVehicle(eventName: ATHENA_EVENTS_VEHICLE, callback: vehicleCallback) {
+    static onVehicle(eventName: TLRP_EVENTS_VEHICLE, callback: vehicleCallback) {
         on(eventName, callback);
     }
 }
@@ -53,13 +53,13 @@ function processCallbacks(eventName: string, args: any[]) {
     });
 }
 
-Object.values(ATHENA_EVENTS_PLAYER).forEach((eventName) => {
+Object.values(TLRP_EVENTS_PLAYER).forEach((eventName) => {
     alt.on(eventName, (...args: any[]) => {
         processCallbacks(eventName.toString(), args);
     });
 });
 
-Object.values(ATHENA_EVENTS_VEHICLE).forEach((eventName) => {
+Object.values(TLRP_EVENTS_VEHICLE).forEach((eventName) => {
     alt.on(eventName, (...args: any[]) => {
         processCallbacks(eventName.toString(), args);
     });

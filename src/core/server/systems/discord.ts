@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import { DEFAULT_CONFIG } from '../tlrp/main';
-import Logger from '../utility/tlrpLogger';
+import Logger from '../utility/tlrp-logger';
 import { OptionsController } from './options';
 
 export class DiscordController {

@@ -7,9 +7,9 @@ import { SystemEvent } from '../shared/enums/system';
 import { getVersionIdentifier } from './ares/getRequests';
 import { PostController } from './ares/postRequests';
 import { Collections } from './interface/DatabaseCollections';
-import { default as logger, default as Logger } from './utility/tlrpLogger';
+import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
-import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
+import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasm-loader';
 
 env.config();
 

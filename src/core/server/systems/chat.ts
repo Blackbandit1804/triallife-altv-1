@@ -4,11 +4,11 @@ import { Command } from '../../shared/interfaces/Command';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { getClosestTypes } from '../../shared/utility/vector';
 import { DEFAULT_CONFIG } from '../tlrp/main';
-import { emitAll } from '../utility/emitHelper';
+import { emitAll } from '../utility/emit-helper';
 import { Permissions } from '../../shared/flags/permissions';
 import { SystemEvent } from '../../shared/enums/system';
 import { playerFuncs } from '../extensions/Player';
-import Logger from '../utility/tlrpLogger';
+import Logger from '../utility/tlrp-logger';
 
 const maxMessageLength: number = 128;
 const printCommands = false;

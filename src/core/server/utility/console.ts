@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import ChatController from '../systems/chat';
-import Logger from './tlrpLogger';
+import Logger from './tlrp-logger';
 import fs from 'fs';
 import { AdminController } from '../systems/admin';
 import { Account } from '../interface/Account';

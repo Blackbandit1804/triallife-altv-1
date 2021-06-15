@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import logger from '../server/utility/tlrpLogger';
+import logger from '../server/utility/tlrp-logger';
 import { SystemEvent } from '../shared/enums/system';
 
 const filePaths = [

@@ -7,7 +7,7 @@ import { LocaleController } from '../../shared/locale/locale';
 import { getClosestVectorByPos } from '../../shared/utility/vector';
 import { playerFuncs } from '../extensions/Player';
 import { Collections } from '../interface/DatabaseCollections';
-import Logger from '../utility/tlrpLogger';
+import Logger from '../utility/tlrp-logger';
 import { distance2d } from '../utility/vector';
 import { InteractionController } from './interaction';
 

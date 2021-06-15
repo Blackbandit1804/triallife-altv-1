@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { ATHENA_EVENTS_PLAYER } from '../../enums/tlrp';
+import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
@@ -89,7 +89,7 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         MarkerController.populateGlobalMarkers(p);
         TextLabelController.populateGlobalLabels(p);
         alt.emit(SystemEvent.VOICE_ADD, p);
-        alt.emit(ATHENA_EVENTS_PLAYER.SELECTED_CHARACTER, p);
+        alt.emit(TLRP_EVENTS_PLAYER.SELECTED_CHARACTER, p);
     }, 500);
 
     // Delete unused data from the Player.

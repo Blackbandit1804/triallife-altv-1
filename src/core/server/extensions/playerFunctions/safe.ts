@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 import emit from './emit';
 import save from './save';
 

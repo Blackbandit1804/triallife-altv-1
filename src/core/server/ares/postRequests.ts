@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import axios from 'axios';
 import { decryptData, getAzureEndpoint, getSharedSecret } from '../utility/encryption'; // Should be able to safely import this.
-import { WASM } from '../utility/wasmLoader';
+import { WASM } from '../utility/wasm-loader';
 import { generatePosterFormat } from './shared';
 
 export class PostController {

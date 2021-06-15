@@ -6,7 +6,7 @@ import toggle from './toggle';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../Vehicle';
-import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 
 const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 

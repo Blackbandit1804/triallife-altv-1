@@ -11,7 +11,7 @@ import save from './save';
 import dataUpdater from './dataUpdater';
 import safe from './safe';
 import sync from './sync';
-import { ATHENA_EVENTS_PLAYER } from '../../enums/tlrp';
+import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { ActionMenu } from '../../../shared/interfaces/actions';
 import { playerFuncs } from '../Player';
 import { Collections } from '../../interface/DatabaseCollections';
@@ -73,7 +73,7 @@ function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null):
         p.nextDeathSpawn = Date.now() + DEFAULT_CONFIG.RESPAWN_TIME;
     }
 
-    alt.emit(ATHENA_EVENTS_PLAYER.DIED, p);
+    alt.emit(TLRP_EVENTS_PLAYER.DIED, p);
 }
 
 /**
@@ -160,7 +160,7 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
         safe.addArmour(p, DEFAULT_CONFIG.RESPAWN_ARMOUR, true);
     });
 
-    alt.emit(ATHENA_EVENTS_PLAYER.SPAWNED, p);
+    alt.emit(TLRP_EVENTS_PLAYER.SPAWNED, p);
 }
 
 export default {

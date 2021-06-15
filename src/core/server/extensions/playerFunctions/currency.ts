@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { CurrencyTypes } from '../../../shared/enums/economy';
 import save from './save';
 import emit from './emit';
-import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 
 const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
