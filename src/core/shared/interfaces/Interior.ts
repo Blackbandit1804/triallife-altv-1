@@ -1,6 +1,6 @@
-import { Item } from './Item';
-import { Vector3 } from './Vector';
-import { Vehicle } from './Vehicle';
+import { Item } from './item';
+import { Vector3 } from './vector';
+import { Vehicle } from './vehicle';
 
 export interface Furniture {
     pos: Vector3;

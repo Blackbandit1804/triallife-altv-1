@@ -3,9 +3,9 @@ import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Chat } from '../../../shared/enums/views';
 import { AnimationFlags } from '../../../shared/flags/animation';
 import { AudioStream } from '../../../shared/interfaces/audio';
-import { Particle } from '../../../shared/interfaces/Particle';
-import { ProgressBar } from '../../../shared/interfaces/ProgressBar';
-import { Task, TaskCallback } from '../../../shared/interfaces/TaskTimeline';
+import { Particle } from '../../../shared/interfaces/particle';
+import { ProgressBar } from '../../../shared/interfaces/progress-bar';
+import { Task, TaskCallback } from '../../../shared/interfaces/task-timeline';
 import utility from './utility';
 
 /**
@@ -17,13 +17,7 @@ import utility from './utility';
  * @return {*}  {void}
  * @memberof EmitPrototype
  */
-function animation(
-    p: alt.Player,
-    dictionary: string,
-    name: string,
-    flags: AnimationFlags,
-    duration: number = -1
-): void {
+function animation(p: alt.Player, dictionary: string, name: string, flags: AnimationFlags, duration: number = -1): void {
     if (p.data.isDead) {
         alt.logWarning(`[Athena] Cannot play ${dictionary}@${name} while player is dead.`);
         return;

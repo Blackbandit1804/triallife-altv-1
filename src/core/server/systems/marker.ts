@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
-import { Marker } from '../../shared/interfaces/Marker';
+import { Marker } from '../../shared/interfaces/marker';
 import Logger from '../utility/tlrp-logger';
 
 const globalMarkers: Array<Marker> = [];

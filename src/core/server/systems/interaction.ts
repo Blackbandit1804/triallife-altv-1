@@ -3,7 +3,7 @@ import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Clothing } from '../../shared/enums/views';
 import gridData from '../../shared/configs/grid-data';
 import { Blip } from '../../shared/interfaces/blip';
-import { Interaction } from '../../shared/interfaces/Interaction';
+import { Interaction } from '../../shared/interfaces/interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { DefaultConfig } from '../configs/settings';
@@ -105,14 +105,7 @@ export class InteractionManager {
      * @param {boolean} isServerEvent Is this a server event or a client event?
      * @memberof InteractionManager
      */
-    static addInteraction(
-        identifierAndEventName: string,
-        position: alt.IVector3,
-        range: number,
-        activationText: string,
-        blip: Blip,
-        isServerEvent: boolean
-    ) {
+    static addInteraction(identifierAndEventName: string, position: alt.IVector3, range: number, activationText: string, blip: Blip, isServerEvent: boolean) {
         const newPos = new alt.Vector3(position.x, position.y, position.z - 1);
         const shape = new alt.ColshapeCylinder(newPos.x, newPos.y, newPos.z, range, 2.5);
         shape.playersOnly = true;
@@ -172,13 +165,7 @@ export class InteractionManager {
 
         const text = colshape['text'] ? colshape['text'] : LocaleManager.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT);
 
-        alt.emitClient(
-            player,
-            SystemEvent.PLAYER_SET_INTERACTION,
-            colshape['interactionType'],
-            new alt.Vector3(colshape.pos.x, colshape.pos.y, colshape.pos.z),
-            text
-        );
+        alt.emitClient(player, SystemEvent.PLAYER_SET_INTERACTION, colshape['interactionType'], new alt.Vector3(colshape.pos.x, colshape.pos.y, colshape.pos.z), text);
     }
 
     /**

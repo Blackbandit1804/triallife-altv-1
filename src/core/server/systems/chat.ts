@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { View_Events_Chat } from '../../shared/enums/views';
-import { Command } from '../../shared/interfaces/Command';
+import { Command } from '../../shared/interfaces/command';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { getClosestTypes } from '../../shared/utility/vector';
 import { DefaultConfig } from '../configs/settings';
@@ -184,8 +184,6 @@ export default class ChatManager {
 import('../commands/commands')
     .catch((err) => {
         console.error(err);
-        console.error(
-            `[Athena] Failed to load a command file. Please fix the error and commands will work normally again.`
-        );
+        console.error(`[Athena] Failed to load a command file. Please fix the error and commands will work normally again.`);
     })
     .then(() => alt.onClient(View_Events_Chat.Send, ChatManager.handleMessage));

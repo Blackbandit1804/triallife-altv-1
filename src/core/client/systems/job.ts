@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import JobEnums, { Objective } from '../../shared/interfaces/Job';
+import JobEnums, { Objective } from '../../shared/interfaces/job';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { distance } from '../../shared/utility/vector';
 import { drawMarker } from '../utility/marker';
@@ -55,11 +55,7 @@ class ObjectiveManager {
     }
 
     private static getVector3Range() {
-        return new alt.Vector3(
-            ObjectiveManager.objective.range,
-            ObjectiveManager.objective.range,
-            ObjectiveManager.objective.range
-        );
+        return new alt.Vector3(ObjectiveManager.objective.range, ObjectiveManager.objective.range, ObjectiveManager.objective.range);
     }
 
     private static verifyType(dist: number): boolean {
@@ -115,22 +111,12 @@ class ObjectiveManager {
         }
 
         if (ObjectiveManager.objective.textLabel && dist <= ObjectiveManager.objective.range * 10) {
-            drawText3D(
-                ObjectiveManager.objective.textLabel.data,
-                ObjectiveManager.objective.textLabel.pos as alt.Vector3,
-                0.4,
-                new alt.RGBA(255, 255, 255, 255)
-            );
+            drawText3D(ObjectiveManager.objective.textLabel.data, ObjectiveManager.objective.textLabel.pos as alt.Vector3, 0.4, new alt.RGBA(255, 255, 255, 255));
         }
 
         if (ObjectiveManager.objective.captureProgress >= 1 && dist <= ObjectiveManager.objective.range * 10) {
             const progressText = `${ObjectiveManager.objective.captureProgress}/${ObjectiveManager.objective.captureMaximum}`;
-            drawText3D(
-                progressText,
-                ObjectiveManager.objective.pos as alt.Vector3,
-                0.4,
-                new alt.RGBA(255, 255, 255, 255)
-            );
+            drawText3D(progressText, ObjectiveManager.objective.pos as alt.Vector3, 0.4, new alt.RGBA(255, 255, 255, 255));
         }
 
         if (ObjectiveManager.cooldown && Date.now() < ObjectiveManager.cooldown) {

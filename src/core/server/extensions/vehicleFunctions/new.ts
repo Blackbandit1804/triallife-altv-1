@@ -1,16 +1,12 @@
 import * as alt from 'alt-server';
 import { Vehicle_Behavior, Vehicle_State } from '../../../shared/enums/vehicle';
-import { Vehicle } from '../../../shared/interfaces/Vehicle';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { sha256Random } from '../../utility/encryption';
 import { playerFuncs } from '../Player';
 
 const ownershipBehavior = Vehicle_Behavior.CONSUMES_FUEL | Vehicle_Behavior.NEED_KEY_TO_START;
-const tmpBehavior =
-    Vehicle_Behavior.NO_KEY_TO_LOCK |
-    Vehicle_Behavior.NO_KEY_TO_START |
-    Vehicle_Behavior.UNLIMITED_FUEL |
-    Vehicle_Behavior.NO_SAVE;
+const tmpBehavior = Vehicle_Behavior.NO_KEY_TO_LOCK | Vehicle_Behavior.NO_KEY_TO_START | Vehicle_Behavior.UNLIMITED_FUEL | Vehicle_Behavior.NO_SAVE;
 
 /**
  * Add a vehicle to a player's data.
@@ -112,15 +108,7 @@ function spawn(player: alt.Player, data: Vehicle): alt.Vehicle {
     }
 
     // Create the new vehicle.
-    const vehicle = new alt.Vehicle(
-        data.model,
-        data.position.x,
-        data.position.y,
-        data.position.z,
-        data.rotation.x,
-        data.rotation.y,
-        data.rotation.z
-    );
+    const vehicle = new alt.Vehicle(data.model, data.position.x, data.position.y, data.position.z, data.rotation.x, data.rotation.y, data.rotation.z);
 
     player.lastVehicleID = vehicle.id;
 

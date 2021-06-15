@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import { Vehicle_Behavior } from '../../../shared/enums/vehicle';
-import { Vehicle } from '../../../shared/interfaces/Vehicle';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { playerFuncs } from '../Player';
 

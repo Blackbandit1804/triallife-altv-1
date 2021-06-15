@@ -7,7 +7,7 @@ import save from './vehicleFunctions/save';
 import setter from './vehicleFunctions/setter';
 import toggle from './vehicleFunctions/toggle';
 import utility from './vehicleFunctions/utility';
-import * as IVeh from '../../shared/interfaces/Vehicle';
+import * as IVeh from '../../shared/interfaces/vehicle';
 
 /**
  * Overwrites the default functionality of vehicles.

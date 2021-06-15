@@ -1,10 +1,10 @@
 import { Blip } from './blip';
-import { EventCall } from './EventCall';
-import { Marker } from './Marker';
-import { TextLabel } from './TextLabel';
-import { Vector3 } from './Vector';
+import { EventCall } from './event-call';
+import { Marker } from './marker';
+import { TextLabel } from './text-label';
+import { Vector3 } from './vector';
 import { JobAnimation } from './animation';
-import { Particle } from './Particle';
+import { Particle } from './particle';
 
 enum ObjectiveCriteria {
     NO_VEHICLE = 1,

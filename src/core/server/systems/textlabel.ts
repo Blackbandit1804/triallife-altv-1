@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
-import { TextLabel } from '../../shared/interfaces/TextLabel';
+import { TextLabel } from '../../shared/interfaces/text-label';
 import Logger from '../utility/tlrp-logger';
 
 const globalTextLabels: Array<TextLabel> = [];

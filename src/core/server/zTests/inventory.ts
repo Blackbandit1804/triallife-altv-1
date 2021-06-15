@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { ItemType } from '../../shared/enums/item-type';
-import { Item } from '../../shared/interfaces/Item';
+import { Item } from '../../shared/interfaces/item';
 import { playerFuncs } from '../extensions/Player';
 import { assert, executeTest } from './base';
 import logger from '../utility/tlrp-logger';
@@ -41,11 +41,7 @@ export default async function runTests() {
 async function testEmpty() {
     const testName = `Verify slot and tab are empty`;
     // Slot Open Check
-    let result: any = await executeTest<{ tab: number; slot: number }>(
-        testName,
-        playerFuncs.inventory.getFreeInventorySlot,
-        player
-    );
+    let result: any = await executeTest<{ tab: number; slot: number }>(testName, playerFuncs.inventory.getFreeInventorySlot, player);
 
     assert(result.tab, 0, `Tab was not equal to zero.`);
     assert(result.slot, 0, `Slot was not equal to zero.`);
@@ -66,12 +62,7 @@ async function testInventoryInsertion() {
 
 async function testIfInInventory() {
     const testName = `Check if in inventory`;
-    let result = await executeTest<{ tab: number; index: number } | null>(
-        testName,
-        playerFuncs.inventory.isInInventory,
-        player,
-        { name: smgItem.name }
-    );
+    let result = await executeTest<{ tab: number; index: number } | null>(testName, playerFuncs.inventory.isInInventory, player, { name: smgItem.name });
 
     assert(result.tab, 0, `Item was not in the inventory.`);
     assert(result.index, 0, `Item was not in the inventory.`);

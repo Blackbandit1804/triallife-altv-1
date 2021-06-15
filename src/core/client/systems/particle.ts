@@ -1,7 +1,7 @@
 import alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/enums/system';
-import { Particle } from '../../shared/interfaces/Particle';
+import { Particle } from '../../shared/interfaces/particle';
 import { sleep } from '../utility/sleep';
 
 alt.onServer(SystemEvent.PLAY_PARTICLE_EFFECT, handlePlayParticle);

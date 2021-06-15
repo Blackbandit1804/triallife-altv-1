@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { ItemType } from '../../shared/enums/item-type';
 import { SystemEvent } from '../../shared/enums/system';
-import { Item } from '../../shared/interfaces/Item';
+import { Item } from '../../shared/interfaces/item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { isFlagEnabled } from '../../shared/utility/flags';

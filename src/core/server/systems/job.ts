@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
-import JobEnums, { Objective } from '../../shared/interfaces/Job';
+import JobEnums, { Objective } from '../../shared/interfaces/job';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { playerFuncs } from '../extensions/Player';
 import { distance } from '../utility/vector';
@@ -242,13 +242,7 @@ export class Job {
             }
 
             alt.nextTick(() => {
-                playerFuncs.emit.animation(
-                    this.player,
-                    objective.animation.dict,
-                    objective.animation.name,
-                    objective.animation.flags,
-                    objective.animation.duration
-                );
+                playerFuncs.emit.animation(this.player, objective.animation.dict, objective.animation.name, objective.animation.flags, objective.animation.duration);
             });
         }, delay);
     }

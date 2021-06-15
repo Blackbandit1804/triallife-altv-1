@@ -2,8 +2,8 @@ import * as alt from 'alt-server';
 import { View_Events_Clothing } from '../../shared/enums/views';
 import * as sm from 'simplymongo';
 import { playerFuncs } from '../extensions/Player';
-import { ClothingComponent } from '../../shared/interfaces/Clothing';
-import { Item } from '../../shared/interfaces/Item';
+import { ClothingComponent } from '../../shared/interfaces/clothing';
+import { Item } from '../../shared/interfaces/item';
 import { ItemType } from '../../shared/enums/item-type';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 import { LocaleManager } from '../../shared/locale/locale';
@@ -31,13 +31,7 @@ function handleExit(player: alt.Player) {
     playerFuncs.sync.inventory(player);
 }
 
-function handlePurchase(
-    player: alt.Player,
-    equipmentSlot: number,
-    component: ClothingComponent,
-    name: string,
-    desc: string
-) {
+function handlePurchase(player: alt.Player, equipmentSlot: number, component: ClothingComponent, name: string, desc: string) {
     const newItem = deepCloneObject<Item>(wearableRef);
     newItem.name = name;
     newItem.description = desc;

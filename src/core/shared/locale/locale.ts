@@ -1,4 +1,4 @@
-import { LocaleFormat } from '../interfaces/LocaleFormat';
+import { LocaleFormat } from '../interfaces/locale-format';
 import en from './languages/en'; // Importing the English Locale
 export const placeholder = `_%_`;
 

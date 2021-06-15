@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import ChatManager from '../systems/chat';
-import { Item } from '../../shared/interfaces/Item';
+import { Item } from '../../shared/interfaces/item';
 import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
 import { playerFuncs } from '../extensions/Player';
@@ -73,27 +73,12 @@ const burgerItem: Item = {
     }
 };
 
-ChatManager.addCommand(
-    'dummyitem',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_DUMMY_ITEM, '/dummyitem'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('dummyitem', LocaleManager.get(LOCALE_KEYS.COMMAND_DUMMY_ITEM, '/dummyitem'), Permissions.Admin, handleCommand);
 
-ChatManager.addCommand(
-    'getitem',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/getitem'),
-    Permissions.Admin,
-    handleGetItem
-);
+ChatManager.addCommand('getitem', LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/getitem'), Permissions.Admin, handleGetItem);
 
 // alias
-ChatManager.addCommand(
-    'spawnitem',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/spawnitem'),
-    Permissions.Admin,
-    handleGetItem
-);
+ChatManager.addCommand('spawnitem', LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/spawnitem'), Permissions.Admin, handleGetItem);
 
 function handleCommand(player: alt.Player): void {
     let itemClone = deepCloneObject<Item>(pistolItem);

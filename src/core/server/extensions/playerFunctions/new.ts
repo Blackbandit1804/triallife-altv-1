@@ -4,7 +4,7 @@ import { Database, getDatabase } from 'simplymongo';
 import { Appearance } from '../../../shared/interfaces/design';
 import { CharacterInfo } from '../../../shared/interfaces/CharacterInfo';
 import select from './select';
-import { Vehicle } from '../../../shared/interfaces/Vehicle';
+import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { Collections } from '../../interface/DatabaseCollections';
 
 const db: Database = getDatabase();
@@ -17,12 +17,7 @@ const db: Database = getDatabase();
  * @return {*}  {Promise<void>}
  * @memberof NewPrototype
  */
-async function character(
-    p: alt.Player,
-    appearance: Partial<Appearance>,
-    info: Partial<CharacterInfo>,
-    name: string
-): Promise<void> {
+async function character(p: alt.Player, appearance: Partial<Appearance>, info: Partial<CharacterInfo>, name: string): Promise<void> {
     const newDocument: Partial<Character> = { ...CharacterDefaults };
     newDocument.appearance = appearance;
     newDocument.info = info;

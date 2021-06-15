@@ -1,5 +1,5 @@
 import { ItemType } from '../enums/item-type';
-import { Item } from '../interfaces/Item';
+import { Item } from '../interfaces/item';
 import { deepCloneObject } from '../utility/deepCopy';
 import EFFECTS from '../enums/effects';
 
@@ -10,8 +10,7 @@ export const ItemRegistry: Array<Item> = [
         icon: 'burger',
         slot: 0,
         quantity: 1,
-        behavior:
-            ItemType.CAN_DROP | ItemType.CAN_TRADE | ItemType.CAN_STACK | ItemType.IS_TOOLBAR | ItemType.CONSUMABLE,
+        behavior: ItemType.CAN_DROP | ItemType.CAN_TRADE | ItemType.CAN_STACK | ItemType.IS_TOOLBAR | ItemType.CONSUMABLE,
         data: {
             event: EFFECTS.EFFECT_FOOD,
             amount: 5,
@@ -24,8 +23,7 @@ export const ItemRegistry: Array<Item> = [
         icon: 'bread',
         slot: 0,
         quantity: 5,
-        behavior:
-            ItemType.CAN_DROP | ItemType.CAN_TRADE | ItemType.CAN_STACK | ItemType.IS_TOOLBAR | ItemType.CONSUMABLE,
+        behavior: ItemType.CAN_DROP | ItemType.CAN_TRADE | ItemType.CAN_STACK | ItemType.IS_TOOLBAR | ItemType.CONSUMABLE,
         data: {
             event: EFFECTS.EFFECT_FOOD,
             amount: 3,
@@ -38,12 +36,7 @@ export const ItemRegistry: Array<Item> = [
         icon: 'toolbox',
         slot: 0,
         quantity: 1,
-        behavior:
-            ItemType.CAN_DROP |
-            ItemType.CAN_TRADE |
-            ItemType.IS_TOOLBAR |
-            ItemType.CONSUMABLE |
-            ItemType.SKIP_CONSUMABLE,
+        behavior: ItemType.CAN_DROP | ItemType.CAN_TRADE | ItemType.IS_TOOLBAR | ItemType.CONSUMABLE | ItemType.SKIP_CONSUMABLE,
         data: {
             event: 'effect:Vehicle:Repair'
         }

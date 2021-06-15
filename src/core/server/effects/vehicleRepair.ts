@@ -1,8 +1,8 @@
 import * as alt from 'alt-server';
 import { Vehicle_Door_List } from '../../shared/enums/vehicle';
 import { AnimationFlags } from '../../shared/flags/animation';
-import { Item } from '../../shared/interfaces/Item';
-import { Task, TaskCallback } from '../../shared/interfaces/TaskTimeline';
+import { Item } from '../../shared/interfaces/item';
+import { Task, TaskCallback } from '../../shared/interfaces/task-timeline';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 import { getForwardVector } from '../utility/vector';
@@ -75,13 +75,7 @@ function handleRepairTimeline(player: alt.Player) {
         return;
     }
 
-    playerFuncs.emit.animation(
-        player,
-        'mp_car_bomb',
-        'car_bomb_mechanic',
-        AnimationFlags.NORMAL | AnimationFlags.REPEAT,
-        12000
-    );
+    playerFuncs.emit.animation(player, 'mp_car_bomb', 'car_bomb_mechanic', AnimationFlags.NORMAL | AnimationFlags.REPEAT, 12000);
 
     vehicleFuncs.setter.doorOpen(closestVehicle, player, Vehicle_Door_List.HOOD, true, true);
 

@@ -2,18 +2,12 @@ import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Clothing } from '../../../shared/enums/views';
-import { ClothingComponent } from '../../../shared/interfaces/Clothing';
-import { Item } from '../../../shared/interfaces/Item';
+import { ClothingComponent } from '../../../shared/interfaces/clothing';
+import { Item } from '../../../shared/interfaces/item';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
-import {
-    createPedEditCamera,
-    destroyPedEditCamera,
-    setFov,
-    setShouldDisableControls,
-    setZPos
-} from '../../utility/camera';
+import { createPedEditCamera, destroyPedEditCamera, setFov, setShouldDisableControls, setZPos } from '../../utility/camera';
 import { BaseHUD } from '../hud/hud';
 
 // const url = `http://127.0.0.1:5555/src/core/client/views/clothing/html/index.html`;

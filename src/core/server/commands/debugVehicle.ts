@@ -5,30 +5,15 @@ import { getVectorInFrontOfPlayer } from '../utility/vector';
 import { Permissions } from '../../shared/flags/permissions';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
-import { Vehicle } from '../../shared/interfaces/Vehicle';
+import { Vehicle } from '../../shared/interfaces/vehicle';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
-ChatManager.addCommand(
-    'vehicle',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_VEHICLE, '/vehicle'),
-    Permissions.Admin,
-    handleTemp
-);
+ChatManager.addCommand('vehicle', LocaleManager.get(LOCALE_KEYS.COMMAND_VEHICLE, '/vehicle'), Permissions.Admin, handleTemp);
 
-ChatManager.addCommand(
-    'addvehicle',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_ADD_VEHICLE, '/addvehicle'),
-    Permissions.Admin,
-    handleAdd
-);
+ChatManager.addCommand('addvehicle', LocaleManager.get(LOCALE_KEYS.COMMAND_ADD_VEHICLE, '/addvehicle'), Permissions.Admin, handleAdd);
 
-ChatManager.addCommand(
-    'spawnvehicle',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_SPAWN_VEHICLE, '/spawnvehicle'),
-    Permissions.None,
-    handleGet
-);
+ChatManager.addCommand('spawnvehicle', LocaleManager.get(LOCALE_KEYS.COMMAND_SPAWN_VEHICLE, '/spawnvehicle'), Permissions.None, handleGet);
 
 function handleTemp(player: alt.Player, model: string): void {
     if (!model) {

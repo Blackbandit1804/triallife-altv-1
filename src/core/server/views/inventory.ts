@@ -3,7 +3,7 @@ import { InventoryType } from '../../shared/enums/inventory-type';
 import { ItemType } from '../../shared/enums/item-type';
 import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Inventory } from '../../shared/enums/views';
-import { DroppedItem, Item } from '../../shared/interfaces/Item';
+import { DroppedItem, Item } from '../../shared/interfaces/item';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { playerFuncs } from '../extensions/Player';
 import { sha256Random } from '../utility/encryption';
@@ -62,13 +62,7 @@ export class InventoryManager {
      * @return {*}  {void}
      * @memberof InventoryManager
      */
-    static processItemMovement(
-        player: alt.Player,
-        selectedSlot: string,
-        endSlot: string,
-        tab: number,
-        hash: string | null
-    ): void {
+    static processItemMovement(player: alt.Player, selectedSlot: string, endSlot: string, tab: number, hash: string | null): void {
         if (!player || !player.valid) {
             return;
         }
@@ -101,13 +95,7 @@ export class InventoryManager {
 
         // Check if this is a swap or stack.
         if (endData.emptyCheck && !endData.emptyCheck(player, endSlotIndex, tab)) {
-            playerFuncs.inventory.handleSwapOrStack(
-                player,
-                selectedSlot,
-                endSlot,
-                tab,
-                InventoryManager.customItemRules
-            );
+            playerFuncs.inventory.handleSwapOrStack(player, selectedSlot, endSlot, tab, InventoryManager.customItemRules);
             return;
         }
 
@@ -120,28 +108,11 @@ export class InventoryManager {
         }
 
         if (endData.name === InventoryType.TAB) {
-            InventoryManager.handleMoveTabs(
-                player,
-                itemClone,
-                selectSlotIndex,
-                tab,
-                endSlotIndex,
-                selectData.name,
-                endData.name
-            );
+            InventoryManager.handleMoveTabs(player, itemClone, selectSlotIndex, tab, endSlotIndex, selectData.name, endData.name);
             return;
         }
 
-        if (
-            !playerFuncs.inventory.allItemRulesValid(
-                player,
-                itemClone,
-                endData,
-                endSlotIndex,
-                InventoryManager.customItemRules,
-                tab
-            )
-        ) {
+        if (!playerFuncs.inventory.allItemRulesValid(player, itemClone, endData, endSlotIndex, InventoryManager.customItemRules, tab)) {
             playerFuncs.sync.inventory(player);
             return;
         }
@@ -178,15 +149,7 @@ export class InventoryManager {
      * @param {Item} item
      * @memberof InventoryManager
      */
-    static handleMoveTabs(
-        player: alt.Player,
-        item: Item,
-        selectSlotIndex: number,
-        tab: number,
-        tabToMoveTo: number,
-        selectName: string,
-        endName: string
-    ) {
+    static handleMoveTabs(player: alt.Player, item: Item, selectSlotIndex: number, tab: number, tabToMoveTo: number, selectName: string, endName: string) {
         // Find a similar item if it exists and stack it if it does exist.
         const freeSlot = playerFuncs.inventory.getFreeInventorySlot(player, tabToMoveTo);
         if (!freeSlot) {
@@ -243,16 +206,7 @@ export class InventoryManager {
             return;
         }
 
-        if (
-            !playerFuncs.inventory.allItemRulesValid(
-                player,
-                itemClone,
-                { name: 'ground' },
-                null,
-                InventoryManager.customItemRules,
-                tab
-            )
-        ) {
+        if (!playerFuncs.inventory.allItemRulesValid(player, itemClone, { name: 'ground' }, null, InventoryManager.customItemRules, tab)) {
             playerFuncs.sync.inventory(player);
             return;
         }
@@ -325,13 +279,7 @@ export class InventoryManager {
         InventoryManager.handlePickupGround(player, endData, openSlot.slot, hash, openSlot.tab);
     }
 
-    static handlePickupGround(
-        player: alt.Player,
-        endData: CategoryData,
-        endSlotIndex: number,
-        hash: string | null,
-        tab: number
-    ) {
+    static handlePickupGround(player: alt.Player, endData: CategoryData, endSlotIndex: number, hash: string | null, tab: number) {
         if (player.vehicle) {
             playerFuncs.sync.inventory(player);
             return;
@@ -361,16 +309,7 @@ export class InventoryManager {
             return;
         }
 
-        if (
-            !playerFuncs.inventory.allItemRulesValid(
-                player,
-                droppedItem.item,
-                endData,
-                endSlotIndex,
-                InventoryManager.customItemRules,
-                tab
-            )
-        ) {
+        if (!playerFuncs.inventory.allItemRulesValid(player, droppedItem.item, endData, endSlotIndex, InventoryManager.customItemRules, tab)) {
             playerFuncs.sync.inventory(player);
             this.updateDroppedItemsAroundPlayer(player, false);
             return;

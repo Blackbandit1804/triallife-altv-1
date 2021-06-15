@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { Item } from '../../shared/interfaces/Item';
+import { Item } from '../../shared/interfaces/item';
 import { playerFuncs } from '../extensions/Player';
 import EFFECT from '../../shared/enums/effects';
 

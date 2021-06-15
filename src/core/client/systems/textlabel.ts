@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { SystemEvent } from '../../shared/enums/system';
-import { TextLabel } from '../../shared/interfaces/TextLabel';
+import { TextLabel } from '../../shared/interfaces/text-label';
 import { distance2d } from '../../shared/utility/vector';
 import { drawText3D } from '../utility/text';
 

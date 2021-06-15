@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/enums/system';
-import { Task, TaskCallback } from '../../shared/interfaces/TaskTimeline';
+import { Task, TaskCallback } from '../../shared/interfaces/task-timeline';
 import { sleep } from '../utility/sleep';
 
 alt.onServer(SystemEvent.PLAYER_EMIT_TASK_TIMELINE, handleTasks);

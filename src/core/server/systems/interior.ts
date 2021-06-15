@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import { SystemEvent } from '../../shared/enums/system';
-import { Interior } from '../../shared/interfaces/Interior';
+import { Interior } from '../../shared/interfaces/interior';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { getClosestVectorByPos } from '../../shared/utility/vector';
@@ -163,12 +163,7 @@ export class InteriorManager {
             if (interior) {
                 alt.Player.all.forEach((player) => {
                     if (player.data.interior.toString() === interior._id.toString()) {
-                        playerFuncs.safe.setPosition(
-                            player,
-                            interior.outside.x,
-                            interior.outside.y,
-                            interior.outside.z
-                        );
+                        playerFuncs.safe.setPosition(player, interior.outside.x, interior.outside.y, interior.outside.z);
                     }
                 });
             }

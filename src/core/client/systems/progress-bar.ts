@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/enums/system';
-import { ProgressBar } from '../../shared/interfaces/ProgressBar';
+import { ProgressBar } from '../../shared/interfaces/progress-bar';
 import { distance2d } from '../../shared/utility/vector';
 import { drawRectangle, drawText3D } from '../utility/text';
 

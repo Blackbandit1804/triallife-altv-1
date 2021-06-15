@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { EquipmentType } from '../../../shared/enums/equipment';
 import { InventoryType } from '../../../shared/enums/inventory-type';
 import { ItemType } from '../../../shared/enums/item-type';
-import { Item, ItemSpecial } from '../../../shared/interfaces/Item';
+import { Item, ItemSpecial } from '../../../shared/interfaces/item';
 import { deepCloneObject } from '../../../shared/utility/deepCopy';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { CategoryData } from '../../interface/CategoryData';
@@ -623,11 +623,7 @@ function findAndRemove(player: alt.Player, itemName: string): boolean {
     return true;
 }
 
-function findItemBySlot(
-    player: alt.Player,
-    selectedSlot: string,
-    tab: number | null
-): { item: Item; index: number } | null {
+function findItemBySlot(player: alt.Player, selectedSlot: string, tab: number | null): { item: Item; index: number } | null {
     // Inventory
     if (selectedSlot.includes('i')) {
         const item = getInventoryItem(player, stripCategory(selectedSlot), tab);
@@ -704,13 +700,7 @@ function saveFields(player: alt.Player, fields: string[]): void {
  * @param {(number | null)} tab
  * @return {*}
  */
-function handleSwapOrStack(
-    player: alt.Player,
-    selectedSlot: string,
-    endSlot: string,
-    tab: number | null,
-    customItemRules: Array<Function>
-) {
+function handleSwapOrStack(player: alt.Player, selectedSlot: string, endSlot: string, tab: number | null, customItemRules: Array<Function>) {
     const fieldsToSave = [];
     const selectItem = findItemBySlot(player, selectedSlot, tab);
     const endItem = findItemBySlot(player, endSlot, tab);
@@ -755,9 +745,7 @@ function handleSwapOrStack(
         }
     }
 
-    const selectedArray: Array<Item> = isSelectInventory
-        ? player.data[selectedSlotName][tab]
-        : player.data[selectedSlotName];
+    const selectedArray: Array<Item> = isSelectInventory ? player.data[selectedSlotName][tab] : player.data[selectedSlotName];
     let endArray;
 
     if (selectedSlotName === endSlotName) {
@@ -838,14 +826,7 @@ function handleSwapOrStack(
  * @param {number} endSlotIndex
  * @return {*}  {boolean}
  */
-function allItemRulesValid(
-    player: alt.Player,
-    item: Item,
-    endSlot: CategoryData,
-    endSlotIndex: number | null,
-    customItemRules: Array<Function>,
-    tab: number | null
-): boolean {
+function allItemRulesValid(player: alt.Player, item: Item, endSlot: CategoryData, endSlotIndex: number | null, customItemRules: Array<Function>, tab: number | null): boolean {
     if (!item.behavior) {
         return true;
     }
