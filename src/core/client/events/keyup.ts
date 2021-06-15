@@ -4,10 +4,10 @@ import { SystemEvent } from '../../shared/enums/system';
 import { InteractionManager } from '../systems/interaction';
 import { ToolbarManager } from '../systems/toolbar';
 import { VehicleManager } from '../systems/vehicle';
-import { ChatManager } from '../views/hud/controllers/chatManager';
-import { HelpManager } from '../views/hud/controllers/helpManager';
-import { LeaderboardManager } from '../views/hud/controllers/leaderBoardManager';
-import { PhoneManager } from '../views/hud/controllers/phoneManager';
+import { ChatManager } from '../views/hud/controllers/chat-manager';
+import { HelpManager } from '../views/hud/controllers/help-manager';
+import { LeaderboardManager } from '../views/hud/controllers/leaderboard-manager';
+import { PhoneManager } from '../views/hud/controllers/phone-manager';
 import { InventoryManager } from '../views/inventory/inventory';
 
 export const KEY_BINDS = {

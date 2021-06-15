@@ -2,12 +2,12 @@ import * as alt from 'alt-client';
 import { SharedConfig } from '../../shared/configs/settings';
 import { SystemEvent } from '../../shared/enums/system';
 import { ActionMenu, Action } from '../../shared/interfaces/actions';
-import { Interaction } from '../../shared/interfaces/Interaction';
+import { Interaction } from '../../shared/interfaces/interaction';
 import { distance2d } from '../../shared/utility/vector';
 import { KEY_BINDS } from '../events/keyup';
 import { drawMarker } from '../utility/marker';
-import { ActionsManager } from '../views/hud/controllers/actionsManager';
-import { HelpManager } from '../views/hud/controllers/helpManager';
+import { ActionsManager } from '../views/hud/controllers/actions-manager';
+import { HelpManager } from '../views/hud/controllers/help-manager';
 import { BaseHUD, HudEventNames } from '../views/hud/hud';
 import { VehicleManager } from './vehicle';
 

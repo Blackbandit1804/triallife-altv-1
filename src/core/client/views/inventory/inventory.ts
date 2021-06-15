@@ -3,7 +3,7 @@ import * as native from 'natives';
 import { SharedConfig } from '../../../shared/configs/settings';
 import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Inventory } from '../../../shared/enums/views';
-import { DroppedItem } from '../../../shared/interfaces/Item';
+import { DroppedItem } from '../../../shared/interfaces/item';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleManager } from '../../../shared/locale/locale';
 import { distance2d } from '../../../shared/utility/vector';

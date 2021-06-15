@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { Item } from '../../shared/interfaces/Item';
+import { Item } from '../../shared/interfaces/item';
 import { Meta } from './meta';
 
 declare module 'alt-client' {

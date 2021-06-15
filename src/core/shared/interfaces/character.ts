@@ -46,3 +46,8 @@ export interface CharacterInfo {
     gender: string;
     age: any;
 }
+
+export interface CharacterInfo {
+    gender: string;
+    age: any;
+}

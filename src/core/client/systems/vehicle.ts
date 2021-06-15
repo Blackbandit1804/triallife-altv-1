@@ -1,18 +1,12 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import {
-    Vehicle_Events,
-    Vehicle_Lock_State,
-    Vehicle_State,
-    Vehicle_Seat_List,
-    Vehicle_Door_List
-} from '../../shared/enums/vehicle';
+import { Vehicle_Events, Vehicle_Lock_State, Vehicle_State, Vehicle_Seat_List, Vehicle_Door_List } from '../../shared/enums/vehicle';
 import { distance, distance2d, getClosestVectorByPos } from '../../shared/utility/vector';
 import vehicleFuncs from '../extensions/vehicle';
 import { BaseHUD, HudEventNames } from '../views/hud/hud';
 import { ActionMenu } from '../../shared/interfaces/actions';
 import { CLIENT_VEHICLE_EVENTS } from '../enums/vehicle';
-import { ChatManager } from '../views/hud/controllers/chatManager';
+import { ChatManager } from '../views/hud/controllers/chat-manager';
 import { drawTexture, loadTexture } from '../utility/texture';
 import { KEY_BINDS } from '../events/keyup';
 import { LocaleManager } from '../../shared/locale/locale';
@@ -185,12 +179,8 @@ export class VehicleManager {
                 return actions;
             }
 
-            const short = `[${String.fromCharCode(KEY_BINDS.INTERACT)}] ${LocaleManager.get(
-                LOCALE_KEYS.INTERACTION_INTERACT_VEHICLE
-            )}`;
-            const long = `[${String.fromCharCode(KEY_BINDS.VEHICLE_LOCK)}] ${LocaleManager.get(
-                LOCALE_KEYS.VEHICLE_TOGGLE_LOCK
-            )}`;
+            const short = `[${String.fromCharCode(KEY_BINDS.INTERACT)}] ${LocaleManager.get(LOCALE_KEYS.INTERACTION_INTERACT_VEHICLE)}`;
+            const long = `[${String.fromCharCode(KEY_BINDS.VEHICLE_LOCK)}] ${LocaleManager.get(LOCALE_KEYS.VEHICLE_TOGGLE_LOCK)}`;
             alt.Player.local.otherInteraction = {
                 position: closestVehicle.pos,
                 short,
@@ -204,11 +194,7 @@ export class VehicleManager {
 
             // Generate Seat Menu
             const maxSeats = native.getVehicleMaxNumberOfPassengers(closestVehicle.scriptID) + 1;
-            actions[vehicleModel]['Seats'] = VehicleManager.getMaximums(
-                Vehicle_Seat_List,
-                maxSeats,
-                CLIENT_VEHICLE_EVENTS.TOGGLE_SEAT
-            );
+            actions[vehicleModel]['Seats'] = VehicleManager.getMaximums(Vehicle_Seat_List, maxSeats, CLIENT_VEHICLE_EVENTS.TOGGLE_SEAT);
 
             // Generate Door Menu
             actions[vehicleModel]['Doors'] = {};

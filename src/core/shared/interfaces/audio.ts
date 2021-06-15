@@ -1,4 +1,4 @@
-import { Vector3 } from './Vector';
+import { Vector3 } from './vector';
 
 export interface AudioStream {
     streamName: string;

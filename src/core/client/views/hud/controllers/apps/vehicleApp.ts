@@ -2,7 +2,7 @@ import * as alt from 'alt-client';
 import * as native from 'natives';
 import { BaseHUD } from '../../hud';
 import { SystemEvent } from '../../../../../shared/enums/system';
-import { ChatManager } from '../chatManager';
+import { ChatManager } from '../chat-manager';
 
 let vehicles = [];
 
