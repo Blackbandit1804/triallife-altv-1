@@ -1,6 +1,6 @@
 import { ItemType } from '../enums/item-type';
 import { Item } from '../interfaces/item';
-import { deepCloneObject } from '../utility/deepCopy';
+import { deepCloneObject } from '../utility/deep-copy';
 import EFFECTS from '../enums/effects';
 
 export const ItemRegistry: Array<Item> = [
