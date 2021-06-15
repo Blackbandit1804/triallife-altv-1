@@ -7,7 +7,7 @@ import { SYSTEM_EVENTS } from '../shared/enums/system';
 import { getVersionIdentifier } from './ares/getRequests';
 import { PostController } from './ares/postRequests';
 import { Collections } from './interface/DatabaseCollections';
-import { default as logger, default as Logger } from './utility/athenaLogger';
+import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
 import { AresFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
 
@@ -19,7 +19,7 @@ const startTime = Date.now();
 const name = 'wasm';
 const data = [];
 const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
-const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/athena.wasm');
+const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/tlrp.wasm');
 const collections = [
     //
     Collections.Accounts,
@@ -33,13 +33,13 @@ alt.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
 
 if (!process.env.GUMROAD) {
     logger.error('Failed to retrieve GUMROAD from your .env file.');
-    logger.log(`Visit: https://athena.stuyk.com/documentation/installing-athena`);
+    logger.log(`Visit: https://tlrp.stuyk.com/documentation/installing-tlrp`);
     process.exit(0);
 }
 
 if (!process.env.EMAIL) {
     logger.error('Failed to retrieve EMAIL from your .env file.');
-    logger.log(`Visit: https://athena.stuyk.com/documentation/installing-athena`);
+    logger.log(`Visit: https://tlrp.stuyk.com/documentation/installing-tlrp`);
     process.exit(0);
 }
 

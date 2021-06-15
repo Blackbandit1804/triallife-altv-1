@@ -16,7 +16,7 @@ button:active {
     transition: 0.1ms;
 }
 
-.athena {
+.tlrp {
     position: fixed;
     display: block;
     right: 2vw;
@@ -26,7 +26,7 @@ button:active {
     min-height: 50px;
     max-height: 50px;
     z-index: 99;
-    background: url('../svg/athena.svg');
+    background: url('../svg/tlrp.svg');
     background-size: cover;
     opacity: 0.2;
 }
@@ -71,11 +71,11 @@ button:active {
     }
 }
 
-.overline{
-    font-size:.75rem!important;
-    font-weight:500;
-    letter-spacing:.1666666667em!important;
-    line-height:2rem;
-    text-transform:uppercase;
-    font-family:Roboto,sans-serif!important
+.overline {
+    font-size: 0.75rem !important;
+    font-weight: 500;
+    letter-spacing: 0.1666666667em !important;
+    line-height: 2rem;
+    text-transform: uppercase;
+    font-family: Roboto, sans-serif !important;
 }

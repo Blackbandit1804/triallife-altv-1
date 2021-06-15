@@ -3,11 +3,11 @@ import { Vehicle_Behavior, Vehicle_Lock_State } from '../../../shared/enums/vehi
 import { isFlagEnabled } from '../../../shared/utility/flags';
 
 function lockState(v: alt.Vehicle): Vehicle_Lock_State {
-    if (v.athenaLockState === null || v.athenaLockState === undefined) {
+    if (v.tlrpLockState === null || v.tlrpLockState === undefined) {
         return Vehicle_Lock_State.LOCKED;
     }
 
-    return v.athenaLockState;
+    return v.tlrpLockState;
 }
 
 function hasFuel(v: alt.Vehicle): boolean {

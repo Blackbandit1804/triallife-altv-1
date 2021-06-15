@@ -4,7 +4,7 @@ import { CurrencyTypes } from '../../../shared/enums/economy';
 import { World } from '../../systems/world';
 import { SYSTEM_EVENTS } from '../../../shared/enums/system';
 import emit from './emit';
-import { DEFAULT_CONFIG } from '../../athena/main';
+import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { playerFuncs } from '../Player';
 import save from './save';
 

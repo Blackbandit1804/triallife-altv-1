@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { Vehicle_Door_List, Vehicle_Events, Vehicle_Seat_List } from '../../../shared/enums/vehicle';
-import { ATHENA_EVENTS_VEHICLE } from '../../enums/athena';
+import { ATHENA_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { playerFuncs } from '../Player';
 import setter from './setter';
 

@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
-import { DEFAULT_CONFIG } from '../athena/main';
-import Logger from '../utility/athenaLogger';
+import { DEFAULT_CONFIG } from '../tlrp/main';
+import Logger from '../utility/tlrpLogger';
 import { OptionsController } from './options';
 
 export class DiscordController {

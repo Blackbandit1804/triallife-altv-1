@@ -1,8 +1,8 @@
 import { Database, getDatabase } from 'simplymongo';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 import { Collections } from '../interface/DatabaseCollections';
 import { defaultOptions, DiscordID, Options } from '../interface/Options';
-import Logger from '../utility/athenaLogger';
+import Logger from '../utility/tlrpLogger';
 
 export class OptionsController {
     static db: Database = getDatabase();

@@ -16,7 +16,7 @@ import * as IVeh from '../../shared/interfaces/Vehicle';
 
 declare module 'alt-server' {
     export interface Vehicle {
-        athenaLockState: Vehicle_Lock_State;
+        tlrpLockState: Vehicle_Lock_State;
         engineStatus: boolean;
         keys?: Array<string>;
         fuel?: number;

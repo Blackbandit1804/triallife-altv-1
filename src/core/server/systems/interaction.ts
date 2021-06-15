@@ -6,7 +6,7 @@ import { Blip } from '../../shared/interfaces/blip';
 import { Interaction } from '../../shared/interfaces/Interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import { distance2d } from '../utility/vector';
 import '../views/atm';

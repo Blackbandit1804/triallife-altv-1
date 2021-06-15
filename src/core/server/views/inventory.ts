@@ -9,7 +9,7 @@ import { playerFuncs } from '../extensions/Player';
 import { sha256Random } from '../utility/encryption';
 import '../effects/heal';
 import '../effects/vehicleRepair';
-import { ATHENA_EVENTS_PLAYER } from '../enums/athena';
+import { ATHENA_EVENTS_PLAYER } from '../enums/tlrp';
 import { distance2d } from '../utility/vector';
 import { stripCategory } from '../utility/category';
 import { CategoryData } from '../interface/CategoryData';

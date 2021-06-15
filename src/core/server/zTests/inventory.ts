@@ -3,7 +3,7 @@ import { ItemType } from '../../shared/enums/item-type';
 import { Item } from '../../shared/interfaces/Item';
 import { playerFuncs } from '../extensions/Player';
 import { assert, executeTest } from './base';
-import logger from '../utility/athenaLogger';
+import logger from '../utility/tlrpLogger';
 
 const player: alt.Player = {
     data: {

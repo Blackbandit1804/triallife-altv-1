@@ -1,8 +1,8 @@
 import * as alt from 'alt-server';
-import { ATHENA_EVENTS_PLAYER } from '../../enums/athena';
+import { ATHENA_EVENTS_PLAYER } from '../../enums/tlrp';
 import { SYSTEM_EVENTS } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
-import { DEFAULT_CONFIG } from '../../athena/main';
+import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { BlipController } from '../../systems/blip';
 import ChatController from '../../systems/chat';
 import { InteractionController } from '../../systems/interaction';

@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Vehicle_Behavior, Vehicle_State } from '../../../shared/enums/vehicle';
 import { Vehicle } from '../../../shared/interfaces/Vehicle';
-import { ATHENA_EVENTS_VEHICLE } from '../../enums/athena';
+import { ATHENA_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { sha256Random } from '../../utility/encryption';
 import { playerFuncs } from '../Player';
 

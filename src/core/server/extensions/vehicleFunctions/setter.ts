@@ -3,7 +3,7 @@ import getter from './getter';
 import { Vehicle_Behavior, Vehicle_Door_List, Vehicle_Lock_State, Vehicle_State } from '../../../shared/enums/vehicle';
 import keys from './keys';
 import toggle from './toggle';
-import { DEFAULT_CONFIG } from '../../athena/main';
+import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../Vehicle';
 import { AresFunctions, WASM } from '../../utility/wasmLoader';
@@ -17,11 +17,11 @@ function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State)
         }
     }
 
-    v.athenaLockState = lockState;
-    v.setStreamSyncedMeta(Vehicle_State.LOCK_STATE, v.athenaLockState);
+    v.tlrpLockState = lockState;
+    v.setStreamSyncedMeta(Vehicle_State.LOCK_STATE, v.tlrpLockState);
 
     // Automatically Close All Doors in Locked State
-    if (v.athenaLockState === Vehicle_Lock_State.LOCKED) {
+    if (v.tlrpLockState === Vehicle_Lock_State.LOCKED) {
         for (let i = 0; i < 6; i++) {
             doorOpen(v, player, i, false);
         }

@@ -3,7 +3,7 @@ import { View_Events_Chat } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import ChatController from '../systems/chat';
 import { emitAll } from '../utility/emitHelper';

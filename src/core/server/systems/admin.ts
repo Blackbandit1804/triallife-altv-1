@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import { Account } from '../interface/Account';
 import { Collections } from '../interface/DatabaseCollections';
-import Logger from '../utility/athenaLogger';
+import Logger from '../utility/tlrpLogger';
 
 const db: Database = getDatabase();
 

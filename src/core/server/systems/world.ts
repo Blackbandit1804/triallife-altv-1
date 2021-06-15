@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 
 /* -- Top of Map --
  * 0 - Weather at Index 0

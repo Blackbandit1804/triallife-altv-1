@@ -19,7 +19,7 @@ alt.onClient('discord:FinishAuth', handleFinishAuth);
  * How does this work?
  * There is an azure web app that this module connects to.
  * It has a public key that is accessible by anyone.
- * That url is: https://altv-athena-discord.azurewebsites.net/v1/request/key
+ * That url is: https://altv-tlrp-discord.azurewebsites.net/v1/request/key
  * The module fetches the public key from the azure web app.
  * This module then uses that public key to generate a shared secret through a Diffie Helman Exchange with our private and their public.
  * Once the secret is generated we can encrypt data to send to the web app.

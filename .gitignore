@@ -8,7 +8,7 @@ modules/
 data/
 *.log
 cache/
-athena.json
+tlrp.json
 configDiscord
 configLoadOrder
 configMongoDB

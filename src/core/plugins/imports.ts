@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import logger from '../server/utility/athenaLogger';
+import logger from '../server/utility/tlrpLogger';
 import { SYSTEM_EVENTS } from '../shared/enums/system';
 
 const filePaths = [

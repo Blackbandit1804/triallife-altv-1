@@ -6,7 +6,7 @@ const MainPath = process.cwd();
 
 const paths = [
     path.join(MainPath, 'resources'),
-    path.join(MainPath, 'athena-cache'),
+    path.join(MainPath, 'tlrp-cache'),
     path.join(MainPath, 'cache'),
     path.join(MainPath, 'crashdumps'),
     path.join(MainPath, 'cache'),
@@ -15,7 +15,7 @@ const paths = [
 ];
 
 async function cleanup() {
-    for(let i = 0; i < paths.length; i++) {
+    for (let i = 0; i < paths.length; i++) {
         const currentPath = paths[i];
 
         if (fs.existsSync(currentPath)) {
@@ -25,7 +25,7 @@ async function cleanup() {
                         console.log(err);
                         return;
                     }
-        
+
                     resolve();
                 });
             });

@@ -6,7 +6,7 @@ description: Frequently asked questions.
 
 -   [FAQ](#faq)
     -   [Do you have a Roadmap?](#do-you-have-a-roadmap)
-    -   [What happens after Trial Life stops development?](#what-happens-after-athena-stops-development)
+    -   [What happens after Trial Life stops development?](#what-happens-after-tlrp-stops-development)
     -   [Server Specification Recommendations](#server-specification-recommendations)
     -   [Interfaces are sometimes laggy or delayed.](#interfaces-are-sometimes-laggy-or-delayed)
     -   [Do I have to use Discord?](#do-i-have-to-use-discord)

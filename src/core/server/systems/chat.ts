@@ -3,12 +3,12 @@ import { View_Events_Chat } from '../../shared/enums/views';
 import { Command } from '../../shared/interfaces/Command';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { getClosestTypes } from '../../shared/utility/vector';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 import { emitAll } from '../utility/emitHelper';
 import { Permissions } from '../../shared/flags/permissions';
 import { SYSTEM_EVENTS } from '../../shared/enums/system';
 import { playerFuncs } from '../extensions/Player';
-import Logger from '../utility/athenaLogger';
+import Logger from '../utility/tlrpLogger';
 
 const maxMessageLength: number = 128;
 const printCommands = false;

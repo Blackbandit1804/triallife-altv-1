@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { PhoneEvents } from '../../shared/enums/phone-events';
 import { VehicleData } from '../../shared/information/vehicle-data';
-import { DEFAULT_CONFIG } from '../athena/main';
+import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 
