@@ -18,6 +18,7 @@ namespace core.Factories {
         public Database.Vehicle data { get; set; }
         public long nextSave { get; set; }
         public long nextUpdate { get; set; }
+
         public MyVehicle(IntPtr nativePointer, ushort id) : base(nativePointer, id) {
             tlrpLockState = Enums.LockState.LOCKED;
             engineStatus = false;
@@ -30,7 +31,6 @@ namespace core.Factories {
             nextUpdate = DateTime.Now.AddMilliseconds(DefaultConfig.TIME_BETWEEN_VEHICLE_UPDATES).Ticks;
             ManualEngineControl = true;
         }
-
         public MyVehicle(uint model, Position position, Rotation rotation, Database.Vehicle data = null) : base(model, position, rotation) {
             tlrpLockState = Enums.LockState.LOCKED;
             engineStatus = false;

@@ -159,8 +159,60 @@ namespace core.vehicleFuncs {
 			}
 		}
 	}
-
 	public class Toggle {
+		public static LockState locked(MyVehicle vehicle, MyPlayer player, bool bypass = false) { 
+			if (!bypass) {
+				if (!Getter.isOwner(vehicle, player) && !Keys.has(vehicle, player)) {
+					return vehicle.tlrpLockState;
+				}
+			}
+			var LockStates = new LockState[] { LockState.UNLOCKED, LockState.LOCKED };
+			var index = LockStates.ToList().FindIndex(x => x == vehicle.tlrpLockState);
+			if (index + 1 == LockStates.Length) index = -1;
+			vehicle.tlrpLockState = LockStates[index + 1];
+			vehicle.SetStreamSyncedMetaData(Utils.GetDescription(VehicleState.LOCK_STATE), vehicle.tlrpLockState);
+			if (vehicle.tlrpLockState == LockState.LOCKED) {
+				for (int i = 0; i < 6; i++) Setter.doorOpen(vehicle, player, i, false);
+			}
+			Alt.Emit(Utils.GetDescription(TlrpEvent.VEHICLE_LOCK), vehicle);
+			return vehicle.tlrpLockState;
+		}
+		public static void engine(MyVehicle vehicle, MyPlayer player, bool bypass = false) {
+			if (Utils.isFlagEnabled(vehicle.behavior, VehicleBehavior.NEED_KEY_TO_START) && !bypass) {
+				if(!Getter.isOwner(vehicle, player) && !Keys.has(vehicle, player))
+					return;
+			}
+			if (!Getter.hasFuel(vehicle)) {
+				vehicle.engineStatus = false;
+				vehicle.SetStreamSyncedMetaData(Utils.GetDescription(VehicleState.ENGINE), vehicle.engineStatus);
+				playerFuncs.Emit.notification(player, "Der Tank des Fahrzeuges ist leer");
+				return;
+			}
 
+			vehicle.engineStatus = !vehicle.engineStatus;
+			vehicle.SetStreamSyncedMetaData(Utils.GetDescription(VehicleState.ENGINE), vehicle.engineStatus);
+			if (player.Exists) {
+				var status = vehicle.engineStatus switch { true => "AN", _ => "AUS" };
+				playerFuncs.Emit.notification(player, $"Motor ~y~ {status}");
+			}
+			Alt.Emit(Utils.GetDescription(TlrpEvent.VEHICLE_ENGINE), vehicle);
+		}
+	}
+	public class Utility {
+		public static void eject(MyVehicle vehicle, MyPlayer player) {
+			if (player.Vehicle == null || (MyVehicle)player.Vehicle != vehicle) return;
+			playerFuncs.Safe.setPosition(player, player.Position.X, player.Position.Y, player.Position.Z);
+		}
+		public static void repair(MyVehicle vehicle) {
+			vehicle.Repair();
+			Setter.doorOpen(vehicle, null, (int)VehicleDoor.HOOD, false, true);
+			Alt.Emit(Utils.GetDescription(TlrpEvent.VEHICLE_REPAIRED), vehicle);
+		}
+		public static void warpInto(MyVehicle vehicle, MyPlayer player, VehicleSeat seat) {
+			if (vehicle.Driver != null) return;
+			if ((MyPlayer)vehicle.Driver == player) return;
+			if (player == null || !player.Exists) return;
+			player.Emit(Utils.GetDescription(VehicleEvent.SET_INTO), vehicle, seat);
+		}
 	}
 }
