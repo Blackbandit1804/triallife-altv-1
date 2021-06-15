@@ -1,14 +1,12 @@
 import * as alt from 'alt-server';
 import { WASM, TlrpFunctions } from './wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
-
 export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
     if (vector1 === undefined || vector2 === undefined) {
         throw new Error('AddVector => vector1 or vector2 is undefined');
     }
 
-    return wasm.AthenaMath.distance3d(vector1.x, vector1.y, vector1.z, vector2.x, vector2.y, vector2.z);
+    return TlrpMath.distance3d(vector1.x, vector1.y, vector1.z, vector2.x, vector2.y, vector2.z);
 }
 
 export function distance2d(vector1: alt.IVector3, vector2: alt.IVector3) {
@@ -16,7 +14,7 @@ export function distance2d(vector1: alt.IVector3, vector2: alt.IVector3) {
         throw new Error('AddVector => vector1 or vector2 is undefined');
     }
 
-    return wasm.AthenaMath.distance2d(vector1.x, vector1.y, vector2.x, vector2.y);
+    return TlrpMath.distance2d(vector1.x, vector1.y, vector2.x, vector2.y);
 }
 
 /**
@@ -26,9 +24,9 @@ export function distance2d(vector1: alt.IVector3, vector2: alt.IVector3) {
  */
 export function getForwardVector(rot: alt.Vector3): alt.Vector3 {
     return {
-        x: wasm.AthenaMath.fwdX(rot.x, rot.z),
-        y: wasm.AthenaMath.fwdY(rot.x, rot.z),
-        z: wasm.AthenaMath.fwdZ(rot.x)
+        x: TlrpMath.fwdX(rot.x, rot.z),
+        y: TlrpMath.fwdY(rot.x, rot.z),
+        z: TlrpMath.fwdZ(rot.x)
     } as alt.Vector3;
 }
 
@@ -43,8 +41,8 @@ export function getForwardVector(rot: alt.Vector3): alt.Vector3 {
 export function getVectorInFrontOfPlayer(player: alt.Player, distance: number): alt.Vector3 {
     const forwardVector = getForwardVector(player.rot);
     const posFront = {
-        x: wasm.AthenaMath.add(player.pos.x, wasm.AthenaMath.multiply(forwardVector.x, distance)),
-        y: wasm.AthenaMath.add(player.pos.y, wasm.AthenaMath.multiply(forwardVector.y, distance)),
+        x: TlrpMath.add(player.pos.x, TlrpMath.multiply(forwardVector.x, distance)),
+        y: TlrpMath.add(player.pos.y, TlrpMath.multiply(forwardVector.y, distance)),
         z: player.pos.z
     };
 
@@ -59,8 +57,8 @@ export function getVectorInFrontOfPlayer(player: alt.Player, distance: number): 
  * @returns {boolean}
  */
 export function isBetweenVectors(pos, vector1, vector2): boolean {
-    const validX = wasm.AthenaMath.isGreater(pos.x, vector1.x) && wasm.AthenaMath.isLesser(pos.x, vector2.x);
-    const validY = wasm.AthenaMath.isGreater(pos.y, vector1.y) && wasm.AthenaMath.isLesser(pos.y, vector2.y);
+    const validX = TlrpMath.isGreater(pos.x, vector1.x) && TlrpMath.isLesser(pos.x, vector2.x);
+    const validY = TlrpMath.isGreater(pos.y, vector1.y) && TlrpMath.isLesser(pos.y, vector2.y);
     return validX && validY ? true : false;
 }
 
@@ -76,8 +74,8 @@ export function isBetweenVectors(pos, vector1, vector2): boolean {
 export function getClosestEntity<T>(playerPosition: alt.Vector3, rot: alt.Vector3, entities: Array<{ pos: alt.Vector3; valid?: boolean }>, distance: number): T | null {
     const fwdVector = getForwardVector(rot);
     const position = {
-        x: wasm.AthenaMath.add(playerPosition.x, wasm.AthenaMath.multiply(fwdVector.x, distance)),
-        y: wasm.AthenaMath.add(playerPosition.y, wasm.AthenaMath.multiply(fwdVector.y, distance)),
+        x: TlrpMath.add(playerPosition.x, TlrpMath.multiply(fwdVector.x, distance)),
+        y: TlrpMath.add(playerPosition.y, TlrpMath.multiply(fwdVector.y, distance)),
         z: playerPosition.z
     };
 
@@ -92,7 +90,7 @@ export function getClosestEntity<T>(playerPosition: alt.Vector3, rot: alt.Vector
         }
 
         const dist = distance2d(position, entity.pos);
-        if (wasm.AthenaMath.isGreater(dist, lastRange)) {
+        if (TlrpMath.isGreater(dist, lastRange)) {
             continue;
         }
 

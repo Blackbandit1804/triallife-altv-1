@@ -1,9 +1,7 @@
 import * as alt from 'alt-server';
-import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
+
 import emit from './emit';
 import save from './save';
-
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Safely set a player's position.
@@ -35,13 +33,13 @@ function addHealth(p: alt.Player, value: number, exactValue: boolean = false) {
         return;
     }
 
-    if (wasm.AthenaMath.add(p.health, value) > 199) {
+    if (TlrpMath.add(p.health, value) > 199) {
         p.acHealth = 199;
         p.health = 199;
         return;
     }
 
-    p.acHealth = wasm.AthenaMath.add(p.health, value);
+    p.acHealth = TlrpMath.add(p.health, value);
     p.health = p.acHealth;
 }
 
@@ -58,13 +56,13 @@ function addArmour(p: alt.Player, value: number, exactValue: boolean = false): v
         return;
     }
 
-    if (wasm.AthenaMath.add(p.armour, value) > 100) {
+    if (TlrpMath.add(p.armour, value) > 100) {
         p.acArmour = 100;
         p.armour = 100;
         return;
     }
 
-    p.acArmour = wasm.AthenaMath.add(p.armour, value);
+    p.acArmour = TlrpMath.add(p.armour, value);
     p.armour = p.acArmour;
 }
 
@@ -95,11 +93,11 @@ function adjustAttribute(player: alt.Player, value: number, attributeName: strin
 
     player.data[attributeName] += value;
 
-    if (wasm.AthenaMath.isLesser(player.data[attributeName], 0)) {
+    if (TlrpMath.isLesser(player.data[attributeName], 0)) {
         player.data[attributeName] = 0;
     }
 
-    if (wasm.AthenaMath.isGreater(player.data[attributeName], 100)) {
+    if (TlrpMath.isGreater(player.data[attributeName], 100)) {
         player.data[attributeName] = 100;
     }
 

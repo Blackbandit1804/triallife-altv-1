@@ -6,9 +6,6 @@ import toggle from './toggle';
 import { DefaultConfig } from '../../configs/settings';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../vehicle';
-import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
-
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State): boolean {
     if (!isFlagEnabled(v.behavior, Vehicle_Behavior.NO_KEY_TO_LOCK)) {
@@ -66,7 +63,7 @@ function updateFuel(v: alt.Vehicle) {
         v.data.fuel = 100;
     }
 
-    v.fuel = wasm.AthenaMath.sub(v.fuel, DefaultConfig.FUEL_LOSS_PER_PLAYER_TICK);
+    v.fuel = TlrpMath.sub(v.fuel, DefaultConfig.FUEL_LOSS_PER_PLAYER_TICK);
 
     if (v.fuel < 0) {
         v.fuel = 0;
