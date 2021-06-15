@@ -27,92 +27,19 @@ alt.on(SystemEvent.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
 
 async function handleFinish() {
     const tmpPath = path.join(alt.getResourcePath(alt.resourceName), `/server/${name}.js`);
-    if (fs.existsSync(tmpPath)) {
-        fs.unlinkSync(tmpPath);
-    }
-
-    for (let i = 0; i < data.length; i++) {
-        fs.appendFileSync(tmpPath, `import '${data[i]}'; \r\n`);
-    }
-
-    import(`./${name}`).then(() => {
-        fs.unlinkSync(tmpPath);
-    });
-
+    if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+    for (let i = 0; i < data.length; i++) fs.appendFileSync(tmpPath, `import '${data[i]}'; \r\n`);
+    import(`./${name}`).then(() => fs.unlinkSync(tmpPath));
     import('./utility/console');
-
-    import('./systems/options').then((res) => {
-        res.default();
-    });
-
-    import('./systems/discord').then((res) => {
-        res.default();
-    });
-
-    import('../plugins/imports').then((res) => {
-        res.default(startTime);
-    });
+    import('./systems/options').then((res) => res.default());
+    import('./systems/discord').then((res) => res.default());
+    import('../plugins/imports').then((res) => res.default(startTime));
 }
 
 async function runBooter() {
-    /*getVersionIdentifier().then((version) => {
-        if (!version) {
-            console.error(new Error(`Failed to contact Auth Service endpoint.`));
-            process.exit(0);
-        }
-
-        logger.info(`Version: ${process.env.ATHENA_VERSION}`);
-        if (version !== process.env.ATHENA_VERSION) {
-            logger.warning(`--- Version Warning ---`);
-            logger.warning(`Your server may be out of date. Please update your server.`);
-            logger.warning(`Please pull down the latest changes from the official repository.`);
-            logger.warning(`Try merging from the master branch or from the upstream branch of your choice.`);
-        }
-    });*/
-
-    const buffer: any = fs.readFileSync(fPath);
-    alt.log(`Buffer-WASM: ${JSON.stringify(buffer)}`);
-    const starterFns = await WASM.load<InjectedStarter>(buffer);
-    alt.log(`Load-WASM: ${JSON.stringify(starterFns)}`);
-    alt.once(starterFns.getEvent(), handleEvent);
-    starterFns.deploy();
-}
-
-async function handleEvent(value: number) {
-    const buffer: Buffer = await PostManager.postAsync(WASM.getHelpers().__getString(value));
-    alt.log(`POST Buffer: ${JSON.stringify(buffer)}`);
-    if (!buffer) {
-        logger.error(`Unable to boot.`);
-        process.exit(0);
-    }
-    await WASM.load<TlrpFunctions>(buffer).catch((err) => {
-        try {
-            const data = JSON.parse(buffer.toString());
-            logger.error(`Status: ${data.status} | Error: ${data.message}`);
-        } catch (err) {}
-        return null;
-    });
-    const ext = WASM.getFunctions<TlrpFunctions>('tlrp');
-    if (!ext.isDoneLoading) {
-        Logger.error(`Failed to properly load Trial Life binaries.`);
-        process.exit(0);
-    }
-
-    onReady(() => {
-        alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
-            data.push(value);
-            WASM.getFunctions<TlrpFunctions>('tlrp').isDoneLoading();
-        });
-
-        alt.once(`${ext.getFinishName()}`, handleFinish);
-        ext.isDoneLoading();
-    });
-
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) {
-        new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
-    } else {
-        new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections);
-    }
+    onReady(() => alt.once(`tlrp:Boot`, handleFinish));
+    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
+    else new Database(mongoURL, 'tlrp', collections);
 }
 
 function handleEntryToggle() {
@@ -129,11 +56,10 @@ function handleEarlyConnect(player: alt.Player): void {
     if (!(player instanceof alt.Player) || !player || !player.valid) {
         return;
     }
-
     try {
-        player.kick('[Athena] Connected too early. Server still warming up.');
+        player.kick('[3L:RP] Connected too early. Server still warming up.');
     } catch (err) {
-        alt.log(`[Athena] A reconnection event happened too early. Try again.`);
+        alt.log(`[3L:RP] A reconnection event happened too early. Try again.`);
     }
 }
 
@@ -143,6 +69,6 @@ try {
     process.env.ATHENA_VERSION = data.version;
     runBooter();
 } catch (err) {
-    logger.error(`[Athena] Could not fetch version from package.json. Is there a package.json?`);
+    logger.error(`[3L:RP] Could not fetch version from package.json. Is there a package.json?`);
     process.exit(0);
 }

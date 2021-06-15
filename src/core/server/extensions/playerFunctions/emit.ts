@@ -19,7 +19,7 @@ import utility from './utility';
  */
 function animation(p: alt.Player, dictionary: string, name: string, flags: AnimationFlags, duration: number = -1): void {
     if (p.data.isDead) {
-        alt.logWarning(`[Athena] Cannot play ${dictionary}@${name} while player is dead.`);
+        alt.logWarning(`[3L:RP] Cannot play ${dictionary}@${name} while player is dead.`);
         return;
     }
 

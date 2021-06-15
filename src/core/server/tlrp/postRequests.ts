@@ -41,12 +41,12 @@ export class PostManager {
     static validateResponse(response: any): boolean {
         if (!response || !response.data || !response.status) {
             if (response.message && response.message.includes('expired')) {
-                alt.logError(`[Athena] ${response.message}`);
+                alt.logError(`[3L:RP] ${response.message}`);
                 process.exit(0);
             }
 
             if (response.message) {
-                alt.logError(`[Athena] ${response.message}`);
+                alt.logError(`[3L:RP] ${response.message}`);
                 process.exit(0);
             }
 
@@ -64,8 +64,9 @@ export class PostManager {
         await PostManager.getSecret();
 
         const params = await PostManager.getPostFormat(data);
+        console.log(`Post-Params: ${params}`);
         const response = await PostManager.emitPost(route, params);
-
+        console.log(`Post-Response: ${response}`);
         if (!PostManager.validateResponse(response)) {
             return null;
         }

@@ -3,7 +3,7 @@ import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 import emit from './emit';
 import save from './save';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Safely set a player's position.

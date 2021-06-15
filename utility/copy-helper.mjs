@@ -87,8 +87,8 @@ async function buildPipeline() {
         copiedFiles += 1;
     }
 
-    console.log(`[Athena] Build Time: ${Date.now() - StartTime}ms`);
-    console.log(`[Athena] Attempting to Boot Server...`);
+    console.log(`[3L:RP] Build Time: ${Date.now() - StartTime}ms`);
+    console.log(`[3L:RP] Attempting to Boot Server...`);
 }
 
 buildPipeline();

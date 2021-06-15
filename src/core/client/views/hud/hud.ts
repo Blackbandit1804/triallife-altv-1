@@ -99,11 +99,7 @@ export class BaseHUD {
 
             native.getVehicleLightsState;
 
-            const [_, lightsOn, highBeams] = native.getVehicleLightsState(
-                alt.Player.local.vehicle.scriptID,
-                false,
-                false
-            );
+            const [_, lightsOn, highBeams] = native.getVehicleLightsState(alt.Player.local.vehicle.scriptID, false, false);
 
             BaseHUD.view.emit(HudEventNames.Lights, lightsOn || highBeams ? true : false);
         }
@@ -113,7 +109,7 @@ export class BaseHUD {
         commandList = _commandList;
         handleFreezePlayer(false);
         BaseHUD.updateCommands();
-        alt.log(`[Athena] Registered Commands: ${commandList.length}`);
+        alt.log(`[3L:RP] Registered Commands: ${commandList.length}`);
     }
 
     static updateCommands() {

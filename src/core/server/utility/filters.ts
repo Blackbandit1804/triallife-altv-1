@@ -3,7 +3,7 @@ import { Permissions } from '../../shared/flags/permissions';
 import { distance } from '../../shared/utility/vector';
 import { TlrpFunctions, WASM } from './wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Returns an array of players filtered by permission level.

@@ -249,7 +249,7 @@ function isInEquipment(p: alt.Player, item: Partial<Item>): { index: number } | 
     }
 
     if (!item) {
-        throw new Error(`[Athena] Specified item is null for isInEquipment`);
+        throw new Error(`[3L:RP] Specified item is null for isInEquipment`);
     }
 
     for (let i = 0; i < p.data.equipment.length; i++) {
@@ -552,7 +552,7 @@ function isInToolbar(p: alt.Player, item: Partial<Item>): { index: number } | nu
     }
 
     if (!item) {
-        throw new Error(`[Athena] Specified item is null for isInToolbar`);
+        throw new Error(`[3L:RP] Specified item is null for isInToolbar`);
     }
 
     for (let i = 0; i < p.data.toolbar.length; i++) {

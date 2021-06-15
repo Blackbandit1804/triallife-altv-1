@@ -1,7 +1,7 @@
 import alt from 'alt-server';
 import loader from '@assemblyscript/loader';
 
-const TlrpFunctionsName = 'tlrp;';
+const TlrpFunctionsName = 'ares;';
 const injections: any = {};
 const helpers: Assembly = {};
 let memory: any = [];
@@ -41,11 +41,9 @@ export interface InjectedStarter {
 
 function convert(v1: any, v2: any) {
     let data = helpers.__getString(v1);
-
     if (process.platform.includes('win')) {
         data = data.replace(/\\/g, '/');
     }
-
     alt.emit(helpers.__getString(v2), data);
 }
 
