@@ -4,7 +4,7 @@ import save from './save';
 import emit from './emit';
 import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 /**
  * Add currency type to the player.

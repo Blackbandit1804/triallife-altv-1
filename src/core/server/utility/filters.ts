@@ -3,7 +3,7 @@ import { Permissions } from '../../shared/flags/permissions';
 import { distance } from '../../shared/utility/vector';
 import { TlrpFunctions, WASM } from './wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 /**
  * Returns an array of players filtered by permission level.
@@ -12,9 +12,7 @@ const wasm = WASM.getFunctions<TlrpFunctions>('ares');
  * @return {Array<alt.Player>}
  */
 export function getPlayersByPermissionLevel(permissionLevels: Array<Permissions>): Array<alt.Player> {
-    const validPlayers = [...alt.Player.all].filter(
-        (p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel)
-    );
+    const validPlayers = [...alt.Player.all].filter((p) => p && p.data && p.accountData && permissionLevels.includes(p.accountData.permissionLevel));
 
     return validPlayers;
 }
@@ -28,9 +26,7 @@ export function getPlayersByPermissionLevel(permissionLevels: Array<Permissions>
  */
 export function getPlayersByGridSpace(player: alt.Player, maxDistance: number): Array<alt.Player> {
     const currentPlayers = [...alt.Player.all];
-    return currentPlayers.filter(
-        (p) => p && p.valid && p.data && player.gridSpace === p.gridSpace && distance(player.pos, p.pos) < maxDistance
-    );
+    return currentPlayers.filter((p) => p && p.valid && p.data && player.gridSpace === p.gridSpace && distance(player.pos, p.pos) < maxDistance);
 }
 
 /**

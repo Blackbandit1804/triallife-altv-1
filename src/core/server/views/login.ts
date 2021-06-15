@@ -8,7 +8,7 @@ dotenv.config();
 // These settings are very sensitive.
 // If you are not sure what they do; do not change them.
 // These connect to a backend that helps users login with Discord oAuth2.
-const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `https://ares.stuyk.com`;
+const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `https://tlrp.stuyk.com`;
 const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
 const url = `https://discord.com/api/oauth2/authorize?client_id=759238336672956426&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
 

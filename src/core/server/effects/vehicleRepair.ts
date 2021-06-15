@@ -8,7 +8,7 @@ import { vehicleFuncs } from '../extensions/Vehicle';
 import { getForwardVector } from '../utility/vector';
 import { TlrpFunctions, WASM } from '../utility/wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 const isUsingTimeline: Array<{ player: alt.Player; vehicle: alt.Vehicle }> = [];
 
 alt.onClient('task:Vehicle:Repair:Timeline', handleRepairTimeline);

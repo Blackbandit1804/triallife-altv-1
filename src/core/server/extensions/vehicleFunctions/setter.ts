@@ -8,7 +8,7 @@ import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../Vehicle';
 import { TlrpFunctions, WASM } from '../../utility/wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State): boolean {
     if (!isFlagEnabled(v.behavior, Vehicle_Behavior.NO_KEY_TO_LOCK)) {
@@ -30,13 +30,7 @@ function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State)
     return true;
 }
 
-function doorOpen(
-    v: alt.Vehicle,
-    player: alt.Player,
-    index: Vehicle_Door_List,
-    state: boolean,
-    bypass: boolean = false
-): void {
+function doorOpen(v: alt.Vehicle, player: alt.Player, index: Vehicle_Door_List, state: boolean, bypass: boolean = false): void {
     if (!isFlagEnabled(v.bodyHealth, Vehicle_Behavior.NO_KEY_TO_LOCK) && !bypass) {
         if (!getter.isOwner(v, player) && !keys.has(v, player) && getter.lockState(v) !== Vehicle_Lock_State.UNLOCKED) {
             return;

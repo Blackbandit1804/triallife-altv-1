@@ -5,7 +5,7 @@ import axios from 'axios';
 import { TlrpFunctions, WASM } from './wasm-loader';
 
 const elliptic = new ecc.ec('curve25519');
-let wasm = WASM.getFunctions<TlrpFunctions>('ares');
+let wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
 
 let azureEndpoint: string;
 let privateKey: string;
@@ -58,7 +58,7 @@ export function sha256(data: string): string {
  */
 export function sha256Random(data: string): string {
     if (!wasm) {
-        wasm = WASM.getFunctions<TlrpFunctions>('ares');
+        wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
     }
 
     const randomValue = wasm.AthenaMath.random(0, Number.MAX_SAFE_INTEGER);
@@ -131,7 +131,7 @@ export async function decryptData(jsonData: string): Promise<any> {
 }
 
 /**
- * Generates a shared key from our private key and the ares service public key.
+ * Generates a shared key from our private key and the tlrp service public key.
  * @export
  * @return {*}  {(Promise<string | boolean>)}
  */
@@ -157,7 +157,7 @@ export async function getSharedSecret(): Promise<string | boolean> {
 }
 
 /**
- * Set the endpoint for contacting the ares service.
+ * Set the endpoint for contacting the tlrp service.
  * @export
  * @param {string} endpoint
  */
@@ -166,7 +166,7 @@ export function setAzureEndpoint(endpoint: string) {
 }
 
 /**
- * Gets the endpoint for the ares service.
+ * Gets the endpoint for the tlrp service.
  * @export
  * @return {*}  {string}
  */
@@ -179,7 +179,7 @@ export function getAzureEndpoint(): string {
 }
 
 /**
- * Retrieves the ares service public key.
+ * Retrieves the tlrp service public key.
  * @export
  * @return {*}  {Promise<string>}
  */

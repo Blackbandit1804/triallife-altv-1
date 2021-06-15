@@ -4,12 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import { Database, onReady } from 'simplymongo';
 import { SystemEvent } from '../shared/enums/system';
-import { getVersionIdentifier } from './ares/getRequests';
-import { PostManager } from './ares/postRequests';
+import { getVersionIdentifier } from './tlrp/getRequests';
+import { PostManager } from './tlrp/postRequests';
 import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasm-loader';
+import { isConsoleOpen } from 'alt-client';
 
 env.config();
 
@@ -57,7 +58,7 @@ async function handleFinish() {
 async function runBooter() {
     getVersionIdentifier().then((version) => {
         if (!version) {
-            console.error(new Error(`Failed to contact Ares endpoint.`));
+            console.error(new Error(`Failed to contact Auth Service endpoint.`));
             process.exit(0);
         }
 
@@ -78,12 +79,11 @@ async function runBooter() {
 
 async function handleEvent(value: number) {
     const buffer: Buffer = await PostManager.postAsync(WASM.getHelpers().__getString(value));
-
+    alt.log(`Boot Buffer: ${JSON.stringify(buffer)}`);
     if (!buffer) {
-        logger.error(`Unable to boot. Potentially invalid license.`);
+        logger.error(`Unable to boot.`);
         process.exit(0);
     }
-
     await WASM.load<TlrpFunctions>(buffer).catch((err) => {
         try {
             const data = JSON.parse(buffer.toString());
@@ -91,18 +91,16 @@ async function handleEvent(value: number) {
         } catch (err) {}
         return null;
     });
-
-    const ext = WASM.getFunctions<TlrpFunctions>('ares');
-
+    const ext = WASM.getFunctions<TlrpFunctions>('tlrp');
     if (!ext.isDoneLoading) {
-        Logger.error(`Failed to properly load Athena binaries.`);
+        Logger.error(`Failed to properly load Trial Life binaries.`);
         process.exit(0);
     }
 
     onReady(() => {
         alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
             data.push(value);
-            WASM.getFunctions<TlrpFunctions>('ares').isDoneLoading();
+            WASM.getFunctions<TlrpFunctions>('tlrp').isDoneLoading();
         });
 
         alt.once(`${ext.getFinishName()}`, handleFinish);
