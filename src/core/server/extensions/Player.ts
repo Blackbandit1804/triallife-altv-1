@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Character } from '../../shared/interfaces/character';
-import { Account } from '../interface/Account';
-import { DiscordUser } from '../interface/DiscordUser';
+import { Account } from '../interface/account';
+import { DiscordUser } from '../interface/discord-user';
 import currency from './playerFunctions/currency';
 import dataUpdater from './playerFunctions/dataUpdater';
 import emit from './playerFunctions/emit';

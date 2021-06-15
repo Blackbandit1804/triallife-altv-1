@@ -1,4 +1,4 @@
-import { Poster, PosterFormat } from '../interface/Poster';
+import { Poster, PosterFormat } from '../interface/poster';
 import { encryptData, getPublicKey } from '../utility/encryption';
 
 /**

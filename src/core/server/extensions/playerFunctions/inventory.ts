@@ -5,7 +5,7 @@ import { ItemType } from '../../../shared/enums/item-type';
 import { Item, ItemSpecial } from '../../../shared/interfaces/item';
 import { deepCloneObject } from '../../../shared/utility/deep-copy';
 import { isFlagEnabled } from '../../../shared/utility/flags';
-import { CategoryData } from '../../interface/CategoryData';
+import { CategoryData } from '../../interface/category-data';
 import { stripCategory } from '../../utility/category';
 import emit from './emit';
 import save from './save';

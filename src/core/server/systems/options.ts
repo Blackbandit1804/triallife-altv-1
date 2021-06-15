@@ -1,7 +1,7 @@
 import { Database, getDatabase } from 'simplymongo';
 import { DefaultConfig } from '../configs/settings';
-import { Collections } from '../interface/DatabaseCollections';
-import { defaultOptions, DiscordID, Options } from '../interface/Options';
+import { Collections } from '../interface/collections';
+import { defaultOptions, DiscordID, Options } from '../interface/options';
 import Logger from '../utility/tlrp-logger';
 
 export class OptionsManager {
@@ -44,11 +44,7 @@ export class OptionsManager {
         }
 
         OptionsManager.data.whitelist.push(id);
-        OptionsManager.db.updatePartialData(
-            OptionsManager.data._id,
-            { whitelist: OptionsManager.data.whitelist },
-            Collections.Options
-        );
+        OptionsManager.db.updatePartialData(OptionsManager.data._id, { whitelist: OptionsManager.data.whitelist }, Collections.Options);
 
         return true;
     }
@@ -85,11 +81,7 @@ export class OptionsManager {
         }
 
         OptionsManager.data.whitelist.splice(index, 1);
-        OptionsManager.db.updatePartialData(
-            OptionsManager.data._id,
-            { whitelist: OptionsManager.data.whitelist },
-            Collections.Options
-        );
+        OptionsManager.db.updatePartialData(OptionsManager.data._id, { whitelist: OptionsManager.data.whitelist }, Collections.Options);
 
         return true;
     }

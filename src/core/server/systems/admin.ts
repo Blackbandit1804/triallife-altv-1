@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import { Account } from '../interface/Account';
-import { Collections } from '../interface/DatabaseCollections';
+import { Account } from '../interface/account';
+import { Collections } from '../interface/collections';
 import Logger from '../utility/tlrp-logger';
 
 const db: Database = getDatabase();

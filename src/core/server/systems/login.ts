@@ -5,13 +5,13 @@ import { View_Events_Discord } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
-import { Account } from '../interface/Account';
-import { DiscordUser } from '../interface/DiscordUser';
+import { Account } from '../interface/account';
+import { DiscordUser } from '../interface/discord-user';
 import { getUniquePlayerHash } from '../utility/encryption';
 import { goToCharacterSelect } from '../views/characters';
 import { OptionsManager } from './options';
 import { vehicleFuncs } from '../extensions/Vehicle';
-import { Collections } from '../interface/DatabaseCollections';
+import { Collections } from '../interface/collections';
 import '../views/login';
 import './tick';
 import './voice';
@@ -58,11 +58,7 @@ export class LoginManager {
         // Used for DiscordToken skirt.
         if (!account) {
             // Generate New Account for Database
-            let accountData: Partial<Account> | null = await db.fetchData<Account>(
-                'discord',
-                data.id,
-                Collections.Accounts
-            );
+            let accountData: Partial<Account> | null = await db.fetchData<Account>('discord', data.id, Collections.Accounts);
             if (!accountData) {
                 const newDocument: Partial<Account> = {
                     discord: player.discord.id,
@@ -107,11 +103,7 @@ export class LoginManager {
 
         // Just enough unique data.
         const hashToken: string = getUniquePlayerHash(player, discord);
-        const account: Partial<Account> | null = await db.fetchData<Account>(
-            'quickToken',
-            hashToken,
-            Collections.Accounts
-        );
+        const account: Partial<Account> | null = await db.fetchData<Account>('quickToken', hashToken, Collections.Accounts);
 
         if (!account) {
             player.needsQT = true;

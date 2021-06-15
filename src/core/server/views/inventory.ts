@@ -12,7 +12,7 @@ import '../effects/vehicleRepair';
 import { TLRP_EVENTS_PLAYER } from '../enums/tlrp';
 import { distance2d } from '../utility/vector';
 import { stripCategory } from '../utility/category';
-import { CategoryData } from '../interface/CategoryData';
+import { CategoryData } from '../interface/category-data';
 import { deepCloneObject } from '../../shared/utility/deep-copy';
 
 /**

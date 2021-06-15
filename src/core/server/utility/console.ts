@@ -4,9 +4,9 @@ import ChatManager from '../systems/chat';
 import Logger from './tlrp-logger';
 import fs from 'fs';
 import { AdminManager } from '../systems/admin';
-import { Account } from '../interface/Account';
+import { Account } from '../interface/account';
 import { OptionsManager } from '../systems/options';
-import { Collections } from '../interface/DatabaseCollections';
+import { Collections } from '../interface/collections';
 
 const db: Database = getDatabase();
 

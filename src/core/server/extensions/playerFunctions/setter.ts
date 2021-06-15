@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { Account } from '../../interface/Account';
+import { Account } from '../../interface/account';
 import { Permissions } from '../../../shared/flags/permissions';
 import { getUniquePlayerHash } from '../../utility/encryption';
 import { Database, getDatabase } from 'simplymongo';
@@ -14,7 +14,7 @@ import sync from './sync';
 import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { ActionMenu } from '../../../shared/interfaces/actions';
 import { playerFuncs } from '../Player';
-import { Collections } from '../../interface/DatabaseCollections';
+import { Collections } from '../../interface/collections';
 
 const db: Database = getDatabase();
 
