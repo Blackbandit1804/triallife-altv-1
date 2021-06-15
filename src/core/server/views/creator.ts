@@ -1,12 +1,12 @@
 import * as alt from 'alt-server';
 import { View_Events_Creator } from '../../shared/enums/views';
 import { Appearance } from '../../shared/interfaces/design';
-import { CharacterInfo } from '../../shared/interfaces/CharacterInfo';
+import { CharacterInfo } from '../../shared/interfaces/character';
 import { goToCharacterSelect, handleNewCharacter } from './characters';
 import * as sm from 'simplymongo';
 import { Character } from '../../shared/interfaces/character';
 import { playerFuncs } from '../extensions/Player';
-import { Collections } from '../interface/DatabaseCollections';
+import { Collections } from '../interface/collections';
 
 const db: sm.Database = sm.getDatabase();
 

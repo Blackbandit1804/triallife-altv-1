@@ -6,7 +6,7 @@ import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { getClosestVectorByPos } from '../../shared/utility/vector';
 import { playerFuncs } from '../extensions/Player';
-import { Collections } from '../interface/DatabaseCollections';
+import { Collections } from '../interface/collections';
 import Logger from '../utility/tlrp-logger';
 import { distance2d } from '../utility/vector';
 import { InteractionManager } from './interaction';

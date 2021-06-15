@@ -7,7 +7,7 @@ import { CurrencyTypes } from '../../shared/enums/economy';
 import { SystemEvent } from '../../shared/enums/system';
 import { AnimationFlags } from '../../shared/flags/animation';
 import JobEnums, { Objective } from '../../shared/interfaces/job';
-import { JobTrigger } from '../../shared/interfaces/job-trigger.ts';
+import { JobTrigger } from '../../shared/interfaces/job-trigger';
 import { distance2d } from '../../shared/utility/vector';
 
 const startPosition = { x: -664.4656372070312, y: -215.07139587402344, z: 37.201847076416016 };

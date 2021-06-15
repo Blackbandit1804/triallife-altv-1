@@ -6,7 +6,7 @@ import { Database, onReady } from 'simplymongo';
 import { SystemEvent } from '../shared/enums/system';
 import { getVersionIdentifier } from './ares/getRequests';
 import { PostManager } from './ares/postRequests';
-import { Collections } from './interface/DatabaseCollections';
+import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasm-loader';
@@ -110,13 +110,7 @@ async function handleEvent(value: number) {
     });
 
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) {
-        new Database(
-            mongoURL,
-            WASM.getHelpers().__getString(ext.getDatabaseName()),
-            collections,
-            process.env.MONGO_USERNAME,
-            process.env.MONGO_PASSWORD
-        );
+        new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     } else {
         new Database(mongoURL, WASM.getHelpers().__getString(ext.getDatabaseName()), collections);
     }

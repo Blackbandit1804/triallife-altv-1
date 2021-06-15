@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { SystemEvent } from '../../../shared/enums/system';
-import { JobTrigger } from '../../../shared/interfaces/job-trigger.ts';
+import { JobTrigger } from '../../../shared/interfaces/job-trigger';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';

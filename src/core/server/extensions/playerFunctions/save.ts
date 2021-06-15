@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
 import { Character } from '../../../shared/interfaces/character';
-import { Collections } from '../../interface/DatabaseCollections';
+import { Collections } from '../../interface/collections';
 
 const db: Database = getDatabase();
 

@@ -6,7 +6,7 @@ import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/Player';
 import * as sm from 'simplymongo';
 import './clothing';
-import { Collections } from '../interface/DatabaseCollections';
+import { Collections } from '../interface/collections';
 
 const db: sm.Database = sm.getDatabase();
 
@@ -19,11 +19,7 @@ alt.onClient(View_Events_Characters.Delete, handleDelete);
  * @param  {Player} player
  */
 export async function goToCharacterSelect(player: Player): Promise<void> {
-    const characters: Array<Character> = await db.fetchAllByField<Character>(
-        'account_id',
-        player.accountData._id,
-        Collections.Characters
-    );
+    const characters: Array<Character> = await db.fetchAllByField<Character>('account_id', player.accountData._id, Collections.Characters);
 
     player.pendingCharacterSelect = true;
 
@@ -95,11 +91,7 @@ async function handleDelete(player: Player, id: string): Promise<void> {
     await db.deleteById(character_uid, Collections.Characters); // Remove Character Here
 
     // Refetch Characters
-    const characters: Array<Character> = await db.fetchAllByField<Character>(
-        'account_id',
-        player.accountData._id,
-        Collections.Characters
-    );
+    const characters: Array<Character> = await db.fetchAllByField<Character>('account_id', player.accountData._id, Collections.Characters);
 
     player.pendingCharacterSelect = true;
 
