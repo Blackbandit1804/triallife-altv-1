@@ -3,7 +3,6 @@ import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
 
-// const url = `http://127.0.0.1:5555/src/core/client/views/login/html/index.html`;
 const url = `http://resource/client/views/login/html/index.html`;
 let view: View;
 let discordURI;
@@ -19,27 +18,18 @@ export class LoginManager {
     }
 
     static handleReady() {
-        if (!view) {
-            return;
-        }
-
+        if (!view) return;
         view.emit('discord:SetLocales', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_LOGIN));
     }
 
     static open() {
-        if (!view) {
-            return;
-        }
-
+        if (!view) return;
         view.emit('discord:OpenURL', discordURI, true);
     }
 
     static close() {
         alt.toggleGameControls(true);
-
-        if (view) {
-            view.close();
-        }
+        if (view) view.close();
     }
 
     static finish() {
@@ -47,10 +37,7 @@ export class LoginManager {
     }
 
     static emitFailureMessage(message: string) {
-        if (!view) {
-            return;
-        }
-
+        if (!view) return;
         view.emit('discord:Fail', message);
     }
 
