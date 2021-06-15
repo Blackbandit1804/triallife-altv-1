@@ -8,7 +8,7 @@ modules/
 data/
 *.log
 cache/
-tlrp.json
+athena.json
 configDiscord
 configLoadOrder
 configMongoDB
@@ -18,8 +18,3 @@ crashdumps
 cdn_upload
 tsconfig.tsbuildinfo
 tlrp-cache/
-.vs
-/src/core/core.csproj
-/src/core/Properties
-/src/core/obj
-/src/core/core.njsproj.user

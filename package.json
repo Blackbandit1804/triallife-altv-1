@@ -1,0 +1,38 @@
+{
+    "name": "triallife-altv",
+    "version": "1.0.0",
+    "description": "a hardcore roleplay framework for alt:V",
+    "author": "deathnerotv",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DeathNeroTV/triallife-altv.git"
+    },
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/DeathNeroTV/triallife-altv/issues"
+    },
+    "homepage": "https://github.com/DeathNeroTV/triallife-altv#readme",
+    "scripts": {
+        "build": "node ./utility/copy-helper.mjs",
+        "core-reload": "node ./utility/manager.mjs",
+        "clean": "node ./utility/cleaner.mjs",
+        "update": "altv-pkg d release && git pull origin master && npm install && git submodule update --force --init --recursive --remote",
+        "windows": "npm run build && altv-server.exe",
+        "linux": "npm run build && ./start.sh",
+        "build-watching": "node ./utility/copy-helper.mjs -- WATCHING",
+        "watch-windows": "tsc-watch --onSuccess \"npm run watch-handle-windows\"",
+        "watch-linux": "tsc-watch --onSuccess \"npm run watch-handle-linux\"",
+        "watch-handle-windows": "npm run build-watching && npm run core-reload",
+        "watch-handle-linux": "npm run build-watching && npm run core-reload"
+    },
+    "devDependencies": {},
+    "prettier": {
+        "tabWidth": 4,
+        "printWidth": 120,
+        "singleQuote": true,
+        "semi": true,
+        "arrowParens": "always",
+        "trailingComma": "none"
+    }
+}
