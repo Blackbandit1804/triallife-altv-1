@@ -4,7 +4,7 @@ import { Item } from '../../shared/interfaces/Item';
 import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
 import { playerFuncs } from '../extensions/Player';
-import { getWeaponByName } from '../../shared/information/weapons';
+import { getWeaponByName } from '../../shared/configs/weapons';
 import { sha256Random } from '../utility/encryption';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 import { LocaleController } from '../../shared/locale/locale';

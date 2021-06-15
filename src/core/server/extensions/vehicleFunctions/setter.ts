@@ -6,9 +6,9 @@ import toggle from './toggle';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../Vehicle';
-import { AresFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 
-const wasm = WASM.getFunctions<AresFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State): boolean {
     if (!isFlagEnabled(v.behavior, Vehicle_Behavior.NO_KEY_TO_LOCK)) {

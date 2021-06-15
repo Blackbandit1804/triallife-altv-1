@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Clothing } from '../../../shared/enums/views';
 import { ClothingComponent } from '../../../shared/interfaces/Clothing';
 import { Item } from '../../../shared/interfaces/Item';
@@ -21,7 +21,7 @@ const url = `http://resource/client/views/clothing/html/index.html`;
 let view: View;
 let open = false;
 
-alt.on(SYSTEM_EVENTS.META_CHANGED, handleMetaChanged);
+alt.on(SystemEvent.META_CHANGED, handleMetaChanged);
 alt.onServer(View_Events_Clothing.Open, handleView);
 
 async function handleView() {

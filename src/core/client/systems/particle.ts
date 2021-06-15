@@ -1,10 +1,10 @@
 import alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Particle } from '../../shared/interfaces/Particle';
 import { sleep } from '../utility/sleep';
 
-alt.onServer(SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, handlePlayParticle);
+alt.onServer(SystemEvent.PLAY_PARTICLE_EFFECT, handlePlayParticle);
 
 function loadParticleDictionary(dictionary: string): Promise<boolean> {
     return new Promise((resolve: Function): void => {

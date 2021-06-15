@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { TextLabel } from '../../shared/interfaces/TextLabel';
 import { distance2d } from '../../shared/utility/vector';
 import { drawText3D } from '../utility/text';
@@ -92,6 +92,6 @@ function handleDrawTextlabels() {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.APPEND_TEXTLABELS, TextlabelController.append);
-alt.onServer(SYSTEM_EVENTS.POPULATE_TEXTLABELS, TextlabelController.populate);
-alt.onServer(SYSTEM_EVENTS.REMOVE_TEXTLABEL, TextlabelController.remove);
+alt.onServer(SystemEvent.APPEND_TEXTLABELS, TextlabelController.append);
+alt.onServer(SystemEvent.POPULATE_TEXTLABELS, TextlabelController.populate);
+alt.onServer(SystemEvent.REMOVE_TEXTLABEL, TextlabelController.remove);

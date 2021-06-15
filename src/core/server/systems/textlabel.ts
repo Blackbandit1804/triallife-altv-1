@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { TextLabel } from '../../shared/interfaces/TextLabel';
 import Logger from '../utility/tlrpLogger';
 
@@ -31,7 +31,7 @@ export class TextLabelController {
         }
 
         TextLabelController.add(label);
-        alt.emit(null, SYSTEM_EVENTS.APPEND_TEXTLABELS, label);
+        alt.emit(null, SystemEvent.APPEND_TEXTLABELS, label);
     }
 
     /**
@@ -47,7 +47,7 @@ export class TextLabelController {
             return false;
         }
 
-        alt.emit(null, SYSTEM_EVENTS.REMOVE_TEXTLABEL, uid);
+        alt.emit(null, SystemEvent.REMOVE_TEXTLABEL, uid);
         globalTextLabels.splice(index, 1);
         return true;
     }
@@ -59,6 +59,6 @@ export class TextLabelController {
      * @memberof TextLabelController
      */
     static populateGlobalLabels(player: alt.Player) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_TEXTLABELS, globalTextLabels);
+        alt.emitClient(player, SystemEvent.POPULATE_TEXTLABELS, globalTextLabels);
     }
 }

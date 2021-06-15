@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SHARED_CONFIG } from '../../../shared/configs/settings';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Inventory } from '../../../shared/enums/views';
 import { DroppedItem } from '../../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
@@ -223,8 +223,8 @@ export class InventoryController {
     }
 }
 
-alt.on(SYSTEM_EVENTS.META_CHANGED, InventoryController.processMetaChange);
-alt.onServer(SYSTEM_EVENTS.POPULATE_ITEMS, InventoryController.updateGroundItems);
+alt.on(SystemEvent.META_CHANGED, InventoryController.processMetaChange);
+alt.onServer(SystemEvent.POPULATE_ITEMS, InventoryController.updateGroundItems);
 
 const keyFunctions = {
     inventory: InventoryController.updateInventory,

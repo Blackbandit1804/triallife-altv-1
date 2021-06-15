@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { InventoryType } from '../../shared/enums/inventory-type';
 import { ItemType } from '../../shared/enums/item-type';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Inventory } from '../../shared/enums/views';
 import { DroppedItem, Item } from '../../shared/interfaces/Item';
 import { isFlagEnabled } from '../../shared/utility/flags';
@@ -305,7 +305,7 @@ export class InventoryController {
                 continue;
             }
 
-            alt.emitClient(target, SYSTEM_EVENTS.POPULATE_ITEMS, items);
+            alt.emitClient(target, SystemEvent.POPULATE_ITEMS, items);
         }
     }
 

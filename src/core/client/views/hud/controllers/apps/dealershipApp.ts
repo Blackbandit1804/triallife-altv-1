@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import { PhoneEvents } from '../../../../../shared/enums/phone-events';
-import { SYSTEM_EVENTS } from '../../../../../shared/enums/system';
-import { VehicleData } from '../../../../../shared/information/vehicle-data';
+import { SystemEvent } from '../../../../../shared/enums/system';
+import { VehicleData } from '../../../../../shared/configs/vehicle-data';
 import { BaseHUD } from '../../hud';
 
 export class DealershipAppController {

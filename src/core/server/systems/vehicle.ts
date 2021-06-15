@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Vehicle_Door_List, Vehicle_Events, Vehicle_Lock_State, Vehicle_State } from '../../shared/enums/vehicle';
 import { AnimationFlags } from '../../shared/flags/animation';
 import { Vehicle } from '../../shared/interfaces/Vehicle';
@@ -15,8 +15,8 @@ alt.on('playerEnteredVehicle', handleEnterVehicle);
 alt.onClient(Vehicle_Events.SET_LOCK, handleCycleLock);
 alt.onClient(Vehicle_Events.SET_DOOR, handleSetDoor);
 alt.onClient(Vehicle_Events.SET_ENGINE, handleSetEngine);
-alt.onClient(SYSTEM_EVENTS.VEHICLES_VIEW_SPAWN, handleSpawn);
-alt.onClient(SYSTEM_EVENTS.VEHICLES_VIEW_DESPAWN, handleDespawn);
+alt.onClient(SystemEvent.VEHICLES_VIEW_SPAWN, handleSpawn);
+alt.onClient(SystemEvent.VEHICLES_VIEW_DESPAWN, handleDespawn);
 
 function handleEnterVehicle(player: alt.Player, vehicle: alt.Vehicle, seat: number) {
     const actualSeat = seat - 1;

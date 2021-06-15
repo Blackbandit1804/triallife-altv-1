@@ -1,14 +1,14 @@
 import * as alt from 'alt-server';
 import ChatController from '../systems/chat';
 
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Permissions } from '../../shared/flags/permissions';
 import { playerFuncs } from '../extensions/Player';
 import { LocaleController } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
-alt.onClient(SYSTEM_EVENTS.NOCLIP_RESET, handleReset);
-alt.onClient(SYSTEM_EVENTS.NOCLIP_UPDATE, handleCamUpdate);
+alt.onClient(SystemEvent.NOCLIP_RESET, handleReset);
+alt.onClient(SystemEvent.NOCLIP_UPDATE, handleCamUpdate);
 
 ChatController.addCommand(
     'noclip',

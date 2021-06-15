@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Chat } from '../../../shared/enums/views';
 import { AnimationFlags } from '../../../shared/flags/animation';
 import { AudioStream } from '../../../shared/interfaces/audio';
@@ -29,7 +29,7 @@ function animation(
         return;
     }
 
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
 }
 
 /**
@@ -37,7 +37,7 @@ function animation(
  * @param {AudioStream} stream
  */
 function audioStream(stream: AudioStream) {
-    alt.emitClient(null, SYSTEM_EVENTS.PLAYER_EMIT_AUDIO_STREAM, stream);
+    alt.emitClient(null, SystemEvent.PLAYER_EMIT_AUDIO_STREAM, stream);
 }
 
 /**
@@ -48,7 +48,7 @@ function audioStream(stream: AudioStream) {
  */
 function meta(p: alt.Player, key: string, value: any): void {
     alt.nextTick(() => {
-        alt.emitClient(p, SYSTEM_EVENTS.META_SET, key, value);
+        alt.emitClient(p, SystemEvent.META_SET, key, value);
     });
 }
 
@@ -67,7 +67,7 @@ function message(p: alt.Player, message: string): void {
  * @memberof EmitPrototype
  */
 function notification(p: alt.Player, message: string): void {
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, message);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_NOTIFICATION, message);
 }
 
 /**
@@ -77,14 +77,14 @@ function notification(p: alt.Player, message: string): void {
  */
 function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false): void {
     if (!emitToNearbyPlayers) {
-        alt.emitClient(p, SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
+        alt.emitClient(p, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
         return;
     }
 
     const nearbyPlayers = utility.getClosestPlayers(p, 10);
     for (let i = 0; i < nearbyPlayers.length; i++) {
         const player = nearbyPlayers[i];
-        alt.emitClient(player, SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
+        alt.emitClient(player, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
     }
 }
 
@@ -94,7 +94,7 @@ function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false
  * @param {ProgressBar} progressbar
  */
 function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
-    alt.emitClient(player, SYSTEM_EVENTS.PROGRESSBAR_CREATE, progressbar);
+    alt.emitClient(player, SystemEvent.PROGRESSBAR_CREATE, progressbar);
 }
 
 /**
@@ -103,7 +103,7 @@ function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
  * @param {string} uid
  */
 function removeProgressBar(player: alt.Player, uid: string) {
-    alt.emitClient(player, SYSTEM_EVENTS.PROGRESSBAR_REMOVE, uid);
+    alt.emitClient(player, SystemEvent.PROGRESSBAR_REMOVE, uid);
 }
 
 /**
@@ -113,7 +113,7 @@ function removeProgressBar(player: alt.Player, uid: string) {
  * @param {number} [volume=0.35]
  */
 function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, audioName, volume);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_2D, audioName, volume);
 }
 
 /**
@@ -123,7 +123,7 @@ function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
  * @memberof EmitPrototype
  */
 function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, target, audioName);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_3D, target, audioName);
 }
 
 /**
@@ -133,7 +133,7 @@ function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
  * @memberof EmitPrototype
  */
 function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
 }
 
 /**
@@ -141,7 +141,7 @@ function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
  * @param {Array<Task | TaskCallback>} tasks
  */
 function taskTimeline(player: alt.Player, tasks: Array<Task | TaskCallback>) {
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, tasks);
+    alt.emitClient(player, SystemEvent.PLAYER_EMIT_TASK_TIMELINE, tasks);
 }
 
 export default {

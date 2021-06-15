@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { ATHENA_EVENTS_PLAYER } from '../../enums/tlrp';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { BlipController } from '../../systems/blip';
@@ -23,7 +23,7 @@ import save from './save';
 async function selectCharacter(p: alt.Player, characterData: Partial<Character>): Promise<void> {
     p.data = { ...characterData };
     sync.appearance(p);
-    alt.emitClient(p, SYSTEM_EVENTS.TICKS_START);
+    alt.emitClient(p, SystemEvent.TICKS_START);
 
     // Set player dimension to zero.
     p.dimension = 0;
@@ -88,7 +88,7 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         BlipController.populateGlobalBlips(p);
         MarkerController.populateGlobalMarkers(p);
         TextLabelController.populateGlobalLabels(p);
-        alt.emit(SYSTEM_EVENTS.VOICE_ADD, p);
+        alt.emit(SystemEvent.VOICE_ADD, p);
         alt.emit(ATHENA_EVENTS_PLAYER.SELECTED_CHARACTER, p);
     }, 500);
 

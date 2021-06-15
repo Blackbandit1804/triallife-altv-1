@@ -1,9 +1,9 @@
 import * as alt from 'alt-server';
-import { AresFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 import emit from './emit';
 import save from './save';
 
-const wasm = WASM.getFunctions<AresFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Safely set a player's position.

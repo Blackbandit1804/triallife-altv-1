@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { ItemType } from '../../shared/enums/item-type';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Item } from '../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
@@ -52,7 +52,7 @@ export class ToolbarController {
             player.lastToolbarData = { equipped: true, slot: item.slot };
             player.giveWeapon(item.data.hash, 9999, true);
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.PLAYER_RELOAD);
             return;
         }
 
@@ -60,7 +60,7 @@ export class ToolbarController {
             player.lastToolbarData = { equipped: true, slot: item.slot };
             player.giveWeapon(item.data.hash, 9999, true);
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.PLAYER_RELOAD);
             return;
         }
 
@@ -68,7 +68,7 @@ export class ToolbarController {
             player.giveWeapon(item.data.hash, 9999, true);
             player.lastToolbarData.equipped = true;
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.PLAYER_RELOAD);
             return;
         }
 
@@ -97,4 +97,4 @@ export class ToolbarController {
     }
 }
 
-alt.onClient(SYSTEM_EVENTS.PLAYER_TOOLBAR_SET, ToolbarController.handleToolbarChange);
+alt.onClient(SystemEvent.PLAYER_TOOLBAR_SET, ToolbarController.handleToolbarChange);

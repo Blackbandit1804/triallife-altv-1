@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { AnimationFlags } from '../../shared/flags/animation';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, playAnimation);
+alt.onServer(SystemEvent.PLAYER_EMIT_ANIMATION, playAnimation);
 
 const MaxLoadAttempts = 250;
 

@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleController } from '../../../shared/locale/locale';
@@ -10,8 +10,8 @@ const url = `http://resource/client/views/atm/html/index.html`;
 let view: View;
 let isOpen = false;
 
-alt.onServer(SYSTEM_EVENTS.INTERACTION_ATM, handleView);
-alt.on(SYSTEM_EVENTS.META_CHANGED, handleChange);
+alt.onServer(SystemEvent.INTERACTION_ATM, handleView);
+alt.on(SystemEvent.META_CHANGED, handleChange);
 
 async function handleView(_characters: Partial<Character>[]) {
     if (alt.Player.local.isPhoneOpen) {
@@ -27,7 +27,7 @@ async function handleView(_characters: Partial<Character>[]) {
 }
 
 function handleAction(type, amount, id = null) {
-    alt.emitServer(SYSTEM_EVENTS.INTERACTION_ATM_ACTION, type, amount, id);
+    alt.emitServer(SystemEvent.INTERACTION_ATM_ACTION, type, amount, id);
 }
 
 function handleClose() {

@@ -3,45 +3,27 @@ import env from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { Database, onReady } from 'simplymongo';
-import { SYSTEM_EVENTS } from '../shared/enums/system';
+import { SystemEvent } from '../shared/enums/system';
 import { getVersionIdentifier } from './ares/getRequests';
 import { PostController } from './ares/postRequests';
 import { Collections } from './interface/DatabaseCollections';
 import { default as logger, default as Logger } from './utility/tlrpLogger';
 import { setAzureEndpoint } from './utility/encryption';
-import { AresFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
+import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasmLoader';
 
 env.config();
 
-setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'https://ares.stuyk.com');
+setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
 
 const startTime = Date.now();
 const name = 'wasm';
 const data = [];
 const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
 const fPath = path.join(alt.getResourcePath(alt.resourceName), '/server/tlrp.wasm');
-const collections = [
-    //
-    Collections.Accounts,
-    Collections.Characters,
-    Collections.Options,
-    Collections.Interiors
-];
+const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
 alt.on('playerConnect', handleEarlyConnect);
-alt.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
-
-if (!process.env.GUMROAD) {
-    logger.error('Failed to retrieve GUMROAD from your .env file.');
-    logger.log(`Visit: https://tlrp.stuyk.com/documentation/installing-tlrp`);
-    process.exit(0);
-}
-
-if (!process.env.EMAIL) {
-    logger.error('Failed to retrieve EMAIL from your .env file.');
-    logger.log(`Visit: https://tlrp.stuyk.com/documentation/installing-tlrp`);
-    process.exit(0);
-}
+alt.on(SystemEvent.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
 
 async function handleFinish() {
     const tmpPath = path.join(alt.getResourcePath(alt.resourceName), `/server/${name}.js`);
@@ -102,7 +84,7 @@ async function handleEvent(value: number) {
         process.exit(0);
     }
 
-    await WASM.load<AresFunctions>(buffer).catch((err) => {
+    await WASM.load<TlrpFunctions>(buffer).catch((err) => {
         try {
             const data = JSON.parse(buffer.toString());
             logger.error(`Status: ${data.status} | Error: ${data.message}`);
@@ -110,7 +92,7 @@ async function handleEvent(value: number) {
         return null;
     });
 
-    const ext = WASM.getFunctions<AresFunctions>('ares');
+    const ext = WASM.getFunctions<TlrpFunctions>('ares');
 
     if (!ext.isDoneLoading) {
         Logger.error(`Failed to properly load Athena binaries.`);
@@ -120,7 +102,7 @@ async function handleEvent(value: number) {
     onReady(() => {
         alt.on(WASM.getHelpers().__getString(ext.getLoadName()), (value) => {
             data.push(value);
-            WASM.getFunctions<AresFunctions>('ares').isDoneLoading();
+            WASM.getFunctions<TlrpFunctions>('ares').isDoneLoading();
         });
 
         alt.once(`${ext.getFinishName()}`, handleFinish);

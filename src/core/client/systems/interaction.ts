@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { SHARED_CONFIG } from '../../shared/configs/settings';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { ActionMenu, Action } from '../../shared/interfaces/actions';
 import { Interaction } from '../../shared/interfaces/Interaction';
 import { distance2d } from '../../shared/utility/vector';
@@ -88,7 +88,7 @@ export class InteractionController {
             const dist = distance2d(alt.Player.local.pos, alt.Player.local.closestInteraction.position);
             if (dist < MAX_CHECKPOINT_DRAW) {
                 dynamicActionMenu[alt.Player.local.closestInteraction.text] = {
-                    eventName: SYSTEM_EVENTS.INTERACTION,
+                    eventName: SystemEvent.INTERACTION,
                     isServer: true,
                     data: alt.Player.local.closestInteraction.type
                 };
@@ -156,8 +156,8 @@ export class InteractionController {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.POPULATE_INTERACTIONS, InteractionController.addInteractions);
-alt.onServer(SYSTEM_EVENTS.PLAYER_SET_INTERACTION, InteractionController.setInteractionInfo);
-alt.onServer(SYSTEM_EVENTS.TICKS_START, () => {
+alt.onServer(SystemEvent.POPULATE_INTERACTIONS, InteractionController.addInteractions);
+alt.onServer(SystemEvent.PLAYER_SET_INTERACTION, InteractionController.setInteractionInfo);
+alt.onServer(SystemEvent.TICKS_START, () => {
     InteractionController.tick = alt.setInterval(InteractionController.handleInteractionMode, 0);
 });

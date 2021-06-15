@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SHARED_CONFIG } from '../../shared/configs/settings';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 
-alt.onServer(SYSTEM_EVENTS.TICKS_START, toggleOn);
+alt.onServer(SystemEvent.TICKS_START, toggleOn);
 
 let interval;
 

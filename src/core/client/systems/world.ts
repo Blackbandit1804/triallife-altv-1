@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { PhoneController } from '../views/hud/controllers/phoneController';
 import { BaseHUD } from '../views/hud/hud';
 
@@ -15,8 +15,8 @@ let currentTime = {
     minute: 0
 };
 
-alt.onServer(SYSTEM_EVENTS.WORLD_UPDATE_TIME, handleUpdateTime);
-alt.onServer(SYSTEM_EVENTS.WORLD_UPDATE_WEATHER, handleUpdateWeather);
+alt.onServer(SystemEvent.WORLD_UPDATE_TIME, handleUpdateTime);
+alt.onServer(SystemEvent.WORLD_UPDATE_WEATHER, handleUpdateWeather);
 alt.on('debug:Time', getTime);
 
 /**

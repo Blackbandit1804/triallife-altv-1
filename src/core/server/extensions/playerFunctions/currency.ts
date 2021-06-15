@@ -2,9 +2,9 @@ import * as alt from 'alt-server';
 import { CurrencyTypes } from '../../../shared/enums/economy';
 import save from './save';
 import emit from './emit';
-import { AresFunctions, WASM } from '../../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../../utility/wasmLoader';
 
-const wasm = WASM.getFunctions<AresFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Add currency type to the player.

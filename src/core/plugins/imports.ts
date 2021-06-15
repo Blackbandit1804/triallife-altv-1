@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import logger from '../server/utility/tlrpLogger';
-import { SYSTEM_EVENTS } from '../shared/enums/system';
+import { SystemEvent } from '../shared/enums/system';
 
 const filePaths = [
     // GAMEMODE IMPORTS -- Remove what you don't want.
@@ -45,5 +45,5 @@ export default async function loadImports(startTime: number) {
 
     logger.info(`Extra Resources Loaded: ${extraResourcesCount}`);
     logger.info(`==> Total Bootup Time -- ${Date.now() - startTime}ms`);
-    alt.emit(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY);
+    alt.emit(SystemEvent.BOOTUP_ENABLE_ENTRY);
 }

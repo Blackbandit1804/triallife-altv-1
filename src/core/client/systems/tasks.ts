@@ -1,10 +1,10 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Task, TaskCallback } from '../../shared/interfaces/TaskTimeline';
 import { sleep } from '../utility/sleep';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, handleTasks);
+alt.onServer(SystemEvent.PLAYER_EMIT_TASK_TIMELINE, handleTasks);
 
 let timeline: Array<Task | TaskCallback> = [];
 

@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 
@@ -7,7 +7,7 @@ let mainChannel: alt.VoiceChannel;
 
 if (DEFAULT_CONFIG.VOICE_ON) {
     alt.on('playerDisconnect', handleDisconnect);
-    alt.on(SYSTEM_EVENTS.VOICE_ADD, addToGlobalVoice);
+    alt.on(SystemEvent.VOICE_ADD, addToGlobalVoice);
 
     mainChannel = new alt.VoiceChannel(true, 25);
 }
@@ -41,6 +41,6 @@ export function addToGlobalVoice(player: alt.Player) {
     }
 
     playerFuncs.emit.message(player, `[Athena] You have joined the global voice server.`);
-    alt.emitClient(player, SYSTEM_EVENTS.VOICE_JOINED);
+    alt.emitClient(player, SystemEvent.VOICE_JOINED);
     mainChannel.addPlayer(player);
 }

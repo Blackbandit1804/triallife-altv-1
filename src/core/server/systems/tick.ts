@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
@@ -7,7 +7,7 @@ import { InventoryController } from '../views/inventory';
 
 const timeBetweenPings = 4950;
 
-alt.onClient(SYSTEM_EVENTS.PLAYER_TICK, handlePing);
+alt.onClient(SystemEvent.PLAYER_TICK, handlePing);
 
 /**
  * This is a tick event that is sent up from the player.

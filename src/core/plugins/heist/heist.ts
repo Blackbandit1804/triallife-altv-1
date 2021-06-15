@@ -4,7 +4,7 @@ import { InteractionController } from '../../server/systems/interaction';
 import { Job } from '../../server/systems/job';
 import { TextLabelController } from '../../server/systems/textlabel';
 import { CurrencyTypes } from '../../shared/enums/economy';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { AnimationFlags } from '../../shared/flags/animation';
 import JobEnums, { Objective } from '../../shared/interfaces/Job';
 import { JobTrigger } from '../../shared/interfaces/JobTrigger';
@@ -301,7 +301,7 @@ alt.on('heistjewelrystore', (player: alt.Player) => {
         summary: `It's time to put up or shutup. Grab your gun and a group of friends because you're about to rob the jewelry store.`
     };
 
-    alt.emitClient(player, SYSTEM_EVENTS.INTERACTION_JOB, trigger);
+    alt.emitClient(player, SystemEvent.INTERACTION_JOB, trigger);
 });
 
 alt.on('heist:Start', (player: alt.Player) => {

@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { CurrencyTypes } from '../../shared/enums/economy';
 import { PhoneEvents } from '../../shared/enums/phone-events';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
 import { playerFuncs } from '../extensions/Player';
@@ -13,7 +13,7 @@ const ActionHandlers = {
     transferCash: handleTransferCash
 };
 
-alt.onClient(SYSTEM_EVENTS.INTERACTION_ATM_ACTION, handleAction);
+alt.onClient(SystemEvent.INTERACTION_ATM_ACTION, handleAction);
 alt.onClient(PhoneEvents.ATM_TRANSFER.name, handlePhoneRoute);
 
 function handlePhoneRoute(player: alt.Player, type: string, amount: string | number, id: null | number) {

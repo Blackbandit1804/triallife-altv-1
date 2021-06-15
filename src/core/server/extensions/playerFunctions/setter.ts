@@ -5,7 +5,7 @@ import { getUniquePlayerHash } from '../../utility/encryption';
 import { Database, getDatabase } from 'simplymongo';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { distance2d } from '../../../shared/utility/vector';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
 import save from './save';
 import dataUpdater from './dataUpdater';
@@ -42,7 +42,7 @@ async function account(p: alt.Player, accountData: Partial<Account>): Promise<vo
             Collections.Accounts
         );
 
-        alt.emitClient(p, SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, p.discord.id);
+        alt.emitClient(p, SystemEvent.QUICK_TOKEN_UPDATE, p.discord.id);
     }
 
     emit.meta(p, 'permissionLevel', accountData.permissionLevel);
@@ -50,7 +50,7 @@ async function account(p: alt.Player, accountData: Partial<Account>): Promise<vo
 }
 
 function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
-    alt.emitClient(player, SYSTEM_EVENTS.SET_ACTION_MENU, actionMenu);
+    alt.emitClient(player, SystemEvent.SET_ACTION_MENU, actionMenu);
 }
 
 /**
@@ -105,7 +105,7 @@ async function firstConnect(p: alt.Player): Promise<void> {
             return;
         }
 
-        alt.emitClient(p, SYSTEM_EVENTS.QUICK_TOKEN_FETCH);
+        alt.emitClient(p, SystemEvent.QUICK_TOKEN_FETCH);
     }, 500);
 }
 /**
@@ -114,7 +114,7 @@ async function firstConnect(p: alt.Player): Promise<void> {
  * @memberof SetPrototype
  */
 function frozen(p: alt.Player, value: boolean): void {
-    alt.emitClient(p, SYSTEM_EVENTS.PLAYER_SET_FREEZE, value);
+    alt.emitClient(p, SystemEvent.PLAYER_SET_FREEZE, value);
 }
 
 /**

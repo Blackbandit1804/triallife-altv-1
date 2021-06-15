@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { SHARED_CONFIG } from '../../shared/configs/settings';
 import { CurrencyTypes } from '../../shared/enums/economy';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Vehicle_Behavior, Vehicle_State } from '../../shared/enums/vehicle';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
@@ -11,7 +11,7 @@ import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 import { distance2d } from '../utility/vector';
 
-alt.on(SYSTEM_EVENTS.INTERACTION_FUEL, handleFuel);
+alt.on(SystemEvent.INTERACTION_FUEL, handleFuel);
 
 // player.id to retrieve
 const maximumFuel = 100;

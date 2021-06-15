@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { View_Events_Creator } from '../../../shared/enums/views';
 import { CurrencyTypes } from '../../../shared/enums/economy';
 import { World } from '../../systems/world';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
 import { playerFuncs } from '../Player';
@@ -71,7 +71,7 @@ function syncedMeta(p: alt.Player): void {
  * @memberof SyncPrototype
  */
 function time(p: alt.Player): void {
-    alt.emitClient(p, SYSTEM_EVENTS.WORLD_UPDATE_TIME, World.hour, World.minute);
+    alt.emitClient(p, SystemEvent.WORLD_UPDATE_TIME, World.hour, World.minute);
 }
 
 /**
@@ -82,7 +82,7 @@ function weather(p: alt.Player): void {
     p.gridSpace = World.getGridSpace(p);
     p.currentWeather = World.getWeatherByGrid(p.gridSpace);
     emit.meta(p, 'gridSpace', p.gridSpace);
-    alt.emitClient(p, SYSTEM_EVENTS.WORLD_UPDATE_WEATHER, p.currentWeather);
+    alt.emitClient(p, SystemEvent.WORLD_UPDATE_WEATHER, p.currentWeather);
 }
 
 function playTime(p: alt.Player): void {

@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import * as sm from 'simplymongo';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Discord } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { DEFAULT_CONFIG } from '../tlrp/main';
@@ -132,7 +132,7 @@ export class LoginController {
     }
 }
 
-alt.onClient(SYSTEM_EVENTS.QUICK_TOKEN_NONE, LoginController.handleNoQuickToken);
-alt.onClient(SYSTEM_EVENTS.QUICK_TOKEN_EMIT, LoginController.tryDiscordQuickToken);
+alt.onClient(SystemEvent.QUICK_TOKEN_NONE, LoginController.handleNoQuickToken);
+alt.onClient(SystemEvent.QUICK_TOKEN_EMIT, LoginController.tryDiscordQuickToken);
 alt.on('playerDisconnect', LoginController.tryDisconnect);
 alt.on('Discord:Login', LoginController.tryLogin);

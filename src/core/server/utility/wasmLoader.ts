@@ -1,12 +1,12 @@
 import alt from 'alt-server';
 import loader from '@assemblyscript/loader';
 
-const AresFunctionsName = 'ares;';
+const TlrpFunctionsName = 'ares;';
 const injections: any = {};
 const helpers: Assembly = {};
 let memory: any = [];
 
-export interface AresFunctions {
+export interface TlrpFunctions {
     isDoneLoading(): boolean;
     getName(): number;
     getFinishName(): number;
@@ -63,7 +63,7 @@ export class WASM {
         return helpers;
     }
 
-    static getFunctions<T>(name: string = AresFunctionsName): T {
+    static getFunctions<T>(name: string = TlrpFunctionsName): T {
         return injections[name] as T;
     }
 

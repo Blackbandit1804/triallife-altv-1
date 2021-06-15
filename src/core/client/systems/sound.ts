@@ -1,15 +1,15 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SHARED_CONFIG } from '../../shared/configs/settings';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { AudioStreamData } from '../../shared/interfaces/audio';
 import { distance } from '../../shared/utility/vector';
 import { BaseHUD } from '../views/hud/hud';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_AUDIO_STREAM, handleAudioStream);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, handleFrontendSound);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, handlePlayAudio3D);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, handlePlayAudio2D);
+alt.onServer(SystemEvent.PLAYER_EMIT_AUDIO_STREAM, handleAudioStream);
+alt.onServer(SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, handleFrontendSound);
+alt.onServer(SystemEvent.PLAYER_EMIT_SOUND_3D, handlePlayAudio3D);
+alt.onServer(SystemEvent.PLAYER_EMIT_SOUND_2D, handlePlayAudio2D);
 
 let audioStreams: Array<AudioStreamData> = [];
 let audioInterval: number;

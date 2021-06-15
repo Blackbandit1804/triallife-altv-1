@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Chat } from '../../../shared/enums/views';
 import { Command } from '../../../shared/interfaces/Command';
 import { handleFrontendSound } from '../../systems/sound';
@@ -232,6 +232,6 @@ export class BaseHUD {
 
 alt.on('enteredVehicle', () => BaseHUD.setHudStatus(HudEventNames.SetVehicle, true));
 alt.on('leftVehicle', () => BaseHUD.setHudStatus(HudEventNames.SetVehicle, false));
-alt.on(SYSTEM_EVENTS.META_CHANGED, BaseHUD.processMetaChange);
-alt.onServer(SYSTEM_EVENTS.TICKS_START, BaseHUD.createView);
-alt.onServer(SYSTEM_EVENTS.POPULATE_COMMANDS, BaseHUD.populateCommands);
+alt.on(SystemEvent.META_CHANGED, BaseHUD.processMetaChange);
+alt.onServer(SystemEvent.TICKS_START, BaseHUD.createView);
+alt.onServer(SystemEvent.POPULATE_COMMANDS, BaseHUD.populateCommands);

@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Blip } from '../../shared/interfaces/blip';
-import gridData from '../../shared/information/grid-data';
+import gridData from '../../shared/configs/grid-data';
 
 interface DumpBlip {
     name: string;
@@ -106,6 +106,6 @@ export class BlipController {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.POPULATE_BLIPS, BlipController.populate);
-alt.onServer(SYSTEM_EVENTS.APPEND_BLIP, BlipController.append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_BLIP, BlipController.remove);
+alt.onServer(SystemEvent.POPULATE_BLIPS, BlipController.populate);
+alt.onServer(SystemEvent.APPEND_BLIP, BlipController.append);
+alt.onServer(SystemEvent.REMOVE_BLIP, BlipController.remove);

@@ -1,9 +1,9 @@
 import * as alt from 'alt-server';
 import { Permissions } from '../../shared/flags/permissions';
 import { distance } from '../../shared/utility/vector';
-import { AresFunctions, WASM } from './wasmLoader';
+import { TlrpFunctions, WASM } from './wasmLoader';
 
-const wasm = WASM.getFunctions<AresFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 /**
  * Returns an array of players filtered by permission level.

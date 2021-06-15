@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../../shared/enums/system';
+import { SystemEvent } from '../../../shared/enums/system';
 import { JobTrigger } from '../../../shared/interfaces/JobTrigger';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleController } from '../../../shared/locale/locale';
@@ -10,7 +10,7 @@ let trigger: JobTrigger;
 let view: View;
 let isOpen = false;
 
-alt.onServer(SYSTEM_EVENTS.INTERACTION_JOB, handleView);
+alt.onServer(SystemEvent.INTERACTION_JOB, handleView);
 
 async function handleView(_trigger: JobTrigger) {
     trigger = _trigger;
@@ -23,7 +23,7 @@ async function handleView(_trigger: JobTrigger) {
 }
 
 function handleAction() {
-    alt.emitServer(SYSTEM_EVENTS.INTERACTION_JOB_ACTION, trigger.event);
+    alt.emitServer(SystemEvent.INTERACTION_JOB_ACTION, trigger.event);
     handleClose();
 }
 

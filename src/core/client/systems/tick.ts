@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 
 const pingEvery = 5000;
 
-alt.onServer(SYSTEM_EVENTS.TICKS_START, startTick);
+alt.onServer(SystemEvent.TICKS_START, startTick);
 
 function startTick() {
     alt.setInterval(handlePing, pingEvery);
@@ -13,5 +13,5 @@ function startTick() {
  * Pings the server every 5 minutes.
  */
 function handlePing() {
-    alt.emitServer(SYSTEM_EVENTS.PLAYER_TICK);
+    alt.emitServer(SystemEvent.PLAYER_TICK);
 }

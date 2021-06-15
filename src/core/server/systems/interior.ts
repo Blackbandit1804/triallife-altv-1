@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Interior } from '../../shared/interfaces/Interior';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleController } from '../../shared/locale/locale';
@@ -38,7 +38,7 @@ class ColshapeInterior extends alt.ColshapeSphere {
             this.dimension = dimension;
         }
 
-        InteractionController.sideLoadInteraction(this.interactionType, SYSTEM_EVENTS.INTERIOR_SWITCH, true, this);
+        InteractionController.sideLoadInteraction(this.interactionType, SystemEvent.INTERIOR_SWITCH, true, this);
     }
 }
 
@@ -358,5 +358,5 @@ export class InteriorController {
     }
 }
 
-alt.on(SYSTEM_EVENTS.INTERIOR_SWITCH, InteriorController.trySwitch);
+alt.on(SystemEvent.INTERIOR_SWITCH, InteriorController.trySwitch);
 InteriorController.load();

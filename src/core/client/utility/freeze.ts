@@ -1,8 +1,8 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_SET_FREEZE, handleFreezePlayer);
+alt.onServer(SystemEvent.PLAYER_SET_FREEZE, handleFreezePlayer);
 
 /**
  * Freezes the player or unfreezes the player.

@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 
 export class ToolbarController {
     static handleToolbarSwitch(key: number) {
@@ -27,6 +27,6 @@ export class ToolbarController {
             return;
         }
 
-        alt.emitServer(SYSTEM_EVENTS.PLAYER_TOOLBAR_SET, slot);
+        alt.emitServer(SystemEvent.PLAYER_TOOLBAR_SET, slot);
     }
 }

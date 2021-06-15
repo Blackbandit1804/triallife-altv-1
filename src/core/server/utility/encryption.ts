@@ -2,10 +2,10 @@ import * as alt from 'alt-server';
 import sjcl from 'sjcl';
 import ecc from 'elliptic';
 import axios from 'axios';
-import { AresFunctions, WASM } from './wasmLoader';
+import { TlrpFunctions, WASM } from './wasmLoader';
 
 const elliptic = new ecc.ec('curve25519');
-let wasm = WASM.getFunctions<AresFunctions>('ares');
+let wasm = WASM.getFunctions<TlrpFunctions>('ares');
 
 let azureEndpoint: string;
 let privateKey: string;
@@ -58,7 +58,7 @@ export function sha256(data: string): string {
  */
 export function sha256Random(data: string): string {
     if (!wasm) {
-        wasm = WASM.getFunctions<AresFunctions>('ares');
+        wasm = WASM.getFunctions<TlrpFunctions>('ares');
     }
 
     const randomValue = wasm.AthenaMath.random(0, Number.MAX_SAFE_INTEGER);

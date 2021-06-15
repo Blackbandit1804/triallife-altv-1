@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { BaseHUD } from '../../hud';
-import { SYSTEM_EVENTS } from '../../../../../shared/enums/system';
+import { SystemEvent } from '../../../../../shared/enums/system';
 import { ChatController } from '../chatController';
 
 let vehicles = [];
@@ -19,7 +19,7 @@ export class VehicleAppController {
             return;
         }
 
-        alt.emitServer(SYSTEM_EVENTS.VEHICLES_VIEW_SPAWN, index);
+        alt.emitServer(SystemEvent.VEHICLES_VIEW_SPAWN, index);
     }
 
     static populate() {
@@ -51,6 +51,6 @@ export class VehicleAppController {
     }
 
     static despawn() {
-        alt.emitServer(SYSTEM_EVENTS.VEHICLES_VIEW_DESPAWN);
+        alt.emitServer(SystemEvent.VEHICLES_VIEW_DESPAWN);
     }
 }

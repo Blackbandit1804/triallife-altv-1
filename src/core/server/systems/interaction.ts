@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Clothing } from '../../shared/enums/views';
-import gridData from '../../shared/information/grid-data';
+import gridData from '../../shared/configs/grid-data';
 import { Blip } from '../../shared/interfaces/blip';
 import { Interaction } from '../../shared/interfaces/Interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
@@ -28,12 +28,12 @@ export class InteractionController {
     static Interactions: InteractionHelper = {};
     static InteractionTypes: { [key: string]: InteractionDefault } = {
         atm: {
-            eventName: SYSTEM_EVENTS.INTERACTION_ATM,
+            eventName: SystemEvent.INTERACTION_ATM,
             isServer: false,
             text: LocaleController.get(LOCALE_KEYS.USE_ATM)
         },
         gas: {
-            eventName: SYSTEM_EVENTS.INTERACTION_FUEL,
+            eventName: SystemEvent.INTERACTION_FUEL,
             isServer: true,
             maxRadius: 3,
             text: LocaleController.get(LOCALE_KEYS.USE_FUEL_PUMP)
@@ -44,7 +44,7 @@ export class InteractionController {
             text: LocaleController.get(LOCALE_KEYS.USE_CLOTHING_STORE)
         },
         interior: {
-            eventName: SYSTEM_EVENTS.INTERIOR_SWITCH,
+            eventName: SystemEvent.INTERIOR_SWITCH,
             isServer: true,
             text: LocaleController.get(LOCALE_KEYS.INTERIOR_INTERACT)
         }
@@ -174,7 +174,7 @@ export class InteractionController {
 
         alt.emitClient(
             player,
-            SYSTEM_EVENTS.PLAYER_SET_INTERACTION,
+            SystemEvent.PLAYER_SET_INTERACTION,
             colshape['interactionType'],
             new alt.Vector3(colshape.pos.x, colshape.pos.y, colshape.pos.z),
             text
@@ -197,7 +197,7 @@ export class InteractionController {
             return;
         }
 
-        alt.emitClient(player, SYSTEM_EVENTS.PLAYER_SET_INTERACTION, null);
+        alt.emitClient(player, SystemEvent.PLAYER_SET_INTERACTION, null);
     }
 
     /**
@@ -249,12 +249,12 @@ export class InteractionController {
      * @memberof InteractionController
      */
     static populateCustomInteractions(player: alt.Player) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_INTERACTIONS, customInteractions);
+        alt.emitClient(player, SystemEvent.POPULATE_INTERACTIONS, customInteractions);
     }
 }
 
 alt.on('entityLeaveColshape', InteractionController.handleLeaveInteraction);
 alt.on('entityEnterColshape', InteractionController.handleEnterInteraction);
-alt.onClient(SYSTEM_EVENTS.INTERACTION, InteractionController.handleInteraction);
+alt.onClient(SystemEvent.INTERACTION, InteractionController.handleInteraction);
 
 InteractionController.generateInteractions();

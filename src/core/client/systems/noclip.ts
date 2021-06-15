@@ -1,6 +1,6 @@
 import alt from 'alt-client';
 import * as native from 'natives';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { getCrossProduct, getNormalizedVector, rotationToDirection } from '../utility/math';
 import { addTemporaryText } from '../utility/text';
 
@@ -225,6 +225,6 @@ function handleCamera() {
 
     if (Date.now() > nextUpdate) {
         nextUpdate = Date.now() + timeBetweenPlayerUpdates;
-        alt.emitServer(SYSTEM_EVENTS.NOCLIP_UPDATE, newPos);
+        alt.emitServer(SystemEvent.NOCLIP_UPDATE, newPos);
     }
 }

@@ -6,9 +6,9 @@ import { Task, TaskCallback } from '../../shared/interfaces/TaskTimeline';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
 import { getForwardVector } from '../utility/vector';
-import { AresFunctions, WASM } from '../utility/wasmLoader';
+import { TlrpFunctions, WASM } from '../utility/wasmLoader';
 
-const wasm = WASM.getFunctions<AresFunctions>('ares');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 const isUsingTimeline: Array<{ player: alt.Player; vehicle: alt.Vehicle }> = [];
 
 alt.onClient('task:Vehicle:Repair:Timeline', handleRepairTimeline);

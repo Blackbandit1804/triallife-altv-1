@@ -1,5 +1,5 @@
 import * as alt from 'alt-client';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { Marker } from '../../shared/interfaces/Marker';
 import { distance2d } from '../../shared/utility/vector';
 import { drawMarker } from '../utility/marker';
@@ -100,6 +100,6 @@ function handleDrawMarkers() {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.POPULATE_MARKERS, MarkerController.populate);
-alt.onServer(SYSTEM_EVENTS.APPEND_MARKER, MarkerController.append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_MARKER, MarkerController.remove);
+alt.onServer(SystemEvent.POPULATE_MARKERS, MarkerController.populate);
+alt.onServer(SystemEvent.APPEND_MARKER, MarkerController.append);
+alt.onServer(SystemEvent.REMOVE_MARKER, MarkerController.remove);

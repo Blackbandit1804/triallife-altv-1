@@ -6,7 +6,7 @@ import { getClosestTypes } from '../../shared/utility/vector';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { emitAll } from '../utility/emitHelper';
 import { Permissions } from '../../shared/flags/permissions';
-import { SYSTEM_EVENTS } from '../../shared/enums/system';
+import { SystemEvent } from '../../shared/enums/system';
 import { playerFuncs } from '../extensions/Player';
 import Logger from '../utility/tlrpLogger';
 
@@ -169,7 +169,7 @@ export default class ChatController {
             });
         });
 
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_COMMANDS, commandList);
+        alt.emitClient(player, SystemEvent.POPULATE_COMMANDS, commandList);
     }
 
     static printAllCommands() {
