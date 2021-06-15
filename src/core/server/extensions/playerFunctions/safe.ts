@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-
+import * as TlrpMath from '../../utility/math';
 import emit from './emit';
 import save from './save';
 

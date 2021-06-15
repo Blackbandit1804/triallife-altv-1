@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { playerFuncs } from '../extensions/player';
-import './playerDeath';
+import './player-death';
 
 alt.on('Discord:Opened', handlePlayerConnect);
 

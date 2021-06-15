@@ -1,8 +1,3 @@
-/**
- * First argument from an `alt.on` event should always be a vehicle.
- * @export
- * @enum {number}
- */
 export enum TLRP_EVENTS_VEHICLE {
     DESPAWNED = 'tlrp:VehicleDespawned',
     ENGINE_STATE_CHANGE = 'tlrp:VehicleEngineState',
@@ -11,12 +6,6 @@ export enum TLRP_EVENTS_VEHICLE {
     REPAIRED = 'tlrp:VehicleRepaired'
 }
 
-/**
- * First argument from an `alt.on` event should always be a player.
- * Server-side only.
- * @export
- * @enum {number}
- */
 export enum TLRP_EVENTS_PLAYER {
     DIED = 'tlrp:PlayerDied',
     DROPPED_ITEM = 'tlrp:PlayerDroppedItem',

@@ -6,6 +6,7 @@ import toggle from './toggle';
 import { DefaultConfig } from '../../configs/settings';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { vehicleFuncs } from '../vehicle';
+import * as TlrpMath from '../../utility/math';
 
 function lock(v: alt.Vehicle, player: alt.Player, lockState: Vehicle_Lock_State): boolean {
     if (!isFlagEnabled(v.behavior, Vehicle_Behavior.NO_KEY_TO_LOCK)) {

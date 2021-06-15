@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import sjcl from 'sjcl';
 import ecc from 'elliptic';
 import axios from 'axios';
-import { TlrpFunctions, WASM } from './wasm-loader';
+import * as TlrpMath from './math';
 
 const elliptic = new ecc.ec('curve25519');
 
@@ -56,7 +56,7 @@ export function sha256(data: string): string {
  * @returns string
  */
 export function sha256Random(data: string): string {
-    const randomValue = AthenaMath.random(0, Number.MAX_SAFE_INTEGER);
+    const randomValue = TlrpMath.random(0, Number.MAX_SAFE_INTEGER);
     return sha256(`${data} + ${randomValue}`);
 }
 

@@ -1,8 +1,3 @@
-/**
- * The interface associated with a Discord User.
- * @export
- * @interface DiscordUser
- */
 export interface DiscordUser {
     id: string;
     username: string;

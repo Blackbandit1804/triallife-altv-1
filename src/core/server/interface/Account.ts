@@ -1,4 +1,3 @@
-import { ObjectId } from 'bson';
 import { Permissions } from '../../shared/flags/permissions';
 
 /**

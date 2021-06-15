@@ -2,6 +2,7 @@ import * as alt from 'alt-server';
 import { CurrencyTypes } from '../../../shared/enums/economy';
 import save from './save';
 import emit from './emit';
+import * as TlrpMath from '../../utility/math';
 
 /**
  * Add currency type to the player.

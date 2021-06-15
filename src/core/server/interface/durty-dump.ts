@@ -1,5 +1,3 @@
-import * as alt from 'alt-server';
-
 export interface DurtyDumpInterface {
     Name: string;
     Hash: number;

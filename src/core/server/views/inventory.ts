@@ -8,7 +8,7 @@ import { isFlagEnabled } from '../../shared/utility/flags';
 import { playerFuncs } from '../extensions/player';
 import { sha256Random } from '../utility/encryption';
 import '../effects/heal';
-import '../effects/vehicleRepair';
+import '../effects/vehicle-repair';
 import { TLRP_EVENTS_PLAYER } from '../enums/tlrp';
 import { distance2d } from '../utility/vector';
 import { stripCategory } from '../utility/category';

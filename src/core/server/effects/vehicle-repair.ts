@@ -6,7 +6,7 @@ import { Task, TaskCallback } from '../../shared/interfaces/task-timeline';
 import { playerFuncs } from '../extensions/player';
 import { vehicleFuncs } from '../extensions/vehicle';
 import { getForwardVector } from '../utility/vector';
-import { TlrpFunctions, WASM } from '../utility/wasm-loader';
+import * as TlrpMath from '../utility/math';
 
 const isUsingTimeline: Array<{ player: alt.Player; vehicle: alt.Vehicle }> = [];
 

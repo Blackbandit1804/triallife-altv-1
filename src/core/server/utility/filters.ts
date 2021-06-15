@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Permissions } from '../../shared/flags/permissions';
 import { distance } from '../../shared/utility/vector';
-import { TlrpFunctions, WASM } from './wasm-loader';
+import * as TlrpMath from './math';
 
 /**
  * Returns an array of players filtered by permission level.
