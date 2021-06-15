@@ -10,11 +10,9 @@ using core.Usefull;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static core.Usefull.Enums;
 
-namespace core.extensions {
+namespace core.playerFuncs {
 	public class Economy {
 		public static bool add(MyPlayer player, EconomyType type, double amount) {
 			amount = Math.Min(Math.Max(0, amount), double.MaxValue);
@@ -59,7 +57,6 @@ namespace core.extensions {
 			} catch (Exception) { return false; }
 		}
 	}
-
 	public class Updater {
 		public static void init(MyPlayer player, Character data = null) {
 			player.data = new Character() {
@@ -94,7 +91,6 @@ namespace core.extensions {
 			});
 		}
 	}
-
 	public class Emit {
 		public static void animation(MyPlayer player, string dictionary, string name, AnimationFlag flags, int duration) {
 			if (player.data.isUnconscious) {
@@ -156,7 +152,6 @@ namespace core.extensions {
 			player.Emit(Utils.GetDescription(SystemEvent.PLAYER_EMIT_TASK_TIMELINE), tasks);
 		}
 	}
-
 	public class Inventory {
 		public static (int, int) getFreeInventorySlot(MyPlayer player, int tabNumber = -1) {
 			for (int i = 0; i < player.data.inventory.Count; i++) {
@@ -572,7 +567,6 @@ namespace core.extensions {
 			return removedWeapons;
 		}
 	}
-
 	public class Create {
 		public static void character(MyPlayer player, Design design, CharInfo info, string name) {
 			using var db = new TlrpEntities();
@@ -598,7 +592,6 @@ namespace core.extensions {
 			Select.character(player, character.Entity);
 		}
 	}
-
 	public class Safe {
 		public static void setPosition(MyPlayer player, float x, float y, float z) {
 			if (!player.hasModel.HasValue || !player.hasModel.Value) {
@@ -656,7 +649,6 @@ namespace core.extensions {
 			Save.field(player, field, playerData[field]);
 		}
 	}
-
 	public class Save {
 		public static void field(MyPlayer player, string fieldName, object fieldValue) {
 			using var db = new TlrpEntities();

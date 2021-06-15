@@ -47,10 +47,12 @@ namespace core.Database {
 	public class Vehicle {
 		[Key]
 		public int id { get; set; }
+		public string uid { get; set; }
 		public string model { get; set; }
 		public Position position { get; set; }
 		public Rotation rotation { get; set; }
 		public double fuel { get; set; }
+		public string plate { get; set; }
 		public Color color { get; set; }
 	}
 }
