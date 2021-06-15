@@ -10,7 +10,6 @@ import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
 import { TlrpFunctions, InjectedStarter, WASM } from './utility/wasm-loader';
-import { isConsoleOpen } from 'alt-client';
 
 env.config();
 
