@@ -72,13 +72,14 @@ async function runBooter() {
 
     const buffer: any = fs.readFileSync(fPath);
     const starterFns = await WASM.load<InjectedStarter>(buffer);
+    alt.log(`StarterFns: ${JSON.stringify(starterFns)}`);
     alt.once(starterFns.getEvent(), handleEvent);
     starterFns.deploy();
 }
 
 async function handleEvent(value: number) {
     const buffer: Buffer = await PostManager.postAsync(WASM.getHelpers().__getString(value));
-    alt.log(`Boot Buffer: ${JSON.stringify(buffer)}`);
+    alt.log(`Buffer: ${JSON.stringify(buffer)}`);
     if (!buffer) {
         logger.error(`Unable to boot.`);
         process.exit(0);
