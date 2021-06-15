@@ -55,7 +55,7 @@ async function handleFinish() {
 }
 
 async function runBooter() {
-    getVersionIdentifier().then((version) => {
+    /*getVersionIdentifier().then((version) => {
         if (!version) {
             console.error(new Error(`Failed to contact Auth Service endpoint.`));
             process.exit(0);
@@ -68,7 +68,7 @@ async function runBooter() {
             logger.warning(`Please pull down the latest changes from the official repository.`);
             logger.warning(`Try merging from the master branch or from the upstream branch of your choice.`);
         }
-    });
+    });*/
 
     const buffer: any = fs.readFileSync(fPath);
     const starterFns = await WASM.load<InjectedStarter>(buffer);
