@@ -3,7 +3,7 @@ import { Database, getDatabase } from 'simplymongo';
 import { Vehicle_Behavior } from '../../../shared/enums/vehicle';
 import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { isFlagEnabled } from '../../../shared/utility/flags';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 
 const db: Database = getDatabase();
 

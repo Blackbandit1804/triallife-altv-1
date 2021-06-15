@@ -1,17 +1,12 @@
 import * as alt from 'alt-server';
 import ChatManager from '../systems/chat';
 import { Permissions } from '../../shared/flags/permissions';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { AudioStream } from '../../shared/interfaces/audio';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
-ChatManager.addCommand(
-    'audiostream',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_AUDIOSTREAM, '/audiostream'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('audiostream', LocaleManager.get(LOCALE_KEYS.COMMAND_AUDIOSTREAM, '/audiostream'), Permissions.Admin, handleCommand);
 
 function handleCommand(player: alt.Player, identifier: string): void {
     if (!identifier) {

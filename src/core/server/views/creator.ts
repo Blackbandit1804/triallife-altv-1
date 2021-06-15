@@ -5,7 +5,7 @@ import { CharacterInfo } from '../../shared/interfaces/character';
 import { goToCharacterSelect, handleNewCharacter } from './characters';
 import * as sm from 'simplymongo';
 import { Character } from '../../shared/interfaces/character';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { Collections } from '../interface/collections';
 
 const db: sm.Database = sm.getDatabase();

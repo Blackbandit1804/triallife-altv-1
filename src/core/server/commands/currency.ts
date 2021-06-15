@@ -3,16 +3,11 @@ import ChatManager from '../systems/chat';
 
 import { CurrencyTypes } from '../../shared/enums/economy';
 import { Permissions } from '../../shared/flags/permissions';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
-ChatManager.addCommand(
-    'setcash',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_SET_CASH, '/setcash'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('setcash', LocaleManager.get(LOCALE_KEYS.COMMAND_SET_CASH, '/setcash'), Permissions.Admin, handleCommand);
 
 function handleCommand(player: alt.Player, amount: string, id: string | null = null): void {
     if (id === null) {

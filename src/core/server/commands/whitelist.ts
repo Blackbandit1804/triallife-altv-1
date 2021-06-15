@@ -2,16 +2,11 @@ import * as alt from 'alt-server';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import ChatManager from '../systems/chat';
 import { OptionsManager } from '../systems/options';
 
-ChatManager.addCommand(
-    'addwhitelist',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_ADD_WHITELIST, '/addwhitelist'),
-    Permissions.Admin | Permissions.Moderator,
-    handleCommandAdd
-);
+ChatManager.addCommand('addwhitelist', LocaleManager.get(LOCALE_KEYS.COMMAND_ADD_WHITELIST, '/addwhitelist'), Permissions.Admin | Permissions.Moderator, handleCommandAdd);
 
 ChatManager.addCommand(
     'removewhitelist',

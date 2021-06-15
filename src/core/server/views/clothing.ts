@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { View_Events_Clothing } from '../../shared/enums/views';
 import * as sm from 'simplymongo';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { ClothingComponent } from '../../shared/interfaces/clothing';
 import { Item } from '../../shared/interfaces/item';
 import { ItemType } from '../../shared/enums/item-type';

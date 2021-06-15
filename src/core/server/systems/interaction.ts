@@ -7,7 +7,7 @@ import { Interaction } from '../../shared/interfaces/interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { distance2d } from '../utility/vector';
 import '../views/atm';
 
@@ -91,7 +91,7 @@ export class InteractionManager {
             });
         });
 
-        alt.log(`[Athena] Generated ${count} Interaction Points`);
+        alt.log(`[3L:RP] Generated ${count} Interaction Points`);
     }
 
     /**

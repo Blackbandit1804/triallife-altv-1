@@ -4,13 +4,13 @@ import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Discord } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { Account } from '../interface/account';
 import { DiscordUser } from '../interface/discord-user';
 import { getUniquePlayerHash } from '../utility/encryption';
 import { goToCharacterSelect } from '../views/characters';
 import { OptionsManager } from './options';
-import { vehicleFuncs } from '../extensions/Vehicle';
+import { vehicleFuncs } from '../extensions/vehicle';
 import { Collections } from '../interface/collections';
 import '../views/login';
 import './tick';
@@ -37,11 +37,11 @@ export class LoginManager {
         player.setMeta('Athena:Discord:Info', data);
 
         if (data.username) {
-            alt.log(`[Athena] (${player.id}) ${data.username} has authenticated.`);
+            alt.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);
         }
 
         if (account && account.discord) {
-            alt.log(`[Athena] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
+            alt.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
         }
 
         const currentPlayers = [...alt.Player.all];

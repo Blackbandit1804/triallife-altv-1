@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Vehicle_Door_List, Vehicle_Events, Vehicle_Seat_List } from '../../../shared/enums/vehicle';
 import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 import setter from './setter';
 
 function eject(v: alt.Vehicle, player: alt.Player): void {

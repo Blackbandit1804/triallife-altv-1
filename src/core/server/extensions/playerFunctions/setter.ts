@@ -13,7 +13,7 @@ import safe from './safe';
 import sync from './sync';
 import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { ActionMenu } from '../../../shared/interfaces/actions';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 import { Collections } from '../../interface/collections';
 
 const db: Database = getDatabase();

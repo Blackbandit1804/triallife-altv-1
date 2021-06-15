@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { ItemType } from '../../shared/enums/item-type';
 import { Item } from '../../shared/interfaces/item';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { assert, executeTest } from './base';
 import logger from '../utility/tlrp-logger';
 

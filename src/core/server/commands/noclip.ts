@@ -3,19 +3,14 @@ import ChatManager from '../systems/chat';
 
 import { SystemEvent } from '../../shared/enums/system';
 import { Permissions } from '../../shared/flags/permissions';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
 alt.onClient(SystemEvent.NOCLIP_RESET, handleReset);
 alt.onClient(SystemEvent.NOCLIP_UPDATE, handleCamUpdate);
 
-ChatManager.addCommand(
-    'noclip',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_NO_CLIP, '/noclip'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('noclip', LocaleManager.get(LOCALE_KEYS.COMMAND_NO_CLIP, '/noclip'), Permissions.Admin, handleCommand);
 
 function handleCommand(player: alt.Player): void {
     const isNoClipping: boolean | null = player.getSyncedMeta('NoClipping');

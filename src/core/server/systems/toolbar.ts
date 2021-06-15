@@ -5,7 +5,7 @@ import { Item } from '../../shared/interfaces/item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { isFlagEnabled } from '../../shared/utility/flags';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 
 export class ToolbarManager {
     static handleToolbarChange(player: alt.Player, slot: number): void {

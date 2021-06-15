@@ -7,7 +7,7 @@ import { DefaultConfig } from '../configs/settings';
 import { emitAll } from '../utility/emit-helper';
 import { Permissions } from '../../shared/flags/permissions';
 import { SystemEvent } from '../../shared/enums/system';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import Logger from '../utility/tlrp-logger';
 
 const maxMessageLength: number = 128;
@@ -38,14 +38,14 @@ export default class ChatManager {
         }, 1500);
 
         if (ChatManager.commands[name]) {
-            alt.logError(`[Athena] Command: ${name} was already registered.`);
+            alt.logError(`[3L:RP] Command: ${name} was already registered.`);
             return;
         }
 
         commandCount += 1;
 
         if (printCommands) {
-            alt.log(`[Athena] Registered Command ${name}`);
+            alt.log(`[3L:RP] Registered Command ${name}`);
         }
 
         ChatManager.commands[name] = {
@@ -65,13 +65,13 @@ export default class ChatManager {
      */
     static addAliases(originalName: string, aliasNames: Array<string>): void {
         if (!ChatManager.commands[originalName]) {
-            alt.logWarning(`[Athena] Could not add aliases for ${originalName}. Command does not exist.`);
+            alt.logWarning(`[3L:RP] Could not add aliases for ${originalName}. Command does not exist.`);
             return;
         }
 
         for (let i = 0; i < aliasNames.length; i++) {
             ChatManager.commands[aliasNames[i]] = ChatManager.commands[originalName];
-            alt.log(`[Athena] Registered Alias ${aliasNames[i]}`);
+            alt.log(`[3L:RP] Registered Alias ${aliasNames[i]}`);
         }
     }
 
@@ -184,6 +184,6 @@ export default class ChatManager {
 import('../commands/commands')
     .catch((err) => {
         console.error(err);
-        console.error(`[Athena] Failed to load a command file. Please fix the error and commands will work normally again.`);
+        console.error(`[3L:RP] Failed to load a command file. Please fix the error and commands will work normally again.`);
     })
     .then(() => alt.onClient(View_Events_Chat.Send, ChatManager.handleMessage));

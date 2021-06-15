@@ -4,7 +4,7 @@ import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import ChatManager from '../systems/chat';
 import { emitAll } from '../utility/emit-helper';
 import { getPlayersByGridSpace } from '../utility/filters';
@@ -24,20 +24,10 @@ ChatManager.addCommand('do', LocaleManager.get(LOCALE_KEYS.COMMAND_DO, '/do'), P
 ChatManager.addCommand('low', LocaleManager.get(LOCALE_KEYS.COMMAND_LOW, '/low'), Permissions.None, handleCommandLow);
 
 // Whisper
-ChatManager.addCommand(
-    'w',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/w'),
-    Permissions.None,
-    handleCommandWhisper
-);
+ChatManager.addCommand('w', LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/w'), Permissions.None, handleCommandWhisper);
 
 // alias
-ChatManager.addCommand(
-    'whisper',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/whisper'),
-    Permissions.None,
-    handleCommandWhisper
-);
+ChatManager.addCommand('whisper', LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/whisper'), Permissions.None, handleCommandWhisper);
 
 function handleCommandOOC(player: alt.Player, ...args): void {
     if (args.length <= 0) {
@@ -48,11 +38,7 @@ function handleCommandOOC(player: alt.Player, ...args): void {
     const fullMessage = args.join(' ');
     const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_OOC_DISTANCE);
 
-    emitAll(
-        closestPlayers,
-        View_Events_Chat.Append,
-        `${DefaultConfig.CHAT_ROLEPLAY_OOC_COLOR}${player.data.name}: (( ${fullMessage} ))`
-    );
+    emitAll(closestPlayers, View_Events_Chat.Append, `${DefaultConfig.CHAT_ROLEPLAY_OOC_COLOR}${player.data.name}: (( ${fullMessage} ))`);
 }
 
 function handleCommandMe(player: alt.Player, ...args): void {
@@ -64,11 +50,7 @@ function handleCommandMe(player: alt.Player, ...args): void {
     const fullMessage = args.join(' ');
     const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_ME_DISTANCE);
 
-    emitAll(
-        closestPlayers,
-        View_Events_Chat.Append,
-        `${DefaultConfig.CHAT_ROLEPLAY_COLOR}${player.data.name} ${fullMessage}`
-    );
+    emitAll(closestPlayers, View_Events_Chat.Append, `${DefaultConfig.CHAT_ROLEPLAY_COLOR}${player.data.name} ${fullMessage}`);
 }
 
 function handleCommandDo(player: alt.Player, ...args): void {
@@ -80,11 +62,7 @@ function handleCommandDo(player: alt.Player, ...args): void {
     const fullMessage = args.join(' ');
     const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_DO_DISTANCE);
 
-    emitAll(
-        closestPlayers,
-        View_Events_Chat.Append,
-        `${DefaultConfig.CHAT_ROLEPLAY_COLOR}* ${fullMessage} ((${player.data.name}))`
-    );
+    emitAll(closestPlayers, View_Events_Chat.Append, `${DefaultConfig.CHAT_ROLEPLAY_COLOR}* ${fullMessage} ((${player.data.name}))`);
 }
 
 function handleCommandLow(player: alt.Player, ...args): void {
@@ -96,11 +74,7 @@ function handleCommandLow(player: alt.Player, ...args): void {
     const fullMessage = args.join(' ');
     const closestPlayers = getPlayersByGridSpace(player, DefaultConfig.COMMAND_LOW_DISTANCE);
 
-    emitAll(
-        closestPlayers,
-        View_Events_Chat.Append,
-        `${DefaultConfig.CHAT_ROLEPLAY_LOW_COLOR}${player.data.name} ${fullMessage}`
-    );
+    emitAll(closestPlayers, View_Events_Chat.Append, `${DefaultConfig.CHAT_ROLEPLAY_LOW_COLOR}${player.data.name} ${fullMessage}`);
 }
 
 function handleCommandWhisper(player: alt.Player, id: string, ...args) {
@@ -132,13 +106,7 @@ function handleCommandWhisper(player: alt.Player, id: string, ...args) {
     }
 
     const fullMessage = args.join(' ');
-    playerFuncs.emit.message(
-        player,
-        `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}You whisper: '${fullMessage}' to ${target.data.name}`
-    );
+    playerFuncs.emit.message(player, `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}You whisper: '${fullMessage}' to ${target.data.name}`);
 
-    playerFuncs.emit.message(
-        target,
-        `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}${player.data.name} whispers: ${fullMessage}`
-    );
+    playerFuncs.emit.message(target, `${DefaultConfig.CHAT_ROLEPLAY_WHISPER_COLOR}${player.data.name} whispers: ${fullMessage}`);
 }

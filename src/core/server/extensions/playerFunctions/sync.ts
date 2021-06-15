@@ -5,7 +5,7 @@ import { World } from '../../systems/world';
 import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
 import { DefaultConfig } from '../../configs/settings';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 import save from './save';
 
 /**

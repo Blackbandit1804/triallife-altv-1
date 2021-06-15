@@ -3,15 +3,10 @@ import { Vehicle_Events } from '../../shared/enums/vehicle';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import ChatManager from '../systems/chat';
 
-ChatManager.addCommand(
-    'seatbelt',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_SEATBELT, '/seatbelt'),
-    Permissions.None,
-    handleCommand
-);
+ChatManager.addCommand('seatbelt', LocaleManager.get(LOCALE_KEYS.COMMAND_SEATBELT, '/seatbelt'), Permissions.None, handleCommand);
 
 ChatManager.addCommand('sb', LocaleManager.get(LOCALE_KEYS.COMMAND_SEATBELT, '/sb'), Permissions.None, handleCommand);
 

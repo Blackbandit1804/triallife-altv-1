@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { playerFuncs } from '../../server/extensions/Player';
+import { playerFuncs } from '../../server/extensions/player';
 import ChatManager from '../../server/systems/chat';
 import { AnimationFlags } from '../../shared/flags/animation';
 import { Permissions } from '../../shared/flags/permissions';
@@ -8,12 +8,7 @@ import { Animation } from '../../shared/interfaces/animation';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 
-ChatManager.addCommand(
-    'actionmenu',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_ACTION_MENU, '/actionmenu'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('actionmenu', LocaleManager.get(LOCALE_KEYS.COMMAND_ACTION_MENU, '/actionmenu'), Permissions.Admin, handleCommand);
 
 function handleCommand(player: alt.Player): void {
     const facePalm: Action = {

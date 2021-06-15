@@ -4,7 +4,7 @@ import { LocaleManager } from '../../shared/locale/locale';
 import ChatManager from '../systems/chat';
 import { Permissions } from '../../shared/flags/permissions';
 import { InteriorManager } from '../systems/interior';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { Interior } from '../../shared/interfaces/interior';
 
 const playerData = {};

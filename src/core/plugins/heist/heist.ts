@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { playerFuncs } from '../../server/extensions/Player';
+import { playerFuncs } from '../../server/extensions/player';
 import { InteractionManager } from '../../server/systems/interaction';
 import { Job } from '../../server/systems/job';
 import { TextLabelManager } from '../../server/systems/textlabel';

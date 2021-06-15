@@ -3,7 +3,7 @@ import ChatManager from '../systems/chat';
 import { Item } from '../../shared/interfaces/item';
 import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { EquipmentType } from '../../shared/enums/equipment';
 import { deepCloneObject } from '../../shared/utility/deep-copy';
 import { getFromRegistry, ItemRegistry } from '../../shared/items/item-registry';

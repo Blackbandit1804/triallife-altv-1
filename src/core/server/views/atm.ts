@@ -4,7 +4,7 @@ import { PhoneEvents } from '../../shared/enums/phone-events';
 import { SystemEvent } from '../../shared/enums/system';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 
 const ActionHandlers = {
     deposit: handleDeposit,

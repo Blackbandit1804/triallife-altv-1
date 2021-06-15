@@ -1,15 +1,10 @@
 import * as alt from 'alt-server';
-import {
-    Vehicle_Behavior,
-    Vehicle_Lock_State,
-    Vehicle_Lock_States,
-    Vehicle_State
-} from '../../../shared/enums/vehicle';
+import { Vehicle_Behavior, Vehicle_Lock_State, Vehicle_Lock_States, Vehicle_State } from '../../../shared/enums/vehicle';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 import { LocaleManager } from '../../../shared/locale/locale';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 import getter from './getter';
 import keys from './keys';
 import setter from './setter';
@@ -69,9 +64,7 @@ function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = fals
     vehicle.setStreamSyncedMeta(Vehicle_State.ENGINE, vehicle.engineStatus);
 
     if (player) {
-        const status = vehicle.engineStatus
-            ? LocaleManager.get(LOCALE_KEYS.LABEL_ON)
-            : LocaleManager.get(LOCALE_KEYS.LABEL_OFF);
+        const status = vehicle.engineStatus ? LocaleManager.get(LOCALE_KEYS.LABEL_ON) : LocaleManager.get(LOCALE_KEYS.LABEL_OFF);
 
         const fullMessage = `${LocaleManager.get(LOCALE_KEYS.LABEL_ENGINE)} ~y~ ${status}`;
         playerFuncs.emit.notification(player, fullMessage);

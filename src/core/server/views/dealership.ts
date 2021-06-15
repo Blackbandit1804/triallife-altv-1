@@ -2,8 +2,8 @@ import * as alt from 'alt-server';
 import { PhoneEvents } from '../../shared/enums/phone-events';
 import { VehicleData } from '../../shared/configs/vehicle-data';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
-import { vehicleFuncs } from '../extensions/Vehicle';
+import { playerFuncs } from '../extensions/player';
+import { vehicleFuncs } from '../extensions/vehicle';
 
 alt.onClient(PhoneEvents.DEALERSHIP_BUY.name, handlePurchase);
 
@@ -44,10 +44,7 @@ function handlePurchase(player: alt.Player, model: string, color: alt.RGBA) {
         color
     });
 
-    playerFuncs.emit.message(
-        player,
-        `Vehicle has been added to your personal vehicles. Check your phone to locate it.`
-    );
+    playerFuncs.emit.message(player, `Vehicle has been added to your personal vehicles. Check your phone to locate it.`);
 
     playerFuncs.emit.notification(player, `~r~-\$${vehicleData.price}`);
     playerFuncs.emit.sound2D(player, 'item_purchase');

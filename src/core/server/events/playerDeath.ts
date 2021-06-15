@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 
 alt.on('playerDeath', handleDeath);
 

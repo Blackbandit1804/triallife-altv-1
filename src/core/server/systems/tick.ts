@@ -1,8 +1,8 @@
 import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
-import { vehicleFuncs } from '../extensions/Vehicle';
+import { playerFuncs } from '../extensions/player';
+import { vehicleFuncs } from '../extensions/vehicle';
 import { InventoryManager } from '../views/inventory';
 
 const timeBetweenPings = 4950;

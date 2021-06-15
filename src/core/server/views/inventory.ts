@@ -5,7 +5,7 @@ import { SystemEvent } from '../../shared/enums/system';
 import { View_Events_Inventory } from '../../shared/enums/views';
 import { DroppedItem, Item } from '../../shared/interfaces/item';
 import { isFlagEnabled } from '../../shared/utility/flags';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { sha256Random } from '../utility/encryption';
 import '../effects/heal';
 import '../effects/vehicleRepair';

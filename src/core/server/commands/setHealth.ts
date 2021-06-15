@@ -3,15 +3,10 @@ import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 import { LocaleManager } from '../../shared/locale/locale';
 
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import ChatManager from '../systems/chat';
 
-ChatManager.addCommand(
-    'sethealth',
-    LocaleManager.get(LOCALE_KEYS.COMMAND_SET_HEALTH, '/sethealth'),
-    Permissions.Admin,
-    handleCommand
-);
+ChatManager.addCommand('sethealth', LocaleManager.get(LOCALE_KEYS.COMMAND_SET_HEALTH, '/sethealth'), Permissions.Admin, handleCommand);
 
 function handleCommand(player: alt.Player, value: number = 100, targetPlayerID: string | null = null): void {
     if (isNaN(value)) {

@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import { SystemEvent } from '../../shared/enums/system';
 import JobEnums, { Objective } from '../../shared/interfaces/job';
 import { isFlagEnabled } from '../../shared/utility/flags';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import { distance } from '../utility/vector';
 
 const JobInstances: { [key: string]: Job } = {};

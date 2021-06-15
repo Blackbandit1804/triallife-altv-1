@@ -3,12 +3,12 @@ import { Vehicle_Door_List } from '../../shared/enums/vehicle';
 import { AnimationFlags } from '../../shared/flags/animation';
 import { Item } from '../../shared/interfaces/item';
 import { Task, TaskCallback } from '../../shared/interfaces/task-timeline';
-import { playerFuncs } from '../extensions/Player';
-import { vehicleFuncs } from '../extensions/Vehicle';
+import { playerFuncs } from '../extensions/player';
+import { vehicleFuncs } from '../extensions/vehicle';
 import { getForwardVector } from '../utility/vector';
 import { TlrpFunctions, WASM } from '../utility/wasm-loader';
 
-const wasm = WASM.getFunctions<TlrpFunctions>('tlrp');
+const wasm = WASM.getFunctions<TlrpFunctions>('ares');
 const isUsingTimeline: Array<{ player: alt.Player; vehicle: alt.Vehicle }> = [];
 
 alt.onClient('task:Vehicle:Repair:Timeline', handleRepairTimeline);

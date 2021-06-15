@@ -3,7 +3,7 @@ import { Player } from 'alt-server';
 import { Character } from '../../shared/interfaces/character';
 import { View_Events_Characters, View_Events_Creator } from '../../shared/enums/views';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/Player';
+import { playerFuncs } from '../extensions/player';
 import * as sm from 'simplymongo';
 import './clothing';
 import { Collections } from '../interface/collections';
@@ -56,7 +56,7 @@ export async function handleSelectCharacter(player: Player, id: string): Promise
     }
 
     if (!player.currentCharacters) {
-        alt.logWarning(`[Athena] Failed to get characters for a player. Sending them to character select again.`);
+        alt.logWarning(`[3L:RP] Failed to get characters for a player. Sending them to character select again.`);
         goToCharacterSelect(player);
         return;
     }

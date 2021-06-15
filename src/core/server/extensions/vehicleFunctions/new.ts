@@ -3,7 +3,7 @@ import { Vehicle_Behavior, Vehicle_State } from '../../../shared/enums/vehicle';
 import { Vehicle } from '../../../shared/interfaces/vehicle';
 import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { sha256Random } from '../../utility/encryption';
-import { playerFuncs } from '../Player';
+import { playerFuncs } from '../player';
 
 const ownershipBehavior = Vehicle_Behavior.CONSUMES_FUEL | Vehicle_Behavior.NEED_KEY_TO_START;
 const tmpBehavior = Vehicle_Behavior.NO_KEY_TO_LOCK | Vehicle_Behavior.NO_KEY_TO_START | Vehicle_Behavior.UNLIMITED_FUEL | Vehicle_Behavior.NO_SAVE;
