@@ -3,7 +3,7 @@ import * as native from 'natives';
 import { View_Events_Characters } from '../../../shared/enums/views';
 import { Character } from '../../../shared/interfaces/character';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
 import { createPedEditCamera, destroyPedEditCamera, setFov, setZPos } from '../../utility/camera';
 import { handleEquipment } from '../clothing/clothing';
@@ -43,7 +43,7 @@ async function handleView(_characters: Partial<Character>[]) {
 }
 
 function handleReady() {
-    view.emit('characters:SetLocale', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CHARACTERS));
+    view.emit('characters:SetLocale', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CHARACTERS));
 }
 
 async function handleSelect(id) {

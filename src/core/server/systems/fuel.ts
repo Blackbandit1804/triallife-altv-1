@@ -4,7 +4,7 @@ import { CurrencyTypes } from '../../shared/enums/economy';
 import { SystemEvent } from '../../shared/enums/system';
 import { Vehicle_Behavior, Vehicle_State } from '../../shared/enums/vehicle';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { playerFuncs } from '../extensions/Player';
@@ -28,12 +28,12 @@ interface FuelStatus {
 
 function handleFuel(player: alt.Player, pos: alt.IVector3) {
     if (player.vehicle) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_EXIT_VEHICLE_FIRST));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_EXIT_VEHICLE_FIRST));
         return;
     }
 
     if (!player.lastEnteredVehicleID) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_UPDATE_VEHICLE_FIRST));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_UPDATE_VEHICLE_FIRST));
         return;
     }
 
@@ -46,27 +46,27 @@ function handleFuel(player: alt.Player, pos: alt.IVector3) {
 
     const lastVehicle = alt.Vehicle.all.find((v) => v.id === player.lastEnteredVehicleID);
     if (!lastVehicle) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_VEHICLE_NOT_CLOSE));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_VEHICLE_NOT_CLOSE));
         return;
     }
 
     if (lastVehicle.fuel >= 99) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_ALREADY_FULL));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_ALREADY_FULL));
         return;
     }
 
     if (distance2d(lastVehicle.pos, pos) > 5) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_TOO_FAR_FROM_PUMP));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_TOO_FAR_FROM_PUMP));
         return;
     }
 
     if (isFlagEnabled(lastVehicle.behavior, Vehicle_Behavior.UNLIMITED_FUEL)) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_HAS_UNLIMITED));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_HAS_UNLIMITED));
         return;
     }
 
     if (player.data.cash <= 0) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
         return;
     }
 
@@ -80,7 +80,7 @@ function handleFuel(player: alt.Player, pos: alt.IVector3) {
         missingFuel = missingFuel - SHARED_CONFIG.FUEL_PRICE * player.data.cash;
 
         if (missingFuel <= 2) {
-            playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
+            playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
             return;
         }
     }
@@ -93,7 +93,7 @@ function handleFuel(player: alt.Player, pos: alt.IVector3) {
 
     playerFuncs.emit.notification(
         player,
-        LocaleController.get(LOCALE_KEYS.FUEL_PAYMENT, maximumCost.toFixed(2), missingFuel.toFixed(2))
+        LocaleManager.get(LOCALE_KEYS.FUEL_PAYMENT, maximumCost.toFixed(2), missingFuel.toFixed(2))
     );
 
     const newPosition = new alt.Vector3(pos.x, pos.y, pos.z).add(0, 0, 3);
@@ -128,7 +128,7 @@ function handleFinishFuel(player: alt.Player, fuelStatus: FuelStatus) {
     }
 
     if (player.data.cash < fuelStatus.maxCost) {
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.FUEL_CANNOT_AFFORD));
         return;
     }
 
@@ -144,7 +144,7 @@ function handleFinishFuel(player: alt.Player, fuelStatus: FuelStatus) {
 
         playerFuncs.emit.notification(
             player,
-            LocaleController.get(LOCALE_KEYS.FUEL_PAID, fuelStatus.maxCost.toFixed(2), fuelStatus.difFuel.toFixed(2))
+            LocaleManager.get(LOCALE_KEYS.FUEL_PAID, fuelStatus.maxCost.toFixed(2), fuelStatus.difFuel.toFixed(2))
         );
         return;
     }
@@ -184,6 +184,6 @@ function handleFinishFuel(player: alt.Player, fuelStatus: FuelStatus) {
 
     playerFuncs.emit.notification(
         player,
-        LocaleController.get(LOCALE_KEYS.FUEL_PAID, totalCost.toFixed(2), totalFuel.toFixed(2))
+        LocaleManager.get(LOCALE_KEYS.FUEL_PAID, totalCost.toFixed(2), totalFuel.toFixed(2))
     );
 }

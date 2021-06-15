@@ -6,71 +6,71 @@ import { drawMarker } from '../utility/marker';
 import { drawText2D, drawText3D } from '../utility/text';
 import { BaseHUD, HudEventNames } from '../views/hud/hud';
 
-class ObjectiveController {
+class ObjectiveManager {
     static objective: Objective | null;
     static interval: number;
     static cooldown: number;
     static blip: alt.Blip;
 
     static updateObjective(data: Objective | null) {
-        ObjectiveController.objective = data;
+        ObjectiveManager.objective = data;
     }
 
     static handleSync(data: Objective | null) {
-        if (ObjectiveController.interval) {
-            alt.clearInterval(ObjectiveController.interval);
+        if (ObjectiveManager.interval) {
+            alt.clearInterval(ObjectiveManager.interval);
         }
 
-        if (ObjectiveController.blip && ObjectiveController.blip.destroy) {
+        if (ObjectiveManager.blip && ObjectiveManager.blip.destroy) {
             try {
-                ObjectiveController.blip.destroy();
+                ObjectiveManager.blip.destroy();
             } catch (err) {}
         }
 
         if (!data) {
-            ObjectiveController.objective = null;
+            ObjectiveManager.objective = null;
             BaseHUD.setHudStatus(HudEventNames.Objective, null);
             return;
         }
 
         if (data.blip) {
-            ObjectiveController.blip = new alt.PointBlip(data.blip.pos.x, data.blip.pos.y, data.blip.pos.z);
-            ObjectiveController.blip.scale = data.blip.scale;
+            ObjectiveManager.blip = new alt.PointBlip(data.blip.pos.x, data.blip.pos.y, data.blip.pos.z);
+            ObjectiveManager.blip.scale = data.blip.scale;
 
             // Beta Feature? Not implemented yet.
-            if (ObjectiveController.blip.hasOwnProperty('size')) {
-                ObjectiveController.blip.size = { x: data.blip.scale, y: data.blip.scale } as alt.Vector2;
+            if (ObjectiveManager.blip.hasOwnProperty('size')) {
+                ObjectiveManager.blip.size = { x: data.blip.scale, y: data.blip.scale } as alt.Vector2;
             }
 
-            ObjectiveController.blip.sprite = data.blip.sprite;
-            ObjectiveController.blip.color = data.blip.color;
-            ObjectiveController.blip.shortRange = data.blip.shortRange;
-            ObjectiveController.blip.name = data.blip.text;
-            ObjectiveController.blip.route = true;
+            ObjectiveManager.blip.sprite = data.blip.sprite;
+            ObjectiveManager.blip.color = data.blip.color;
+            ObjectiveManager.blip.shortRange = data.blip.shortRange;
+            ObjectiveManager.blip.name = data.blip.text;
+            ObjectiveManager.blip.route = true;
         }
 
         BaseHUD.setHudStatus(HudEventNames.Objective, data.description);
-        ObjectiveController.objective = data;
-        ObjectiveController.interval = alt.setInterval(ObjectiveController.verifyObjective, 0);
+        ObjectiveManager.objective = data;
+        ObjectiveManager.interval = alt.setInterval(ObjectiveManager.verifyObjective, 0);
     }
 
     private static getVector3Range() {
         return new alt.Vector3(
-            ObjectiveController.objective.range,
-            ObjectiveController.objective.range,
-            ObjectiveController.objective.range
+            ObjectiveManager.objective.range,
+            ObjectiveManager.objective.range,
+            ObjectiveManager.objective.range
         );
     }
 
     private static verifyType(dist: number): boolean {
-        if (isFlagEnabled(ObjectiveController.objective.type, JobEnums.ObjectiveType.WAYPOINT)) {
-            if (dist <= ObjectiveController.objective.range) {
+        if (isFlagEnabled(ObjectiveManager.objective.type, JobEnums.ObjectiveType.WAYPOINT)) {
+            if (dist <= ObjectiveManager.objective.range) {
                 return true;
             }
         }
 
-        if (isFlagEnabled(ObjectiveController.objective.type, JobEnums.ObjectiveType.CAPTURE_POINT)) {
-            if (dist <= ObjectiveController.objective.range) {
+        if (isFlagEnabled(ObjectiveManager.objective.type, JobEnums.ObjectiveType.CAPTURE_POINT)) {
+            if (dist <= ObjectiveManager.objective.range) {
                 return true;
             }
         }
@@ -79,13 +79,13 @@ class ObjectiveController {
     }
 
     private static verifyCriteria(dist: number): boolean {
-        if (isFlagEnabled(ObjectiveController.objective.criteria, JobEnums.ObjectiveCriteria.NO_VEHICLE)) {
+        if (isFlagEnabled(ObjectiveManager.objective.criteria, JobEnums.ObjectiveCriteria.NO_VEHICLE)) {
             if (alt.Player.local.vehicle) {
                 return false;
             }
         }
 
-        if (isFlagEnabled(ObjectiveController.objective.criteria, JobEnums.ObjectiveCriteria.IN_VEHICLE)) {
+        if (isFlagEnabled(ObjectiveManager.objective.criteria, JobEnums.ObjectiveCriteria.IN_VEHICLE)) {
             if (!alt.Player.local.vehicle) {
                 return false;
             }
@@ -99,51 +99,51 @@ class ObjectiveController {
             return;
         }
 
-        if (!ObjectiveController.objective) {
+        if (!ObjectiveManager.objective) {
             return;
         }
 
-        const dist = distance(alt.Player.local.pos, ObjectiveController.objective.pos);
+        const dist = distance(alt.Player.local.pos, ObjectiveManager.objective.pos);
 
-        if (ObjectiveController.objective.marker && dist <= ObjectiveController.objective.range * 25) {
+        if (ObjectiveManager.objective.marker && dist <= ObjectiveManager.objective.range * 25) {
             drawMarker(
-                ObjectiveController.objective.type,
-                ObjectiveController.objective.marker.pos as alt.Vector3,
-                ObjectiveController.getVector3Range(),
-                ObjectiveController.objective.marker.color
+                ObjectiveManager.objective.type,
+                ObjectiveManager.objective.marker.pos as alt.Vector3,
+                ObjectiveManager.getVector3Range(),
+                ObjectiveManager.objective.marker.color
             );
         }
 
-        if (ObjectiveController.objective.textLabel && dist <= ObjectiveController.objective.range * 10) {
+        if (ObjectiveManager.objective.textLabel && dist <= ObjectiveManager.objective.range * 10) {
             drawText3D(
-                ObjectiveController.objective.textLabel.data,
-                ObjectiveController.objective.textLabel.pos as alt.Vector3,
+                ObjectiveManager.objective.textLabel.data,
+                ObjectiveManager.objective.textLabel.pos as alt.Vector3,
                 0.4,
                 new alt.RGBA(255, 255, 255, 255)
             );
         }
 
-        if (ObjectiveController.objective.captureProgress >= 1 && dist <= ObjectiveController.objective.range * 10) {
-            const progressText = `${ObjectiveController.objective.captureProgress}/${ObjectiveController.objective.captureMaximum}`;
+        if (ObjectiveManager.objective.captureProgress >= 1 && dist <= ObjectiveManager.objective.range * 10) {
+            const progressText = `${ObjectiveManager.objective.captureProgress}/${ObjectiveManager.objective.captureMaximum}`;
             drawText3D(
                 progressText,
-                ObjectiveController.objective.pos as alt.Vector3,
+                ObjectiveManager.objective.pos as alt.Vector3,
                 0.4,
                 new alt.RGBA(255, 255, 255, 255)
             );
         }
 
-        if (ObjectiveController.cooldown && Date.now() < ObjectiveController.cooldown) {
+        if (ObjectiveManager.cooldown && Date.now() < ObjectiveManager.cooldown) {
             return;
         }
 
-        ObjectiveController.cooldown = Date.now() + 250;
+        ObjectiveManager.cooldown = Date.now() + 250;
 
-        if (!ObjectiveController.verifyType(dist)) {
+        if (!ObjectiveManager.verifyType(dist)) {
             return;
         }
 
-        if (!ObjectiveController.verifyCriteria(dist)) {
+        if (!ObjectiveManager.verifyCriteria(dist)) {
             return;
         }
 
@@ -151,5 +151,5 @@ class ObjectiveController {
     }
 }
 
-alt.onServer(JobEnums.ObjectiveEvents.JOB_SYNC, ObjectiveController.handleSync);
-alt.onServer(JobEnums.ObjectiveEvents.JOB_UPDATE, ObjectiveController.updateObjective);
+alt.onServer(JobEnums.ObjectiveEvents.JOB_SYNC, ObjectiveManager.handleSync);
+alt.onServer(JobEnums.ObjectiveEvents.JOB_UPDATE, ObjectiveManager.updateObjective);

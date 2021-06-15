@@ -1,11 +1,11 @@
 import * as alt from 'alt-server';
 import { playerFuncs } from '../../server/extensions/Player';
-import ChatController from '../../server/systems/chat';
+import ChatManager from '../../server/systems/chat';
 import { ItemType } from '../../shared/enums/item-type';
 import { Permissions } from '../../shared/flags/permissions';
 import { Item } from '../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 
 const teleporterItem: Item = {
@@ -21,9 +21,9 @@ const teleporterItem: Item = {
     }
 };
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'teleporter',
-    LocaleController.get(LOCALE_KEYS.COMMAND_TELEPORTER, '/teleporter'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_TELEPORTER, '/teleporter'),
     Permissions.Admin,
     (player: alt.Player) => {
         let itemClone = deepCloneObject<Item>(teleporterItem);

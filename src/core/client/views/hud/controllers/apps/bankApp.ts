@@ -5,10 +5,10 @@ import { BaseHUD } from '../../hud';
 
 alt.on(SystemEvent.META_CHANGED, handleChange);
 
-export class BankAppController {
+export class BankAppManager {
     static init() {
         // No Initialization Needed at This Time
-        BaseHUD.view.on('phone:ATM:Populate', BankAppController.updateCurrency);
+        BaseHUD.view.on('phone:ATM:Populate', BankAppManager.updateCurrency);
     }
 
     static updateCurrency() {
@@ -27,5 +27,5 @@ function handleChange(key: string, newValue: any, oldValue: any) {
         return;
     }
 
-    BankAppController.updateCurrency();
+    BankAppManager.updateCurrency();
 }

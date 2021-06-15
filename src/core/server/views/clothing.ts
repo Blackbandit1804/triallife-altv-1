@@ -6,7 +6,7 @@ import { ClothingComponent } from '../../shared/interfaces/Clothing';
 import { Item } from '../../shared/interfaces/Item';
 import { ItemType } from '../../shared/enums/item-type';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
 const db: sm.Database = sm.getDatabase();
@@ -59,7 +59,7 @@ function handlePurchase(
             return;
         }
 
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.CLOTHING_ITEM_IN_INVENTORY));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.CLOTHING_ITEM_IN_INVENTORY));
         didGetAdded = playerFuncs.inventory.inventoryAdd(player, newItem, openSlot.slot, openSlot.tab);
     }
 

@@ -2,56 +2,46 @@ import * as alt from 'alt-server';
 import { View_Events_Chat } from '../../shared/enums/views';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 import { emitAll } from '../utility/emit-helper';
 import { getPlayersByGridSpace } from '../utility/filters';
 import { distance2d } from '../utility/vector';
 
 // Talk out of Character
-ChatController.addCommand('b', LocaleController.get(LOCALE_KEYS.COMMAND_OOC, '/b'), Permissions.None, handleCommandOOC);
-ChatController.addCommand(
-    'ooc',
-    LocaleController.get(LOCALE_KEYS.COMMAND_OOC, '/ooc'),
-    Permissions.None,
-    handleCommandOOC
-);
+ChatManager.addCommand('b', LocaleManager.get(LOCALE_KEYS.COMMAND_OOC, '/b'), Permissions.None, handleCommandOOC);
+ChatManager.addCommand('ooc', LocaleManager.get(LOCALE_KEYS.COMMAND_OOC, '/ooc'), Permissions.None, handleCommandOOC);
 
 // Perform an Action
-ChatController.addCommand('me', LocaleController.get(LOCALE_KEYS.COMMAND_ME, '/me'), Permissions.None, handleCommandMe);
+ChatManager.addCommand('me', LocaleManager.get(LOCALE_KEYS.COMMAND_ME, '/me'), Permissions.None, handleCommandMe);
 
 // Describe an Action
-ChatController.addCommand('do', LocaleController.get(LOCALE_KEYS.COMMAND_DO, '/do'), Permissions.None, handleCommandDo);
+ChatManager.addCommand('do', LocaleManager.get(LOCALE_KEYS.COMMAND_DO, '/do'), Permissions.None, handleCommandDo);
 
 // Speak Low
-ChatController.addCommand(
-    'low',
-    LocaleController.get(LOCALE_KEYS.COMMAND_LOW, '/low'),
-    Permissions.None,
-    handleCommandLow
-);
+ChatManager.addCommand('low', LocaleManager.get(LOCALE_KEYS.COMMAND_LOW, '/low'), Permissions.None, handleCommandLow);
 
 // Whisper
-ChatController.addCommand(
+ChatManager.addCommand(
     'w',
-    LocaleController.get(LOCALE_KEYS.COMMAND_WHISPER, '/w'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/w'),
     Permissions.None,
     handleCommandWhisper
 );
 
 // alias
-ChatController.addCommand(
+ChatManager.addCommand(
     'whisper',
-    LocaleController.get(LOCALE_KEYS.COMMAND_WHISPER, '/whisper'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_WHISPER, '/whisper'),
     Permissions.None,
     handleCommandWhisper
 );
 
 function handleCommandOOC(player: alt.Player, ...args): void {
     if (args.length <= 0) {
-        playerFuncs.emit.message(player, ChatController.getDescription('b'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('b'));
         return;
     }
 
@@ -67,7 +57,7 @@ function handleCommandOOC(player: alt.Player, ...args): void {
 
 function handleCommandMe(player: alt.Player, ...args): void {
     if (args.length <= 0) {
-        playerFuncs.emit.message(player, ChatController.getDescription('me'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('me'));
         return;
     }
 
@@ -83,7 +73,7 @@ function handleCommandMe(player: alt.Player, ...args): void {
 
 function handleCommandDo(player: alt.Player, ...args): void {
     if (args.length <= 0) {
-        playerFuncs.emit.message(player, ChatController.getDescription('do'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('do'));
         return;
     }
 
@@ -99,7 +89,7 @@ function handleCommandDo(player: alt.Player, ...args): void {
 
 function handleCommandLow(player: alt.Player, ...args): void {
     if (args.length <= 0) {
-        playerFuncs.emit.message(player, ChatController.getDescription('low'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('low'));
         return;
     }
 
@@ -119,12 +109,12 @@ function handleCommandWhisper(player: alt.Player, id: string, ...args) {
     }
 
     if (typeof id !== 'string') {
-        playerFuncs.emit.message(player, ChatController.getDescription('w'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('w'));
         return;
     }
 
     if (id === null) {
-        playerFuncs.emit.message(player, ChatController.getDescription('w'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('w'));
         return;
     }
 
@@ -132,12 +122,12 @@ function handleCommandWhisper(player: alt.Player, id: string, ...args) {
     const target = players.find((target) => target && id === target.id.toString());
 
     if (!target || !target.valid) {
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.CANNOT_FIND_PLAYER));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.CANNOT_FIND_PLAYER));
         return;
     }
 
     if (distance2d(target.pos, player.pos) > DEFAULT_CONFIG.COMMAND_WHISPER_DISTANCE) {
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.PLAYER_IS_TOO_FAR));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.PLAYER_IS_TOO_FAR));
         return;
     }
 

@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
 
 // const url = `http://127.0.0.1:5555/src/core/client/views/login/html/index.html`;
@@ -8,13 +8,13 @@ const url = `http://resource/client/views/login/html/index.html`;
 let view: View;
 let discordURI;
 
-export class LoginController {
+export class LoginManager {
     static async show(oAuthUrl: string) {
         discordURI = oAuthUrl;
         view = await View.getInstance(url, true, false, false);
-        view.on('discord:OpenURL', LoginController.open);
-        view.on('discord:FinishAuth', LoginController.finish);
-        view.on('discord:Ready', LoginController.handleReady);
+        view.on('discord:OpenURL', LoginManager.open);
+        view.on('discord:FinishAuth', LoginManager.finish);
+        view.on('discord:Ready', LoginManager.handleReady);
         alt.toggleGameControls(false);
     }
 
@@ -23,7 +23,7 @@ export class LoginController {
             return;
         }
 
-        view.emit('discord:SetLocales', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_LOGIN));
+        view.emit('discord:SetLocales', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_LOGIN));
     }
 
     static open() {
@@ -59,7 +59,7 @@ export class LoginController {
     }
 }
 
-alt.on('connectionComplete', LoginController.trigger);
-alt.onServer(`Discord:Open`, LoginController.show);
-alt.onServer(`Discord:Close`, LoginController.close);
-alt.onServer('Discord:Fail', LoginController.emitFailureMessage);
+alt.on('connectionComplete', LoginManager.trigger);
+alt.onServer(`Discord:Open`, LoginManager.show);
+alt.onServer(`Discord:Close`, LoginManager.close);
+alt.onServer('Discord:Fail', LoginManager.emitFailureMessage);

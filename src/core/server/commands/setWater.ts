@@ -1,13 +1,13 @@
 import * as alt from 'alt-server';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { playerFuncs } from '../extensions/Player';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'setwater',
-    LocaleController.get(LOCALE_KEYS.COMMAND_SET_WATER, '/setwater'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_SET_WATER, '/setwater'),
     Permissions.Admin,
     handleCommand
 );
@@ -16,7 +16,7 @@ function handleCommand(player: alt.Player, value: string): void {
     let waterLevel = parseInt(value);
 
     if (isNaN(waterLevel)) {
-        playerFuncs.emit.message(player, ChatController.getDescription('setwater'));
+        playerFuncs.emit.message(player, ChatManager.getDescription('setwater'));
         return;
     }
 

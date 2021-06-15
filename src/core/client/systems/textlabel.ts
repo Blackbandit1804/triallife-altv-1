@@ -8,12 +8,12 @@ let addedLabels: Array<TextLabel> = [];
 let interval;
 let isRemoving = false;
 
-export class TextlabelController {
+export class TextlabelManager {
     /**
      * Add a single text label.
      * @static
      * @param {TextLabel} label
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static append(label: TextLabel) {
         if (!label.uid) {
@@ -32,7 +32,7 @@ export class TextlabelController {
      * Used to populate server-side markers.
      * @static
      * @param {Array<Marker>} markers
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static populate(markers: Array<TextLabel>) {
         addedLabels = addedLabels.concat(markers);
@@ -47,7 +47,7 @@ export class TextlabelController {
      * @static
      * @param {string} uid
      * @return {*}
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static remove(uid: string) {
         isRemoving = true;
@@ -92,6 +92,6 @@ function handleDrawTextlabels() {
     }
 }
 
-alt.onServer(SystemEvent.APPEND_TEXTLABELS, TextlabelController.append);
-alt.onServer(SystemEvent.POPULATE_TEXTLABELS, TextlabelController.populate);
-alt.onServer(SystemEvent.REMOVE_TEXTLABEL, TextlabelController.remove);
+alt.onServer(SystemEvent.APPEND_TEXTLABELS, TextlabelManager.append);
+alt.onServer(SystemEvent.POPULATE_TEXTLABELS, TextlabelManager.populate);
+alt.onServer(SystemEvent.REMOVE_TEXTLABEL, TextlabelManager.remove);

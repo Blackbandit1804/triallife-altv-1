@@ -3,7 +3,7 @@ import { CurrencyTypes } from '../../shared/enums/economy';
 import { PhoneEvents } from '../../shared/enums/phone-events';
 import { SystemEvent } from '../../shared/enums/system';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { playerFuncs } from '../extensions/Player';
 
 const ActionHandlers = {
@@ -92,7 +92,7 @@ function handleTransfer(player: alt.Player, amount: number, id: string | number)
 
     playerFuncs.currency.sub(player, CurrencyTypes.BANK, amount);
     playerFuncs.currency.add(target, CurrencyTypes.BANK, amount);
-    const msg = LocaleController.get(LOCALE_KEYS.PLAYER_RECEIVED_BLANK, `$${amount}`, player.data.name);
+    const msg = LocaleManager.get(LOCALE_KEYS.PLAYER_RECEIVED_BLANK, `$${amount}`, player.data.name);
     playerFuncs.emit.message(target, msg);
     return true;
 }
@@ -114,7 +114,7 @@ function handleTransferCash(player: alt.Player, amount: number, id: string | num
     playerFuncs.currency.sub(player, CurrencyTypes.CASH, amount);
     playerFuncs.currency.add(target, CurrencyTypes.CASH, amount);
 
-    const msg = LocaleController.get(LOCALE_KEYS.PLAYER_RECEIVED_BLANK, `$${amount}`, player.data.name);
+    const msg = LocaleManager.get(LOCALE_KEYS.PLAYER_RECEIVED_BLANK, `$${amount}`, player.data.name);
     playerFuncs.emit.message(target, msg);
     return true;
 }

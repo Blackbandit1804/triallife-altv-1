@@ -2,7 +2,7 @@ import { LOCALE_KEYS } from './keys';
 
 /**
  * Locales are written with a key and value type.
- * When you get the key of 'greet-user' from the LocaleController
+ * When you get the key of 'greet-user' from the LocaleManager
  * It will return a string of 'Hello someVariableYouPass, welcome to the server.'
  * It's a simple way to create locales without hurting performance too much.
  */

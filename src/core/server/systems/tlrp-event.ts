@@ -17,15 +17,15 @@ function on(eventName: TLRP_EVENTS_PLAYER | TLRP_EVENTS_VEHICLE, callback: playe
 /**
  * Used to bind events to callbacks.
  * @export
- * @class EventController
+ * @class EventManager
  */
-export class EventController {
+export class EventManager {
     /**
      * Subscribe to an Athena Player event.
      * @static
      * @param {TLRP_EVENTS_PLAYER} eventName
      * @param {playerCallback} callback
-     * @memberof EventController
+     * @memberof EventManager
      */
     static onPlayer(eventName: TLRP_EVENTS_PLAYER, callback: playerCallback) {
         on(eventName, callback);
@@ -36,7 +36,7 @@ export class EventController {
      * @static
      * @param {TLRP_EVENTS_VEHICLE} eventName
      * @param {vehicleCallback} callback
-     * @memberof EventController
+     * @memberof EventManager
      */
     static onVehicle(eventName: TLRP_EVENTS_VEHICLE, callback: vehicleCallback) {
         on(eventName, callback);

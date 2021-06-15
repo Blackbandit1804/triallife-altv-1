@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 import { Item } from '../../shared/interfaces/Item';
 import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
@@ -7,19 +7,19 @@ import { playerFuncs } from '../extensions/Player';
 import { getWeaponByName } from '../../shared/configs/weapons';
 import { sha256Random } from '../utility/encryption';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'weapon',
-    LocaleController.get(LOCALE_KEYS.COMMAND_WEAPON, '/weapon'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_WEAPON, '/weapon'),
     Permissions.Admin,
     handleCommand
 );
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'removeallweapons',
-    LocaleController.get(LOCALE_KEYS.COMMAND_REMOVE_ALL_WEAPONS, '/removeallweapons'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_REMOVE_ALL_WEAPONS, '/removeallweapons'),
     Permissions.Admin,
     handleRemoveWeapons
 );

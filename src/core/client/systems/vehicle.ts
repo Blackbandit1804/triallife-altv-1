@@ -12,10 +12,10 @@ import vehicleFuncs from '../extensions/vehicle';
 import { BaseHUD, HudEventNames } from '../views/hud/hud';
 import { ActionMenu } from '../../shared/interfaces/actions';
 import { CLIENT_VEHICLE_EVENTS } from '../enums/vehicle';
-import { ChatController } from '../views/hud/controllers/chatController';
+import { ChatManager } from '../views/hud/controllers/chatManager';
 import { drawTexture, loadTexture } from '../utility/texture';
 import { KEY_BINDS } from '../events/keyup';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
 alt.onServer(Vehicle_Events.SET_INTO, handleSetInto);
@@ -33,7 +33,7 @@ if (!native.hasStreamedTextureDictLoaded('mpsafecracking')) {
     loadTexture('mpsafecracking');
 }
 
-export class VehicleController {
+export class VehicleManager {
     static processingVehicles = false;
 
     // The different states for this controller
@@ -68,7 +68,7 @@ export class VehicleController {
      * Called from the events/keyup.ts file.
      * @static
      * @param {string} booleanName
-     * @memberof VehicleController
+     * @memberof VehicleManager
      */
     static triggerVehicleFunction(booleanName: string): void {
         if (alt.Player.local.isChatOpen) {
@@ -81,20 +81,20 @@ export class VehicleController {
     /**
      * Sets all keypress booleans to false.
      * @static
-     * @memberof VehicleController
+     * @memberof VehicleManager
      */
     static turnOffAllVehicleFunctions(): void {
-        VehicleController.pressedLockKey = false;
-        VehicleController.pressedVehicleFunction = false;
-        VehicleController.pressedVehicleFunctionAlt = false;
+        VehicleManager.pressedLockKey = false;
+        VehicleManager.pressedVehicleFunction = false;
+        VehicleManager.pressedVehicleFunctionAlt = false;
     }
 
     static updateNextKeyPress(): void {
-        VehicleController.nextControlPress = Date.now() + TIME_BETWEEN_CONTROL_PRESS;
+        VehicleManager.nextControlPress = Date.now() + TIME_BETWEEN_CONTROL_PRESS;
     }
 
     static async updateClosestVehicles() {
-        if (!VehicleController.processingVehicles) {
+        if (!VehicleManager.processingVehicles) {
             return;
         }
 
@@ -110,8 +110,8 @@ export class VehicleController {
             processedVehicles.push(vehicle);
         }
 
-        VehicleController.vehicles = processedVehicles;
-        VehicleController.processingVehicles = false;
+        VehicleManager.vehicles = processedVehicles;
+        VehicleManager.processingVehicles = false;
     }
 
     /**
@@ -119,14 +119,14 @@ export class VehicleController {
      *
      * @static
      * @return {*}  {alt.Vehicle}
-     * @memberof VehicleController
+     * @memberof VehicleManager
      */
     static getClosestVehicle(): alt.Vehicle {
         if (alt.Player.local.vehicle) {
             return alt.Player.local.vehicle;
         }
 
-        return getClosestVectorByPos<alt.Vehicle>(alt.Player.local.pos, VehicleController.vehicles);
+        return getClosestVectorByPos<alt.Vehicle>(alt.Player.local.pos, VehicleManager.vehicles);
     }
 
     static getMaximums(baseEnum: any, maxValue: number, eventName: string): ActionMenu {
@@ -157,7 +157,7 @@ export class VehicleController {
     }
 
     static getVehicleOptions(): ActionMenu {
-        const closestVehicle = VehicleController.getClosestVehicle();
+        const closestVehicle = VehicleManager.getClosestVehicle();
         if (!closestVehicle || !closestVehicle.model) {
             return {};
         }
@@ -185,10 +185,10 @@ export class VehicleController {
                 return actions;
             }
 
-            const short = `[${String.fromCharCode(KEY_BINDS.INTERACT)}] ${LocaleController.get(
+            const short = `[${String.fromCharCode(KEY_BINDS.INTERACT)}] ${LocaleManager.get(
                 LOCALE_KEYS.INTERACTION_INTERACT_VEHICLE
             )}`;
-            const long = `[${String.fromCharCode(KEY_BINDS.VEHICLE_LOCK)}] ${LocaleController.get(
+            const long = `[${String.fromCharCode(KEY_BINDS.VEHICLE_LOCK)}] ${LocaleManager.get(
                 LOCALE_KEYS.VEHICLE_TOGGLE_LOCK
             )}`;
             alt.Player.local.otherInteraction = {
@@ -204,7 +204,7 @@ export class VehicleController {
 
             // Generate Seat Menu
             const maxSeats = native.getVehicleMaxNumberOfPassengers(closestVehicle.scriptID) + 1;
-            actions[vehicleModel]['Seats'] = VehicleController.getMaximums(
+            actions[vehicleModel]['Seats'] = VehicleManager.getMaximums(
                 Vehicle_Seat_List,
                 maxSeats,
                 CLIENT_VEHICLE_EVENTS.TOGGLE_SEAT
@@ -288,12 +288,12 @@ export class VehicleController {
      * Running on an every tick instance.
      * @static
      * @return {*}
-     * @memberof VehicleController
+     * @memberof VehicleManager
      */
-    static runVehicleControllerTick(): void {
-        if (!VehicleController.processingVehicles) {
-            VehicleController.processingVehicles = true;
-            alt.setTimeout(VehicleController.updateClosestVehicles, 0);
+    static runVehicleManagerTick(): void {
+        if (!VehicleManager.processingVehicles) {
+            VehicleManager.processingVehicles = true;
+            alt.setTimeout(VehicleManager.updateClosestVehicles, 0);
         }
 
         // Stop Entering Vehicle
@@ -314,22 +314,22 @@ export class VehicleController {
             }
         }
 
-        const closestVehicle = VehicleController.getClosestVehicle();
+        const closestVehicle = VehicleManager.getClosestVehicle();
         if (!closestVehicle) {
-            VehicleController.pressedVehicleFunction = false;
-            VehicleController.pressedVehicleFunctionAlt = false;
+            VehicleManager.pressedVehicleFunction = false;
+            VehicleManager.pressedVehicleFunctionAlt = false;
             return;
         }
 
-        if (Date.now() > VehicleController.nextVehicleStateUpdate) {
-            VehicleController.updateVehicleState(closestVehicle);
+        if (Date.now() > VehicleManager.nextVehicleStateUpdate) {
+            VehicleManager.updateVehicleState(closestVehicle);
         }
 
         if (distance2d(closestVehicle.pos, alt.Player.local.pos) > MAX_VEHICLE_DISTANCE) {
             return;
         }
 
-        const exceededNextControlCheck = Date.now() > VehicleController.nextControlPress;
+        const exceededNextControlCheck = Date.now() > VehicleManager.nextControlPress;
 
         // Draw Vehicle Lock
         if (!alt.Player.local.vehicle) {
@@ -346,18 +346,18 @@ export class VehicleController {
         }
 
         // F - Enter / Exit Vehicle
-        if (VehicleController.pressedVehicleFunction && exceededNextControlCheck) {
-            VehicleController.pressedVehicleFunction = false;
-            VehicleController.updateNextKeyPress();
-            VehicleController.enterExitVehicle(closestVehicle, 0);
+        if (VehicleManager.pressedVehicleFunction && exceededNextControlCheck) {
+            VehicleManager.pressedVehicleFunction = false;
+            VehicleManager.updateNextKeyPress();
+            VehicleManager.enterExitVehicle(closestVehicle, 0);
             return;
         }
 
         // G - Enter Passenger
-        if (!alt.Player.local.vehicle && VehicleController.pressedVehicleFunctionAlt && exceededNextControlCheck) {
-            VehicleController.pressedVehicleFunctionAlt = false;
-            VehicleController.updateNextKeyPress();
-            VehicleController.enterExitVehicle(closestVehicle, 1);
+        if (!alt.Player.local.vehicle && VehicleManager.pressedVehicleFunctionAlt && exceededNextControlCheck) {
+            VehicleManager.pressedVehicleFunctionAlt = false;
+            VehicleManager.updateNextKeyPress();
+            VehicleManager.enterExitVehicle(closestVehicle, 1);
             return;
         }
     }
@@ -365,7 +365,7 @@ export class VehicleController {
     static enterExitVehicle(closestVehicle: alt.Vehicle, startingAt: number) {
         const isLocked = closestVehicle.lockStatus === Vehicle_Lock_State.LOCKED || !closestVehicle.lockStatus;
         if (isLocked) {
-            ChatController.appendMessage(LocaleController.get(LOCALE_KEYS.VEHICLE_TOGGLE_LOCK));
+            ChatManager.appendMessage(LocaleManager.get(LOCALE_KEYS.VEHICLE_TOGGLE_LOCK));
             return;
         }
 
@@ -390,7 +390,7 @@ export class VehicleController {
             const isSeatFree = native.isVehicleSeatFree(closestVehicle.scriptID, i - 1, false);
             if (isSeatFree) {
                 alt.log(i);
-                VehicleController.updatePedFlags(closestVehicle);
+                VehicleManager.updatePedFlags(closestVehicle);
                 native.taskEnterVehicle(alt.Player.local.scriptID, closestVehicle.scriptID, 2000, i - 1, 2, 1, 0);
                 return;
             }
@@ -406,7 +406,7 @@ export class VehicleController {
             return;
         }
 
-        const vehicle = VehicleController.getClosestVehicle();
+        const vehicle = VehicleManager.getClosestVehicle();
         if (!vehicle) {
             return;
         }
@@ -423,7 +423,7 @@ export class VehicleController {
             return;
         }
 
-        const vehicle = VehicleController.getClosestVehicle();
+        const vehicle = VehicleManager.getClosestVehicle();
         if (!vehicle) {
             return;
         }
@@ -448,7 +448,7 @@ export class VehicleController {
     }
 
     static handleToggleSeat(seat) {
-        const vehicle = VehicleController.getClosestVehicle();
+        const vehicle = VehicleManager.getClosestVehicle();
         if (!vehicle) {
             return;
         }
@@ -462,12 +462,12 @@ export class VehicleController {
             return;
         }
 
-        VehicleController.updatePedFlags(vehicle);
+        VehicleManager.updatePedFlags(vehicle);
         native.taskEnterVehicle(alt.Player.local.scriptID, vehicle.scriptID, 2000, seat, 2, 1, 0);
     }
 
     static handleToggleDoor(door) {
-        const vehicle = VehicleController.getClosestVehicle();
+        const vehicle = VehicleManager.getClosestVehicle();
         if (!vehicle) {
             return;
         }
@@ -481,7 +481,7 @@ export class VehicleController {
     }
 
     static updateVehicleState(closestVehicle: alt.Vehicle): void {
-        VehicleController.nextVehicleStateUpdate = Date.now() + TIME_BETWEEN_STATE_UPDATES;
+        VehicleManager.nextVehicleStateUpdate = Date.now() + TIME_BETWEEN_STATE_UPDATES;
         alt.setTimeout(() => {
             vehicleFuncs.sync.update(closestVehicle);
         }, 0);
@@ -560,8 +560,8 @@ async function handleVehicleDataChange(vehicle: alt.Vehicle, key: string, value:
     }
 }
 
-alt.onServer(Vehicle_Events.SET_SEATBELT, VehicleController.putOnSeatbelt);
-alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_ENGINE, VehicleController.handleToggleEngine);
-alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_LOCK, VehicleController.handleToggleLock);
-alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_SEAT, VehicleController.handleToggleSeat);
-alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_DOOR, VehicleController.handleToggleDoor);
+alt.onServer(Vehicle_Events.SET_SEATBELT, VehicleManager.putOnSeatbelt);
+alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_ENGINE, VehicleManager.handleToggleEngine);
+alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_LOCK, VehicleManager.handleToggleLock);
+alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_SEAT, VehicleManager.handleToggleSeat);
+alt.on(CLIENT_VEHICLE_EVENTS.TOGGLE_DOOR, VehicleManager.handleToggleDoor);

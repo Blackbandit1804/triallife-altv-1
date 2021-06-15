@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/enums/system';
-import { PhoneController } from '../views/hud/controllers/phoneController';
+import { PhoneManager } from '../views/hud/controllers/phoneManager';
 import { BaseHUD } from '../views/hud/hud';
 
 // Weather
@@ -33,7 +33,7 @@ function handleUpdateTime(hour: number, minute: number): void {
     currentTime.hour = hour;
     currentTime.minute = minute;
 
-    PhoneController.updateTime(currentTime.hour, currentTime.minute);
+    PhoneManager.updateTime(currentTime.hour, currentTime.minute);
     native.setClockTime(hour, minute, 0);
 }
 

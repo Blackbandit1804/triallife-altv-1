@@ -36,7 +36,7 @@ import { deepCloneObject } from '../../shared/utility/deepCopy';
  * Makes it nice and neat and keeps all the underlying code elsewhere.
  */
 
-export class InventoryController {
+export class InventoryManager {
     static groundItems: Array<DroppedItem> = [];
     static customItemRules: Array<Function> = [];
 
@@ -45,10 +45,10 @@ export class InventoryController {
      * These are ran for all items, equips, etc.
      * @static
      * @param {Function} someFunction
-     * @memberof InventoryController
+     * @memberof InventoryManager
      */
     static addItemRuleCheck(someFunction: Function) {
-        InventoryController.customItemRules.push(someFunction);
+        InventoryManager.customItemRules.push(someFunction);
     }
 
     /**
@@ -60,7 +60,7 @@ export class InventoryController {
      * @param {number} tab
      * @param {(string | null)} hash
      * @return {*}  {void}
-     * @memberof InventoryController
+     * @memberof InventoryManager
      */
     static processItemMovement(
         player: alt.Player,
@@ -89,13 +89,13 @@ export class InventoryController {
 
         // Handle Drop Ground
         if (endData.name === InventoryType.GROUND) {
-            InventoryController.handleDropGround(player, selectedSlot, tab);
+            InventoryManager.handleDropGround(player, selectedSlot, tab);
             return;
         }
 
         // Pickup Item from Ground
         if (selectData.name === InventoryType.GROUND) {
-            InventoryController.handlePickupGround(player, endData, endSlotIndex, hash, tab);
+            InventoryManager.handlePickupGround(player, endData, endSlotIndex, hash, tab);
             return;
         }
 
@@ -106,7 +106,7 @@ export class InventoryController {
                 selectedSlot,
                 endSlot,
                 tab,
-                InventoryController.customItemRules
+                InventoryManager.customItemRules
             );
             return;
         }
@@ -120,7 +120,7 @@ export class InventoryController {
         }
 
         if (endData.name === InventoryType.TAB) {
-            InventoryController.handleMoveTabs(
+            InventoryManager.handleMoveTabs(
                 player,
                 itemClone,
                 selectSlotIndex,
@@ -138,7 +138,7 @@ export class InventoryController {
                 itemClone,
                 endData,
                 endSlotIndex,
-                InventoryController.customItemRules,
+                InventoryManager.customItemRules,
                 tab
             )
         ) {
@@ -176,7 +176,7 @@ export class InventoryController {
      * @static
      * @param {alt.Player} player
      * @param {Item} item
-     * @memberof InventoryController
+     * @memberof InventoryManager
      */
     static handleMoveTabs(
         player: alt.Player,
@@ -215,7 +215,7 @@ export class InventoryController {
      * @static
      * @param {string} selectedSlot
      * @param {number} tab
-     * @memberof InventoryController
+     * @memberof InventoryManager
      */
     static handleDropGround(player: alt.Player, selectedSlot: string, tab: number) {
         const selectSlotIndex = stripCategory(selectedSlot);
@@ -249,7 +249,7 @@ export class InventoryController {
                 itemClone,
                 { name: 'ground' },
                 null,
-                InventoryController.customItemRules,
+                InventoryManager.customItemRules,
                 tab
             )
         ) {
@@ -275,7 +275,7 @@ export class InventoryController {
         }
 
         itemClone.hash = sha256Random(JSON.stringify(itemClone));
-        InventoryController.groundItems.push({
+        InventoryManager.groundItems.push({
             gridSpace: player.gridSpace,
             item: itemClone,
             position: playerFuncs.utility.getPositionFrontOf(player, 1),
@@ -288,7 +288,7 @@ export class InventoryController {
     }
 
     static getDroppedItemsByGridSpace(gridSpace: number): Array<DroppedItem> {
-        return InventoryController.groundItems.filter((item) => item.gridSpace === gridSpace);
+        return InventoryManager.groundItems.filter((item) => item.gridSpace === gridSpace);
     }
 
     static updateDroppedItemsAroundPlayer(player: alt.Player, updateOtherPlayers: boolean): void {
@@ -298,7 +298,7 @@ export class InventoryController {
             players = playerFuncs.utility.getClosestPlayers(player, 50);
         }
 
-        const items = InventoryController.getDroppedItemsByGridSpace(player.gridSpace);
+        const items = InventoryManager.getDroppedItemsByGridSpace(player.gridSpace);
         for (let i = 0; i < players.length; i++) {
             const target = players[i];
             if (!target || !target.valid) {
@@ -322,7 +322,7 @@ export class InventoryController {
             return;
         }
 
-        InventoryController.handlePickupGround(player, endData, openSlot.slot, hash, openSlot.tab);
+        InventoryManager.handlePickupGround(player, endData, openSlot.slot, hash, openSlot.tab);
     }
 
     static handlePickupGround(
@@ -347,14 +347,14 @@ export class InventoryController {
             return;
         }
 
-        const index = InventoryController.groundItems.findIndex((gItem) => gItem.item.hash === hash);
+        const index = InventoryManager.groundItems.findIndex((gItem) => gItem.item.hash === hash);
         if (index <= -1) {
             playerFuncs.sync.inventory(player);
             this.updateDroppedItemsAroundPlayer(player, false);
             return;
         }
 
-        const droppedItem: DroppedItem = { ...InventoryController.groundItems[index] };
+        const droppedItem: DroppedItem = { ...InventoryManager.groundItems[index] };
         if (distance2d(player.pos, droppedItem.position) >= 10) {
             playerFuncs.sync.inventory(player);
             this.updateDroppedItemsAroundPlayer(player, false);
@@ -367,7 +367,7 @@ export class InventoryController {
                 droppedItem.item,
                 endData,
                 endSlotIndex,
-                InventoryController.customItemRules,
+                InventoryManager.customItemRules,
                 tab
             )
         ) {
@@ -384,7 +384,7 @@ export class InventoryController {
             return;
         }
 
-        const removedItems = InventoryController.groundItems.splice(index, 1);
+        const removedItems = InventoryManager.groundItems.splice(index, 1);
         if (removedItems.length <= 0) {
             playerFuncs.sync.inventory(player);
             this.updateDroppedItemsAroundPlayer(player, false);
@@ -412,7 +412,7 @@ export class InventoryController {
      * @param {string} selectedSlot // i-0
      * @param {number} tab // 0-3
      * @return {*}
-     * @memberof InventoryController
+     * @memberof InventoryManager
      */
     static processUse(player: alt.Player, selectedSlot: string, tab: number) {
         if (!selectedSlot || tab === undefined || tab === null) {
@@ -599,7 +599,7 @@ const DataHelpers: Array<CategoryData> = [
     }
 ];
 
-alt.onClient(View_Events_Inventory.Use, InventoryController.processUse);
-alt.onClient(View_Events_Inventory.Process, InventoryController.processItemMovement);
-alt.onClient(View_Events_Inventory.Split, InventoryController.processSplit);
-alt.onClient(View_Events_Inventory.Pickup, InventoryController.handleProcessPickup);
+alt.onClient(View_Events_Inventory.Use, InventoryManager.processUse);
+alt.onClient(View_Events_Inventory.Process, InventoryManager.processItemMovement);
+alt.onClient(View_Events_Inventory.Split, InventoryManager.processSplit);
+alt.onClient(View_Events_Inventory.Pickup, InventoryManager.handleProcessPickup);

@@ -2,16 +2,16 @@ import * as alt from 'alt-client';
 import { BaseHUD } from '../hud';
 import { PhoneEventList, PhoneEvents } from '../../../../shared/enums/phone-events';
 import { isAnyMenuOpen } from '../../../utility/menus';
-import { VehicleAppController } from './apps/vehicleApp';
-import { BankAppController } from './apps/bankApp';
-import { DealershipAppController } from './apps/dealershipApp';
+import { VehicleAppManager } from './apps/vehicleApp';
+import { BankAppManager } from './apps/bankApp';
+import { DealershipAppManager } from './apps/dealershipApp';
 
-export class PhoneController {
+export class PhoneManager {
     static initializeApps() {
         // Initialize Apps
-        VehicleAppController.init();
-        BankAppController.init();
-        DealershipAppController.init();
+        VehicleAppManager.init();
+        BankAppManager.init();
+        DealershipAppManager.init();
     }
 
     static togglePhone() {
@@ -38,7 +38,7 @@ export class PhoneController {
      * @param {boolean} isServer
      * @param {...any[]} args
      * @return {*}
-     * @memberof PhoneController
+     * @memberof PhoneManager
      */
     static routeFromPhone(name: string, ...args: any[]) {
         const event = PhoneEventList.find((event) => event.name.toLowerCase().includes(name.toLowerCase()));

@@ -3,13 +3,13 @@ import { Database, getDatabase } from 'simplymongo';
 import { SystemEvent } from '../../shared/enums/system';
 import { Interior } from '../../shared/interfaces/Interior';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { getClosestVectorByPos } from '../../shared/utility/vector';
 import { playerFuncs } from '../extensions/Player';
 import { Collections } from '../interface/DatabaseCollections';
 import Logger from '../utility/tlrp-logger';
 import { distance2d } from '../utility/vector';
-import { InteractionController } from './interaction';
+import { InteractionManager } from './interaction';
 
 interface InteriorInfo {
     interior: Interior;
@@ -30,7 +30,7 @@ class ColshapeInterior extends alt.ColshapeSphere {
         this.interior = interior;
         this.isInteraction = true;
         this.interactionType = 'interior';
-        this.text = LocaleController.get(LOCALE_KEYS.INTERIOR_INTERACT);
+        this.text = LocaleManager.get(LOCALE_KEYS.INTERIOR_INTERACT);
 
         if (interior.isActuallyOutside) {
             this.dimension = 0;
@@ -38,7 +38,7 @@ class ColshapeInterior extends alt.ColshapeSphere {
             this.dimension = dimension;
         }
 
-        InteractionController.sideLoadInteraction(this.interactionType, SystemEvent.INTERIOR_SWITCH, true, this);
+        InteractionManager.sideLoadInteraction(this.interactionType, SystemEvent.INTERIOR_SWITCH, true, this);
     }
 }
 
@@ -49,18 +49,18 @@ const interiors: Array<Interior> = [];
 const colshapes: Array<ColshapeInterior> = [];
 let dimension = 0;
 
-export class InteriorController {
+export class InteriorManager {
     /**
      * Load all interiors from Database.
      * @static
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static async load() {
         const savedInteriors = await db.fetchAllData<Interior>(Collections.Interiors);
         let count = 0;
 
         for (let i = 0; i < savedInteriors.length; i++) {
-            InteriorController.populate(savedInteriors[i]);
+            InteriorManager.populate(savedInteriors[i]);
             count += 1;
         }
 
@@ -71,7 +71,7 @@ export class InteriorController {
      * Populate an interior into memory.
      * @static
      * @param {Interior} interior
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static populate(interior: Interior) {
         dimension += 1; // Increment Dimension
@@ -91,7 +91,7 @@ export class InteriorController {
      * @static
      * @param {Interior} interior
      * @return {*}  {(Promise<Interior | boolean>)}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static async create(ownerIdentification: string, interior: Interior): Promise<Interior | boolean> {
         if (!interior.outside) {
@@ -150,7 +150,7 @@ export class InteriorController {
      * @static
      * @param {string} _id
      * @return {*}  {Promise<boolean>}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static async remove(interiorID: string): Promise<boolean> {
         interiorID = interiorID.toString();
@@ -183,7 +183,7 @@ export class InteriorController {
      * @param {alt.Player} player
      * @param {string} interiorID
      * @return {*}  {boolean}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static isOwner(player: alt.Player, interior: Interior): boolean {
         return interior.friends[0] === player.data._id.toString();
@@ -195,7 +195,7 @@ export class InteriorController {
      * @param {string} playerID
      * @param {Interior} interior
      * @return {*}  {boolean}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static isOwnerByID(playerID: string, interior: Interior): boolean {
         return interior.friends[0] === playerID.toString();
@@ -207,7 +207,7 @@ export class InteriorController {
      * @param {alt.Player} player
      * @param {Interior} interior
      * @return {*}  {boolean}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static hasAccess(player: alt.Player, interior: Interior): boolean {
         let index = interiors.findIndex((i) => i._id.toString() === interior._id.toString());
@@ -224,7 +224,7 @@ export class InteriorController {
      * @static
      * @param {alt.Player} player
      * @return {*}  {boolean}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static hasFactionAccess(player: alt.Player): boolean {
         // To Be Added
@@ -236,7 +236,7 @@ export class InteriorController {
      * @static
      * @param {alt.Player} player
      * @return {*}  {({ interior: Interior; isInside: boolean } | null)}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static findClosestInterior(player: alt.Player): InteriorInfo | null {
         let index;
@@ -281,7 +281,7 @@ export class InteriorController {
      * @param {alt.Player} player
      * @param {Interior} interior
      * @return {*}  {boolean}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static switchLocation(player: alt.Player, interior: Interior): boolean {
         // Allows the player to exit the interior they are currently in.
@@ -346,17 +346,17 @@ export class InteriorController {
      * @param {alt.Player} player
      * @param {alt.IVector3} pos
      * @return {*}
-     * @memberof InteriorController
+     * @memberof InteriorManager
      */
     static trySwitch(player: alt.Player, pos: alt.IVector3) {
-        const interior = InteriorController.findClosestInterior(player);
+        const interior = InteriorManager.findClosestInterior(player);
         if (!interior) {
             return;
         }
 
-        InteriorController.switchLocation(player, interior.interior);
+        InteriorManager.switchLocation(player, interior.interior);
     }
 }
 
-alt.on(SystemEvent.INTERIOR_SWITCH, InteriorController.trySwitch);
-InteriorController.load();
+alt.on(SystemEvent.INTERIOR_SWITCH, InteriorManager.trySwitch);
+InteriorManager.load();

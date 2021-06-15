@@ -5,7 +5,7 @@ import path from 'path';
 import { Database, onReady } from 'simplymongo';
 import { SystemEvent } from '../shared/enums/system';
 import { getVersionIdentifier } from './ares/getRequests';
-import { PostController } from './ares/postRequests';
+import { PostManager } from './ares/postRequests';
 import { Collections } from './interface/DatabaseCollections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
@@ -77,7 +77,7 @@ async function runBooter() {
 }
 
 async function handleEvent(value: number) {
-    const buffer: Buffer = await PostController.postAsync(WASM.getHelpers().__getString(value));
+    const buffer: Buffer = await PostManager.postAsync(WASM.getHelpers().__getString(value));
 
     if (!buffer) {
         logger.error(`Unable to boot. Potentially invalid license.`);

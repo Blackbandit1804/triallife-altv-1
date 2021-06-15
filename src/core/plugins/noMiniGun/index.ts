@@ -1,12 +1,12 @@
-import { InventoryController } from '../../server/views/inventory';
+import { InventoryManager } from '../../server/views/inventory';
 import { Item } from '../../shared/interfaces/Item';
 import * as alt from 'alt-server';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { ItemType } from '../../shared/enums/item-type';
 import { Permissions } from '../../shared/flags/permissions';
 
-InventoryController.addItemRuleCheck(handleNoMinigun);
-InventoryController.addItemRuleCheck(handleNoMinigunDrop);
+InventoryManager.addItemRuleCheck(handleNoMinigun);
+InventoryManager.addItemRuleCheck(handleNoMinigunDrop);
 
 function handleNoMinigun(
     player: alt.Player,

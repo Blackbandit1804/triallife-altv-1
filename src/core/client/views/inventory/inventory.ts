@@ -5,7 +5,7 @@ import { SystemEvent } from '../../../shared/enums/system';
 import { View_Events_Inventory } from '../../../shared/enums/views';
 import { DroppedItem } from '../../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { distance2d } from '../../../shared/utility/vector';
 import { View } from '../../extensions/view';
 import { drawMarker } from '../../utility/marker';
@@ -22,7 +22,7 @@ let camera;
 let lastDroppedItems: Array<DroppedItem> = [];
 let noPedPreview = false;
 
-export class InventoryController {
+export class InventoryManager {
     static isOpen = false;
     static drawInterval: number = null;
 
@@ -37,14 +37,14 @@ export class InventoryController {
 
         noPedPreview = false;
         view = await View.getInstance(url, true, false, false);
-        view.on('inventory:Update', InventoryController.updateEverything);
-        view.on('inventory:Use', InventoryController.handleUse);
-        view.on('inventory:Process', InventoryController.handleProcess);
-        view.on('inventory:Close', InventoryController.handleClose);
-        view.on('inventory:Split', InventoryController.handleSplit);
-        view.on('inventory:Pickup', InventoryController.handlePickup);
+        view.on('inventory:Update', InventoryManager.updateEverything);
+        view.on('inventory:Use', InventoryManager.handleUse);
+        view.on('inventory:Process', InventoryManager.handleProcess);
+        view.on('inventory:Close', InventoryManager.handleClose);
+        view.on('inventory:Split', InventoryManager.handleSplit);
+        view.on('inventory:Pickup', InventoryManager.handlePickup);
         alt.toggleGameControls(false);
-        InventoryController.isOpen = true;
+        InventoryManager.isOpen = true;
 
         BaseHUD.setHudVisibility(false);
     }
@@ -66,10 +66,10 @@ export class InventoryController {
             keyFunctions[key]();
         });
 
-        InventoryController.processClosestGroundItems();
-        const didRenderCamera = await InventoryController.showPreview();
+        InventoryManager.processClosestGroundItems();
+        const didRenderCamera = await InventoryManager.showPreview();
         view.emit('inventory:DisablePreview', !didRenderCamera ? true : false);
-        view.emit('inventory:SetLocales', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_INVENTORY));
+        view.emit('inventory:SetLocales', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_INVENTORY));
     }
 
     static updateInventory(): void {
@@ -105,7 +105,7 @@ export class InventoryController {
     }
 
     static handleClose(): void {
-        InventoryController.isOpen = false;
+        InventoryManager.isOpen = false;
         native.clearFocus();
         alt.toggleGameControls(true);
         native.renderScriptCams(false, false, 255, true, false, 0);
@@ -137,24 +137,24 @@ export class InventoryController {
     static updateGroundItems(items: Array<DroppedItem>) {
         lastDroppedItems = items;
 
-        if (InventoryController.drawInterval) {
-            alt.clearInterval(InventoryController.drawInterval);
-            InventoryController.drawInterval = null;
+        if (InventoryManager.drawInterval) {
+            alt.clearInterval(InventoryManager.drawInterval);
+            InventoryManager.drawInterval = null;
         }
 
         if (lastDroppedItems.length >= 1) {
-            InventoryController.drawInterval = alt.setInterval(InventoryController.drawItemMarkers, 0);
+            InventoryManager.drawInterval = alt.setInterval(InventoryManager.drawItemMarkers, 0);
         }
 
         if (!view) {
             return;
         }
 
-        if (!InventoryController.isOpen) {
+        if (!InventoryManager.isOpen) {
             return;
         }
 
-        alt.setTimeout(InventoryController.processClosestGroundItems, 0);
+        alt.setTimeout(InventoryManager.processClosestGroundItems, 0);
     }
 
     static processClosestGroundItems() {
@@ -223,11 +223,11 @@ export class InventoryController {
     }
 }
 
-alt.on(SystemEvent.META_CHANGED, InventoryController.processMetaChange);
-alt.onServer(SystemEvent.POPULATE_ITEMS, InventoryController.updateGroundItems);
+alt.on(SystemEvent.META_CHANGED, InventoryManager.processMetaChange);
+alt.onServer(SystemEvent.POPULATE_ITEMS, InventoryManager.updateGroundItems);
 
 const keyFunctions = {
-    inventory: InventoryController.updateInventory,
-    toolbar: InventoryController.updateToolbar,
-    equipment: InventoryController.updateEquipment
+    inventory: InventoryManager.updateInventory,
+    toolbar: InventoryManager.updateToolbar,
+    equipment: InventoryManager.updateEquipment
 };

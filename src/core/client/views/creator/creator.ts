@@ -10,7 +10,7 @@ import {
 } from '../../utility/camera';
 import { Appearance } from '../../../shared/interfaces/design';
 import { View_Events_Creator } from '../../../shared/enums/views';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
 
 // const url = `http://127.0.0.1:5555/src/core/client/views/creator/html/index.html`;
@@ -90,7 +90,7 @@ function handleReadyDone() {
     }
 
     view.emit('creator:SetData', oldCharacterData, totalCharacters);
-    view.emit('creator:SetLocales', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CREATOR));
+    view.emit('creator:SetLocales', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CREATOR));
 }
 
 function handleCheckName(name: string): void {

@@ -2,7 +2,7 @@ import * as alt from 'alt-client';
 import { distance2d } from '../../../../shared/utility/vector';
 import { BaseHUD } from '../hud';
 
-export class LeaderboardController {
+export class LeaderboardManager {
     static focusLeaderBoard(): void {
         if (!BaseHUD.view) {
             return;

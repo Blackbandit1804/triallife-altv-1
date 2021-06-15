@@ -3,7 +3,7 @@ import * as native from 'natives';
 import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
 
 const url = `http://resource/client/views/atm/html/index.html`;
@@ -43,7 +43,7 @@ function handleClose() {
 
 function handleReady() {
     handleChange('bank', null, null);
-    view.emit('atm:SetLocale', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_ATM));
+    view.emit('atm:SetLocale', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_ATM));
 }
 
 function handleChange(key: string, newValue: any, oldValue: any) {

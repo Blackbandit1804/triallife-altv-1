@@ -3,15 +3,15 @@ import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
 import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { DEFAULT_CONFIG } from '../../tlrp/main';
-import { BlipController } from '../../systems/blip';
-import ChatController from '../../systems/chat';
-import { InteractionController } from '../../systems/interaction';
-import { MarkerController } from '../../systems/marker';
+import { BlipManager } from '../../systems/blip';
+import ChatManager from '../../systems/chat';
+import { InteractionManager } from '../../systems/interaction';
+import { MarkerManager } from '../../systems/marker';
 import emit from './emit';
 import safe from './safe';
 import setter from './setter';
 import sync from './sync';
-import { TextLabelController } from '../../systems/textlabel';
+import { TextLabelManager } from '../../systems/textlabel';
 import save from './save';
 
 /**
@@ -83,11 +83,11 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         sync.vehicles(p);
 
         // Propagation
-        ChatController.populateCommands(p);
-        InteractionController.populateCustomInteractions(p);
-        BlipController.populateGlobalBlips(p);
-        MarkerController.populateGlobalMarkers(p);
-        TextLabelController.populateGlobalLabels(p);
+        ChatManager.populateCommands(p);
+        InteractionManager.populateCustomInteractions(p);
+        BlipManager.populateGlobalBlips(p);
+        MarkerManager.populateGlobalMarkers(p);
+        TextLabelManager.populateGlobalLabels(p);
         alt.emit(SystemEvent.VOICE_ADD, p);
         alt.emit(TLRP_EVENTS_PLAYER.SELECTED_CHARACTER, p);
     }, 500);

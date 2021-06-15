@@ -3,7 +3,7 @@ import { View_Events_Chat } from '../../../../shared/enums/views';
 import { disableAllControls } from '../../../utility/disable-controls';
 import { BaseHUD } from '../hud';
 
-export class ChatController {
+export class ChatManager {
     static focusChat(): void {
         if (alt.isConsoleOpen()) {
             return;
@@ -41,7 +41,7 @@ export class ChatController {
      * @static
      * @param {string} message
      * @return {*}  {void}
-     * @memberof HUDController
+     * @memberof HUDManager
      */
     static appendMessage(message: string): void {
         if (!BaseHUD.view) {
@@ -52,4 +52,4 @@ export class ChatController {
     }
 }
 
-alt.onServer(View_Events_Chat.Append, ChatController.appendMessage);
+alt.onServer(View_Events_Chat.Append, ChatManager.appendMessage);

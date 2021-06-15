@@ -1,14 +1,14 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/enums/system';
-import { InteractionController } from '../systems/interaction';
-import { ToolbarController } from '../systems/toolbar';
-import { VehicleController } from '../systems/vehicle';
-import { ChatController } from '../views/hud/controllers/chatController';
-import { HelpController } from '../views/hud/controllers/helpController';
-import { LeaderboardController } from '../views/hud/controllers/leaderBoardController';
-import { PhoneController } from '../views/hud/controllers/phoneController';
-import { InventoryController } from '../views/inventory/inventory';
+import { InteractionManager } from '../systems/interaction';
+import { ToolbarManager } from '../systems/toolbar';
+import { VehicleManager } from '../systems/vehicle';
+import { ChatManager } from '../views/hud/controllers/chatManager';
+import { HelpManager } from '../views/hud/controllers/helpManager';
+import { LeaderboardManager } from '../views/hud/controllers/leaderBoardManager';
+import { PhoneManager } from '../views/hud/controllers/phoneManager';
+import { InventoryManager } from '../views/inventory/inventory';
 
 export const KEY_BINDS = {
     // Left Alt
@@ -46,43 +46,43 @@ const KEY_UP_BINDS = {
         singlePress: handleDebugMessages
     },
     [KEY_BINDS.LEADERBOARD]: {
-        singlePress: LeaderboardController.focusLeaderBoard
+        singlePress: LeaderboardManager.focusLeaderBoard
     },
     [KEY_BINDS.INVENTORY]: {
-        singlePress: InventoryController.handleView
+        singlePress: InventoryManager.handleView
     },
     [KEY_BINDS.VEHICLE_LOCK]: {
-        singlePress: VehicleController.handleToggleLock
+        singlePress: VehicleManager.handleToggleLock
     },
     [KEY_BINDS.VEHICLE_ENGINE]: {
-        singlePress: VehicleController.handleToggleEngine
+        singlePress: VehicleManager.handleToggleEngine
     },
     [KEY_BINDS.VEHICLE_FUNCS]: {
-        singlePress: (...args: any[]) => VehicleController.triggerVehicleFunction('pressedVehicleFunction')
+        singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction')
     },
     [KEY_BINDS.VEHICLE_FUNCS_ALT]: {
-        singlePress: (...args: any[]) => VehicleController.triggerVehicleFunction('pressedVehicleFunctionAlt')
+        singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt')
     },
     [KEY_BINDS.CHAT]: {
-        singlePress: ChatController.focusChat
+        singlePress: ChatManager.focusChat
     },
     [KEY_BINDS.INTERACT]: {
-        singlePress: InteractionController.triggerInteraction
+        singlePress: InteractionManager.triggerInteraction
     },
     [KEY_BINDS.TOOLBAR_ONE]: {
-        singlePress: ToolbarController.handleToolbarSwitch
+        singlePress: ToolbarManager.handleToolbarSwitch
     },
     [KEY_BINDS.TOOLBAR_TWO]: {
-        singlePress: ToolbarController.handleToolbarSwitch
+        singlePress: ToolbarManager.handleToolbarSwitch
     },
     [KEY_BINDS.TOOLBAR_THREE]: {
-        singlePress: ToolbarController.handleToolbarSwitch
+        singlePress: ToolbarManager.handleToolbarSwitch
     },
     [KEY_BINDS.TOOLBAR_FOUR]: {
-        singlePress: ToolbarController.handleToolbarSwitch
+        singlePress: ToolbarManager.handleToolbarSwitch
     },
     [KEY_BINDS.PHONE]: {
-        singlePress: PhoneController.togglePhone
+        singlePress: PhoneManager.togglePhone
     }
 };
 

@@ -3,11 +3,11 @@ import { ItemType } from '../../shared/enums/item-type';
 import { SystemEvent } from '../../shared/enums/system';
 import { Item } from '../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { isFlagEnabled } from '../../shared/utility/flags';
 import { playerFuncs } from '../extensions/Player';
 
-export class ToolbarController {
+export class ToolbarManager {
     static handleToolbarChange(player: alt.Player, slot: number): void {
         if (slot <= -1 || slot >= 4) {
             return;
@@ -15,7 +15,7 @@ export class ToolbarController {
 
         const item = playerFuncs.inventory.getToolbarItem(player, slot);
         if (!item) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.ITEM_NOT_EQUIPPED));
+            playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.ITEM_NOT_EQUIPPED));
             return;
         }
 
@@ -25,13 +25,13 @@ export class ToolbarController {
 
         // Handle Weapon Switch
         if (isFlagEnabled(item.behavior, ItemType.IS_WEAPON)) {
-            ToolbarController.handleWeaponEquip(player, item);
+            ToolbarManager.handleWeaponEquip(player, item);
             return;
         }
 
         // Handle Consume Item from Toolbar
         if (isFlagEnabled(item.behavior, ItemType.CONSUMABLE)) {
-            ToolbarController.handleToolbarUse(player, item);
+            ToolbarManager.handleToolbarUse(player, item);
             return;
         }
 
@@ -43,7 +43,7 @@ export class ToolbarController {
         player.removeAllWeapons();
 
         if (!item.data.hash) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.WEAPON_NO_HASH));
+            playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.WEAPON_NO_HASH));
             return;
         }
 
@@ -97,4 +97,4 @@ export class ToolbarController {
     }
 }
 
-alt.onClient(SystemEvent.PLAYER_TOOLBAR_SET, ToolbarController.handleToolbarChange);
+alt.onClient(SystemEvent.PLAYER_TOOLBAR_SET, ToolbarManager.handleToolbarChange);

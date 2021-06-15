@@ -4,33 +4,29 @@ import { Collections } from '../interface/DatabaseCollections';
 import { defaultOptions, DiscordID, Options } from '../interface/Options';
 import Logger from '../utility/tlrp-logger';
 
-export class OptionsController {
+export class OptionsManager {
     static db: Database = getDatabase();
     static data: Options = {};
 
     /**
      * Used to initialize options after loading.
      * @static
-     * @memberof OptionsController
+     * @memberof OptionsManager
      */
     static async propagateOptions() {
-        const databaseData = await OptionsController.db.fetchAllData<Options>(Collections.Options);
+        const databaseData = await OptionsManager.db.fetchAllData<Options>(Collections.Options);
         const currentOptions = !databaseData[0] ? defaultOptions : databaseData[0];
 
         Object.keys(currentOptions).forEach((key) => {
-            OptionsController.data[key] = currentOptions[key];
+            OptionsManager.data[key] = currentOptions[key];
         });
 
         if (!databaseData[0]) {
-            OptionsController.data = await OptionsController.db.insertData(
-                OptionsController.data,
-                Collections.Options,
-                true
-            );
+            OptionsManager.data = await OptionsManager.db.insertData(OptionsManager.data, Collections.Options, true);
         }
 
         if (DEFAULT_CONFIG.WHITELIST) {
-            Logger.info(`Whitelisted Users: ${OptionsController.data.whitelist.length}`);
+            Logger.info(`Whitelisted Users: ${OptionsManager.data.whitelist.length}`);
         }
     }
 
@@ -38,19 +34,19 @@ export class OptionsController {
      * Add a user to the whitelist group.
      * @static
      * @param {DiscordID} id
-     * @memberof OptionsController
+     * @memberof OptionsManager
      */
     static async addToWhitelist(id: DiscordID) {
-        const isWhitelisted = await OptionsController.isWhitelisted(id);
+        const isWhitelisted = await OptionsManager.isWhitelisted(id);
 
         if (isWhitelisted) {
             return true;
         }
 
-        OptionsController.data.whitelist.push(id);
-        OptionsController.db.updatePartialData(
-            OptionsController.data._id,
-            { whitelist: OptionsController.data.whitelist },
+        OptionsManager.data.whitelist.push(id);
+        OptionsManager.db.updatePartialData(
+            OptionsManager.data._id,
+            { whitelist: OptionsManager.data.whitelist },
             Collections.Options
         );
 
@@ -62,10 +58,10 @@ export class OptionsController {
      * @static
      * @param {DiscordID} id
      * @return {*}  {boolean}
-     * @memberof OptionsController
+     * @memberof OptionsManager
      */
     static isWhitelisted(id: DiscordID): boolean {
-        const index = OptionsController.data.whitelist.findIndex((dID) => dID === id);
+        const index = OptionsManager.data.whitelist.findIndex((dID) => dID === id);
 
         if (index >= 0) {
             return true;
@@ -79,19 +75,19 @@ export class OptionsController {
      * @static
      * @param {DiscordID} id
      * @return {*}  {boolean}
-     * @memberof OptionsController
+     * @memberof OptionsManager
      */
     static removeFromWhitelist(id: DiscordID): boolean {
-        const index = OptionsController.data.whitelist.findIndex((dID) => dID === id);
+        const index = OptionsManager.data.whitelist.findIndex((dID) => dID === id);
 
         if (index <= -1) {
             return false;
         }
 
-        OptionsController.data.whitelist.splice(index, 1);
-        OptionsController.db.updatePartialData(
-            OptionsController.data._id,
-            { whitelist: OptionsController.data.whitelist },
+        OptionsManager.data.whitelist.splice(index, 1);
+        OptionsManager.db.updatePartialData(
+            OptionsManager.data._id,
+            { whitelist: OptionsManager.data.whitelist },
             Collections.Options
         );
 
@@ -100,5 +96,5 @@ export class OptionsController {
 }
 
 export default function loader() {
-    OptionsController.propagateOptions();
+    OptionsManager.propagateOptions();
 }

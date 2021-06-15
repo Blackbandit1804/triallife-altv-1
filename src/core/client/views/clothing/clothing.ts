@@ -5,7 +5,7 @@ import { View_Events_Clothing } from '../../../shared/enums/views';
 import { ClothingComponent } from '../../../shared/interfaces/Clothing';
 import { Item } from '../../../shared/interfaces/Item';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { View } from '../../extensions/view';
 import {
     createPedEditCamera,
@@ -44,7 +44,7 @@ function handleReady() {
         return;
     }
 
-    view.emit('clothing:SetLocales', LocaleController.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CLOTHING));
+    view.emit('clothing:SetLocales', LocaleManager.getWebviewLocale(LOCALE_KEYS.WEBVIEW_CLOTHING));
 }
 
 function handleMetaChanged(key: string, items: Array<Item>, oldValue: any): void {

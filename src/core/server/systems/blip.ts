@@ -7,12 +7,12 @@ import { sha256Random } from '../utility/encryption';
 
 const globalBlips: Array<Blip> = [];
 
-export class BlipController {
+export class BlipManager {
     /**
      * Adds a global label the player loads when they join.
      * @static
      * @param {Blip} blip
-     * @memberof BlipController
+     * @memberof BlipManager
      */
     static add(blip: Blip) {
         globalBlips.push(blip);
@@ -24,7 +24,7 @@ export class BlipController {
      * Requires a UID to remove it later.
      * @static
      * @param {Blip} label
-     * @memberof BlipController
+     * @memberof BlipManager
      */
     static append(blip: Blip) {
         if (!blip.uid) {
@@ -32,7 +32,7 @@ export class BlipController {
             return;
         }
 
-        BlipController.add(blip);
+        BlipManager.add(blip);
         alt.emit(null, SystemEvent.APPEND_BLIP, blip);
     }
 
@@ -41,7 +41,7 @@ export class BlipController {
      * @static
      * @param {string} uid
      * @return {*}  {boolean}
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static remove(uid: string): boolean {
         const index = globalBlips.findIndex((label) => label.uid === uid);
@@ -61,7 +61,7 @@ export class BlipController {
 
 DEFAULT_CONFIG.VALID_HOSPITALS.forEach((position) => {
     const hash = sha256Random(JSON.stringify(position));
-    BlipController.append({
+    BlipManager.append({
         text: 'Hospital',
         color: 6,
         sprite: 153,

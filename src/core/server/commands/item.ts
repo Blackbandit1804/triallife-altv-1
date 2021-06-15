@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 import { Item } from '../../shared/interfaces/Item';
 import { Permissions } from '../../shared/flags/permissions';
 import { ItemType } from '../../shared/enums/item-type';
@@ -7,7 +7,7 @@ import { playerFuncs } from '../extensions/Player';
 import { EquipmentType } from '../../shared/enums/equipment';
 import { deepCloneObject } from '../../shared/utility/deepCopy';
 import { getFromRegistry, ItemRegistry } from '../../shared/items/itemRegistry';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
 
 const pistolItem: Item = {
@@ -73,24 +73,24 @@ const burgerItem: Item = {
     }
 };
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'dummyitem',
-    LocaleController.get(LOCALE_KEYS.COMMAND_DUMMY_ITEM, '/dummyitem'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_DUMMY_ITEM, '/dummyitem'),
     Permissions.Admin,
     handleCommand
 );
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'getitem',
-    LocaleController.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/getitem'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/getitem'),
     Permissions.Admin,
     handleGetItem
 );
 
 // alias
-ChatController.addCommand(
+ChatManager.addCommand(
     'spawnitem',
-    LocaleController.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/spawnitem'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_GET_ITEM, '/spawnitem'),
     Permissions.Admin,
     handleGetItem
 );
@@ -119,7 +119,7 @@ function handleGetItem(player: alt.Player, name: string) {
     const item = getFromRegistry(name);
 
     if (!item) {
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.ITEM_DOES_NOT_EXIST, name));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.ITEM_DOES_NOT_EXIST, name));
         return;
     }
 
@@ -128,5 +128,5 @@ function handleGetItem(player: alt.Player, name: string) {
     playerFuncs.inventory.inventoryAdd(player, itemClone, slotInfo.slot, slotInfo.tab);
     playerFuncs.save.field(player, 'inventory', player.data.inventory);
     playerFuncs.sync.inventory(player);
-    playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.ITEM_WAS_ADDED_INVENTORY, item.name));
+    playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.ITEM_WAS_ADDED_INVENTORY, item.name));
 }

@@ -5,12 +5,12 @@ import Logger from '../utility/tlrp-logger';
 
 const globalTextLabels: Array<TextLabel> = [];
 
-export class TextLabelController {
+export class TextLabelManager {
     /**
      * Adds a global label the player loads when they join.
      * @static
      * @param {TextLabel} label
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static add(label: TextLabel) {
         globalTextLabels.push(label);
@@ -22,7 +22,7 @@ export class TextLabelController {
      * Requires a UID to remove it later.
      * @static
      * @param {TextLabel} label
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static append(label: TextLabel) {
         if (!label.uid) {
@@ -30,7 +30,7 @@ export class TextLabelController {
             return;
         }
 
-        TextLabelController.add(label);
+        TextLabelManager.add(label);
         alt.emit(null, SystemEvent.APPEND_TEXTLABELS, label);
     }
 
@@ -39,7 +39,7 @@ export class TextLabelController {
      * @static
      * @param {string} uid
      * @return {*}  {boolean}
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static remove(uid: string): boolean {
         const index = globalTextLabels.findIndex((label) => label.uid === uid);
@@ -56,7 +56,7 @@ export class TextLabelController {
      * Creates all existing labels for a player.
      * @static
      * @param {alt.Player} player
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static populateGlobalLabels(player: alt.Player) {
         alt.emitClient(player, SystemEvent.POPULATE_TEXTLABELS, globalTextLabels);

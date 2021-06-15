@@ -1,11 +1,11 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 import Logger from './tlrp-logger';
 import fs from 'fs';
-import { AdminController } from '../systems/admin';
+import { AdminManager } from '../systems/admin';
 import { Account } from '../interface/Account';
-import { OptionsController } from '../systems/options';
+import { OptionsManager } from '../systems/options';
 import { Collections } from '../interface/DatabaseCollections';
 
 const db: Database = getDatabase();
@@ -23,7 +23,7 @@ const command = {
     '/dox': handleDox,
     '/addwhitelist': handleAddWhitelist,
     '/removewhitelist': handleRemoveWhitelist,
-    '/commands': ChatController.printAllCommands
+    '/commands': ChatManager.printAllCommands
 };
 
 /**
@@ -83,7 +83,7 @@ function handleUnban(cmdName: string, discord: string) {
         return;
     }
 
-    AdminController.unbanPlayer(discord);
+    AdminManager.unbanPlayer(discord);
 }
 
 function handleSetAdmin(cmdName: string, discord: string, permissionLevel: string | number) {
@@ -106,7 +106,7 @@ function handleSetAdmin(cmdName: string, discord: string, permissionLevel: strin
 
     player.accountData.permissionLevel = permission;
     saveField(player, 'permissionLevel', player.accountData.permissionLevel);
-    ChatController.populateCommands(player);
+    ChatManager.populateCommands(player);
     Logger.info(`(${discord}) ${player.data.name} had their permission level changed to: ${permissionLevel}.`);
 }
 
@@ -189,7 +189,7 @@ async function handleAddWhitelist(cmdName: string, id: string) {
         return;
     }
 
-    const wasAdded = OptionsController.addToWhitelist(id);
+    const wasAdded = OptionsManager.addToWhitelist(id);
     if (!wasAdded) {
         Logger.error(`Could not add: ${id} to the whitelist.`);
         return;
@@ -204,7 +204,7 @@ async function handleRemoveWhitelist(cmdName: string, id: string) {
         return;
     }
 
-    const wasRemoved = OptionsController.removeFromWhitelist(id);
+    const wasRemoved = OptionsManager.removeFromWhitelist(id);
     if (!wasRemoved) {
         Logger.log(`${id} does not exist in the list or was already removed.`);
         return;

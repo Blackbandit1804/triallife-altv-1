@@ -4,9 +4,9 @@ import { SystemEvent } from '../../../../../shared/enums/system';
 import { VehicleData } from '../../../../../shared/configs/vehicle-data';
 import { BaseHUD } from '../../hud';
 
-export class DealershipAppController {
+export class DealershipAppManager {
     static init() {
-        BaseHUD.view.on('phone:Dealership:Populate', DealershipAppController.populate);
+        BaseHUD.view.on('phone:Dealership:Populate', DealershipAppManager.populate);
     }
 
     static populate() {

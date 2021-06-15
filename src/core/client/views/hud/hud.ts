@@ -6,12 +6,12 @@ import { Command } from '../../../shared/interfaces/Command';
 import { handleFrontendSound } from '../../systems/sound';
 import { disableAllAttacks, disableAllControls } from '../../utility/disable-controls';
 import { handleFreezePlayer } from '../../utility/freeze';
-import { ActionsController } from './controllers/actionsController';
-import './controllers/audioController';
-import './controllers/chatController';
-import './controllers/helpController';
-import './controllers/leaderBoardController';
-import { PhoneController } from './controllers/phoneController';
+import { ActionsManager } from './controllers/actionsManager';
+import './controllers/audioManager';
+import './controllers/chatManager';
+import './controllers/helpManager';
+import './controllers/leaderBoardManager';
+import { PhoneManager } from './controllers/phoneManager';
 
 // const url = `http://127.0.0.1:5500/src/core/client/views/hud/html/index.html`;
 const url = `http://resource/client/views/hud/html/index.html`;
@@ -44,14 +44,14 @@ export class BaseHUD {
             BaseHUD.view.on('chat:Send', BaseHUD.handleNewMessage);
             BaseHUD.view.on('mouse:Focus', BaseHUD.handleFocus);
             BaseHUD.view.on('commands:Update', BaseHUD.updateCommands);
-            BaseHUD.view.on('actions:Navigate', ActionsController.navigate);
-            BaseHUD.view.on('actions:Close', ActionsController.closed);
-            BaseHUD.view.on('actions:LeftRight', ActionsController.leftRight);
-            BaseHUD.view.on('actions:Trigger', ActionsController.trigger);
-            BaseHUD.view.on('phone:Event', PhoneController.routeFromPhone);
+            BaseHUD.view.on('actions:Navigate', ActionsManager.navigate);
+            BaseHUD.view.on('actions:Close', ActionsManager.closed);
+            BaseHUD.view.on('actions:LeftRight', ActionsManager.leftRight);
+            BaseHUD.view.on('actions:Trigger', ActionsManager.trigger);
+            BaseHUD.view.on('phone:Event', PhoneManager.routeFromPhone);
             BaseHUD.view.on('play:Sound', handleFrontendSound);
 
-            PhoneController.initializeApps();
+            PhoneManager.initializeApps();
 
             alt.setTimeout(() => {
                 if (native.isScreenFadedOut()) {

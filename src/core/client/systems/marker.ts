@@ -8,12 +8,12 @@ let addedMarkers: Array<Marker> = [];
 let isRemoving = false;
 let interval;
 
-export class MarkerController {
+export class MarkerManager {
     /**
      * Add a single marker.
      * @static
      * @param {Marker} marker
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static append(marker: Marker) {
         if (!marker.uid) {
@@ -32,7 +32,7 @@ export class MarkerController {
      * Used to populate server-side markers.
      * @static
      * @param {Array<Marker>} markers
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static populate(markers: Array<Marker>) {
         addedMarkers = addedMarkers.concat(markers);
@@ -47,7 +47,7 @@ export class MarkerController {
      * @static
      * @param {string} uid
      * @return {*}
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static remove(uid: string) {
         isRemoving = true;
@@ -100,6 +100,6 @@ function handleDrawMarkers() {
     }
 }
 
-alt.onServer(SystemEvent.POPULATE_MARKERS, MarkerController.populate);
-alt.onServer(SystemEvent.APPEND_MARKER, MarkerController.append);
-alt.onServer(SystemEvent.REMOVE_MARKER, MarkerController.remove);
+alt.onServer(SystemEvent.POPULATE_MARKERS, MarkerManager.populate);
+alt.onServer(SystemEvent.APPEND_MARKER, MarkerManager.append);
+alt.onServer(SystemEvent.REMOVE_MARKER, MarkerManager.remove);

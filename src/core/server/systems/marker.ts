@@ -5,12 +5,12 @@ import Logger from '../utility/tlrp-logger';
 
 const globalMarkers: Array<Marker> = [];
 
-export class MarkerController {
+export class MarkerManager {
     /**
      * Adds a global label the player loads when they join.
      * @static
      * @param {Marker} marker
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static add(marker: Marker) {
         globalMarkers.push(marker);
@@ -22,7 +22,7 @@ export class MarkerController {
      * Requires a UID to remove it later.
      * @static
      * @param {Marker} label
-     * @memberof MarkerController
+     * @memberof MarkerManager
      */
     static append(marker: Marker) {
         if (!marker.uid) {
@@ -30,7 +30,7 @@ export class MarkerController {
             return;
         }
 
-        MarkerController.add(marker);
+        MarkerManager.add(marker);
         alt.emit(null, SystemEvent.APPEND_MARKER, marker);
     }
 
@@ -39,7 +39,7 @@ export class MarkerController {
      * @static
      * @param {string} uid
      * @return {*}  {boolean}
-     * @memberof TextLabelController
+     * @memberof TextLabelManager
      */
     static remove(uid: string): boolean {
         const index = globalMarkers.findIndex((label) => label.uid === uid);

@@ -5,7 +5,7 @@ import gridData from '../../shared/configs/grid-data';
 import { Blip } from '../../shared/interfaces/blip';
 import { Interaction } from '../../shared/interfaces/Interaction';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import { distance2d } from '../utility/vector';
@@ -24,36 +24,36 @@ interface InteractionDefault {
 
 let customInteractions: Array<Interaction> = [];
 
-export class InteractionController {
+export class InteractionManager {
     static Interactions: InteractionHelper = {};
     static InteractionTypes: { [key: string]: InteractionDefault } = {
         atm: {
             eventName: SystemEvent.INTERACTION_ATM,
             isServer: false,
-            text: LocaleController.get(LOCALE_KEYS.USE_ATM)
+            text: LocaleManager.get(LOCALE_KEYS.USE_ATM)
         },
         gas: {
             eventName: SystemEvent.INTERACTION_FUEL,
             isServer: true,
             maxRadius: 3,
-            text: LocaleController.get(LOCALE_KEYS.USE_FUEL_PUMP)
+            text: LocaleManager.get(LOCALE_KEYS.USE_FUEL_PUMP)
         },
         clothing: {
             eventName: View_Events_Clothing.Open,
             isServer: false,
-            text: LocaleController.get(LOCALE_KEYS.USE_CLOTHING_STORE)
+            text: LocaleManager.get(LOCALE_KEYS.USE_CLOTHING_STORE)
         },
         interior: {
             eventName: SystemEvent.INTERIOR_SWITCH,
             isServer: true,
-            text: LocaleController.get(LOCALE_KEYS.INTERIOR_INTERACT)
+            text: LocaleManager.get(LOCALE_KEYS.INTERIOR_INTERACT)
         }
     };
 
     /**
      * Generates interaction points based on prop data.
      * @static
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static generateInteractions() {
         let count = 0;
@@ -61,7 +61,7 @@ export class InteractionController {
         gridData.forEach((grid) => {
             Object.keys(grid.objects).forEach((key) => {
                 const category = key;
-                const interaction = InteractionController.InteractionTypes[category];
+                const interaction = InteractionManager.InteractionTypes[category];
 
                 if (!interaction) {
                     return;
@@ -81,12 +81,12 @@ export class InteractionController {
                     shape['interactionType'] = category;
                     shape['text'] = interaction.text;
 
-                    if (!InteractionController.Interactions[category]) {
-                        InteractionController.Interactions[category] = [];
+                    if (!InteractionManager.Interactions[category]) {
+                        InteractionManager.Interactions[category] = [];
                     }
 
                     count += 1;
-                    InteractionController.Interactions[category].push(shape);
+                    InteractionManager.Interactions[category].push(shape);
                 });
             });
         });
@@ -103,7 +103,7 @@ export class InteractionController {
      * @param {string} activationText What this interaction tells you it will do
      * @param {Blip} blip The blip that goes along with this interaction
      * @param {boolean} isServerEvent Is this a server event or a client event?
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static addInteraction(
         identifierAndEventName: string,
@@ -120,13 +120,13 @@ export class InteractionController {
         shape['interactionType'] = identifierAndEventName;
         shape['text'] = activationText;
 
-        if (!InteractionController.Interactions[identifierAndEventName]) {
-            InteractionController.Interactions[identifierAndEventName] = [];
+        if (!InteractionManager.Interactions[identifierAndEventName]) {
+            InteractionManager.Interactions[identifierAndEventName] = [];
         }
 
         customInteractions.push({ identifier: identifierAndEventName, blip, text: activationText });
-        InteractionController.Interactions[identifierAndEventName].push(shape);
-        InteractionController.InteractionTypes[identifierAndEventName] = {
+        InteractionManager.Interactions[identifierAndEventName].push(shape);
+        InteractionManager.InteractionTypes[identifierAndEventName] = {
             eventName: identifierAndEventName,
             isServer: isServerEvent
         };
@@ -139,15 +139,15 @@ export class InteractionController {
      * @param {string} eventName
      * @param {boolean} isServer
      * @param {alt.Colshape} shape
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static sideLoadInteraction(identifier: string, eventName: string, isServer: boolean, shape: alt.Colshape) {
-        if (!InteractionController.Interactions[identifier]) {
-            InteractionController.Interactions[identifier] = [];
+        if (!InteractionManager.Interactions[identifier]) {
+            InteractionManager.Interactions[identifier] = [];
         }
 
-        InteractionController.Interactions[identifier].push(shape);
-        InteractionController.InteractionTypes[identifier] = {
+        InteractionManager.Interactions[identifier].push(shape);
+        InteractionManager.InteractionTypes[identifier] = {
             eventName: eventName,
             isServer: isServer
         };
@@ -159,7 +159,7 @@ export class InteractionController {
      * @param {alt.Colshape} colshape
      * @param {alt.Entity} player
      * @return {*}
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static handleEnterInteraction(colshape: alt.Colshape, player: alt.Entity) {
         if (!colshape.hasOwnProperty('isInteraction')) {
@@ -170,7 +170,7 @@ export class InteractionController {
             return;
         }
 
-        const text = colshape['text'] ? colshape['text'] : LocaleController.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT);
+        const text = colshape['text'] ? colshape['text'] : LocaleManager.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT);
 
         alt.emitClient(
             player,
@@ -186,7 +186,7 @@ export class InteractionController {
      * @static
      * @param {alt.Colshape} colshape
      * @param {alt.Entity} player
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static handleLeaveInteraction(colshape: alt.Colshape, player: alt.Entity) {
         if (!colshape.hasOwnProperty('isInteraction')) {
@@ -206,14 +206,14 @@ export class InteractionController {
      * @param {alt.Player} player
      * @param {string} type
      * @return {*}
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static handleInteraction(player: alt.Player, type: string) {
-        if (!InteractionController.Interactions[type]) {
+        if (!InteractionManager.Interactions[type]) {
             return;
         }
 
-        const closestInteraction = InteractionController.Interactions[type].find((interaction) => {
+        const closestInteraction = InteractionManager.Interactions[type].find((interaction) => {
             if (distance2d(interaction.pos, player.pos) <= DEFAULT_CONFIG.MAX_INTERACTION_DISTANCE) {
                 return true;
             }
@@ -222,13 +222,13 @@ export class InteractionController {
         });
 
         if (!closestInteraction) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.INTERACTION_TOO_FAR_AWAY));
+            playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.INTERACTION_TOO_FAR_AWAY));
             return;
         }
 
-        const interaction = InteractionController.InteractionTypes[type];
+        const interaction = InteractionManager.InteractionTypes[type];
         if (!interaction) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT));
+            playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT));
             return;
         }
 
@@ -246,15 +246,15 @@ export class InteractionController {
      * Sends custom interactions to client after connecting.
      * @static
      * @param {alt.Player} player
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static populateCustomInteractions(player: alt.Player) {
         alt.emitClient(player, SystemEvent.POPULATE_INTERACTIONS, customInteractions);
     }
 }
 
-alt.on('entityLeaveColshape', InteractionController.handleLeaveInteraction);
-alt.on('entityEnterColshape', InteractionController.handleEnterInteraction);
-alt.onClient(SystemEvent.INTERACTION, InteractionController.handleInteraction);
+alt.on('entityLeaveColshape', InteractionManager.handleLeaveInteraction);
+alt.on('entityEnterColshape', InteractionManager.handleEnterInteraction);
+alt.onClient(SystemEvent.INTERACTION, InteractionManager.handleInteraction);
 
-InteractionController.generateInteractions();
+InteractionManager.generateInteractions();

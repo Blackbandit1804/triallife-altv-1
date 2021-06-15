@@ -2,16 +2,16 @@ import * as alt from 'alt-client';
 import * as native from 'natives';
 import { BaseHUD } from '../../hud';
 import { SystemEvent } from '../../../../../shared/enums/system';
-import { ChatController } from '../chatController';
+import { ChatManager } from '../chatManager';
 
 let vehicles = [];
 
-export class VehicleAppController {
+export class VehicleAppManager {
     static init() {
-        BaseHUD.view.on('phone:Vehicles:Populate', VehicleAppController.populate);
-        BaseHUD.view.on('phone:Vehicles:Locate', VehicleAppController.locate);
-        BaseHUD.view.on('phone:Vehicles:Spawn', VehicleAppController.spawn);
-        BaseHUD.view.on('phone:Vehicles:Despawn', VehicleAppController.despawn);
+        BaseHUD.view.on('phone:Vehicles:Populate', VehicleAppManager.populate);
+        BaseHUD.view.on('phone:Vehicles:Locate', VehicleAppManager.locate);
+        BaseHUD.view.on('phone:Vehicles:Spawn', VehicleAppManager.spawn);
+        BaseHUD.view.on('phone:Vehicles:Despawn', VehicleAppManager.despawn);
     }
 
     static spawn(index: number) {
@@ -43,7 +43,7 @@ export class VehicleAppController {
         blip['routeColor'] = new alt.RGBA(255, 0, 0, 255);
         blip.route = true;
 
-        ChatController.appendMessage(`Vehicle Located. Blip will be active for {00FFFF}30s`);
+        ChatManager.appendMessage(`Vehicle Located. Blip will be active for {00FFFF}30s`);
 
         alt.setTimeout(() => {
             blip.destroy();

@@ -1,45 +1,45 @@
 import * as alt from 'alt-server';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
-import ChatController from '../systems/chat';
+import { LocaleManager } from '../../shared/locale/locale';
+import ChatManager from '../systems/chat';
 import { Permissions } from '../../shared/flags/permissions';
-import { InteriorController } from '../systems/interior';
+import { InteriorManager } from '../systems/interior';
 import { playerFuncs } from '../extensions/Player';
 import { Interior } from '../../shared/interfaces/Interior';
 
 const playerData = {};
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'interiorcreate',
-    LocaleController.get(LOCALE_KEYS.COMMAND_INTERIOR_CREATE, '/interiorcreate'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_INTERIOR_CREATE, '/interiorcreate'),
     Permissions.Admin,
     handleCreate
 );
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'interioroutside',
-    LocaleController.get(LOCALE_KEYS.COMMAND_INTERIOR_OUTSIDE, '/interioroutside'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_INTERIOR_OUTSIDE, '/interioroutside'),
     Permissions.Admin,
     handleOutside
 );
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'interiorinside',
-    LocaleController.get(LOCALE_KEYS.COMMAND_INTERIOR_INSIDE, '/interiorinside'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_INTERIOR_INSIDE, '/interiorinside'),
     Permissions.Admin,
     handleInside
 );
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'interiordone',
-    LocaleController.get(LOCALE_KEYS.COMMAND_INTERIOR_DONE, '/interiordone'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_INTERIOR_DONE, '/interiordone'),
     Permissions.Admin,
     handleDone
 );
 
 function handleCreate(player: alt.Player, name: string, isActuallyOutside: string): void {
     if (!name) {
-        ChatController.getDescription('interiorcreate');
+        ChatManager.getDescription('interiorcreate');
         return;
     }
 
@@ -69,11 +69,11 @@ async function handleDone(player: alt.Player): Promise<void> {
     }
 
     const data = playerData[player.id] as Interior;
-    const document = await InteriorController.create(player.data._id.toString(), data);
+    const document = await InteriorManager.create(player.data._id.toString(), data);
     if (!document) {
         playerFuncs.emit.message(player, `Something went wrong during interior creation process.`);
         return;
     }
 
-    InteriorController.populate(document as Interior);
+    InteriorManager.populate(document as Interior);
 }

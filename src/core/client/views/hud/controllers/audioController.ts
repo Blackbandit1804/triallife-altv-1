@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import { BaseHUD } from '../hud';
 
-export class AudioController {
+export class AudioManager {
     /**
      * Play custom 3D audio from the 'sounds' folder.
      * @static
@@ -9,7 +9,7 @@ export class AudioController {
      * @param {number} pan
      * @param {number} volume
      * @return {*}  {void}
-     * @memberof HUDController
+     * @memberof HUDManager
      */
     static handle3DAudio(soundName: string, pan: number, volume: number): void {
         if (!BaseHUD.view) {
@@ -20,4 +20,4 @@ export class AudioController {
     }
 }
 
-alt.on('hud:PlayAudio3D', AudioController.handle3DAudio);
+alt.on('hud:PlayAudio3D', AudioManager.handle3DAudio);

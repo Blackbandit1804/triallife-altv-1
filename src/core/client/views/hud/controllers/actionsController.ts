@@ -4,14 +4,14 @@ import { Action, ActionMenu } from '../../../../shared/interfaces/actions';
 import { handleFrontendSound } from '../../../systems/sound';
 import { BaseHUD } from '../hud';
 
-export class ActionsController {
+export class ActionsManager {
     /**
      * Set the action menu instance.
      * Set to null to force-clear the menu.
      * @static
      * @param {(ActionMenu | null)} actionMenu
      * @return {*}
-     * @memberof ActionController
+     * @memberof ActionManager
      */
     static set(actionMenu: ActionMenu) {
         if (!actionMenu) {
@@ -42,7 +42,7 @@ export class ActionsController {
     /**
      * Plays a sound when you navigate up and down.
      * @static
-     * @memberof ActionController
+     * @memberof ActionManager
      */
     static navigate() {
         handleFrontendSound('NAV_UP_DOWN', 'HUD_FREEMODE_SOUNDSET');
@@ -51,7 +51,7 @@ export class ActionsController {
     /**
      * Plays a sound when you navigate left to right.
      * @static
-     * @memberof ActionsController
+     * @memberof ActionsManager
      */
     static leftRight() {
         handleFrontendSound('NAV_LEFT_RIGHT', 'HUD_FREEMODE_SOUNDSET');
@@ -60,7 +60,7 @@ export class ActionsController {
     /**
      * When the menu is closed or an option is slected.
      * @static
-     * @memberof ActionController
+     * @memberof ActionManager
      */
     static closed() {
         alt.Player.local.isActionMenuOpen = false;
@@ -71,10 +71,10 @@ export class ActionsController {
      * @static
      * @param {Action} action
      * @return {*}
-     * @memberof ActionsController
+     * @memberof ActionsManager
      */
     static trigger(action: Action) {
-        ActionsController.closed();
+        ActionsManager.closed();
         handleFrontendSound('SELECT', 'HUD_FREEMODE_SOUNDSET');
 
         if (action.isServer) {
@@ -86,4 +86,4 @@ export class ActionsController {
     }
 }
 
-alt.onServer(SystemEvent.SET_ACTION_MENU, ActionsController.set);
+alt.onServer(SystemEvent.SET_ACTION_MENU, ActionsManager.set);

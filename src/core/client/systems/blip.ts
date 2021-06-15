@@ -75,7 +75,7 @@ function create(blipData: Blip): alt.PointBlip {
     return blip;
 }
 
-export class BlipController {
+export class BlipManager {
     static append(blipData: Blip): alt.PointBlip {
         const blip = create(blipData);
         addedBlips.push(blip);
@@ -106,6 +106,6 @@ export class BlipController {
     }
 }
 
-alt.onServer(SystemEvent.POPULATE_BLIPS, BlipController.populate);
-alt.onServer(SystemEvent.APPEND_BLIP, BlipController.append);
-alt.onServer(SystemEvent.REMOVE_BLIP, BlipController.remove);
+alt.onServer(SystemEvent.POPULATE_BLIPS, BlipManager.populate);
+alt.onServer(SystemEvent.APPEND_BLIP, BlipManager.append);
+alt.onServer(SystemEvent.REMOVE_BLIP, BlipManager.remove);

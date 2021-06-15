@@ -6,7 +6,7 @@ import Logger from '../utility/tlrp-logger';
 
 const db: Database = getDatabase();
 
-export class AdminController {
+export class AdminManager {
     static async banPlayer(player: alt.Player, reason: string): Promise<boolean> {
         if (!player.accountData) {
             return false;

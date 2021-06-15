@@ -1,13 +1,13 @@
 import * as alt from 'alt-server';
 import { Permissions } from '../../shared/flags/permissions';
 import { LOCALE_KEYS } from '../../shared/locale/languages/keys';
-import { LocaleController } from '../../shared/locale/locale';
+import { LocaleManager } from '../../shared/locale/locale';
 import { playerFuncs } from '../extensions/Player';
-import ChatController from '../systems/chat';
+import ChatManager from '../systems/chat';
 
-ChatController.addCommand(
+ChatManager.addCommand(
     'revive',
-    LocaleController.get(LOCALE_KEYS.COMMAND_REVIVE, '/revive'),
+    LocaleManager.get(LOCALE_KEYS.COMMAND_REVIVE, '/revive'),
     Permissions.Admin,
     handleCommand
 );
@@ -20,12 +20,12 @@ function handleCommand(player: alt.Player, targetPlayerID: string | null = null)
 
     const target: alt.Player = [...alt.Player.all].find((x) => x.id.toString() === targetPlayerID);
     if (!target) {
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.CANNOT_FIND_PLAYER));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.CANNOT_FIND_PLAYER));
         return;
     }
 
     if (!target.data.isDead) {
-        playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.PLAYER_IS_NOT_DEAD));
+        playerFuncs.emit.message(player, LocaleManager.get(LOCALE_KEYS.PLAYER_IS_NOT_DEAD));
         return;
     }
 

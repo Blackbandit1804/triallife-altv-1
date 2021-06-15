@@ -10,7 +10,7 @@
     <body>
         <div id="app" >
             <v-app v-cloak v-if="characters[characterIndex]">
-                <!-- Character Select Controller -->
+                <!-- Character Select Manager -->
                 <div class="pa-3 grey darken-4 rounded elevation-12 selection">
                     <div class="split">
                         <button class="pl-6 pr-6 mr-4 outline-round" @click="decrementIndex">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <!-- Option Controller -->
+                <!-- Option Manager -->
                 <div class="pa-3 grey darken-4 rounded elevation-12 options">
                     <div class="button-group">
                         <div class="split">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <!-- Stats Controller -->
+                <!-- Stats Manager -->
                 <div class="pa-3 grey darken-4 rounded elevation-12 stats">
                     <div class="split" v-for="(stat, index) in statNames" :key="index">
                         <div class="overline text-left mr-2">

@@ -9,7 +9,7 @@ import { Account } from '../interface/Account';
 import { DiscordUser } from '../interface/DiscordUser';
 import { getUniquePlayerHash } from '../utility/encryption';
 import { goToCharacterSelect } from '../views/characters';
-import { OptionsController } from './options';
+import { OptionsManager } from './options';
 import { vehicleFuncs } from '../extensions/Vehicle';
 import { Collections } from '../interface/DatabaseCollections';
 import '../views/login';
@@ -21,14 +21,14 @@ import './textlabel';
 
 const db: sm.Database = sm.getDatabase();
 
-export class LoginController {
+export class LoginManager {
     static async tryLogin(player: alt.Player, data: Partial<DiscordUser>, account: Partial<Account>): Promise<void> {
         delete player.pendingLogin;
         delete player.discordToken;
 
         // Whitelist Handling
         if (DEFAULT_CONFIG.WHITELIST) {
-            if (!OptionsController.isWhitelisted(data.id)) {
+            if (!OptionsManager.isWhitelisted(data.id)) {
                 player.kick(`You are not currently whitelisted.`);
                 return;
             }
@@ -124,7 +124,7 @@ export class LoginController {
             return;
         }
 
-        LoginController.tryLogin(player, { id: discord }, account);
+        LoginManager.tryLogin(player, { id: discord }, account);
     }
 
     static async handleNoQuickToken(player: alt.Player): Promise<void> {
@@ -132,7 +132,7 @@ export class LoginController {
     }
 }
 
-alt.onClient(SystemEvent.QUICK_TOKEN_NONE, LoginController.handleNoQuickToken);
-alt.onClient(SystemEvent.QUICK_TOKEN_EMIT, LoginController.tryDiscordQuickToken);
-alt.on('playerDisconnect', LoginController.tryDisconnect);
-alt.on('Discord:Login', LoginController.tryLogin);
+alt.onClient(SystemEvent.QUICK_TOKEN_NONE, LoginManager.handleNoQuickToken);
+alt.onClient(SystemEvent.QUICK_TOKEN_EMIT, LoginManager.tryDiscordQuickToken);
+alt.on('playerDisconnect', LoginManager.tryDisconnect);
+alt.on('Discord:Login', LoginManager.tryLogin);

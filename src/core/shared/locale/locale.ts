@@ -22,12 +22,12 @@ const locales: LocaleFormat = {
     // Additional languages can be added here...
 };
 
-export class LocaleController {
+export class LocaleManager {
     /**
      * The ISO-639-1 Code to Utilize for Language
      * @static
      * @param {string} [iso639='en']
-     * @memberof LocaleController
+     * @memberof LocaleManager
      */
     static setLanguage(iso639: string = 'en') {
         defaultLanguage = iso639;
@@ -39,7 +39,7 @@ export class LocaleController {
      * @param {string} key
      * @param {...any[]} args
      * @return {*}  {string}
-     * @memberof LocaleController
+     * @memberof LocaleManager
      */
     static get(key: string, ...args: any[]): string {
         if (!locales[defaultLanguage][key]) {
@@ -60,7 +60,7 @@ export class LocaleController {
      * @static
      * @param {string} key
      * @return {*}  {Object}
-     * @memberof LocaleController
+     * @memberof LocaleManager
      */
     static getWebviewLocale(key: string): Object {
         if (!locales[defaultLanguage][key]) {

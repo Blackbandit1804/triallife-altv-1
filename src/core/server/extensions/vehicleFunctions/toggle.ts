@@ -6,7 +6,7 @@ import {
     Vehicle_State
 } from '../../../shared/enums/vehicle';
 import { LOCALE_KEYS } from '../../../shared/locale/languages/keys';
-import { LocaleController } from '../../../shared/locale/locale';
+import { LocaleManager } from '../../../shared/locale/locale';
 import { isFlagEnabled } from '../../../shared/utility/flags';
 import { TLRP_EVENTS_VEHICLE } from '../../enums/tlrp';
 import { playerFuncs } from '../Player';
@@ -61,7 +61,7 @@ function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = fals
     if (!getter.hasFuel(vehicle)) {
         vehicle.engineStatus = false;
         vehicle.setStreamSyncedMeta(Vehicle_State.ENGINE, vehicle.engineStatus);
-        playerFuncs.emit.notification(player, LocaleController.get(LOCALE_KEYS.VEHICLE_NO_FUEL));
+        playerFuncs.emit.notification(player, LocaleManager.get(LOCALE_KEYS.VEHICLE_NO_FUEL));
         return;
     }
 
@@ -70,10 +70,10 @@ function engine(vehicle: alt.Vehicle, player: alt.Player, bypass: boolean = fals
 
     if (player) {
         const status = vehicle.engineStatus
-            ? LocaleController.get(LOCALE_KEYS.LABEL_ON)
-            : LocaleController.get(LOCALE_KEYS.LABEL_OFF);
+            ? LocaleManager.get(LOCALE_KEYS.LABEL_ON)
+            : LocaleManager.get(LOCALE_KEYS.LABEL_OFF);
 
-        const fullMessage = `${LocaleController.get(LOCALE_KEYS.LABEL_ENGINE)} ~y~ ${status}`;
+        const fullMessage = `${LocaleManager.get(LOCALE_KEYS.LABEL_ENGINE)} ~y~ ${status}`;
         playerFuncs.emit.notification(player, fullMessage);
     }
 

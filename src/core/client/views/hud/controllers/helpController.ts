@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import { drawText3D } from '../../../utility/text';
 
-export class HelpController {
+export class HelpManager {
     private static key: number | null;
     private static helpShown: boolean = false;
     private static shortPress: string | null;
@@ -15,70 +15,70 @@ export class HelpController {
         shortDesc: string | null,
         longDesc: string | null
     ): void {
-        if (!HelpController.interval) {
-            HelpController.interval = alt.setInterval(HelpController.drawHelp, 0);
+        if (!HelpManager.interval) {
+            HelpManager.interval = alt.setInterval(HelpManager.drawHelp, 0);
         }
 
-        HelpController.key = key;
-        HelpController.longPress = longDesc;
-        HelpController.shortPress = shortDesc;
-        HelpController.helpShown = true;
+        HelpManager.key = key;
+        HelpManager.longPress = longDesc;
+        HelpManager.shortPress = shortDesc;
+        HelpManager.helpShown = true;
 
         if (position) {
-            HelpController.position = new alt.Vector3(position.x, position.y, alt.Player.local.pos.z);
+            HelpManager.position = new alt.Vector3(position.x, position.y, alt.Player.local.pos.z);
         } else {
-            HelpController.position = null;
+            HelpManager.position = null;
         }
     }
 
     private static drawHelp() {
-        if (!HelpController.position) {
+        if (!HelpManager.position) {
             return;
         }
 
-        if (!HelpController.shortPress && !HelpController.longPress) {
+        if (!HelpManager.shortPress && !HelpManager.longPress) {
             return;
         }
 
-        HelpController.drawKey();
-        HelpController.drawShortPress();
-        HelpController.drawLongPress();
+        HelpManager.drawKey();
+        HelpManager.drawShortPress();
+        HelpManager.drawLongPress();
     }
 
     private static drawKey() {
-        if (!HelpController.key) {
+        if (!HelpManager.key) {
             return;
         }
 
         drawText3D(
-            `[${String.fromCharCode(HelpController.key)}]`,
-            HelpController.position,
+            `[${String.fromCharCode(HelpManager.key)}]`,
+            HelpManager.position,
             0.3,
             new alt.RGBA(255, 255, 255, 255)
         );
     }
 
     private static drawShortPress() {
-        if (!HelpController.shortPress) {
+        if (!HelpManager.shortPress) {
             return;
         }
 
         drawText3D(
-            HelpController.shortPress,
-            new alt.Vector3(HelpController.position.x, HelpController.position.y, HelpController.position.z - 0.1),
+            HelpManager.shortPress,
+            new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1),
             0.3,
             new alt.RGBA(255, 255, 255, 255)
         );
     }
 
     private static drawLongPress() {
-        if (!HelpController.longPress) {
+        if (!HelpManager.longPress) {
             return;
         }
 
         drawText3D(
-            HelpController.longPress,
-            new alt.Vector3(HelpController.position.x, HelpController.position.y, HelpController.position.z - 0.1 * 2),
+            HelpManager.longPress,
+            new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1 * 2),
             0.3,
             new alt.RGBA(255, 255, 255, 255)
         );
@@ -88,7 +88,7 @@ export class HelpController {
      * Check if help text is currently showing.
      * @static
      * @return {*}  {boolean}
-     * @memberof HelpController
+     * @memberof HelpManager
      */
     static isHelpShowing(): boolean {
         return this.helpShown;

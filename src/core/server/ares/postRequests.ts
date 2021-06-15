@@ -4,7 +4,7 @@ import { decryptData, getAzureEndpoint, getSharedSecret } from '../utility/encry
 import { WASM } from '../utility/wasm-loader';
 import { generatePosterFormat } from './shared';
 
-export class PostController {
+export class PostManager {
     static isWindows(): boolean {
         return process.platform.includes('win');
     }
@@ -21,7 +21,7 @@ export class PostController {
 
     static async getPostFormat(data: any): Promise<URLSearchParams> {
         const responseParms = new URLSearchParams();
-        const postData = await generatePosterFormat({ isWindows: PostController.isWindows, ...data });
+        const postData = await generatePosterFormat({ isWindows: PostManager.isWindows, ...data });
         responseParms.append('data', JSON.stringify(postData));
         return responseParms;
     }
@@ -61,12 +61,12 @@ export class PostController {
             route = WASM.getHelpers().__getString(route);
         }
 
-        await PostController.getSecret();
+        await PostManager.getSecret();
 
-        const params = await PostController.getPostFormat(data);
-        const response = await PostController.emitPost(route, params);
+        const params = await PostManager.getPostFormat(data);
+        const response = await PostManager.emitPost(route, params);
 
-        if (!PostController.validateResponse(response)) {
+        if (!PostManager.validateResponse(response)) {
             return null;
         }
 

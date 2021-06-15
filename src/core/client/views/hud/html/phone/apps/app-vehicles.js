@@ -11,7 +11,7 @@ const appVehicles = Vue.component('app-vehicles', {
                 return;
             }
 
-            view.on('phone:Vehicles:Despawn', VehicleAppController.despawn);
+            view.on('phone:Vehicles:Despawn', VehicleAppManager.despawn);
         },
         locate(index) {
             if (!('alt' in window)) {

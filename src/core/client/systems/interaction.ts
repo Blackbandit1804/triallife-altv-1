@@ -6,10 +6,10 @@ import { Interaction } from '../../shared/interfaces/Interaction';
 import { distance2d } from '../../shared/utility/vector';
 import { KEY_BINDS } from '../events/keyup';
 import { drawMarker } from '../utility/marker';
-import { ActionsController } from '../views/hud/controllers/actionsController';
-import { HelpController } from '../views/hud/controllers/helpController';
+import { ActionsManager } from '../views/hud/controllers/actionsManager';
+import { HelpManager } from '../views/hud/controllers/helpManager';
 import { BaseHUD, HudEventNames } from '../views/hud/hud';
-import { VehicleController } from './vehicle';
+import { VehicleManager } from './vehicle';
 
 const MAX_INTERACTION_DRAW = 4; // Draws the key to press near the object.
 const MAX_CHECKPOINT_DRAW = 8;
@@ -18,14 +18,14 @@ let NEXT_MENU_UPDATE = Date.now() + 2000;
 let NEXT_HELP_CLEAR = Date.now() + 5000;
 let dynamicActionMenu: ActionMenu = {};
 
-export class InteractionController {
+export class InteractionManager {
     static customInteractions: Array<Interaction> = [];
     static tick: number;
     static pressedKey: boolean = false;
     static nextKeyPress = Date.now() + TIME_BETWEEN_CHECKS;
 
     static triggerInteraction(): void {
-        InteractionController.pressedKey = true;
+        InteractionManager.pressedKey = true;
     }
 
     /**
@@ -33,7 +33,7 @@ export class InteractionController {
      * @static
      * @param {(string | null)} type
      * @param {alt.Vector3} position
-     * @memberof InteractionController
+     * @memberof InteractionManager
      */
     static setInteractionInfo(type: string | null, position: alt.Vector3, text: string) {
         if (type === null) {
@@ -46,29 +46,29 @@ export class InteractionController {
 
     static handleInteractionMode() {
         if (alt.Player.local.isMenuOpen) {
-            InteractionController.pressedKey = false;
+            InteractionManager.pressedKey = false;
             dynamicActionMenu = {};
             return;
         }
 
         if (alt.Player.local.isChatOpen) {
-            InteractionController.pressedKey = false;
+            InteractionManager.pressedKey = false;
             dynamicActionMenu = {};
             return;
         }
 
         if (alt.Player.local.meta.isDead) {
-            InteractionController.pressedKey = false;
+            InteractionManager.pressedKey = false;
             dynamicActionMenu = {};
             return;
         }
 
-        VehicleController.runVehicleControllerTick();
+        VehicleManager.runVehicleManagerTick();
 
         if (Date.now() > NEXT_HELP_CLEAR) {
             NEXT_HELP_CLEAR = Date.now() + 5000;
             delete alt.Player.local.otherInteraction;
-            HelpController.updateHelpText(null, null, null, null);
+            HelpManager.updateHelpText(null, null, null, null);
         }
 
         // Populates the Menu
@@ -77,7 +77,7 @@ export class InteractionController {
             dynamicActionMenu = {};
 
             // Populate Vehicle Options
-            const vehicleMenus = VehicleController.getVehicleOptions();
+            const vehicleMenus = VehicleManager.getVehicleOptions();
             if (Object.keys(vehicleMenus).length >= 1) {
                 dynamicActionMenu = { ...dynamicActionMenu, ...vehicleMenus };
             }
@@ -96,8 +96,8 @@ export class InteractionController {
         }
 
         // Timeout for Key Presses
-        if (InteractionController.nextKeyPress > Date.now()) {
-            InteractionController.pressedKey = false;
+        if (InteractionManager.nextKeyPress > Date.now()) {
+            InteractionManager.pressedKey = false;
             return;
         }
 
@@ -108,14 +108,14 @@ export class InteractionController {
 
         if (alt.Player.local.closestInteraction && alt.Player.local.closestInteraction.position) {
             // Show this when interactions available is populated.
-            HelpController.updateHelpText(
+            HelpManager.updateHelpText(
                 alt.Player.local.closestInteraction.position,
                 KEY_BINDS.INTERACT,
                 alt.Player.local.closestInteraction.text,
                 null
             );
         } else if (alt.Player.local.otherInteraction) {
-            HelpController.updateHelpText(
+            HelpManager.updateHelpText(
                 alt.Player.local.otherInteraction.position,
                 null,
                 alt.Player.local.otherInteraction.short,
@@ -124,17 +124,17 @@ export class InteractionController {
         }
 
         // Open the Dynamic Menu
-        if (InteractionController.pressedKey) {
-            InteractionController.pressedKey = false;
-            InteractionController.nextKeyPress = Date.now() + TIME_BETWEEN_CHECKS;
-            ActionsController.set(dynamicActionMenu);
+        if (InteractionManager.pressedKey) {
+            InteractionManager.pressedKey = false;
+            InteractionManager.nextKeyPress = Date.now() + TIME_BETWEEN_CHECKS;
+            ActionsManager.set(dynamicActionMenu);
         }
 
         return;
     }
 
     static addInteractions(customInteractions: Array<Interaction>): void {
-        InteractionController.customInteractions = customInteractions;
+        InteractionManager.customInteractions = customInteractions;
 
         for (let i = 0; i < customInteractions.length; i++) {
             const interaction = customInteractions[i];
@@ -156,8 +156,8 @@ export class InteractionController {
     }
 }
 
-alt.onServer(SystemEvent.POPULATE_INTERACTIONS, InteractionController.addInteractions);
-alt.onServer(SystemEvent.PLAYER_SET_INTERACTION, InteractionController.setInteractionInfo);
+alt.onServer(SystemEvent.POPULATE_INTERACTIONS, InteractionManager.addInteractions);
+alt.onServer(SystemEvent.PLAYER_SET_INTERACTION, InteractionManager.setInteractionInfo);
 alt.onServer(SystemEvent.TICKS_START, () => {
-    InteractionController.tick = alt.setInterval(InteractionController.handleInteractionMode, 0);
+    InteractionManager.tick = alt.setInterval(InteractionManager.handleInteractionMode, 0);
 });

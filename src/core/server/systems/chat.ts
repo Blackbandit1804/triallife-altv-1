@@ -15,7 +15,7 @@ const printCommands = false;
 let commandCount = 0;
 let commandInterval;
 
-export default class ChatController {
+export default class ChatManager {
     static commands: { [key: string]: Command } = {};
 
     /**
@@ -26,7 +26,7 @@ export default class ChatController {
      * @param {Permissions} permissions Permission needed to run this command.
      * @param {Function} callback
      * @return {*}
-     * @memberof ChatController
+     * @memberof ChatManager
      */
     static addCommand(name: string, description: string, permissions: Permissions, callback: Function): void {
         if (commandInterval) {
@@ -37,7 +37,7 @@ export default class ChatController {
             Logger.info(`Total Commands: ${commandCount}`);
         }, 1500);
 
-        if (ChatController.commands[name]) {
+        if (ChatManager.commands[name]) {
             alt.logError(`[Athena] Command: ${name} was already registered.`);
             return;
         }
@@ -48,7 +48,7 @@ export default class ChatController {
             alt.log(`[Athena] Registered Command ${name}`);
         }
 
-        ChatController.commands[name] = {
+        ChatManager.commands[name] = {
             name,
             description,
             func: callback,
@@ -61,16 +61,16 @@ export default class ChatController {
      * @static
      * @param {string} originalName
      * @param {Array<string>} aliasNames
-     * @memberof ChatController
+     * @memberof ChatManager
      */
     static addAliases(originalName: string, aliasNames: Array<string>): void {
-        if (!ChatController.commands[originalName]) {
+        if (!ChatManager.commands[originalName]) {
             alt.logWarning(`[Athena] Could not add aliases for ${originalName}. Command does not exist.`);
             return;
         }
 
         for (let i = 0; i < aliasNames.length; i++) {
-            ChatController.commands[aliasNames[i]] = ChatController.commands[originalName];
+            ChatManager.commands[aliasNames[i]] = ChatManager.commands[originalName];
             alt.log(`[Athena] Registered Alias ${aliasNames[i]}`);
         }
     }
@@ -101,7 +101,7 @@ export default class ChatController {
 
             const args = message.split(' ');
             const commandName = args.shift();
-            ChatController.handleCommand(player, commandName, ...args);
+            ChatManager.handleCommand(player, commandName, ...args);
             return;
         }
 
@@ -133,7 +133,7 @@ export default class ChatController {
      * @return {Promise<void>}
      */
     static handleCommand(player: alt.Player, commandName: string, ...args: any[]): void {
-        const commandInfo = ChatController.commands[commandName];
+        const commandInfo = ChatManager.commands[commandName];
         if (!commandInfo || !commandInfo.func) {
             playerFuncs.emit.message(player, `/${commandName} is not a valid command.`);
             return;
@@ -150,14 +150,14 @@ export default class ChatController {
     }
 
     static getDescription(commandName: string): string {
-        return ChatController.commands[commandName].description;
+        return ChatManager.commands[commandName].description;
     }
 
     static populateCommands(player: alt.Player): void {
         const commandList: Array<Command> = [];
 
-        Object.keys(ChatController.commands).forEach((key) => {
-            const commandInfo = ChatController.commands[key];
+        Object.keys(ChatManager.commands).forEach((key) => {
+            const commandInfo = ChatManager.commands[key];
             if (!isFlagEnabled(player.accountData.permissionLevel, commandInfo.permission)) {
                 return;
             }
@@ -173,8 +173,8 @@ export default class ChatController {
     }
 
     static printAllCommands() {
-        Object.keys(ChatController.commands).forEach((key) => {
-            const cmdData = ChatController.commands[key];
+        Object.keys(ChatManager.commands).forEach((key) => {
+            const cmdData = ChatManager.commands[key];
             console.log(`${cmdData.description}`);
         });
     }
@@ -188,4 +188,4 @@ import('../commands/commands')
             `[Athena] Failed to load a command file. Please fix the error and commands will work normally again.`
         );
     })
-    .then(() => alt.onClient(View_Events_Chat.Send, ChatController.handleMessage));
+    .then(() => alt.onClient(View_Events_Chat.Send, ChatManager.handleMessage));

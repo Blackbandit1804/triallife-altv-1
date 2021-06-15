@@ -3,7 +3,7 @@ import { SystemEvent } from '../../shared/enums/system';
 import { DEFAULT_CONFIG } from '../tlrp/main';
 import { playerFuncs } from '../extensions/Player';
 import { vehicleFuncs } from '../extensions/Vehicle';
-import { InventoryController } from '../views/inventory';
+import { InventoryManager } from '../views/inventory';
 
 const timeBetweenPings = 4950;
 
@@ -37,7 +37,7 @@ function handlePing(player: alt.Player): void {
     // Updates Items on Ground for Player
     if (!player.nextItemSync || Date.now() > player.nextItemSync) {
         player.nextItemSync = Date.now() + DEFAULT_CONFIG.TIME_BETWEEN_INVENTORY_UPDATES;
-        InventoryController.updateDroppedItemsAroundPlayer(player, false);
+        InventoryManager.updateDroppedItemsAroundPlayer(player, false);
     }
 
     // Updates Food & Water

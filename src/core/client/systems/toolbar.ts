@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import { SystemEvent } from '../../shared/enums/system';
 
-export class ToolbarController {
+export class ToolbarManager {
     static handleToolbarSwitch(key: number) {
         if (alt.Player.local.isChatOpen) {
             return;
