@@ -2,16 +2,7 @@ import * as alt from 'alt-server';
 import logger from '../server/utility/tlrp-logger';
 import { SystemEvent } from '../shared/enums/system';
 
-const filePaths = [
-    // GAMEMODE IMPORTS -- Remove what you don't want.
-    './teleportEffect/teleporter',
-    './heist/heist',
-    './deathLog/deathLog',
-    './actionMenu/actionMenu',
-    './interactionExample/index',
-    './noMiniGun/index'
-    // YOUR IMPORTS -- BELOW HERE
-];
+const filePaths = [];
 
 /**
  * But Stuyk, why don't you just make a recursive file reader?
