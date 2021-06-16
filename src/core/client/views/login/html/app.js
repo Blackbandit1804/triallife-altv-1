@@ -50,29 +50,22 @@ const app = new Vue({
         finishAuth() {
             this.loading = true;
             this.updates += 1;
-            if ('alt' in window) {
-                alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-                alt.emit('discord:FinishAuth');
-            } else {
-                setTimeout(() => {
-                    this.fail('Testing fail message');
-                }, 2500);
-            }
+            if (!('alt' in window)) return;
+            alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+            alt.emit('discord:FinishAuth');
         },
         authAgain() {
             this.getURL();
         },
         getURL() {
             this.waitingForAuth = true;
-            if ('alt' in window) {
-                alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-                alt.emit('discord:OpenURL');
-            }
+            if (!('alt' in window)) return;
+            alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+            alt.emit('discord:OpenURL');
         },
         hover() {
-            if ('alt' in window) {
-                alt.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-            }
+            if (!('alt' in window)) return;
+            alt.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
         openURL(url) {
             this.window = window.open(url);
@@ -81,12 +74,11 @@ const app = new Vue({
             this.$nextTick(() => this.setAsReady());
         },
         endWindow() {
-            if (this.window) {
-                try {
-                    this.window.close();
-                } catch (err) {
-                    console.log(err);
-                }
+            if (!this.window) return;
+            try {
+                this.window.close();
+            } catch (err) {
+                console.log(err);
             }
         },
         fail(message) {
