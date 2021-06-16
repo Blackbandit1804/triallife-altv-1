@@ -6,15 +6,15 @@ import Logger from '../utility/tlrp-logger';
 
 dotenv.config();
 
-const azureURL = process.env.ENDPOINT;
+const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `http://mg-community.ddns.net:7800`;
 const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
-const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_CLIENT}&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
+const url = `https://discord.com/api/oauth2/authorize?client_id=660200376523292725&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
 
 alt.onClient('discord:Begin', handlePlayerConnect);
 alt.onClient('discord:FinishAuth', handleFinishAuth);
 
 async function handlePlayerConnect(player: alt.Player): Promise<void> {
-    if (!player || !player.valid) return;
+    //if (!player || !player.valid) return;
     const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     player.discordToken = sha256Random(uniquePlayerData);
     const encryptionFormatObject = { player_identifier: player.discordToken };
@@ -23,7 +23,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     const senderFormat = { public_key, data: encryptedData };
     const encryptedDataJSON = JSON.stringify(senderFormat);
     const discordOAuth2URL = getDiscordOAuth2URL();
-    alt.emit(`Discord:Opened`, player);
+    alt.emit('Discord:Opened', player);
     Logger.log(`${discordOAuth2URL}&state=${encryptedDataJSON}`);
     player.emit('Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
 }

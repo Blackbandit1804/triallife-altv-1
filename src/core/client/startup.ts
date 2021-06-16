@@ -1,5 +1,3 @@
-import * as alt from 'alt-client';
-
 // Interfaces - Always Load First
 import './extensions/meta';
 import './extensions/player';
@@ -47,5 +45,5 @@ import './views/inventory/inventory';
 import './views/job/job';
 import './views/login/login';
 
-// Client Plugins
+// imported client plugins
 import '../client-plugins/imports';

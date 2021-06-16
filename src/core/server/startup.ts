@@ -1,5 +1,5 @@
 import * as alt from 'alt-server';
-import env from 'dotenv';
+import dotenv from 'dotenv';
 import { Database, onReady } from 'simplymongo';
 import { DefaultConfig } from './configs/settings';
 import { SystemEvent } from '../shared/enums/system';
@@ -7,11 +7,11 @@ import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
 
-env.config();
+dotenv.config();
 
 const needed = ['MONGO_URL', 'ENDPOINT', 'TLRP_READY', 'MONGO_DATABASE'];
 
-if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT_SECRET', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
+if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT', 'DISCORD_SERVER_ID');
 if (DefaultConfig.WHITELIST) needed.push('WHITELIST_ROLE');
 
 for (let i = 0; i < needed.length; i++) {
@@ -20,7 +20,8 @@ for (let i = 0; i < needed.length; i++) {
     process.exit(0);
 }
 
-setAzureEndpoint(process.env.ENDPOINT);
+setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
+
 const name = 'tlrp';
 const mongoURL = process.env.MONGO_URL;
 const startTime = Date.now();

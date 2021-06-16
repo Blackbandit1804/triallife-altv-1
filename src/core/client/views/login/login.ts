@@ -47,6 +47,6 @@ export class LoginManager {
 }
 
 alt.on('connectionComplete', LoginManager.trigger);
-alt.onServer(`Discord:Open`, LoginManager.show);
-alt.onServer(`Discord:Close`, LoginManager.close);
+alt.onServer('Discord:Open', LoginManager.show);
+alt.onServer('Discord:Close', LoginManager.close);
 alt.onServer('Discord:Fail', LoginManager.emitFailureMessage);
