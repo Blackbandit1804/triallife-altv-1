@@ -10,6 +10,7 @@ import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/player';
 import { distance2d } from '../utility/vector';
 import '../views/atm';
+import { default as logger, default as Logger } from '../utility/tlrp-logger';
 
 interface InteractionHelper {
     [key: string]: Array<alt.Colshape>;
@@ -91,7 +92,7 @@ export class InteractionManager {
             });
         });
 
-        alt.log(`[3L:RP] Generated ${count} Interaction Points`);
+        logger.log(`[3L:RP] Generated ${count} Interaction Points`);
     }
 
     /**
