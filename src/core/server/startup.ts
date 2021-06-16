@@ -9,7 +9,7 @@ import { setAzureEndpoint } from './utility/encryption';
 
 env.config();
 
-const needed = ['MONGO_URL', 'ENDPOINT', 'TEST', 'TLRP_READY'];
+const needed = ['MONGO_URL', 'ENDPOINT', 'TEST', 'TLRP_READY', 'MONGO_DATABASE'];
 
 if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
 if (DefaultConfig.WHITELIST) needed.push('WHITELIST_ROLE');
@@ -53,8 +53,9 @@ function handleEarlyConnect(player: alt.Player): void {
 }
 
 try {
-    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
-    else new Database(mongoURL, 'tlrp', collections);
+    if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD)
+        new Database(mongoURL, process.env.MONGO_DATABASE, collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
+    else new Database(mongoURL, process.env.MONGO_DATABASE, collections);
 } catch (err) {
     logger.error(`[3L:RP] Could not create database.`);
     process.exit(0);
