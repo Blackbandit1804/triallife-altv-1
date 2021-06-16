@@ -23,4 +23,4 @@ alt.on('enable:Entry', () => {
     });
 });
 
-app.listen(port);
+app.listen(port, () => alt.log('[3L:RP] Express Server running on Port ' + port));
