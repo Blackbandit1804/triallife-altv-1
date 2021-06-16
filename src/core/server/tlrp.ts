@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import('./extensions/player');
 import('./extensions/vehicle');
 
@@ -42,5 +45,7 @@ import('./views/dealership');
 import('./views/inventory');
 import('./views/login');
 
-import('./zTests/base');
-import('./zTests/inventory');
+if (process.env.TEST) {
+    import('./zTests/base');
+    import('./zTests/inventory');
+}
