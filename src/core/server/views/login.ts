@@ -7,7 +7,7 @@ dotenv.config();
 
 const azureURL = process.env.ENDPOINT;
 const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
-const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_CLIENT}&redirect_uri=${azureRedirect}&response_type=code&scope=identify`;
+const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_CLIENT}&redirect_uri=${azureRedirect}&response_type=code&scope=identify`; //&prompt=none
 
 alt.onClient('discord:Begin', handlePlayerConnect);
 alt.onClient('discord:FinishAuth', handleFinishAuth);
