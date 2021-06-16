@@ -136,14 +136,14 @@ button:active {
     margin-bottom: 7vh;
 }
 
-.blue {
-    color: #5aadf1 !important;
-    caret-color: #5aadf1 !important;
+.green {
+    color: #008736 !important;
+    caret-color: #008736 !important;
 }
 
-.orange {
-    color: #ff9800 !important;
-    caret-color: #ff9800 !important;
+.dark {
+    color: #2d2d2d !important;
+    caret-color: #2d2d2d !important;
 }
 
 .placeholder {

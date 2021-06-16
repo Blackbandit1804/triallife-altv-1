@@ -13,13 +13,12 @@ const app = new Vue({
             errorMessage: null,
             readyToFinish: false,
             locales: {
-                LABEL_OPEN_PAGE: `A page will open up outside of your game and assist you with logging in.`,
-                LABEL_LOGIN_WITH_DISCORD: `Login with Discord`,
-                LABEL_TRY_AGAIN: `Try again...`,
-                LABEL_TAB_OUT: `Tab out and check your browser to finish authentication. If this fails try opening the
-                window again.`,
-                LABEL_FINISH_LOGIN: `Finish Login`,
-                LABEL_OPEN_WINDOW: `Open Login Window Again`
+                LABEL_OPEN_PAGE: `Außerhalb Ihres Spiels öffnet sich eine Seite, die Sie beim Einloggen unterstützt`,
+                LABEL_LOGIN_WITH_DISCORD: `Mit Discord anmelden `,
+                LABEL_TAB_OUT: `Überprüfen Sie Ihren Browser, um die Authentifizierung abzuschließen. Wenn dies fehlschlägt, versuchen Sie, das
+                Fenster wieder zu öffnen`,
+                LABEL_FINISH_LOGIN: `Anmeldung beenden `,
+                LABEL_OPEN_WINDOW: `Anmeldefenster erneut öffnen`
             }
         };
     },

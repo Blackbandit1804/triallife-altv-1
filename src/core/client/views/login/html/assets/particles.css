@@ -43,7 +43,7 @@ body {
     height: 100%;
     border-radius: 50%;
     mix-blend-mode: screen;
-    background-image: radial-gradient(#99ffff, #99ffff 10%, rgba(153, 255, 255, 0) 56%);
+    background-image: radial-gradient(#008736, #008736 10%, rgba(153, 255, 255, 0) 56%);
     -webkit-animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
     animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
 }

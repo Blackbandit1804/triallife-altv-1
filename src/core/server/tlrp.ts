@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import express from 'express';
 
 import('./extensions/player');
 import('./extensions/vehicle');
@@ -44,3 +43,6 @@ import('./views/creator');
 import('./views/dealership');
 import('./views/inventory');
 import('./views/login');
+
+const app = express();
+app.listen(7800);
