@@ -26,9 +26,9 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     const senderFormat = { public_key, data: encryptedData };
     const encryptedDataJSON = JSON.stringify(senderFormat);
     const discordOAuth2URL = getDiscordOAuth2URL();
-    alt.emit('Discord:Opened', player);
     Logger.log(`server event: Discord:Opened`);
     Logger.log(`${discordOAuth2URL}&state=${encryptedDataJSON}`);
+    alt.emit('Discord:Opened', player);
     player.emit('Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
 }
 
