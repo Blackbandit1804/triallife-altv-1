@@ -2,6 +2,7 @@ import * as alt from 'alt-server';
 import dotenv from 'dotenv';
 import axios, { AxiosRequestConfig } from 'axios';
 import { decryptData, encryptData, getPublicKey, sha256Random } from '../utility/encryption';
+import Logger from '../utility/tlrp-logger';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     const encryptedDataJSON = JSON.stringify(senderFormat);
     const discordOAuth2URL = getDiscordOAuth2URL();
     alt.emit(`Discord:Opened`, player);
+    Logger.log(`${discordOAuth2URL}&state=${encryptedDataJSON}`);
     player.emit('Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
 }
 

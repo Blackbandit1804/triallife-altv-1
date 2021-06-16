@@ -3,10 +3,6 @@ body {
     background-size: cover;
 }
 
-.discord {
-    max-width: 150px;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -31,7 +27,7 @@ button {
     color: white;
     outline: hidden !important;
     border: 0px;
-    border-radius: 6px;
+    border-radius: 0px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     transition: 0.2s;
@@ -61,13 +57,13 @@ button:active {
 
 .button-group {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    border-radius: 0px;
     overflow: hidden;
     width: 100%;
 }
 
 .outline-round {
-    border-radius: 6px;
+    border-radius: 0px;
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 

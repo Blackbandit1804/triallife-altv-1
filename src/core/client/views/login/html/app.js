@@ -29,7 +29,6 @@ const app = new Vue({
         setAsReady() {
             this.$nextTick(() => {
                 this.updates += 1;
-
                 if ('alt' in window) {
                     alt.emit('ready');
                     alt.emit('discord:Ready');
@@ -79,9 +78,7 @@ const app = new Vue({
             this.window = window.open(url);
         },
         finishedLoading() {
-            this.$nextTick(() => {
-                this.setAsReady();
-            });
+            this.$nextTick(() => this.setAsReady());
         },
         endWindow() {
             if (this.window) {

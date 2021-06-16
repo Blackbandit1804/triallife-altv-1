@@ -28,15 +28,9 @@ export class View extends alt.WebView {
      * @param  {string} url
      * @param  {boolean} addCursor
      */
-    static async getInstance(
-        url: string,
-        addCursor: boolean,
-        isInit: boolean = false,
-        blurBackground: boolean = false
-    ): Promise<View> {
+    static async getInstance(url: string, addCursor: boolean, isInit: boolean = false, blurBackground: boolean = false): Promise<View> {
         if (!_instance) {
             _instance = new View(url);
-
             if (isInit) {
                 return _instance;
             }
@@ -70,10 +64,7 @@ export class View extends alt.WebView {
 
         // Used to hide the view until it's ready.
         _instance.on('play:Sound', handleFrontendSound);
-        _instance.on('ready', () => {
-            _instance.isVisible = true;
-        });
-
+        _instance.on('ready', () => (_instance.isVisible = true));
         return _instance;
     }
 
