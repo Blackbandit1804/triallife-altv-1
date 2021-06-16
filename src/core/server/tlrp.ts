@@ -45,7 +45,7 @@ import('./views/dealership');
 import('./views/inventory');
 import('./views/login');
 
-if (process.env.TEST) {
+if (process.env.TEST !== 'false') {
     import('./zTests/base');
     import('./zTests/inventory');
 }
