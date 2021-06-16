@@ -14,7 +14,7 @@ app.get('/v1/request/key', async (req, res) => {
     const userToken = req.query.state;
     let request;
     if (!token || !userToken) {
-        Logger.error(`token | userToken not found`);
+        res.redirect('/v1/request/key');
         return;
     }
     const player = [...alt.Player.all].find((player) => player.discordToken === userToken);
