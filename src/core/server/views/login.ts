@@ -7,7 +7,7 @@ import Logger from '../utility/tlrp-logger';
 dotenv.config();
 
 const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `http://mg-community.ddns.net:7800`;
-const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
+const azureRedirect = encodeURI(`${azureURL}/authenticate`);
 const url = `https://discord.com/api/oauth2/authorize?client_id=660200376523292725&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
 
 alt.onClient('discord:Begin', handlePlayerConnect);
@@ -53,12 +53,7 @@ async function handleFinishAuth(player: alt.Player): Promise<void> {
         method: 'POST',
         url: `${azureURL}/v1/post/discord`,
         headers: { 'Content-Type': 'application/json' },
-        data: {
-            data: {
-                player_identifier,
-                public_key
-            }
-        }
+        data: { data: { player_identifier, public_key } }
     };
     const result = await axios.request(options).catch((err) => {
         player.emit('Discord:Fail', 'Could not communicate with Authorization service.');
