@@ -4,8 +4,10 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import Logger from '../utility/tlrp-logger';
-import { getPublicKey } from '../utility/encryption';
+import { decryptData, getPublicKey } from '../utility/encryption';
 import { LoginManager } from '../systems/login';
+import { DefaultConfig } from '../configs/settings';
+import { OptionsManager } from '../systems/options';
 
 dotenv.config();
 const app = express();
@@ -32,7 +34,7 @@ app.get('/v1/request/key', async (req, res) => {
     if (!request.data || !request.data.id || !request.data.username) return;
     const player = [...alt.Player.all].find((player) => player.discordToken === userToken);
     if (!player || !player.valid) return;
-    LoginManager.tryDiscordQuickToken(player, request.data.id);
+    LoginManager.tryDiscordQuickToken(player, request.data.id.toString());
 });
 
 app.get('/v1/get/key', async (req, res) => res.send(JSON.stringify({ status: true, key: getPublicKey() })));
