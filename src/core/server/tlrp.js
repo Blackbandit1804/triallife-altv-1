@@ -12,7 +12,6 @@ import('./events/player-death');
 
 import('./systems/admin');
 import('./systems/blip');
-import('./systems/chat');
 import('./systems/fuel');
 import('./systems/interaction');
 import('./systems/interior');
@@ -36,7 +35,7 @@ import('./utility/tlrp-logger');
 import('./utility/vector');
 
 import('./views/atm');
-import('./views/character');
+import('./views/characters');
 import('./views/clothing');
 import('./views/creator');
 import('./views/dealership');
