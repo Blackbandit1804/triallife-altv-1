@@ -43,6 +43,6 @@ try {
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
 } catch (err) {
-    logger.error(`[3L:RP] Could not fetch version from package.json. Is there a package.json?`);
+    logger.error(`[3L:RP] Could not fetch vedatabase url from .env file. Is there an entry for 'MONGO_URL' in .env?`);
     process.exit(0);
 }
