@@ -8,7 +8,7 @@ import { distance2d } from '../../../shared/utility/vector';
 import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
 import save from './save';
-import dataUpdater from './updater';
+import updater from './updater';
 import safe from './safe';
 import sync from './sync';
 import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';
@@ -33,7 +33,7 @@ async function account(p: alt.Player, accountData: Partial<Account>): Promise<vo
             },
             Collections.Accounts
         );
-        alt.emitClient(p, SystemEvent.QUICK_TOKEN_UPDATE, p.discord.id);
+        p.emit(SystemEvent.QUICK_TOKEN_UPDATE, p.discord.id);
     }
     emit.meta(p, 'permissionLevel', accountData.permissionLevel);
     p.accountData = accountData;
@@ -43,7 +43,7 @@ function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
     player.emit(SystemEvent.SET_ACTION_MENU, actionMenu);
 }
 
-function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {
+function unconscious(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {
     p.spawn(p.pos.x, p.pos.y, p.pos.z, 0);
     if (!p.data.isUnconscious) {
         p.data.isUnconscious = true;
@@ -58,24 +58,24 @@ function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null):
 async function firstConnect(p: alt.Player): Promise<void> {
     if (!p || !p.valid) return;
     if (process.env.TLRP_READY === 'false') {
-        p.kick('Still warming up...');
+        p.kick('Server wird noch aufgewärmt ;)');
         return;
     }
     const pos = { ...DefaultConfig.CHARACTER_SELECT_POS };
-    p.dimension = p.id + 1; // First ID is 0. We add 1 so everyone gets a unique dimension.
+    p.dimension = p.id + 1;
     p.pendingLogin = true;
-    dataUpdater.init(p, null);
+    updater.init(p, null);
     safe.setPosition(p, pos.x, pos.y, pos.z);
     sync.time(p);
     sync.weather(p);
     alt.setTimeout(() => {
         if (!p || !p.valid) return;
-        alt.emitClient(p, SystemEvent.QUICK_TOKEN_FETCH);
+        p.emit(SystemEvent.QUICK_TOKEN_FETCH);
     }, 500);
 }
 
 function frozen(p: alt.Player, value: boolean): void {
-    alt.emitClient(p, SystemEvent.PLAYER_SET_FREEZE, value);
+    p.emit(SystemEvent.PLAYER_SET_FREEZE, value);
 }
 
 function respawned(p: alt.Player, position: alt.Vector3 = null): void {
@@ -83,46 +83,34 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
     p.data.isUnconscious = false;
     emit.meta(p, 'isDead', false);
     save.field(p, 'isDead', false);
-
     let nearestHopsital = position;
     if (!position) {
         const hospitals = [...DefaultConfig.VALID_HOSPITALS];
         let index = 0;
         let lastDistance = distance2d(p.pos, hospitals[0]);
-
         for (let i = 1; i < hospitals.length; i++) {
             const distanceCalc = distance2d(p.pos, hospitals[i]);
-            if (distanceCalc > lastDistance) {
-                continue;
-            }
-
+            if (distanceCalc > lastDistance) continue;
             lastDistance = distanceCalc;
             index = i;
         }
-
         nearestHopsital = hospitals[index] as alt.Vector3;
-
-        if (DefaultConfig.RESPAWN_LOSE_WEAPONS) {
-            playerFuncs.inventory.removeAllWeapons(p);
-        }
+        if (DefaultConfig.RESPAWN_LOSE_WEAPONS) playerFuncs.inventory.removeAllWeapons(p);
     }
-
     safe.setPosition(p, nearestHopsital.x, nearestHopsital.y, nearestHopsital.z);
     p.spawn(nearestHopsital.x, nearestHopsital.y, nearestHopsital.z, 0);
-
     alt.nextTick(() => {
         p.clearBloodDamage();
         safe.addHealth(p, DefaultConfig.RESPAWN_HEALTH, true);
         safe.addArmour(p, DefaultConfig.RESPAWN_ARMOUR, true);
     });
-
     alt.emit(TLRP_EVENTS_PLAYER.SPAWNED, p);
 }
 
 export default {
     account,
     actionMenu,
-    dead,
+    unconscious,
     firstConnect,
     frozen,
     respawned

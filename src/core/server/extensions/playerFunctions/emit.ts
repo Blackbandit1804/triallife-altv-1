@@ -23,7 +23,7 @@ function animation(p: alt.Player, dictionary: string, name: string, flags: Anima
         return;
     }
 
-    alt.emitClient(p, SystemEvent.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
+    p.emit(SystemEvent.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
 }
 
 /**
@@ -42,7 +42,7 @@ function audioStream(stream: AudioStream) {
  */
 function meta(p: alt.Player, key: string, value: any): void {
     alt.nextTick(() => {
-        alt.emitClient(p, SystemEvent.META_SET, key, value);
+        p.emit(SystemEvent.META_SET, key, value);
     });
 }
 
@@ -52,7 +52,7 @@ function meta(p: alt.Player, key: string, value: any): void {
  * @memberof EmitPrototype
  */
 function message(p: alt.Player, message: string): void {
-    alt.emitClient(p, View_Events_Chat.Append, message);
+    p.emit(View_Events_Chat.Append, message);
 }
 
 /**
@@ -61,7 +61,7 @@ function message(p: alt.Player, message: string): void {
  * @memberof EmitPrototype
  */
 function notification(p: alt.Player, message: string): void {
-    alt.emitClient(p, SystemEvent.PLAYER_EMIT_NOTIFICATION, message);
+    p.emit(SystemEvent.PLAYER_EMIT_NOTIFICATION, message);
 }
 
 /**
@@ -71,7 +71,7 @@ function notification(p: alt.Player, message: string): void {
  */
 function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false): void {
     if (!emitToNearbyPlayers) {
-        alt.emitClient(p, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
+        p.emit(SystemEvent.PLAY_PARTICLE_EFFECT, particle);
         return;
     }
 
@@ -107,7 +107,7 @@ function removeProgressBar(player: alt.Player, uid: string) {
  * @param {number} [volume=0.35]
  */
 function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
-    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_2D, audioName, volume);
+    p.emit(SystemEvent.PLAYER_EMIT_SOUND_2D, audioName, volume);
 }
 
 /**
@@ -117,7 +117,7 @@ function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
  * @memberof EmitPrototype
  */
 function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
-    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_3D, target, audioName);
+    p.emit(SystemEvent.PLAYER_EMIT_SOUND_3D, target, audioName);
 }
 
 /**
@@ -127,7 +127,7 @@ function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
  * @memberof EmitPrototype
  */
 function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
-    alt.emitClient(p, SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
+    p.emit(SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
 }
 
 /**

@@ -28,7 +28,7 @@ export class LoginManager {
         delete player.discordToken;
         if (DefaultConfig.WHITELIST) {
             if (!OptionsManager.isWhitelisted(data.id)) {
-                player.kick(`You are not currently whitelisted.`);
+                player.kick(`Sie sind nicht freigeschaltet.`);
                 return;
             }
         }

@@ -1,14 +1,13 @@
+import('./auth/index');
 import('./extensions/player');
 import('./extensions/vehicle');
 
-import('./effects/food');
-import('./effects/heal');
-import('./effects/load-effects');
-import('./effects/vehicle-repair');
-import('./effects/water');
-
 import('./events/player-connect');
 import('./events/player-death');
+
+import('./effects/load-effects');
+import('./effects/heal');
+import('./effects/vehicle-repair');
 
 import('./systems/admin');
 import('./systems/blip');
