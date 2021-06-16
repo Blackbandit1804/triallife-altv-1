@@ -1,14 +1,28 @@
 import * as alt from 'alt-server';
 import env from 'dotenv';
 import { Database, onReady } from 'simplymongo';
+import { DefaultConfig } from './configs/settings';
 import { SystemEvent } from '../shared/enums/system';
 import { Collections } from './interface/collections';
 import { default as logger, default as Logger } from './utility/tlrp-logger';
 import { setAzureEndpoint } from './utility/encryption';
 
 env.config();
-setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
+
+const needed = ['MONGO_URL', 'ENDPOINT', 'TEST', 'TLRP_READY'];
+
+if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
+if (DefaultConfig.WHITELIST) needed.push('WHITELIST_ROLE');
+
+for (let i = 0; i < needed.length; i++) {
+    if (needed[i] in process.env) continue;
+    logger.error(`[3L:RP] Could not fetch entry from .env file Is there an entry for '${needed[i]}' in .env?`);
+    process.exit(0);
+}
+
+setAzureEndpoint(process.env.ENDPOINT);
 const name = 'tlrp';
+const mongoURL = process.env.MONGO_URL;
 const startTime = Date.now();
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
@@ -39,10 +53,9 @@ function handleEarlyConnect(player: alt.Player): void {
 }
 
 try {
-    const mongoURL = process.env.MONGO_URL;
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
 } catch (err) {
-    logger.error(`[3L:RP] Could not fetch vedatabase url from .env file. Is there an entry for 'MONGO_URL' in .env?`);
+    logger.error(`[3L:RP] Could not create database.`);
     process.exit(0);
 }
