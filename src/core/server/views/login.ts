@@ -6,7 +6,7 @@ import { decryptData, encryptData, getPublicKey, sha256Random } from '../utility
 dotenv.config();
 
 const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `http://mg-community.ddns.net:7800`;
-const azureRedirect = encodeURI(`${azureURL}/authenticate`);
+const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
 const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
 
 alt.onClient('discord:Begin', handlePlayerConnect);
