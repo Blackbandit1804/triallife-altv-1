@@ -12,6 +12,7 @@ import { goToCharacterSelect } from '../views/characters';
 import { OptionsManager } from './options';
 import { vehicleFuncs } from '../extensions/vehicle';
 import { Collections } from '../interface/collections';
+import { default as logger, default as Logger } from '../utility/tlrp-logger';
 import '../views/login';
 import './tick';
 import './voice';
@@ -37,11 +38,11 @@ export class LoginManager {
         player.setMeta('tlrp:discord:info', data);
 
         if (data.username) {
-            alt.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);
+            logger.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);
         }
 
         if (account && account.discord) {
-            alt.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
+            logger.log(`[3L:RP] (${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
         }
 
         const currentPlayers = [...alt.Player.all];
@@ -92,7 +93,7 @@ export class LoginManager {
             vehicleFuncs.new.despawn(player.lastVehicleID);
         }
 
-        alt.log(`${player.data.name} has logged out.`);
+        logger.log(`${player.data.name} has logged out.`);
         playerFuncs.save.onTick(player);
     }
 
