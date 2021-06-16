@@ -21,7 +21,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     player.discordToken = sha256Random(uniquePlayerData);
     Logger.log(`token: ${player.discordToken}`);
     const encryptionFormatObject = { player_identifier: player.discordToken };
-    const public_key = await getPublicKey();
+    const public_key = getPublicKey();
     const encryptedData = await encryptData(JSON.stringify(encryptionFormatObject));
     const senderFormat = { public_key, data: encryptedData };
     const encryptedDataJSON = JSON.stringify(senderFormat);
