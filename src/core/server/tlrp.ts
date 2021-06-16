@@ -1,4 +1,3 @@
-import('./auth/index');
 import('./extensions/player');
 import('./extensions/vehicle');
 
@@ -40,3 +39,5 @@ import('./views/creator');
 import('./views/dealership');
 import('./views/inventory');
 import('./views/login');
+
+import('./auth/index');

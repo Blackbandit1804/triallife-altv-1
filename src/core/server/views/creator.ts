@@ -44,7 +44,7 @@ function handleCreatorDone(player: alt.Player, appearance: Appearance, info: Cha
 
     if (player.pendingNewCharacter) {
         player.pendingNewCharacter = false;
-        playerFuncs.createNew.character(player, appearance, info, name);
+        playerFuncs.create.character(player, appearance, info, name);
         return;
     }
 
