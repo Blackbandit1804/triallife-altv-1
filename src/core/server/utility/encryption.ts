@@ -102,5 +102,5 @@ export async function getAzurePublicKey(): Promise<string> {
 }
 
 export function getUniquePlayerHash(player: alt.Player, discord: string): string {
-    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialId}`));
+    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialID}`));
 }
