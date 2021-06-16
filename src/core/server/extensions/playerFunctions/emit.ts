@@ -23,7 +23,7 @@ function animation(p: alt.Player, dictionary: string, name: string, flags: Anima
         return;
     }
 
-    p.emit(SystemEvent.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
 }
 
 /**
@@ -42,7 +42,7 @@ function audioStream(stream: AudioStream) {
  */
 function meta(p: alt.Player, key: string, value: any): void {
     alt.nextTick(() => {
-        p.emit(SystemEvent.META_SET, key, value);
+        alt.emitClient(p, SystemEvent.META_SET, key, value);
     });
 }
 
@@ -52,7 +52,7 @@ function meta(p: alt.Player, key: string, value: any): void {
  * @memberof EmitPrototype
  */
 function message(p: alt.Player, message: string): void {
-    p.emit(View_Events_Chat.Append, message);
+    alt.emitClient(p, View_Events_Chat.Append, message);
 }
 
 /**
@@ -61,7 +61,7 @@ function message(p: alt.Player, message: string): void {
  * @memberof EmitPrototype
  */
 function notification(p: alt.Player, message: string): void {
-    p.emit(SystemEvent.PLAYER_EMIT_NOTIFICATION, message);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_NOTIFICATION, message);
 }
 
 /**
@@ -71,14 +71,14 @@ function notification(p: alt.Player, message: string): void {
  */
 function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false): void {
     if (!emitToNearbyPlayers) {
-        p.emit(SystemEvent.PLAY_PARTICLE_EFFECT, particle);
+        alt.emitClient(p, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
         return;
     }
 
     const nearbyPlayers = utility.getClosestPlayers(p, 10);
     for (let i = 0; i < nearbyPlayers.length; i++) {
         const player = nearbyPlayers[i];
-        player.emit(SystemEvent.PLAY_PARTICLE_EFFECT, particle);
+        alt.emitClient(player, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
     }
 }
 
@@ -88,7 +88,7 @@ function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false
  * @param {ProgressBar} progressbar
  */
 function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
-    player.emit(SystemEvent.PROGRESSBAR_CREATE, progressbar);
+    alt.emitClient(player, SystemEvent.PROGRESSBAR_CREATE, progressbar);
 }
 
 /**
@@ -97,7 +97,7 @@ function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
  * @param {string} uid
  */
 function removeProgressBar(player: alt.Player, uid: string) {
-    player.emit(SystemEvent.PROGRESSBAR_REMOVE, uid);
+    alt.emitClient(player, SystemEvent.PROGRESSBAR_REMOVE, uid);
 }
 
 /**
@@ -107,7 +107,7 @@ function removeProgressBar(player: alt.Player, uid: string) {
  * @param {number} [volume=0.35]
  */
 function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
-    p.emit(SystemEvent.PLAYER_EMIT_SOUND_2D, audioName, volume);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_2D, audioName, volume);
 }
 
 /**
@@ -117,7 +117,7 @@ function sound2D(p: alt.Player, audioName: string, volume: number = 0.35) {
  * @memberof EmitPrototype
  */
 function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
-    p.emit(SystemEvent.PLAYER_EMIT_SOUND_3D, target, audioName);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_SOUND_3D, target, audioName);
 }
 
 /**
@@ -127,7 +127,7 @@ function sound3D(p: alt.Player, audioName: string, target: alt.Entity): void {
  * @memberof EmitPrototype
  */
 function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
-    p.emit(SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
+    alt.emitClient(p, SystemEvent.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
 }
 
 /**
@@ -135,7 +135,7 @@ function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
  * @param {Array<Task | TaskCallback>} tasks
  */
 function taskTimeline(player: alt.Player, tasks: Array<Task | TaskCallback>) {
-    player.emit(SystemEvent.PLAYER_EMIT_TASK_TIMELINE, tasks);
+    alt.emitClient(player, SystemEvent.PLAYER_EMIT_TASK_TIMELINE, tasks);
 }
 
 export default {

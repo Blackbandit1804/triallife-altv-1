@@ -22,7 +22,7 @@ import save from './save';
 async function selectCharacter(p: alt.Player, characterData: Partial<Character>): Promise<void> {
     p.data = { ...characterData };
     sync.appearance(p);
-    p.emit(SystemEvent.TICKS_START);
+    alt.emitClient(p, SystemEvent.TICKS_START);
 
     // Set player dimension to zero.
     p.dimension = 0;

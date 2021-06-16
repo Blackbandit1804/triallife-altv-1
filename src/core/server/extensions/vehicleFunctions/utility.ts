@@ -32,7 +32,7 @@ function warpInto(v: alt.Vehicle, player: alt.Player, seat: Vehicle_Seat_List): 
             return;
         }
 
-        player.emit(Vehicle_Events.SET_INTO, v, seat);
+        alt.emitClient(player, Vehicle_Events.SET_INTO, v, seat);
     });
 }
 

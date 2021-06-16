@@ -281,7 +281,7 @@ function handleVerify(player: alt.Player) {
 
     if (!instance) {
         alt.log(`${player.data.name} has a dead job instance.`);
-        player.emit(JobEnums.ObjectiveEvents.JOB_SYNC, null);
+        alt.emitClient(player, JobEnums.ObjectiveEvents.JOB_SYNC, null);
         return;
     }
 

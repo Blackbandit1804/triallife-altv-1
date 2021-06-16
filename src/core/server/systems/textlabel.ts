@@ -32,6 +32,6 @@ export class TextLabelManager {
     }
 
     static populateGlobalLabels(player: alt.Player) {
-        player.emit(SystemEvent.POPULATE_TEXTLABELS, globalTextLabels);
+        alt.emitClient(player, SystemEvent.POPULATE_TEXTLABELS, globalTextLabels);
     }
 }

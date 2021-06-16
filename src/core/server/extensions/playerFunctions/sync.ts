@@ -32,7 +32,7 @@ function appearance(p: alt.Player): void {
 
     p.setSyncedMeta('Name', p.data.name);
     emit.meta(p, 'appearance', p.data.appearance);
-    p.emit(View_Events_Creator.Sync, p.data.appearance);
+    alt.emitClient(p, View_Events_Creator.Sync, p.data.appearance);
 }
 
 function inventory(p: alt.Player): void {
@@ -71,7 +71,7 @@ function syncedMeta(p: alt.Player): void {
  * @memberof SyncPrototype
  */
 function time(p: alt.Player): void {
-    p.emit(SystemEvent.WORLD_UPDATE_TIME, World.hour, World.minute);
+    alt.emitClient(p, SystemEvent.WORLD_UPDATE_TIME, World.hour, World.minute);
 }
 
 /**
@@ -82,7 +82,7 @@ function weather(p: alt.Player): void {
     p.gridSpace = World.getGridSpace(p);
     p.currentWeather = World.getWeatherByGrid(p.gridSpace);
     emit.meta(p, 'gridSpace', p.gridSpace);
-    p.emit(SystemEvent.WORLD_UPDATE_WEATHER, p.currentWeather);
+    alt.emitClient(p, SystemEvent.WORLD_UPDATE_WEATHER, p.currentWeather);
 }
 
 function playTime(p: alt.Player): void {

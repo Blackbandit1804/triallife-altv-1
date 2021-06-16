@@ -42,7 +42,7 @@ export class LoginManager {
             return;
         }
         player.discord = data as DiscordUser;
-        player.emit(View_Events_Discord.Close);
+        alt.emitClient(player, View_Events_Discord.Close);
         if (!account) {
             let accountData: Partial<Account> | null = await db.fetchData<Account>('discord', data.id, Collections.Accounts);
             if (!accountData) {

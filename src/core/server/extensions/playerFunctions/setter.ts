@@ -33,14 +33,14 @@ async function account(p: alt.Player, accountData: Partial<Account>): Promise<vo
             },
             Collections.Accounts
         );
-        p.emit(SystemEvent.QUICK_TOKEN_UPDATE, p.discord.id);
+        alt.emitClient(p, SystemEvent.QUICK_TOKEN_UPDATE, p.discord.id);
     }
     emit.meta(p, 'permissionLevel', accountData.permissionLevel);
     p.accountData = accountData;
 }
 
 function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
-    player.emit(SystemEvent.SET_ACTION_MENU, actionMenu);
+    alt.emitClient(player, SystemEvent.SET_ACTION_MENU, actionMenu);
 }
 
 function unconscious(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {
@@ -70,12 +70,12 @@ async function firstConnect(p: alt.Player): Promise<void> {
     sync.weather(p);
     alt.setTimeout(() => {
         if (!p || !p.valid) return;
-        p.emit(SystemEvent.QUICK_TOKEN_FETCH);
+        alt.emitClient(p, SystemEvent.QUICK_TOKEN_FETCH);
     }, 500);
 }
 
 function frozen(p: alt.Player, value: boolean): void {
-    p.emit(SystemEvent.PLAYER_SET_FREEZE, value);
+    alt.emitClient(p, SystemEvent.PLAYER_SET_FREEZE, value);
 }
 
 function respawned(p: alt.Player, position: alt.Vector3 = null): void {

@@ -29,7 +29,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     Logger.log(`server event: Discord:Opened`);
     Logger.log(`${discordOAuth2URL}&state=${encryptedDataJSON}`);
     alt.emit('Discord:Opened', player);
-    player.emit('Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
+    alt.emitClient(player, 'Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
 }
 
 export async function fetchAzureKey(): Promise<string> {
@@ -60,15 +60,15 @@ async function handleFinishAuth(player: alt.Player): Promise<void> {
         data: { data: { player_identifier, public_key } }
     };
     const result = await axios.request(options).catch((err) => {
-        player.emit('Discord:Fail', 'Could not communicate with Authorization service.');
+        alt.emitClient(player, 'Discord:Fail', 'Could not communicate with Authorization service.');
         return null;
     });
     if (!result) return;
     const data = await decryptData(JSON.stringify(result.data)).catch((err) => {
-        player.emit('Discord:Fail', 'Could not decrypt data from Authorization service.');
+        alt.emitClient(player, 'Discord:Fail', 'Could not decrypt data from Authorization service.');
         return null;
     });
     if (!data) return;
-    player.emit('Discord:Close');
+    alt.emitClient(player, 'Discord:Close');
     alt.emit('Discord:Login', player, JSON.parse(data));
 }

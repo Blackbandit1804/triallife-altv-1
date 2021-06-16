@@ -53,6 +53,6 @@ export class MarkerManager {
     }
 
     static populateGlobalMarkers(player: alt.Player) {
-        player.emit(SystemEvent.POPULATE_MARKERS, globalMarkers);
+        alt.emitClient(player, SystemEvent.POPULATE_MARKERS, globalMarkers);
     }
 }
