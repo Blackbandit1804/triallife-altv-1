@@ -10,7 +10,6 @@ env.config();
 setAzureEndpoint(process.env.ENDPOINT ? process.env.ENDPOINT : 'http://mg-community.ddns.net:7800');
 const name = 'tlrp';
 const startTime = Date.now();
-const mongoURL = process.env.MONGO_URL ? process.env.MONGO_URL : `mongodb://localhost:27017`;
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
 
 alt.on('playerConnect', handleEarlyConnect);
@@ -39,8 +38,10 @@ function handleEarlyConnect(player: alt.Player): void {
     }
 }
 
+onReady(() => handleFinish);
+
 try {
-    onReady(() => handleFinish);
+    const mongoURL = process.env.MONGO_URL;
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
 } catch (err) {

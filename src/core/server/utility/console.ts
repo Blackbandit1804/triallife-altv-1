@@ -24,10 +24,6 @@ const command = {
     '/removewhitelist': handleRemoveWhitelist
 };
 
-/**
- * Handles console commands when server is free.
- * @param {...string[]} args
- */
 function handleConsoleMessage(...args: string[]) {
     alt.setTimeout(() => {
         const cmdName = args[0].toLowerCase();
