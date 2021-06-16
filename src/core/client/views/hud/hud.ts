@@ -59,7 +59,6 @@ export class BaseHUD {
                 }
             }, 1000);
         }
-
         BaseHUD.view.unfocus();
     }
 

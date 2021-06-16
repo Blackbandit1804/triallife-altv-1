@@ -1,6 +1,5 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import ChatManager from '../systems/chat';
 import Logger from './tlrp-logger';
 import fs from 'fs';
 import { AdminManager } from '../systems/admin';
@@ -22,8 +21,7 @@ const command = {
     '/unban': handleUnban,
     '/dox': handleDox,
     '/addwhitelist': handleAddWhitelist,
-    '/removewhitelist': handleRemoveWhitelist,
-    '/commands': ChatManager.printAllCommands
+    '/removewhitelist': handleRemoveWhitelist
 };
 
 /**
@@ -103,10 +101,8 @@ function handleSetAdmin(cmdName: string, discord: string, permissionLevel: strin
         Logger.error(`That player is not currently logged in.`);
         return;
     }
-
     player.accountData.permissionLevel = permission;
     saveField(player, 'permissionLevel', player.accountData.permissionLevel);
-    ChatManager.populateCommands(player);
     Logger.info(`(${discord}) ${player.data.name} had their permission level changed to: ${permissionLevel}.`);
 }
 

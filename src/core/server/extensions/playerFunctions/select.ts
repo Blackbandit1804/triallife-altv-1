@@ -4,7 +4,6 @@ import { SystemEvent } from '../../../shared/enums/system';
 import { Character } from '../../../shared/interfaces/character';
 import { DefaultConfig } from '../../configs/settings';
 import { BlipManager } from '../../systems/blip';
-import ChatManager from '../../systems/chat';
 import { InteractionManager } from '../../systems/interaction';
 import { MarkerManager } from '../../systems/marker';
 import emit from './emit';
@@ -78,7 +77,6 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
         sync.vehicles(p);
 
         // Propagation
-        ChatManager.populateCommands(p);
         InteractionManager.populateCustomInteractions(p);
         BlipManager.populateGlobalBlips(p);
         MarkerManager.populateGlobalMarkers(p);

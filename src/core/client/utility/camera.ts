@@ -26,12 +26,7 @@ alt.on('disconnect', () => {
 export function createPedEditCamera(offset: alt.IVector3 = null): void {
     startPosition = { ...alt.Player.local.pos } as alt.Vector3;
     if (offset) {
-        startPosition = native.getOffsetFromEntityInWorldCoords(
-            alt.Player.local.scriptID,
-            offset.x,
-            offset.y,
-            offset.z
-        );
+        startPosition = native.getOffsetFromEntityInWorldCoords(alt.Player.local.scriptID, offset.x, offset.y, offset.z);
     }
 
     if (!camera) {
@@ -45,18 +40,7 @@ export function createPedEditCamera(offset: alt.IVector3 = null): void {
         fov = 90;
         startCamPosition = forwardCameraPosition;
 
-        camera = native.createCamWithParams(
-            'DEFAULT_SCRIPTED_CAMERA',
-            forwardCameraPosition.x,
-            forwardCameraPosition.y,
-            forwardCameraPosition.z,
-            0,
-            0,
-            0,
-            fov,
-            true,
-            0
-        );
+        camera = native.createCamWithParams('DEFAULT_SCRIPTED_CAMERA', forwardCameraPosition.x, forwardCameraPosition.y, forwardCameraPosition.z, 0, 0, 0, fov, true, 0);
 
         native.pointCamAtCoord(camera, startPosition.x, startPosition.y, startPosition.z);
         native.setCamActive(camera, true);
@@ -140,7 +124,6 @@ function handleControls() {
     if (native.isDisabledControlPressed(0, 16)) {
         if (_x < width / 2 + 250 && _x > width / 2 - 250) {
             fov += 2;
-
             if (fov > 130) {
                 fov = 130;
             }
