@@ -24,7 +24,7 @@
                             <p class="mt-6 light-blue--text text-h6 font-weight-black text-center" v-else>{{ errorMessage }}</p>
                         </div>
                     </template>
-                    <template v-if="waitingForAuth">
+                    <template v-else>
                         <div class="placeholder">
                             <p class="mb-4 slideindown">{{ locales.LABEL_TAB_OUT }}</p>
                             <template v-if="readyToFinish">

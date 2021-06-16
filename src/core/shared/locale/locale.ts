@@ -1,46 +1,20 @@
 import { LocaleFormat } from '../interfaces/locale-format';
-import en from './languages/en'; // Importing the English Locale
+import en from './languages/en';
+import de from './languages/de';
 export const placeholder = `_%_`;
 
-let defaultLanguage = 'en';
-
-/**
- * All locales have a base language in ISO-639-1.
- * Example for English is: 'en'.
- *
- * Variables are replaced in their respective orders.
- * Variable placeholders are written with: _%_
- *
- * This file cannot be injected into during runtime.
- * Locales must be written and present at the time of bootup.
- *
- * `setLanguage` function must be used on `client-side` in order to change the language.
- */
+let defaultLanguage = 'de';
 
 const locales: LocaleFormat = {
+    de,
     en
-    // Additional languages can be added here...
 };
 
 export class LocaleManager {
-    /**
-     * The ISO-639-1 Code to Utilize for Language
-     * @static
-     * @param {string} [iso639='en']
-     * @memberof LocaleManager
-     */
     static setLanguage(iso639: string = 'en') {
         defaultLanguage = iso639;
     }
 
-    /**
-     * Get a locale based on its key value.
-     * @static
-     * @param {string} key
-     * @param {...any[]} args
-     * @return {*}  {string}
-     * @memberof LocaleManager
-     */
     static get(key: string, ...args: any[]): string {
         if (!locales[defaultLanguage][key]) {
             console.log(`Translation for ${key} was not found`);
@@ -55,13 +29,6 @@ export class LocaleManager {
         return message;
     }
 
-    /**
-     * Returns an object of strings with labels for WebViews.
-     * @static
-     * @param {string} key
-     * @return {*}  {Object}
-     * @memberof LocaleManager
-     */
     static getWebviewLocale(key: string): Object {
         if (!locales[defaultLanguage][key]) {
             console.log(`Translation for ${key} was not found`);
