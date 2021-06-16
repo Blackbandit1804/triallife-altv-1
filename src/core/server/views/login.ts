@@ -52,7 +52,7 @@ async function handleFinishAuth(player: alt.Player): Promise<void> {
     const player_identifier = player.discordToken;
     if (!player_identifier) return;
     const public_key = getPublicKey();
-    const azureURL = await getAzureURL();
+    const azureURL = getAzureURL();
     const options: AxiosRequestConfig = {
         method: 'POST',
         url: `${azureURL}/v1/post/discord`,
