@@ -22,7 +22,7 @@ app.get('/v1/request/key', async (req, res) => {
     authParams.append(`grant_type`, `authorization_code`);
     authParams.append(`code`, token);
     authParams.append(`scope`, `identify`);
-    authParams.append(`redirect_uri`, `http://${process.env.ENDPOINT}:7800/v1/request/key`);
+    authParams.append(`redirect_uri`, `http://${process.env.ENDPOINT}/v1/request/key`);
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) return;
     const discordData = { ...request.data };
