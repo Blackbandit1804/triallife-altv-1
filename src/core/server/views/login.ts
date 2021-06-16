@@ -68,6 +68,6 @@ async function handleFinishAuth(player: alt.Player): Promise<void> {
         return null;
     });
     if (!data) return;
-    player.emit(`Discord:Close`);
+    player.emit('Discord:Close');
     alt.emit('Discord:Login', player, JSON.parse(data));
 }

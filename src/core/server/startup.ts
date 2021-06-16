@@ -11,7 +11,7 @@ env.config();
 
 const needed = ['MONGO_URL', 'ENDPOINT', 'TLRP_READY', 'MONGO_DATABASE'];
 
-if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
+if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT_SECRET', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
 if (DefaultConfig.WHITELIST) needed.push('WHITELIST_ROLE');
 
 for (let i = 0; i < needed.length; i++) {
