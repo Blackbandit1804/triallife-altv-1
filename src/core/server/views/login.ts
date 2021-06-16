@@ -42,7 +42,7 @@ export function getAzureURL(): string {
     return azureURL;
 }
 
-async function handleFinishAuth(player: alt.Player) {
+async function handleFinishAuth(player: alt.Player): Promise<void> {
     const player_identifier = player.discordToken;
     if (!player_identifier) return;
     const public_key = await getPublicKey();
