@@ -9,7 +9,7 @@ import { handleFreezePlayer } from '../../utility/freeze';
 import { ActionsManager } from './controllers/actions-manager';
 import './controllers/audio-manager';
 import './controllers/chat-manager';
-import './controllers/helpManager';
+import './controllers/help-manager';
 import './controllers/leaderboard-manager';
 import { PhoneManager } from './controllers/phone-manager';
 
