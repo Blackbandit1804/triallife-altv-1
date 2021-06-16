@@ -8,7 +8,7 @@ import { distance2d } from '../../../shared/utility/vector';
 import { SystemEvent } from '../../../shared/enums/system';
 import emit from './emit';
 import save from './save';
-import dataUpdater from './dataUpdater';
+import dataUpdater from './updater';
 import safe from './safe';
 import sync from './sync';
 import { TLRP_EVENTS_PLAYER } from '../../enums/tlrp';

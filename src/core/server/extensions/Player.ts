@@ -3,7 +3,7 @@ import { Character } from '../../shared/interfaces/character';
 import { Account } from '../interface/account';
 import { DiscordUser } from '../interface/discord-user';
 import currency from './playerFunctions/currency';
-import dataUpdater from './playerFunctions/dataUpdater';
+import dataUpdater from './playerFunctions/updater';
 import emit from './playerFunctions/emit';
 import inventory from './playerFunctions/inventory';
 import createNew from './playerFunctions/new';

@@ -30,9 +30,7 @@
                     </template>
                     <template v-if="waitingForAuth">
                         <div class="placeholder">
-                            <p class="mb-4 slideindown">
-                                {{ locales.LABEL_TAB_OUT }}
-                            </p>
+                            <p class="mb-4 slideindown">{{ locales.LABEL_TAB_OUT }}</p>
                             <template v-if="readyToFinish">
                                 <button @mouseover="hover" class="overline green mb-4 slideinright" @click="finishAuth">{{ locales.LABEL_FINISH_LOGIN }}</button>
                                 <button @mouseover="hover" class="overline dark mb-4 slideinleft" @click="authAgain">{{ locales.LABEL_OPEN_WINDOW }}</button>
