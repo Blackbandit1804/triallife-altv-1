@@ -8,6 +8,7 @@ import { LoginManager } from '../systems/login';
 import { getSharedSecret } from '../utility/encryption';
 
 const app = express();
+/*
 app.use(cors());
 app.get('/v1/request/key', async (req, res) => {
     const token = req.query.code;
@@ -27,7 +28,7 @@ app.get('/v1/request/key', async (req, res) => {
     authParams.append(`redirect_uri`, `http://${process.env.ENDPOINT}/v1/request/key`);
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) {
-        player.emit('Discord:Fail', 'Could not communicate with Authorization service.');
+        res.redirect('/v1/request/key');
         return;
     }
 });
@@ -44,6 +45,6 @@ app.get('/v1/post/discord', async (req, res) => {
         res.redirect('/v1/request/key');
         return;
     }
-});
+});*/
 
 app.listen(7800, () => Logger.info('Authentication service listen on port 7800'));
