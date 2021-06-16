@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 axios
-    .get(`http://127.0.0.1:7800/restart/core`)
+    .get(`http://mg-community.ddns.net:7800/restart/core`)
     .catch((err) => {
         if (!err) return;
         alt.log(`Please run your server first. 'npm run windows' or 'npm run linux'`);
