@@ -1,12 +1,13 @@
 import * as alt from 'alt-server';
 import express from 'express';
+import { default as logger, default as Logger } from '../core/server/utility/tlrp-logger';
 
 const app = express();
 const port = 7800;
 
 app.get('/restart/:resourceName', async (req, res) => {
     if (!alt.hasResource(req.params.resourceName)) {
-        alt.logWarning(`${req.params.resourceName} is not a resource.`);
+        logger.warning(`${req.params.resourceName} is not a resource.`);
         return;
     }
     alt.restartResource(req.params.resourceName);
@@ -23,4 +24,4 @@ alt.on('enable:Entry', () => {
     });
 });
 
-app.listen(port, () => alt.log('[3L:RP] Express Server running on Port ' + port));
+app.listen(port, () => logger.info(`express service running on port ${port}`));
