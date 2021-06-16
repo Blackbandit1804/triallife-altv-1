@@ -27,7 +27,7 @@ let commands = [
 const chat = Vue.component('chat', {
     data() {
         return {
-            previous: [' ', 'alt:V Athena Chat', 'By Stuyk'],
+            previous: [' ', 'alt:V triallife Chat', 'By Stuyk'],
             currentMessage: '',
             chatActive: false,
             position: 0,
@@ -43,9 +43,7 @@ const chat = Vue.component('chat', {
             const date = new Date(currentTime);
             messages.push({
                 message: msg,
-                time: `[${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}:${this.addZero(
-                    date.getSeconds()
-                )}]`
+                time: `[${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}:${this.addZero(date.getSeconds())}]`
             });
 
             // Log Messages to Console
@@ -291,10 +289,7 @@ const chat = Vue.component('chat', {
                 for (let i = matches.length - 1; i >= 0; --i) {
                     let color = matches[i].found.substring(1, matches[i].found.length - 1);
                     let insertHtml = `${i !== 0 ? '</font>' : ''}<font color="#${color}">`;
-                    text = `${text.slice(0, matches[i].index)}${insertHtml}${text.slice(
-                        matches[i].index + matches[i].found.length,
-                        text.length
-                    )}`;
+                    text = `${text.slice(0, matches[i].index)}${insertHtml}${text.slice(matches[i].index + matches[i].found.length, text.length)}`;
                 }
             }
 
@@ -344,9 +339,7 @@ const chat = Vue.component('chat', {
             let count = 0;
             let interval = setInterval(() => {
                 count += 1;
-                this.appendMessage(
-                    `Message ${count} lore impsum do stuff long words and this is me screaming internally.`
-                );
+                this.appendMessage(`Message ${count} lore impsum do stuff long words and this is me screaming internally.`);
 
                 if (count >= 100) {
                     clearInterval(interval);

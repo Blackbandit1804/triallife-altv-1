@@ -1,14 +1,14 @@
 ---
-description: This will tell you how to setup a private mirror of Athena.
+description: This will tell you how to setup a private mirror of triallife.
 ---
 
 # Installing Trial Life Advanced
 
-Ensure that you have followed and completed the [Before Setup](./before-setup.md) instructional page. The prerequisites inside of that page are deeply important for making alt:V Athena function out of the box.
+Ensure that you have followed and completed the [Before Setup](./before-setup.md) instructional page. The prerequisites inside of that page are deeply important for making alt:V triallife function out of the box.
 
 ## Table of Contents
 
--   [Installing Athena Advanced](#installing-triallife-advanced)
+-   [Installing triallife Advanced](#installing-triallife-advanced)
     -   [Table of Contents](#table-of-contents)
     -   [Setup](#setup)
         -   [Updating Submodules](#updating-submodules)
@@ -26,7 +26,7 @@ Ensure that you have followed and completed the [Before Setup](./before-setup.md
 
 ## Setup Private Repo
 
-Create a bare clone of the Athena Repository
+Create a bare clone of the triallife Repository
 
 ```bash
 git clone https://github.com/DeathNeroTV/triallife-altv --bare triallife-altv-bare
@@ -69,7 +69,7 @@ Clone the repository down from github.
 git clone <your_github_url_here>
 ```
 
-Add the upstream of the original athena repository.
+Add the upstream of the original triallife repository.
 
 ```bash
 git remote add upstream git@github.com:DeathNeroTV/triallife-altv.git

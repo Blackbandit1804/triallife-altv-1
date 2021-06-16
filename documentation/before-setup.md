@@ -70,7 +70,7 @@ If you need additional help with port forwarding in your router you should check
 
 ## Linux Ubuntu 18.04
 
-The recommended distro for alt:V is Ubuntu 18.04. You are going to need to perform a handful of Linux commands through a **shell/terminal interface** to fully utilize this framework. This can often be done with [Putty ](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)on a Windows computer. Athena will **only work** with an **unmanaged vps** or **unmanaged dedicated server**.
+The recommended distro for alt:V is Ubuntu 18.04. You are going to need to perform a handful of Linux commands through a **shell/terminal interface** to fully utilize this framework. This can often be done with [Putty ](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)on a Windows computer. triallife will **only work** with an **unmanaged vps** or **unmanaged dedicated server**.
 
 What that means for you as an end-user is using one of the following services:
 

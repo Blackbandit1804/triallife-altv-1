@@ -18,7 +18,7 @@ import { deepCloneObject } from '../../shared/utility/deep-copy';
 /**
  * Let's talk about Inventory Logic! Woo!
  *
- * Inventories are complicated but here at Athena we want to simplify that process.
+ * Inventories are complicated but here at triallife we want to simplify that process.
  * You cannot swap an item with another item.
  * Drag one out. Put one in. Simple.
  * Hard to come across bugs when you have to look for null slots.

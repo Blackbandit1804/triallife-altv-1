@@ -34,7 +34,7 @@ export class LoginManager {
             }
         }
 
-        player.setMeta('Athena:Discord:Info', data);
+        player.setMeta('tlrp:discord:info', data);
 
         if (data.username) {
             alt.log(`[3L:RP] (${player.id}) ${data.username} has authenticated.`);

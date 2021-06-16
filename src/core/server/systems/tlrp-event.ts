@@ -21,7 +21,7 @@ function on(eventName: TLRP_EVENTS_PLAYER | TLRP_EVENTS_VEHICLE, callback: playe
  */
 export class EventManager {
     /**
-     * Subscribe to an Athena Player event.
+     * Subscribe to an triallife Player event.
      * @static
      * @param {TLRP_EVENTS_PLAYER} eventName
      * @param {playerCallback} callback
@@ -32,7 +32,7 @@ export class EventManager {
     }
 
     /**
-     * Subscribe to an Athena Vehicle event.
+     * Subscribe to an triallife Vehicle event.
      * @static
      * @param {TLRP_EVENTS_VEHICLE} eventName
      * @param {vehicleCallback} callback
