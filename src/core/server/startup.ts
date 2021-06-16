@@ -9,7 +9,7 @@ import { setAzureEndpoint } from './utility/encryption';
 
 env.config();
 
-const needed = ['MONGO_URL', 'ENDPOINT', 'TEST', 'TLRP_READY', 'MONGO_DATABASE'];
+const needed = ['MONGO_URL', 'ENDPOINT', 'TLRP_READY', 'MONGO_DATABASE'];
 
 if (DefaultConfig.USE_DISCORD_BOT) needed.push('DISCORD_BOT_CLIENT', 'DISCORD_BOT', 'DISCORD_SERVER_ID');
 if (DefaultConfig.WHITELIST) needed.push('WHITELIST_ROLE');
