@@ -4,10 +4,8 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import Logger from '../utility/tlrp-logger';
-import { decryptData, getPublicKey } from '../utility/encryption';
+import { getPublicKey } from '../utility/encryption';
 import { LoginManager } from '../systems/login';
-import { DefaultConfig } from '../configs/settings';
-import { OptionsManager } from '../systems/options';
 
 dotenv.config();
 const app = express();
