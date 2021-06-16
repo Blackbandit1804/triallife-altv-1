@@ -78,7 +78,7 @@ function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false
     const nearbyPlayers = utility.getClosestPlayers(p, 10);
     for (let i = 0; i < nearbyPlayers.length; i++) {
         const player = nearbyPlayers[i];
-        alt.emitClient(player, SystemEvent.PLAY_PARTICLE_EFFECT, particle);
+        player.emit(SystemEvent.PLAY_PARTICLE_EFFECT, particle);
     }
 }
 
@@ -88,7 +88,7 @@ function particle(p: alt.Player, particle: Particle, emitToNearbyPlayers = false
  * @param {ProgressBar} progressbar
  */
 function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
-    alt.emitClient(player, SystemEvent.PROGRESSBAR_CREATE, progressbar);
+    player.emit(SystemEvent.PROGRESSBAR_CREATE, progressbar);
 }
 
 /**
@@ -97,7 +97,7 @@ function createProgressBar(player: alt.Player, progressbar: ProgressBar) {
  * @param {string} uid
  */
 function removeProgressBar(player: alt.Player, uid: string) {
-    alt.emitClient(player, SystemEvent.PROGRESSBAR_REMOVE, uid);
+    player.emit(SystemEvent.PROGRESSBAR_REMOVE, uid);
 }
 
 /**
@@ -135,7 +135,7 @@ function soundFrontend(p: alt.Player, audioName: string, ref: string): void {
  * @param {Array<Task | TaskCallback>} tasks
  */
 function taskTimeline(player: alt.Player, tasks: Array<Task | TaskCallback>) {
-    alt.emitClient(player, SystemEvent.PLAYER_EMIT_TASK_TIMELINE, tasks);
+    player.emit(SystemEvent.PLAYER_EMIT_TASK_TIMELINE, tasks);
 }
 
 export default {

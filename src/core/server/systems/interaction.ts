@@ -166,7 +166,7 @@ export class InteractionManager {
 
         const text = colshape['text'] ? colshape['text'] : LocaleManager.get(LOCALE_KEYS.INTERACTION_INVALID_OBJECT);
 
-        alt.emitClient(player, SystemEvent.PLAYER_SET_INTERACTION, colshape['interactionType'], new alt.Vector3(colshape.pos.x, colshape.pos.y, colshape.pos.z), text);
+        player.emit(SystemEvent.PLAYER_SET_INTERACTION, colshape['interactionType'], new alt.Vector3(colshape.pos.x, colshape.pos.y, colshape.pos.z), text);
     }
 
     /**
@@ -185,7 +185,7 @@ export class InteractionManager {
             return;
         }
 
-        alt.emitClient(player, SystemEvent.PLAYER_SET_INTERACTION, null);
+        player.emit(SystemEvent.PLAYER_SET_INTERACTION, null);
     }
 
     /**
@@ -227,7 +227,7 @@ export class InteractionManager {
         }
 
         // Goes Client Side
-        alt.emitClient(player, interaction.eventName, closestInteraction.pos);
+        player.emit(interaction.eventName, closestInteraction.pos);
     }
 
     /**
@@ -237,7 +237,7 @@ export class InteractionManager {
      * @memberof InteractionManager
      */
     static populateCustomInteractions(player: alt.Player) {
-        alt.emitClient(player, SystemEvent.POPULATE_INTERACTIONS, customInteractions);
+        player.emit(SystemEvent.POPULATE_INTERACTIONS, customInteractions);
     }
 }
 

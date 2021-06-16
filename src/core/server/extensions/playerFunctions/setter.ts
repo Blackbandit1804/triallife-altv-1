@@ -40,7 +40,7 @@ async function account(p: alt.Player, accountData: Partial<Account>): Promise<vo
 }
 
 function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
-    alt.emitClient(player, SystemEvent.SET_ACTION_MENU, actionMenu);
+    player.emit(SystemEvent.SET_ACTION_MENU, actionMenu);
 }
 
 function dead(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {

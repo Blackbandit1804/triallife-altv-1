@@ -53,7 +53,7 @@ export class LoginManager {
         }
 
         player.discord = data as DiscordUser;
-        alt.emitClient(player, View_Events_Discord.Close);
+        player.emit(View_Events_Discord.Close);
 
         // Used for DiscordToken skirt.
         if (!account) {

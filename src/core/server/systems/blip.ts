@@ -55,7 +55,7 @@ export class BlipManager {
     }
 
     static populateGlobalBlips(player: alt.Player) {
-        alt.emitClient(player, SystemEvent.POPULATE_BLIPS, globalBlips);
+        player.emit(SystemEvent.POPULATE_BLIPS, globalBlips);
     }
 }
 

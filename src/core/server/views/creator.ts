@@ -66,16 +66,16 @@ function handleCreatorDone(player: alt.Player, appearance: Appearance, info: Cha
 function handleAwaitModel(player: alt.Player, characterSex: number, shouldTPose: boolean): void {
     player.model = characterSex === 0 ? 'mp_f_freemode_01' : 'mp_m_freemode_01';
     player.pos = player.pos;
-    alt.emitClient(player, View_Events_Creator.AwaitModel, shouldTPose);
+    player.emit(View_Events_Creator.AwaitModel, shouldTPose);
 }
 
 async function handleAwaitNameValid(player: alt.Player, name: string): Promise<void> {
     const result = await db.fetchData<Character>('name', name, Collections.Characters);
 
     if (!result) {
-        alt.emitClient(player, View_Events_Creator.AwaitName, true); // Yes the name is available.
+        player.emit(View_Events_Creator.AwaitName, true); // Yes the name is available.
         return;
     }
 
-    alt.emitClient(player, View_Events_Creator.AwaitName, false); // No the name is not available.
+    player.emit(View_Events_Creator.AwaitName, false); // No the name is not available.
 }

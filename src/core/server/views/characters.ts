@@ -41,7 +41,7 @@ export async function goToCharacterSelect(player: Player): Promise<void> {
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
 
     alt.setTimeout(() => {
-        alt.emitClient(player, View_Events_Characters.Show, characters);
+        player.emit(View_Events_Characters.Show, characters);
     }, 1000);
 }
 
@@ -73,7 +73,7 @@ export async function handleSelectCharacter(player: Player, id: string): Promise
 
     player.pendingCharacterSelect = false;
 
-    alt.emitClient(player, View_Events_Characters.Done);
+    player.emit(View_Events_Characters.Done);
     playerFuncs.select.character(player, player.currentCharacters[index]);
 }
 
@@ -111,7 +111,7 @@ async function handleDelete(player: Player, id: string): Promise<void> {
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
 
     player.currentCharacters = characters;
-    alt.emitClient(player, View_Events_Characters.Show, characters);
+    player.emit(View_Events_Characters.Show, characters);
 }
 
 /**
@@ -143,9 +143,9 @@ export function handleNewCharacter(player: Player): void {
 
     player.rot = { ...DefaultConfig.CHARACTER_CREATOR_ROT } as alt.Vector3;
     playerFuncs.safe.setPosition(player, pos.x, pos.y, pos.z);
-    alt.emitClient(player, View_Events_Characters.Done);
+    player.emit(View_Events_Characters.Done);
 
     alt.setTimeout(() => {
-        alt.emitClient(player, View_Events_Creator.Show, null, true, false, totalCharacters); // _oldCharacterData, _noDiscard, _noName
+        player.emit(View_Events_Creator.Show, null, true, false, totalCharacters); // _oldCharacterData, _noDiscard, _noName
     }, 1000);
 }

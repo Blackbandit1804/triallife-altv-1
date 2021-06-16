@@ -153,7 +153,7 @@ async function handleScreenshot(cmdName: string, id: string) {
     }
 
     Logger.info(`Attempting screenshot of... ${player.id}`);
-    alt.emitClient(player, cmdName);
+    player.emit(cmdName);
 }
 
 function handleDox(cmdName: string, id: string) {

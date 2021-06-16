@@ -41,6 +41,6 @@ export function addToGlobalVoice(player: alt.Player) {
     }
 
     playerFuncs.emit.message(player, `[3L:RP] You have joined the global voice server.`);
-    alt.emitClient(player, SystemEvent.VOICE_JOINED);
+    player.emit(SystemEvent.VOICE_JOINED);
     mainChannel.addPlayer(player);
 }
