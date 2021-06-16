@@ -15,14 +15,14 @@ const collections = [Collections.Accounts, Collections.Characters, Collections.O
 alt.on('playerConnect', handleEarlyConnect);
 alt.on(SystemEvent.BOOTUP_ENABLE_ENTRY, handleEntryToggle);
 
-async function handleFinish() {
+onReady(async () => {
     import(`./${name}`);
     import('./utility/console');
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
     import('../plugins/imports').then((res) => res.default(startTime));
     alt.emit(SystemEvent.BOOTUP_ENABLE_ENTRY);
-}
+});
 
 function handleEntryToggle() {
     alt.off('playerConnect', handleEarlyConnect);
@@ -37,8 +37,6 @@ function handleEarlyConnect(player: alt.Player): void {
         alt.log(`[3L:RP] A reconnection event happened too early. Try again.`);
     }
 }
-
-onReady(() => handleFinish);
 
 try {
     const mongoURL = process.env.MONGO_URL;
