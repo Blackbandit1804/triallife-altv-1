@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 import express from 'express';
 
 const app = express();
-const port = 8899;
+const port = 7800;
 
 app.get('/restart/:resourceName', async (req, res) => {
     if (!alt.hasResource(req.params.resourceName)) {
