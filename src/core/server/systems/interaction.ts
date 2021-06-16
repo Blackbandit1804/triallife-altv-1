@@ -92,7 +92,7 @@ export class InteractionManager {
             });
         });
 
-        logger.log(`[3L:RP] Generated ${count} Interaction Points`);
+        logger.info(`Generated ${count} Interaction Points`);
     }
 
     /**
