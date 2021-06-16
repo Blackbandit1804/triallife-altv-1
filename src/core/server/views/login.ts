@@ -14,20 +14,15 @@ alt.onClient('discord:Begin', handlePlayerConnect);
 alt.onClient('discord:FinishAuth', handleFinishAuth);
 
 async function handlePlayerConnect(player: alt.Player): Promise<void> {
-    Logger.log(`startet discord:Begin`);
     if (!player || !player.valid) return;
-    Logger.log(`player is valid`);
     const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     player.discordToken = sha256Random(uniquePlayerData);
-    Logger.log(`token: ${player.discordToken}`);
     const encryptionFormatObject = { player_identifier: player.discordToken };
     const public_key = getPublicKey();
     const encryptedData = await encryptData(JSON.stringify(encryptionFormatObject));
     const senderFormat = { public_key, data: encryptedData };
     const encryptedDataJSON = JSON.stringify(senderFormat);
     const discordOAuth2URL = getDiscordOAuth2URL();
-    Logger.log(`server event: Discord:Opened`);
-    Logger.log(`${discordOAuth2URL}&state=${encryptedDataJSON}`);
     alt.emit('Discord:Opened', player);
     alt.emitClient(player, 'Discord:Open', `${discordOAuth2URL}&state=${encryptedDataJSON}`);
 }
