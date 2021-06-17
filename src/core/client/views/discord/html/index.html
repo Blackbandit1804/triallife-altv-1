@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <head>
+        <title>Discord Login by DeathNeroTV</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/particles.css" />
+        <link rel="stylesheet" type="text/css" href="../../icomoon/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    </head>
+    <body>
+        <div id="app">
+            <v-app v-cloak>
+                <div v-for="i in 100" class="circle-container">
+                    <div class="circle"></div>
+                </div>
+                <div class="container">
+                    <template v-if="!waitingForAuth">
+                        <div class="placeholder">
+                            <div class="center">
+                                <img class="discord mb-2 slideindown" src="./assets/logo_small.png"></img>
+                            </div>
+                            <button @mouseover="hover" class="overline green mb-4 slideinright" @mouseup="beginAuth">Mit Discord anmelden</button>
+                            <p class="mt-6 slideinup" v-if="!errorMessage">Außerhalb Ihres Spiels öffnet sich eine Seite, die Sie beim Einloggen unterstützt</p>
+                            <p class="mt-6 green--text text-h6 font-weight-black text-center" v-else>{{ errorMessage }}</p>
+                        </div>
+                    </template>
+                    <template v-if="waitingForAuth">
+                        <div class="placeholder">
+                            <p class="mb-4 slideindown" style="text-align: center;">
+                                Überprüfen Sie Ihren Browser, um die Authentifizierung abzuschließen.<br />Wenn dies fehlschlägt, versuchen Sie, das Fenster  erneut zu öffnen
+                            </p>
+                            <template v-if="readyToFinish">
+                                <button @mouseover="hover" class="overline green mb-4 slideinright" @click="finishAuth">Anmeldung beenden</button>
+                                <button @mouseover="hover" class="overline orange mb-4 slideinleft" @click="authAgain">Fenster erneut öffnen</button>
+                            </template>
+                        </div>
+                    </template>
+                </div>                
+            </v-app>
+        </div>
+        <script src="../../js/vue.min.js"></script>
+        <script src="../../js/vuetify.js"></script>
+        <script src="./app.js" type="text/javascript"></script>
+    </body>
+</html>
