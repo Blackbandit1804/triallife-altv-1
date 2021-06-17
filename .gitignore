@@ -13,9 +13,12 @@ configDiscord
 configLoadOrder
 configMongoDB
 .env
+bin
+obj
 crashdumps
 ./screenshots/*
 cdn_upload
 tsconfig.tsbuildinfo
 tlrp-cache/
 /.vs
+.sln
