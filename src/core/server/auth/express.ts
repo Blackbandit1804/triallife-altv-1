@@ -11,4 +11,4 @@ app.get('/api/request/key', (req, res) => {
     const userToken = req.query.state;
 });
 
-app.listen(7800, () => Logger.info(`starting discord authentication service on port 7800`));
+//app.listen(7800, () => Logger.info(`starting discord authentication service on port 7800`));
