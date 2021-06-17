@@ -3,7 +3,7 @@ import Logger from '../../utility/tlrp-logger';
 
 const router = express.Router();
 
-router.get('/key', async (req, res) => {
+router.get('/key', (req, res) => {
     const token = req.query.code;
     const crypted = req.query.state;
     if (!token) return;
