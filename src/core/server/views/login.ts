@@ -2,11 +2,12 @@ import * as alt from 'alt-server';
 import dotenv from 'dotenv';
 import axios, { AxiosRequestConfig } from 'axios';
 import { decryptData, encryptData, getPublicKey, sha256Random } from '../utility/encryption';
+import Logger from '../utility/tlrp-logger';
 
 dotenv.config();
 
 const azureURL = process.env.ENDPOINT ? process.env.ENDPOINT : `http://mg-community.ddns.net:7800`;
-const azureRedirect = encodeURI(`${azureURL}/v1/request/key`);
+const azureRedirect = encodeURI(`${azureURL}/api/request/key`);
 const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${azureRedirect}&prompt=none&response_type=code&scope=identify`;
 
 alt.onClient('discord:Begin', handlePlayerConnect);
@@ -16,9 +17,13 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     if (!player || !player.valid) return;
     const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     player.discordToken = sha256Random(uniquePlayerData);
-    const discordOAuth2URL = getDiscordOAuth2URL();
+    const encryptionFormatObject = { player_identifier: player.discordToken };
+    const public_key = await getPublicKey();
+    const encryptedData = await encryptData(JSON.stringify(encryptionFormatObject));
+    const senderFormat = { public_key, data: encryptedData };
+    const encryptedDataJSON = JSON.stringify(senderFormat);
     alt.emit('Discord:Opened', player);
-    alt.emitClient(player, 'Discord:Open', `${discordOAuth2URL}&state=${player.discordToken}`);
+    alt.emitClient(player, 'Discord:Open', `${url}&state=${encryptedDataJSON}`);
 }
 
 export async function fetchAzureKey(): Promise<string> {
@@ -44,7 +49,7 @@ async function handleFinishAuth(player: alt.Player): Promise<void> {
     const azureURL = await getAzureURL();
     const options: AxiosRequestConfig = {
         method: 'POST',
-        url: `${azureURL}/v1/post/discord`,
+        url: `${azureURL}/api/post/discord`,
         headers: { 'Content-Type': 'application/json' },
         data: { data: { player_identifier, public_key } }
     };

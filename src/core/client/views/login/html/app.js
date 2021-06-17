@@ -41,7 +41,6 @@ const app = new Vue({
                 this.errorMessage = null;
                 this.updates += 1;
             }, 100);
-
             setTimeout(() => {
                 this.readyToFinish = true;
                 this.updates += 1;
