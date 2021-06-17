@@ -1,7 +1,7 @@
 import express from 'express';
-import request from './requester';
-import getter from './getter';
-import poster from './poster';
+import request from './requester.js';
+import getter from './getter.js';
+import poster from './poster.js';
 
 const router = express.Router();
 

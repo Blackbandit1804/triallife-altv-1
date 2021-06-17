@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import Logger from '../utility/tlrp-logger';
-import routes from './routes';
+import routes from './routes/index.js';
 
 const app = express();
 const port = 7800;
