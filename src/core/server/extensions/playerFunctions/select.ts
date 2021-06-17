@@ -26,7 +26,7 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
 
     // Set player dimension to zero.
     p.dimension = 0;
-    setter.frozen(p, true);
+    setter.frozen(p, false);
 
     alt.setTimeout(() => {
         if (p.data.pos) {
@@ -61,10 +61,10 @@ async function selectCharacter(p: alt.Player, characterData: Partial<Character>)
             p.nextDeathSpawn = Date.now() + 30000;
             p.data.isUnconscious = false;
             safe.addHealth(p, 0, true);
-            emit.meta(p, 'isDead', true);
+            emit.meta(p, 'isUnconscious', true);
         } else {
             p.data.isUnconscious = false;
-            emit.meta(p, 'isDead', false);
+            emit.meta(p, 'isUnconscious', false);
         }
 
         // Synchronization

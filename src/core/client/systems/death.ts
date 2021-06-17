@@ -17,7 +17,7 @@ let deathTime: number;
  * @return {*}  {void}
  */
 function handleSingleMetaChange(key: string, newValue: any, oldValue: any): void {
-    if (key !== 'isDead') {
+    if (key !== 'isUnconscious') {
         return;
     }
 
@@ -48,12 +48,7 @@ function handleDeathMovement() {
 
     const timeLeft = deathTime - Date.now();
     if (timeLeft > 0) {
-        drawText2D(
-            `${(timeLeft / 1000).toFixed(2)}s Until Respawn`,
-            { x: 0.5, y: 0.2 },
-            0.5,
-            new alt.RGBA(255, 255, 255, 255)
-        );
+        drawText2D(`${(timeLeft / 1000).toFixed(2)}s Until Respawn`, { x: 0.5, y: 0.2 }, 0.5, new alt.RGBA(255, 255, 255, 255));
     } else {
         drawText2D(`/acceptdeath - To Trigger Respawn`, { x: 0.5, y: 0.2 }, 0.5, new alt.RGBA(255, 255, 255, 255));
     }
