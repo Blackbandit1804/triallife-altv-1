@@ -18,7 +18,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     player.discordToken = sha256Random(uniquePlayerData);
     const encryptionFormatObject = { player_identifier: player.discordToken };
-    const public_key = await getPublicKey();
+    const public_key = getPublicKey();
     const encryptedData = await encryptData(JSON.stringify(encryptionFormatObject));
     const senderFormat = { public_key, data: encryptedData };
     const encryptedDataJSON = JSON.stringify(senderFormat);
@@ -45,8 +45,8 @@ export function getAzureURL(): string {
 async function handleFinishAuth(player: alt.Player): Promise<void> {
     const player_identifier = player.discordToken;
     if (!player_identifier) return;
-    const public_key = await getPublicKey();
-    const azureURL = await getAzureURL();
+    const public_key = getPublicKey();
+    const azureURL = getAzureURL();
     const options: AxiosRequestConfig = {
         method: 'POST',
         url: `${azureURL}/api/post/discord`,
