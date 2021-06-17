@@ -15,7 +15,6 @@ let compilationPromise;
 
 async function buildPipeline() {
     console.log(`[3L:RP] Starting Compilation`);
-
     if (!process.argv.includes('WATCHING')) {
         // Remove old resource files.
         if (fs.existsSync(ResourcesPath)) {
@@ -55,38 +54,21 @@ async function buildPipeline() {
         const oldPath = SourceFiles[i];
         const newPath = SourceFiles[i].replace('src', 'resources');
         const dirName = path.dirname(newPath).normalize();
-
-        if (!fs.existsSync(dirName)) {
-            fs.mkdirSync(dirName, { recursive: true });
-        }
-
+        if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true });
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
-
-    // Copy Addon-Resources
-    console.log(`[3L:RP] Copying Addon Resources`);
-    fs.copySync(path.join(MainPath, 'addon-resources'), path.join(MainPath, 'resources'), { recursive: true });
     console.log(`[3L:RP] Copied ${copiedFiles} Extra Files for Trial Life`);
-
-    if (compilationPromise) {
-        await compilationPromise;
-    }
-
+    if (compilationPromise) await compilationPromise;
     const CompiledFiles = new glob.GlobSync('./tlrp-cache/**/*.!(ts)').found;
     for (let i = 0; i < CompiledFiles.length; i++) {
         const oldPath = CompiledFiles[i];
         const newPath = CompiledFiles[i].replace('tlrp-cache', 'resources');
         const dirName = path.dirname(newPath).normalize();
-
-        if (!fs.existsSync(dirName)) {
-            fs.mkdirSync(dirName, { recursive: true });
-        }
-
+        if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true });
         fs.copyFileSync(oldPath, newPath);
         copiedFiles += 1;
     }
-
     console.log(`[3L:RP] Build Time: ${Date.now() - StartTime}ms`);
     console.log(`[3L:RP] Attempting to Boot Server...`);
 }
