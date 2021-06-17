@@ -17,7 +17,7 @@
         "allowSyntheticDefaultImports": true,
         "composite": true
     },
-    "include": ["./src/**/*.ts", "src/core/shared/interfaces/job-triggerts"],
+    "include": ["./src/**/*.ts"],
     "watchOptions": {
         "watchFile": "useFsEvents",
         "watchDirectory": "useFsEvents",
