@@ -1,10 +1,8 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import Logger from '../utility/tlrp-logger';
 import * as routes from './routes';
 
-dotenv.config();
 const app = express();
 const port = 7800;
 
