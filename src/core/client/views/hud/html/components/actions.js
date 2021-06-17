@@ -259,20 +259,12 @@ const actions = Vue.component('actions', {
             <div class="actionMenu pa-3" v-if="getActions() && getActions().length >= 1">
                 <div class="action pt-2 pb-2 pl-4 pr-4" v-for="(action, index) in getActions()" :key="index" :class="selection === index ? { 'active': true } : {}">
                     <template v-if="selection === index">
-                        <span class="light-blue--text text--lighten-2 overline">
-                            {{ index + 1 }}.
-                        </span>
-                        <span class="light-blue--text text--lighten-2 overline">
-                            {{ action.menuName }}
-                        </span>
+                        <span class="green--text text--lighten-2 overline">{{ index + 1 }}.</span>
+                        <span class="green--text text--lighten-2 overline">{{ action.menuName }}</span>
                     </template>
                     <template v-else>
-                        <span class="overline">
-                            {{ index + 1 }}.
-                        </span>
-                        <span class="overline">
-                            {{ action.menuName }}
-                        </span>
+                        <span class="overline">{{ index + 1 }}.</span>
+                        <span class="overline">{{ action.menuName }}</span>
                     </template>
                 </div>
             </div>

@@ -4,6 +4,7 @@ const status = Vue.component('status', {
             // On Foot
             food: 100,
             water: 100,
+            mood: 100,
             // Vehicle
             fuel: 25,
             lock: 100,
@@ -18,19 +19,19 @@ const status = Vue.component('status', {
             lockColor: ['n/a', 'grey darken-4', 'red lighten-2', 'n/a', 'orange'],
             engineColor: {
                 false: 'grey darken-4',
-                true: 'grey'
+                true: 'blue'
             },
             seatbeltColor: {
                 false: 'grey darken-4',
-                true: 'grey'
+                true: 'blue'
             },
             interactColor: {
                 false: 'grey darken-4',
-                true: 'grey'
+                true: 'blue'
             },
             lightsColor: {
                 false: 'grey darken-4',
-                true: 'grey'
+                true: 'blue'
             },
             objective: null
         };
@@ -41,6 +42,9 @@ const status = Vue.component('status', {
         },
         setFood(value) {
             this.food = value;
+        },
+        setMood(value) {
+            this.mood = value;
         },
         setFuel(value) {
             this.fuel = value;
@@ -53,10 +57,7 @@ const status = Vue.component('status', {
         },
         setVehicle(value) {
             this.inVehicle = value;
-
-            if (!value) {
-                this.seatbelt = false;
-            }
+            if (!value) this.seatbelt = false;
         },
         setLock(value) {
             this.lockState = value;
@@ -83,6 +84,7 @@ const status = Vue.component('status', {
     mounted() {
         if ('alt' in window) {
             alt.on('hud:SetFood', this.setFood);
+            alt.on('hud:SetMood', this.setMood);
             alt.on('hud:SetWater', this.setWater);
             alt.on('hud:SetFuel', this.setFuel);
             alt.on('hud:SetVehicle', this.setVehicle);
@@ -98,11 +100,9 @@ const status = Vue.component('status', {
         }
     },
     beforeDestroy() {
-        if (!('alt' in window)) {
-            return;
-        }
-
+        if (!('alt' in window)) return;
         alt.off('hud:SetFood', this.setFood);
+        alt.off('hud:SetMood', this.setMood);
         alt.off('hud:SetWater', this.setWater);
         alt.off('hud:SetFuel', this.setFuel);
         alt.off('hud:SetVehicle', this.setVehicle);
@@ -116,16 +116,18 @@ const status = Vue.component('status', {
     },
     template: `
         <div class="statusWrapper pa-3">
-            <div class="objective" v-if="objective">
-                {{ objective }}
-            </div>
+            <div class="objective" v-if="objective">{{ objective }}</div>
             <div class="water rounder mb-3">
                 <v-icon small class="icon">icon-droplet</v-icon>
                 <div class="status-overlay light-blue lighten-2" :style="getTotalHeight('water')"></div>
             </div>
-            <div class="food rounder" :class="inVehicle ? { 'mb-3': true } : {}">
+            <div class="food rounder mb-3">
                 <v-icon small class="icon">icon-fastfood</v-icon>
                 <div class="status-overlay orange lighten-2" :style="getTotalHeight('food')"></div>
+            </div>
+            <div class="mood rounder" :class="inVehicle ? { 'mb-3': true } : {}">
+                <v-icon small class="icon">icon-pacman</v-icon>
+                <div class="status-overlay green lighten-2" :style="getTotalHeight('mood')"></div>
             </div>
             <template v-if="inVehicle">
                 <div class="fuel rounder mb-3">

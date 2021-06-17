@@ -15,6 +15,17 @@ body {
     justify-items: center;
     color: white;
     font-family: 'Arial';
+    background-color: rgba(45, 45, 45, 0.8);
+}
+
+.context {
+    position: fixed;
+    bottom: 5vh;
+}
+
+.context a {
+    color: rgb(0, 135, 54);
+    cursor: pointer;
 }
 
 button {

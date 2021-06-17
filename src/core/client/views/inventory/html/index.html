@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <title>Inventory by Stuyk</title>
+        <title>Inventory by DeathNeroTV</title>
         <link rel="stylesheet" type="text/css" href="../../css/materialdesignicons.min.css" />
         <link rel="stylesheet" type="text/css" href="../../css/vuetify.min.css" />
         <link rel="stylesheet" type="text/css" href="./style.css" />
@@ -63,7 +63,6 @@
                             </template>
                             <div class="ground mt-2" v-if="!disablePreview">
                                 <div 
-                                class="rounded rounded"
                                 v-for="(item, index) in ground" 
                                 :class="!item ? { 'is-null-item': true } : { 'item': true }" 
                                 :id="`g-${index}`"
@@ -139,7 +138,7 @@
                                             <img :src="`../icons/${item.icon}.png`"></img>
                                         </div>
                                         <div class="consume" v-if="item && item.data && item.data.event">
-                                            <v-icon color="light-blue accent-3" small>icon-arrow-down</v-icon>
+                                            <v-icon color="green accent-3" small>icon-arrow-down</v-icon>
                                         </div>
                                         <div class="quantity">
                                             {{ item.quantity }}x

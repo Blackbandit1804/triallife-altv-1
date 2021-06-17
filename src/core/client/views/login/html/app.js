@@ -80,6 +80,9 @@ const app = new Vue({
                 console.log(err);
             }
         },
+        loadTlrp() {
+            this.window.open('https://github.com/DeathNeroTV/triallife-altv');
+        },
         fail(message) {
             this.errorMessage = message;
             this.waitingForAuth = false;

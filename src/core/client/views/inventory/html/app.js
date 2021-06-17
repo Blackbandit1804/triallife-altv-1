@@ -548,7 +548,7 @@ const app = new Vue({
         this.inventory = new Array(6).fill(new Array(28).fill(null));
         this.ground = new Array(8).fill(null);
         this.equipment = new Array(11).fill(null);
-        this.toolbar = new Array(4).fill(null);
+        this.toolbar = new Array(5).fill(null);
 
         if ('alt' in window) {
             alt.on('inventory:Toolbar', this.updateToolbar);

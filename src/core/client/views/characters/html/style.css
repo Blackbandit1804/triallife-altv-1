@@ -41,7 +41,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    bottom: calc(6vh + 75px);
+    bottom: 3vh;
 }
 
 .options button {
@@ -52,9 +52,12 @@ body {
     position: fixed;
     left: 3vh;
     top: 3vh;
-    min-width: 270px;
-    max-width: 270px;
-    overflow: hidden;
+    min-width: 300px;
+    max-width: 300px;
+    min-height: calc(100% - 6vh);
+    max-height: calc(100% - 6vh);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .split {
@@ -71,13 +74,13 @@ body {
 
 .button-group {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    border-radius: 0;
     overflow: hidden;
     width: 100%;
 }
 
-.outline-round {
-    border-radius: 6px;
+.outline {
+    border-radius: 0;
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -89,7 +92,7 @@ button {
     transition: 0.1s;
     opacity: 0.75;
     overflow: hidden;
-    outline: hidden !important;
+    outline: none !important;
 }
 
 button:hover {
@@ -119,7 +122,7 @@ button:active {
     flex-direction: row;
     height: auto;
     min-width: 75vh !important;
-    bottom: 3vh;
+    top: 3vh;
 }
 
 .selection .disabled-button {

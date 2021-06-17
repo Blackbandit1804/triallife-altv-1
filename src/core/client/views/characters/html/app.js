@@ -11,7 +11,7 @@ const exampleCharacter = {
         age: 18,
         gender: 'male'
     },
-    name: 'Arachnid_Monolith_Name_Face',
+    name: 'Roman Jackson',
     appearance: {
         colorOverlays: [0, 0, 0],
         eyebrows: 0,
@@ -46,71 +46,28 @@ const app = new Vue({
     data() {
         return {
             characters: [],
-            locales: {
-                LABEL_DELETE: 'Delete',
-                LABEL_NEW: 'New',
-                LABEL_SELECT: 'Select',
-                LABEL_YES: 'Yes',
-                LABEL_NO: 'No',
-                LABEL_CONFIRM_DELETE: 'Are you sure you want to delete your character',
-                LABEL_NAME: 'Name',
-                LABEL_AGE: 'Age',
-                LABEL_GENDER: 'Gender',
-                LABEL_HOURS: 'Hours',
-                LABEL_CASH: 'Cash',
-                LABEL_BANK: 'Bank'
-            },
-            statNames: [],
+            infos: [],
             characterIndex: 0,
             deleteDialog: false
         };
     },
-    computed: {
-        hasCharacters() {
-            return this.characters.length >= 2;
-        }
-    },
     methods: {
-        pruneDecimals(value) {
-            if (isNaN(value)) {
-                return value;
-            }
-
-            if (value === null || value === undefined) {
-                return 0;
-            }
-
-            return value.toFixed(2);
-        },
-        handleSet(characters) {
+        handleSet(characters, infos) {
             this.characterIndex = 0;
             this.characters = characters;
+            this.infos = infos;
             this.updateAppearance();
         },
         incrementIndex() {
-            this.characterIndex += 1;
-            if (this.characterIndex > this.characters.length - 1) {
-                this.characterIndex = 0;
-            }
+            this.characterIndex = Math.min(this.characters.length - 1, this.characterIndex + 1);
             this.updateAppearance();
-
-            if (!('alt' in window)) {
-                return;
-            }
-
+            if (!('alt' in window)) return;
             alt.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
         decrementIndex() {
-            this.characterIndex -= 1;
-            if (this.characterIndex <= -1) {
-                this.characterIndex = this.characters.length - 1;
-            }
+            this.characterIndex = Math.max(0, this.characterIndex - 1);
             this.updateAppearance();
-
-            if (!('alt' in window)) {
-                return;
-            }
-
+            if (!('alt' in window)) return;
             alt.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
         updateAppearance() {
@@ -132,71 +89,36 @@ const app = new Vue({
             alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
             alt.emit('characters:Select', this.characters[this.characterIndex]._id);
         },
-        newCharacter() {
-            if (!('alt' in window)) {
-                return;
-            }
-
-            alt.emit('characters:New');
-            alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-        },
         showDeleteInterface() {
             this.deleteDialog = true;
-
-            if (!('alt' in window)) {
-                return;
-            }
-
+            if (!('alt' in window)) return;
             alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
         hideDeleteInterface() {
             this.deleteDialog = false;
-
-            if (!('alt' in window)) {
-                return;
-            }
-
+            if (!('alt' in window)) return;
             alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
         deleteCharacter() {
             this.deleteDialog = false;
-
-            if (!('alt' in window)) {
-                return;
-            }
-
+            if (!('alt' in window)) return;
             alt.emit('characters:Delete', this.characters[this.characterIndex]._id);
             alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-        },
-        setLocales(localeObject) {
-            this.locales = localeObject;
-            this.updateLocales(true);
-        },
-        updateLocales(skipDefault = false) {
-            this.statNames = [
-                /* Name of the stat, variable name inside character object */
-                { varName: this.locales.LABEL_NAME, varRef: 'name' },
-                { varName: this.locales.LABEL_AGE, varRef: 'age', useInfo: true },
-                { varName: this.locales.LABEL_GENDER, varRef: 'gender', useInfo: true },
-                { varName: this.locales.LABEL_HOURS, varRef: 'hours' },
-                { varName: this.locales.LABEL_CASH, varRef: 'cash', prefix: '$' },
-                { varName: this.locales.LABEL_BANK, varRef: 'bank', prefix: '$' }
-            ];
         }
     },
     mounted() {
         if ('alt' in window) {
-            alt.on('characters:SetLocale', this.setLocales);
             alt.on('characters:Set', this.handleSet);
             alt.emit('characters:Ready');
             alt.emit('ready');
         } else {
-            this.characters = [
-                exampleCharacter,
-                { ...exampleCharacter, ...{ appearance: { sex: 0 }, name: 'Jobi_Jobonai' } }
+            this.infos = [
+                {
+                    title: 'Trial Life v1 Early Alpha',
+                    message: 'Diese Version wird Fehler enthalten<br/>Bitte meldet dem Team die Bugs<br/>Wir wünschen euch viel Spaß<br/><br/>Euer TL:RP - Team'
+                }
             ];
+            this.characters = [exampleCharacter, { ...exampleCharacter, ...{ appearance: { sex: 0 }, name: 'Jobi_Jobonai' } }];
         }
-
-        this.updateLocales();
     }
 });

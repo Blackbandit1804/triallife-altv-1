@@ -118,7 +118,7 @@ body {
     overflow: hidden;
     height: 100%;
     border: 2px solid rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
+    border-radius: 0;
     background: rgba(0, 0, 0, 0.75);
 }
 .item:hover {
@@ -171,7 +171,7 @@ body {
     box-sizing: border-box;
     overflow: hidden;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 0;
     background: rgba(0, 0, 0, 0.85);
     border: 2px solid rgba(0, 0, 0, 0.5);
     cursor: auto;
@@ -186,7 +186,7 @@ body {
     margin-bottom: 2vh;
     justify-content: space-evenly;
     background: rgba(0, 0, 0, 0.85);
-    border-radius: 5px;
+    border-radius: 0;
     border: 2px solid black;
 }
 .navigation .tab {
@@ -197,7 +197,7 @@ body {
     z-index: 1 !important;
     outline: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0;
     width: 100%;
     padding: 12px 0px;
 }
@@ -221,7 +221,7 @@ body {
     position: fixed !important;
     display: flex !important;
     pointer-events: none !important;
-    border-radius: 4px !important;
+    border-radius: 0 !important;
     background-color: #424242 !important;
     min-width: 10vh;
     max-width: 10vh;
@@ -258,7 +258,7 @@ body {
 }
 .splitter .split {
     background: rgba(0, 0, 0, 0.75);
-    border-radius: 5px;
+    border-radius: 0;
     padding: 20px;
     box-sizing: border-box;
     min-width: 30vw;
@@ -310,14 +310,14 @@ button:active {
     outline: none !important;
 }
 .outline-round {
-    border-radius: 6px;
+    border-radius: 0;
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 .item-info {
     background: rgba(0, 0, 0, 0.85);
     padding: 6px;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 0;
     border: 2px solid black;
     max-width: 41.5vh !important;
     max-height: 40vh;

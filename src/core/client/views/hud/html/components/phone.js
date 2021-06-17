@@ -2,13 +2,13 @@ const phone = Vue.component('phone', {
     components: [appBank, appDealership, appVehicles],
     data() {
         return {
-            isActive: false,
+            isActive: true,
             page: 0,
             maxPages: 3,
             pageComponent: null, // 'app-bank'
             data: {
-                hour: 23,
-                minute: 59,
+                hour: 1,
+                minute: 0,
                 bank: 0,
                 cash: 0,
                 vehicles: []
@@ -45,20 +45,13 @@ const phone = Vue.component('phone', {
     },
     computed: {
         getTime() {
-            let timeData = {
-                hour: this.data.hour,
-                minute: this.data.minute
-            };
-
-            if (timeData.hour < 10) {
-                timeData.hour = `0${timeData.hour}`;
-            }
-
-            if (timeData.minute < 10) {
-                timeData.minute = `0${timeData.minute}`;
-            }
-
+            let timeData = { hour: new String(this.data.hour).padStart(2, '0'), minute: new String(this.data.minute).padStart(2, '0') };
             return `${timeData.hour}:${timeData.minute}`;
+        },
+        getDate() {
+            let date = new Date();
+            let dateData = { day: new String(date.getDate()).padStart(2, '0'), month: new String(date.getMonth() + 1).padStart(2, '0'), year: date.getFullYear() };
+            return `${dateData.day}.${dateData.month}.${dateData.year}`;
         }
     },
     mounted() {
@@ -123,13 +116,13 @@ const phone = Vue.component('phone', {
         <div class="phoneWrapper">
             <div class="iphone-x" v-if="!isActive">
                 <div class="notch">
-                    <div class="white--text overline pt-1">\${{ data.cash.toFixed(2) }}</div>
+                    <div class="white--text overline pt-1">{{ getDate }}</div>
                     <div class="white--text overline pt-1">{{ getTime }}</div>
                 </div>
             </div>
             <div class="iphone-x iphone-x-active" v-if="isActive">
                 <div class="notch">
-                    <div class="white--text overline pt-1">\${{ data.cash.toFixed(2) }}</div>
+                    <div class="white--text overline pt-1">{{ getDate }}</div>
                     <div class="white--text overline pt-1">{{ getTime }}</div>
                 </div>
                 <div class="screen">
@@ -145,10 +138,10 @@ const phone = Vue.component('phone', {
                                         <v-icon x-large>icon-message</v-icon>
                                     </div>
                                     <div class="phone-icon orange" id="app-vehicles" @click="selectApp">
-                                        <div class="text-icon font-weight-black">Vehicles</div>
-                                        <v-icon x-large>icon-key</v-icon>
+                                        <div class="text-icon font-weight-black">Contacts</div>
+                                        <v-icon x-large>icon-address-book</v-icon>
                                     </div>
-                                    <div class="phone-icon blue-grey darken-1" id="app-bank" @click="selectApp">
+                                    <div class="phone-icon red darken-1" id="app-bank" @click="selectApp">
                                         <div class="text-icon font-weight-black">Bank</div>
                                         <v-icon x-large>icon-bank</v-icon>
                                     </div>

@@ -95,7 +95,7 @@ export function getAzureEndpoint(): string {
 
 export async function getAzurePublicKey(): Promise<string> {
     if (azurePubKey) return azurePubKey;
-    const result = await axios.get(`${azureEndpoint}/v1/get/key`).catch((err) => null);
+    const result = await axios.get(`${azureEndpoint}/api/get/key`).catch((err) => null);
     if (!result || !result.data || !result.data.key) return await getAzurePublicKey();
     azurePubKey = result.data.key;
     return result.data.key;

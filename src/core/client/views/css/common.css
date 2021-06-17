@@ -19,16 +19,16 @@ button:active {
 .tlrp {
     position: fixed;
     display: block;
-    right: 2vw;
-    top: 2vh;
-    min-width: 50px;
-    max-width: 50px;
-    min-height: 50px;
-    max-height: 50px;
+    top: 3vh;
+    right: 3vh;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 120px;
+    max-height: 120px;
     z-index: 99;
-    background: url('../svg/tlrp.svg');
+    background-image: url(../svg/tlrp.svg);
     background-size: cover;
-    opacity: 0.2;
+    opacity: 1;
 }
 
 .center {
@@ -44,14 +44,14 @@ button:active {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    background: rgba(20, 20, 20, 0.85);
-    box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.25);
+    width: 5px;
+    background: #1f1f1f;
+    box-shadow: -1px 0px 0px 0px #1f1f1f;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #646464;
-    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+    background: #2d2d2d;
+    box-shadow: 0px 2px 0px 0px #2d2d2d;
 }
 
 ::-webkit-scrollbar-thumb:hover {
