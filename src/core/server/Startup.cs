@@ -1,4 +1,5 @@
 ﻿using AltV.Net;
+using Microsoft.EntityFrameworkCore;
 using triallife.Database;
 using triallife.Utility;
 
@@ -7,7 +8,7 @@ namespace triallife {
 		public override void OnStart() {
 			TlrpEntities.Initialize();
 			using var db = new TlrpEntities();
-			db.Database.EnsureCreated();
+			db.Database.Migrate();
 			Logger.Info("Trial Life wurde gestartet");
 		}
 

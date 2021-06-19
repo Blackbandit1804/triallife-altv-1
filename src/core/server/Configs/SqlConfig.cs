@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace triallife.Utility {
+namespace triallife.Configs {
 	public class SqlConfig {
 		public string server { get; set; }
 		public string database { get; set; }
