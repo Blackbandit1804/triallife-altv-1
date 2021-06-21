@@ -5,12 +5,12 @@ const url = `http://resource/client/views/login/html/index.html`;
 let view: View;
 let discordURI;
 
-export class LoginController {
+export class DiscordManager {
     static async show(oAuthUrl: string) {
         discordURI = oAuthUrl;
         view = await View.getInstance(url, true, false, false);
-        view.on('discord:OpenURL', LoginController.open);
-        view.on('discord:FinishAuth', LoginController.finish);
+        view.on('discord:OpenURL', DiscordManager.open);
+        view.on('discord:FinishAuth', DiscordManager.finish);
         alt.toggleGameControls(false);
     }
 
@@ -38,7 +38,7 @@ export class LoginController {
     }
 }
 
-alt.on('connectionComplete', LoginController.trigger);
-alt.onServer(`Discord:Open`, LoginController.show);
-alt.onServer(`Discord:Close`, LoginController.close);
-alt.onServer('Discord:Fail', LoginController.emitFailureMessage);
+alt.on('connectionComplete', DiscordManager.trigger);
+alt.onServer(`Discord:Open`, DiscordManager.show);
+alt.onServer(`Discord:Close`, DiscordManager.close);
+alt.onServer('Discord:Fail', DiscordManager.emitFailureMessage);

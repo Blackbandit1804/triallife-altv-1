@@ -4,11 +4,10 @@ import fs from 'fs-extra';
 import glob from 'glob';
 import { exec } from 'promisify-child-process';
 
-// Path is where package.json is.
 const StartTime = Date.now();
 const MainPath = process.cwd();
 const ResourcesPath = path.join(MainPath, 'resources');
-const SourceFiles = new glob.GlobSync('./src/core/client/*.!(ts)').found;
+const SourceFiles = new glob.GlobSync('./src/**/*.!(ts)').found;
 let copiedFiles = 0;
 let compilationPromise;
 

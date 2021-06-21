@@ -6,7 +6,7 @@ description: 'A GTA V Hardcore Roleplay Framework for alt:V.'
 
 ## Summary
 
-This project solely exists as a new standard for GTA 5 roleplay scripts on the [alt:V](https://altv.mp/) client. The Trial Life Roleplay Script for GTA 5 has type safety through TypeScript and a solid foundation for what is considered core for a Roleplay server. The Serverside part will run on c# and the client on TypeScript.
+This project solely exists as a new standard for GTA 5 roleplay scripts on the [alt:V](https://altv.mp/) client. The Trial Life Roleplay Script for GTA 5 has type safety through TypeScript and a solid foundation for what is considered core for a Roleplay server.
 Below you will find a [list of features](#Feature-List-Work-in-Progress) which came with this framework.
 
 You will have to do some general script writing and know Javascript or Typescript to fully understand what this script has to offer. The script itself takes some of the harder pieces of writing a roleplay script for GTA 5 and makes them more accessible.

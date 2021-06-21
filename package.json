@@ -20,6 +20,7 @@
     "devDependencies": {
         "@altv/types-client": "^1.7.0",
         "@altv/types-natives": "^1.4.2",
+        "@altv/types-server": "^1.9.1",
         "@altv/types-webview": "^1.0.2",
         "@types/node": "^15.12.2",
         "fs-extra": "^10.0.0",
@@ -45,7 +46,7 @@
     },
     "prettier": {
         "tabWidth": 4,
-        "printWidth": 180,
+        "printWidth": 190,
         "singleQuote": true,
         "semi": true,
         "arrowParens": "always",
