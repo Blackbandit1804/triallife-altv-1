@@ -11,9 +11,9 @@ dotenv.config();
 
 const authenticated = {};
 
-const htmlPath = path.join(alt.getResourcePath(alt.resourceName), '/server/html');
-const cssPath = path.join(alt.getResourcePath(alt.resourceName), '/server/html/css');
-const jsPath = path.join(alt.getResourcePath(alt.resourceName), '/server/html/js');
+const htmlPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html');
+const cssPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html/css');
+const jsPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html/js');
 const app = express();
 const port = 7800;
 
