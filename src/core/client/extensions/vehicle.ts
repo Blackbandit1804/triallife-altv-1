@@ -6,7 +6,7 @@ import setter from './vehicleFuncs/setter';
 import play from './vehicleFuncs/play';
 import sync from './vehicleFuncs/sync';
 import toggle from './vehicleFuncs/toggle';
-import { Vehicle_Lock_State } from '../../shared/enums/vehicle';
+import { VehicleLock_State } from '../../shared/utility/enums';
 
 alt.on('gameEntityCreate', handleEntityCreation);
 
@@ -21,7 +21,7 @@ declare module 'alt-client' {
         doorStates: { [doorNumber: number]: boolean };
         owner: number;
         engineStatus: boolean;
-        lockStatus: number | Vehicle_Lock_State;
+        lockStatus: number | VehicleLock_State;
         fuel: number;
     }
 }

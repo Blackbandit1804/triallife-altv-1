@@ -11,6 +11,7 @@ import Logger from '../utility/Logger';
 import { getUniquePlayerHash } from '../utility/usefull';
 import { openCharSelect } from '../views/character';
 import { OptionsManager } from './options';
+import '../views/login';
 
 const db: sm.Database = sm.getDatabase();
 

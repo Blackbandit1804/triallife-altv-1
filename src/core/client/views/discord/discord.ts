@@ -25,7 +25,7 @@ export class DiscordManager {
     }
 
     static finish() {
-        alt.emitServer('discord:FinishAuth', alt.Discord.currentUser);
+        alt.emitServer('discord:FinishAuth');
     }
 
     static emitFailureMessage(message: string) {

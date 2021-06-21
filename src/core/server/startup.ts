@@ -7,8 +7,18 @@ import { TlrpEvent } from './utility/enums';
 import Logger from './utility/Logger';
 
 dotenv.config();
-const name = 'tlrp';
-const neededValues = ['ENDPOINT', 'MONGO_URL', 'MONGO_USERNAME', 'MONGO_PASSWORD', 'TLRP_READY', 'DISCORD_BOT', 'DISCORD_SERVER_ID', 'DISCORD_WHITELIST_ROLE'];
+const neededValues = [
+    'ENDPOINT',
+    'MONGO_URL',
+    'MONGO_USERNAME',
+    'MONGO_PASSWORD',
+    'TLRP_READY',
+    'DISCORD_BOT_ID',
+    'DISCORD_BOT_SECRET',
+    'DISCORD_BOT',
+    'DISCORD_SERVER_ID',
+    'DISCORD_WHITELIST_ROLE'
+];
 const startTime = Date.now();
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];

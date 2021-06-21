@@ -85,6 +85,8 @@ export enum SystemEvent {
     QuickToken_Update = 'quicktoken:Update',
     Actions_Set = 'actions:Set',
     Ticks_Start = 'ticks:Start',
+    Time_Update = 'time:Update',
+    Weather_Update = 'weather:Update',
     Voice_Add = 'voice:Add',
     Voice_Joined = 'voice:Joined'
 }

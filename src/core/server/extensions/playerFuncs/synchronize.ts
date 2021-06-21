@@ -1,7 +1,8 @@
 import * as alt from 'alt-server';
 import { Item } from '../../../shared/interfaces/item';
-import { ViewEvent } from '../../../shared/utility/enums';
+import { SystemEvent, ViewEvent } from '../../../shared/utility/enums';
 import { DefaultConfig } from '../../configs/settings';
+import { World } from '../../systems/world';
 import { playerFuncs } from '../player';
 import emit from './emit';
 import save from './save';
@@ -29,14 +30,14 @@ function syncedMeta(p: alt.Player): void {
 }
 
 function time(p: alt.Player): void {
-    alt.emitClient(p, SYSTEM_EVENTS.WORLD_UPDATE_TIME, World.hour, World.minute);
+    alt.emitClient(p, SystemEvent.Time_Update, World.hour, World.minute);
 }
 
 function weather(p: alt.Player): void {
     p.gridSpace = World.getGridSpace(p);
-    p.currentWeather = World.getWeatherByGrid(p.gridSpace);
+    p.curWeather = World.getWeatherByGrid(p.gridSpace);
     emit.meta(p, 'gridSpace', p.gridSpace);
-    alt.emitClient(p, SYSTEM_EVENTS.WORLD_UPDATE_WEATHER, p.curWeather);
+    alt.emitClient(p, SystemEvent.Weather_Update, p.curWeather);
 }
 
 function playTime(p: alt.Player): void {
