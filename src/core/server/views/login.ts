@@ -7,7 +7,8 @@ dotenv.config();
 
 alt.onClient('discord:Begin', handlePlayerConnect);
 alt.onClient('discord:FinishAuth', handleFinishAuth);
-const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_ID}&redirect_uri=${process.env.ENDPOINT}&prompt=none&response_type=code&scope=identify`;
+const encoded = encodeURI(`${process.env.ENDPOINT}/authenticate`);
+const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_ID}&redirect_uri=${encoded}&prompt=none&response_type=code&scope=identify`;
 
 async function handlePlayerConnect(player) {
     if (!player || !player.valid) return;

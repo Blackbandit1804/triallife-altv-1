@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <head>
+        <title>Trial Life | Authentification Complete!</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                <template v-if="success">
+                    <h2>Authorization Complete!</h2>
+                    <p>{{ info }}</p>
+                </template>
+                <template v-else>
+                    <h2>Oops. Authorization has failed!</h2>
+                    <p>{{ info }}</p>
+                </template>
+                <p class="context mt-6">Discord Authentication - Written by <a @click="loadTlrp">DeathNeroTV</a></p>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

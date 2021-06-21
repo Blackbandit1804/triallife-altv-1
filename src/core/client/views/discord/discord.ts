@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import { View } from '../../extensions/view';
 
-const url = `http://resource/client/views/login/html/index.html`;
+const url = `http://resource/client/views/discord/html/index.html`;
 let view: View;
 let discordURI;
 

@@ -5,7 +5,7 @@ import './extensions/vehicle';
 
 //extensions
 import './extensions/blip';
-import './extensions/views';
+import './extensions/view';
 
 //events
 import './events/client';

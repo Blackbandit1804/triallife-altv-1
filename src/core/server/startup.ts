@@ -56,6 +56,7 @@ function startup() {
         import('./systems/discord').then((res) => res.default());
         import('./auth/express');
         Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
+        alt.emit(TlrpEvent.TLRP_READY);
     });
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
