@@ -1,41 +1,38 @@
 import * as alt from 'alt-server';
-import Logger from '../utility/Logger';
-import { DiscordUser } from '../interfaces/discord-user';
-import dotenv from 'dotenv';
+import axios from 'axios';
 import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
-import axios from 'axios';
+import { DiscordUser } from './interfaces/discord-user';
+import Logger from './utility/Logger';
 
 dotenv.config();
 
 const authenticated = {};
 
-const htmlPath = path.join(alt.getResourcePath(alt.resourceName), 'server/auth/html');
-const cssPath = path.join(alt.getResourcePath(alt.resourceName), 'server/auth/html/css');
-const jsPaths = path.join(alt.getResourcePath(alt.resourceName), 'server/auth/html/js');
-const imgPaths = path.join(alt.getResourcePath(alt.resourceName), 'server/auth/html/img');
+const htmlPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html');
+const cssPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html/css');
+const jsPath = path.join(alt.getResourcePath(alt.resourceName), 'server/html/js');
 const app = express();
 const port = 7800;
 
 app.use(cors());
-app.get('/authenticate', authenticate);
-app.use('/js', express.static(jsPaths));
+app.get('/authenticate', handleAuthentication);
+app.use('/js', express.static(jsPath));
 app.use('/css', express.static(cssPath));
-app.use('/img', express.static(imgPaths));
 
-async function authenticate(req, res) {
-    const token = req.query.code;
-    const userToken = req.query.state;
+async function handleAuthentication(req: any, res: any): Promise<void> {
+    const token: string = req.query.code;
+    const userToken: string = req.query.state;
     let request;
 
     if (!token || !userToken) {
-        req.params.success = false;
-        req.params.info = 'Sie haben kein Token erhalten';
+        res.sendFile(path.join(htmlPath, '/index.html'), (err) => {});
         return;
     }
 
-    const authParams = new URLSearchParams();
+    const authParams: URLSearchParams = new URLSearchParams();
     authParams.append(`client_id`, process.env.DISCORD_BOT_ID);
     authParams.append(`client_secret`, process.env.DISCORD_BOT_SECRET);
     authParams.append(`grant_type`, `authorization_code`);
@@ -45,8 +42,7 @@ async function authenticate(req, res) {
 
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) {
-        req.params.success = false;
-        req.params.info = 'Sie haben einen falschen Token benutzt';
+        res.sendFile(path.join(htmlPath, '/index.html'), (err) => {});
         return;
     }
 
@@ -57,18 +53,21 @@ async function authenticate(req, res) {
     });
 
     if (!request.data || !request.data.id || !request.data.username) {
-        req.params.success = false;
-        req.params.info = 'Sie sind nicht auf unserem Discord Server';
+        res.sendFile(path.join(htmlPath, '/index.html'), (err) => {});
+        return;
+    }
+
+    const player = [...alt.Player.all].find((x) => x.discordToken === userToken);
+    if (!player || !player.valid) {
+        res.sendFile(path.join(htmlPath, '/index.html'), (err) => {});
         return;
     }
 
     authenticated[userToken] = request.data;
-
-    req.params.success = true;
-    req.params.info = 'Sie können das Fenster nun schließen und ins Spiel zurück kehren.';
+    res.sendFile(path.join(htmlPath, '/index.html'), (err) => {});
 }
 
-export async function getDiscordUser(userToken: string): Promise<DiscordUser> {
+export function getDiscordUser(userToken: string): DiscordUser {
     if (!authenticated[userToken]) return null;
     return authenticated[userToken] as DiscordUser;
 }

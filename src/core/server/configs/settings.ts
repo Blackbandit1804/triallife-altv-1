@@ -1,8 +1,8 @@
 import { SharedConfig } from '../../shared/configs/settings';
 
 export const DefaultConfig = {
-    WHITELIST: false,
-    USE_DISCORD_BOT: false,
+    WHITELIST: true,
+    USE_DISCORD_BOT: true,
 
     VOICE_ON: SharedConfig.VOICE_ON,
     VOICE_MAX_DISTANCE: 32,

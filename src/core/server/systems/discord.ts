@@ -5,7 +5,7 @@ import { OptionsManager } from './options';
 
 export class DiscordController {
     static client: Discord.Client = new Discord.Client({ ws: { intents: new Discord.Intents(Discord.Intents.ALL) } });
-    static whitelistRole = process.env.WHITELIST_ROLE ? process.env.WHITELIST_ROLE : null;
+    static whitelistRole = process.env.DISCORD_WHITELIST_ROLE || null;
     static guild: Discord.Guild;
 
     static populateEndpoints() {
@@ -17,7 +17,7 @@ export class DiscordController {
     static ready() {
         Logger.info(`Discord Bot Connected Successfully`);
         if (DefaultConfig.WHITELIST && !DiscordController.whitelistRole) {
-            Logger.error(`.env file is missing WHITELIST_ROLE identif action for auto-whitelist.`);
+            Logger.error(`.env file is missing DISCORD_WHITELIST_ROLE identif action for auto-whitelist.`);
             return;
         }
         if (!process.env.DISCORD_SERVER_ID) {
@@ -61,7 +61,7 @@ export class DiscordController {
 export default function loader() {
     if (DefaultConfig.USE_DISCORD_BOT) {
         if (!process.env.DISCORD_BOT) {
-            Logger.error(`.env is missing DISCORD_BOT secret for logging in. Don't forget to add WHITELIST_ROLE as well.`);
+            Logger.error(`.env is missing DISCORD_BOT token for logging in. Don't forget to add DISCORD_WHITELIST_ROLE as well.`);
             return;
         }
         DiscordController.populateEndpoints();

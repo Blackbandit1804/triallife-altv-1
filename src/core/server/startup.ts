@@ -22,7 +22,7 @@ const neededValues = [
 const startTime = Date.now();
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
-const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './views/character'];
+const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './systems/world', './views/character'];
 
 neededValues.forEach((value) => {
     if (!(value in process.env)) {
@@ -48,16 +48,18 @@ function handleBootup() {
     Logger.info(`Server Warmup Complete. Now accepting connections.`);
 }
 
+async function handleFinish() {
+    for (let i = 0; i < imports.length; i++) import(`${imports[i]}`);
+    import('./utility/console');
+    import('./systems/options').then((res) => res.default());
+    import('./systems/discord').then((res) => res.default());
+    import('./express');
+    Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
+    alt.emit(TlrpEvent.TLRP_READY);
+}
+
 function startup() {
-    onReady(async () => {
-        imports.forEach((file) => import(`${file}`));
-        import('./utility/console');
-        import('./systems/options').then((res) => res.default());
-        import('./systems/discord').then((res) => res.default());
-        import('./auth/express');
-        Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
-        alt.emit(TlrpEvent.TLRP_READY);
-    });
+    onReady(() => handleFinish);
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
 }

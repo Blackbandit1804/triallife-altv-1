@@ -6,7 +6,7 @@ import * as TlrpMath from '../utility/math';
 const elliptic = new ecc.ec('curve25519');
 
 export function getUniquePlayerHash(player: alt.Player, discord: string): string {
-    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialId}`));
+    return sha256(sha256(`${player.hwidHash}${player.hwidExHash}${player.ip}${discord}${player.socialID}`));
 }
 
 export function sha256(data: string): string {

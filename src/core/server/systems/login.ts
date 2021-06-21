@@ -25,7 +25,7 @@ export class LoginManager {
                 return;
             }
         }
-        player.setMeta('Athena:Discord:Info', data);
+        player.setMeta('tlrp:discord:info', data);
         if (data.username) Logger.log(`(${player.id}) ${data.username} has authenticated.`);
         if (account && account.discord) Logger.log(`(${player.id}) Discord ${account.discord} has logged in with a Quick Token `);
         const currentPlayers = [...alt.Player.all];

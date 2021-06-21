@@ -1,6 +1,7 @@
 <!DOCTYPE html>
     <head>
-        <title>Trial Life | Authentification Complete!</title>
+        <meta charset="utf-8">
+        <title>Trial Life | Discord Authentifizierung</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
@@ -8,11 +9,11 @@
         <div id="app">
             <div class="container">
                 <template v-if="success">
-                    <h2>Authorization Complete!</h2>
+                    <h2>Authentifizierung war erfolgreich</h2>
                     <p>{{ info }}</p>
                 </template>
                 <template v-else>
-                    <h2>Oops. Authorization has failed!</h2>
+                    <h2>Oops. Authentifizierung ist fehlgeschlagen</h2>
                     <p>{{ info }}</p>
                 </template>
                 <p class="context mt-6">Discord Authentication - Written by <a @click="loadTlrp">DeathNeroTV</a></p>

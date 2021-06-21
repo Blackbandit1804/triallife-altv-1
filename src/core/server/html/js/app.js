@@ -5,7 +5,7 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            info: `You accessed this page directly. Check out https://github.com/DeathNeroTV/triallife-altv/`,
+            info: `Sie haben die Seite direkt besucht. Zum Repository: https://github.com/DeathNeroTV/triallife-altv/`,
             success: false
         };
     },
