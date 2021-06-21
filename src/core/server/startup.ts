@@ -1,7 +1,8 @@
 import * as alt from 'alt-server';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 import { Database, onReady } from 'simplymongo';
-import { SystemEvent } from '../shared/utility/enums';
 import { Collections } from './interfaces/collection';
 import { TlrpEvent } from './utility/enums';
 import Logger from './utility/Logger';
@@ -19,10 +20,11 @@ const neededValues = [
     'DISCORD_SERVER_ID',
     'DISCORD_WHITELIST_ROLE'
 ];
+const name = 'tlrp';
 const startTime = Date.now();
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
-const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './systems/world', './views/character'];
+const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './systems/world', './views/character', './express'];
 
 neededValues.forEach((value) => {
     if (!(value in process.env)) {
@@ -49,17 +51,21 @@ function handleBootup() {
 }
 
 async function handleFinish() {
-    for (let i = 0; i < imports.length; i++) import(`${imports[i]}`);
+    const tmpPath = path.join(alt.getResourcePath(alt.resourceName), `/server/${name}.js`);
+    if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+    for (let i = 0; i < imports.length; i++) fs.appendFileSync(tmpPath, `import '${imports[i]}'; \r\n`);
+    import(`./${name}`).then(() => fs.unlinkSync(tmpPath));
     import('./utility/console');
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
-    import('./express');
     Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
     alt.emit(TlrpEvent.TLRP_READY);
 }
 
-function startup() {
-    onReady(() => handleFinish);
+async function startup() {
+    onReady(() => {
+        handleFinish();
+    });
     if (process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD) new Database(mongoURL, 'tlrp', collections, process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD);
     else new Database(mongoURL, 'tlrp', collections);
 }
