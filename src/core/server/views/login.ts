@@ -2,18 +2,21 @@ import * as alt from 'alt-server';
 import dotenv from 'dotenv';
 import { ViewEvent } from '../../shared/utility/enums';
 import { getDiscordUser } from '../express';
+import Logger from '../utility/Logger';
 import { sha256Random } from '../utility/usefull';
 
 dotenv.config();
-
+let ip;
 alt.onClient('discord:Begin', handlePlayerConnect);
 alt.onClient('discord:FinishAuth', handleFinishAuth);
-const ip = encodeURI(`${process.env.ENDPOINT}/authenticate`);
-const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_ID}&redirect_uri=${ip}&prompt=none&response_type=code&scope=identify`;
 
 async function handlePlayerConnect(player: alt.Player): Promise<void> {
     if (!player || !player.valid) return;
-    const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash + player.socialID);
+    if (player.ip === `::ffff:127.0.0.1`) ip = encodeURI(`http://127.0.0.1:7800/authenticate`);
+    else ip = encodeURI(`${process.env.ENDPOINT}/authenticate`);
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_BOT_ID}&redirect_uri=${ip}&prompt=none&response_type=code&scope=identify`;
+    Logger.log(`auth url: ${ip}`);
+    const uniquePlayerData = JSON.stringify(player.ip + player.hwidHash + player.hwidExHash);
     const playerToken = sha256Random(uniquePlayerData);
     player.discordToken = playerToken;
     alt.emit(`Discord:Opened`, player);
@@ -22,7 +25,10 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
 
 function handleFinishAuth(player: alt.Player): void {
     const player_identifier = player.discordToken;
-    if (!player_identifier) return;
+    if (!player_identifier) {
+        alt.emitClient(player, ViewEvent.Discord_Fail, `Ihre Identifizierung ist fehlgeschlagen`);
+        return;
+    }
     const data = getDiscordUser(player_identifier);
     if (!data) {
         alt.emitClient(player, ViewEvent.Discord_Fail, 'Wir konnten keine Discord Daten finden');
