@@ -4,11 +4,12 @@ import { Particle } from '../../../shared/interfaces/particle';
 import { ProgressBar } from '../../../shared/interfaces/progress-bar';
 import { Task, TaskCallback } from '../../../shared/interfaces/task-timeline';
 import { AnimationFlag, SystemEvent } from '../../../shared/utility/enums';
+import Logger from '../../utility/Logger';
 import utility from './utility';
 
 function animation(p: alt.Player, dictionary: string, name: string, flags: AnimationFlag, duration: number = -1): void {
     if (p.data.isUnconsciouse) {
-        alt.logWarning(`[3L:RP] Cannot play ${dictionary}@${name} while player is unconsciouse.`);
+        Logger.warning(`Cannot play ${dictionary}@${name} while player is unconsciouse.`);
         return;
     }
     alt.emitClient(p, 'animation:Play', dictionary, name, flags, duration);
@@ -19,7 +20,7 @@ function audioStream(stream: AudioStream) {
 }
 
 function meta(p: alt.Player, key: string, value: any): void {
-    alt.nextTick(() => alt.emitClient(p, 'meta:Set', key, value));
+    alt.nextTick(() => alt.emitClient(p, SystemEvent.Meta_Emit, key, value));
 }
 
 function message(p: alt.Player, message: string): void {

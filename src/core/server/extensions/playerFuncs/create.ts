@@ -8,12 +8,12 @@ import select from './selection';
 const db: Database = getDatabase();
 
 async function character(p: alt.Player, design: Partial<Design>, info: Partial<CharacterInfo>, name: string): Promise<void> {
-    const newDocument: Partial<Character> = { ...CharacterDefaults };
-    newDocument.design = design;
-    newDocument.info = info;
-    newDocument.account_id = p.account._id;
-    newDocument.info.name = name;
-    const document = await db.insertData(newDocument, Collections.Characters, true);
+    const character: Partial<Character> = { ...CharacterDefaults };
+    character.design = design;
+    character.info = info;
+    character.account_id = p.account._id;
+    character.info.name = name;
+    const document = await db.insertData(character, Collections.Characters, true);
     document._id = document._id.toString();
     select.character(p, document);
 }
