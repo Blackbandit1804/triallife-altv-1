@@ -24,7 +24,9 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
             p.data.exterior = null;
             save.field(p, 'exterior', p.data.exterior);
         }
+
         if (p.data.stats) save.setStats(p, p.data.stats);
+
         if (p.data.stats.blood) save.addHealth(p, p.data.stats.blood, true);
         else save.addHealth(p, 7500, true);
 
