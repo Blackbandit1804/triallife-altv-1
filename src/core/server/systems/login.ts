@@ -21,7 +21,7 @@ export class LoginManager {
         delete player.discordToken;
         if (DefaultConfig.WHITELIST) {
             if (!OptionsManager.isWhitelisted(data.id)) {
-                player.kick(`You are not currently whitelisted.`);
+                player.kick(`Sie sind nicht freigeschlatet`);
                 return;
             }
         }
@@ -31,7 +31,7 @@ export class LoginManager {
         const currentPlayers = [...alt.Player.all];
         const index = currentPlayers.findIndex((p) => p.discord && p.discord.id === data.id && p.id !== player.id);
         if (index >= 1) {
-            player.kick('That ID is already logged in.');
+            player.kick('Diese ID ist bereits im Spiel vorhanden');
             return;
         }
         player.discord = data as DiscordUser;
