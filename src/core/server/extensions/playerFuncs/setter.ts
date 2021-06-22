@@ -79,8 +79,8 @@ function frozen(p: alt.Player, value: boolean): void {
 function respawned(p: alt.Player, position: alt.Vector3 = null): void {
     p.nextUnconsciouseSpawn = null;
     p.data.isUnconsciouse = false;
-    emit.meta(p, 'isDead', false);
-    save.field(p, 'isDead', false);
+    emit.meta(p, 'isUnconsciouse', false);
+    save.field(p, 'isUnconsciouse', false);
     let nearestHopsital = position;
     if (!position) {
         const hospitals = [...DefaultConfig.HOSPITAL_SPAWNS];

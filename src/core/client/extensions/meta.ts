@@ -4,16 +4,15 @@ import { Vehicle } from '../interfaces/vehicle';
 
 export interface Meta {
     permissionLevel: number;
-    isDead: boolean;
+    isUnconsciouse: boolean;
     gridSpace: number;
     bank: number;
     cash: number;
     food: number;
     water: number;
     design: Design;
-    inventory: Array<Array<Partial<Item>>>;
+    inventory: { maxWeight: number; money: number; items: Array<Partial<Item>> };
     equipment: Array<Partial<Item>>;
     toolbar: Array<Partial<Item>>;
-
     vehicles: Array<Vehicle>;
 }
