@@ -5,7 +5,6 @@ import { Interaction } from '../../shared/interfaces/interaction';
 import { distance2d } from '../../shared/utility/usefull';
 import { KEY_BINDS } from '../events/client';
 
-const MAX_INTERACTION_DRAW = 4;
 const MAX_CHECKPOINT_DRAW = 8;
 const TIME_BETWEEN_CHECKS = 500;
 

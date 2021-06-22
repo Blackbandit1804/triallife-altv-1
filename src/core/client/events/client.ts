@@ -1,5 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
+import { SystemEvent } from '../../shared/utility/enums';
 import { InteractionManager } from '../systems/interaction';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
@@ -45,22 +46,22 @@ const KEY_UP_BINDS = {
     //[KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction') },
     //[KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt') },
     [KEY_BINDS.INTERACT]: { singlePress: InteractionManager.triggerInteraction }
-    //[KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarController.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarController.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarController.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarController.handleToolbarSwitch },
-    //[KEY_BINDS.PHONE]: { singlePress: PhoneController.togglePhone }
+    //[KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    //[KEY_BINDS.PHONE]: { singlePress: PhoneManager.togglePhone }
 };
 
 let keyPressTimes = {};
 let nextKeyPress = Date.now() + DELAY_BETWEEN_PRESSES;
 
-alt.onServer('ticks:Start', () => {
+alt.onServer(SystemEvent.Ticks_Start, () => {
     alt.on('keyup', handleKeyUp);
     alt.on('keydown', handleKeyDown);
 });
 
-function handleDebugMessages() {
+function handleDebugMessages(key: number) {
     alt.log(`POSITION:`);
     const pos = { ...alt.Player.local.pos };
     alt.log(JSON.stringify(pos));
@@ -99,5 +100,5 @@ function handleKeyUp(key: number) {
     keyPressTimes[key] = null;
     const isLongPressReady = keyPressTimes[key] + DELAY_BETWEEN_LONG_PRESSES < Date.now();
     if (keyPressTimes[key] && isLongPressReady && KEY_UP_BINDS[key]['longPress']) KEY_UP_BINDS[key]['longPress'](key);
-    //if (KEY_UP_BINDS[key] && KEY_UP_BINDS[key].singlePress) KEY_UP_BINDS[key].singlePress(key);
+    if (KEY_UP_BINDS[key] && KEY_UP_BINDS[key].singlePress) KEY_UP_BINDS[key].singlePress(key);
 }
