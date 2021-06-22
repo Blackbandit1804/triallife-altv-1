@@ -69,6 +69,16 @@ export enum ViewEvent {
 }
 
 export enum SystemEvent {
+    Player_Interact = 'player:Interact',
+    Interior_Switch = 'interior:Switch',
+    Blip_Append = 'append:Blip',
+    Blip_Populate = 'blips:Populate',
+    Blip_Remove = 'remove:Blip',
+    Interaction_Populate = 'interaction:Populate',
+    Interaction_Set = 'interaction:Set',
+    Atm_Open = 'atm:Open',
+    Atm_Action = 'atm:Action',
+    Fuel_Action = 'fuel:Action',
     Hud_Message_Append = 'hud:Messages:Append',
     Hud_Notification_Show = 'hud:Notification:Show',
     Hud_Particle_Play = 'hud:Particle:Play',

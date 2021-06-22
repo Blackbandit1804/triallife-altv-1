@@ -4,88 +4,20 @@ export default [
         minY: 6000,
         objects: {
             atm: [
-                {
-                    name: 'prop_atm_02',
-                    hash: 1514362634,
-                    position: { x: 156.188629, y: 6643.2, z: 30.59372 },
-                    rotation: { x: 0, y: 0, z: -44.9999352 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 4049537503,
-                    position: { x: 173.8246, y: 6638.21729, z: 30.59372 },
-                    rotation: { x: 0, y: 0, z: 44.9999352 }
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 2018047884,
-                    position: { x: -282.7141, y: 6226.43, z: 30.4964752 },
-                    rotation: { x: 0, y: 0, z: -43.7256851 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 3113752420,
-                    position: { x: -95.870285, y: 6457.462, z: 30.473938 },
-                    rotation: { x: 0, y: 0, z: 45.9272766 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 2441561620,
-                    position: { x: -97.63721, y: 6455.732, z: 30.4679337 },
-                    rotation: { x: 0, y: 0, z: 45.9272766 }
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 1410425274,
-                    position: { x: -132.66629, y: 6366.87646, z: 30.47258 },
-                    rotation: { x: 0, y: 0, z: -43.0990028 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_02',
-                    hash: 2184825683,
-                    position: { x: -386.4596, y: 6046.41064, z: 30.4739914 },
-                    rotation: { x: 0, y: 0, z: -44.63107 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_01',
-                    hash: 372857665,
-                    position: { x: 1700.69409, y: 6426.762, z: 31.6329651 },
-                    rotation: { x: 0, y: 0, z: 64.8711548 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_atm_01',
-                    hash: 3424098598,
-                    position: { x: 1735.0105, y: 6410.01, z: 34.03717 },
-                    rotation: { x: 0, y: 0, z: 153.640823 },
-                    isBlip: true
-                }
+                { name: 'prop_atm_02', hash: 1514362634, position: { x: 156.188629, y: 6643.2, z: 30.59372 }, rotation: { x: 0, y: 0, z: -44.9999352 }, isBlip: true },
+                { name: 'prop_atm_02', hash: 4049537503, position: { x: 173.8246, y: 6638.21729, z: 30.59372 }, rotation: { x: 0, y: 0, z: 44.9999352 } },
+                { name: 'prop_atm_02', hash: 2018047884, position: { x: -282.7141, y: 6226.43, z: 30.4964752 }, rotation: { x: 0, y: 0, z: -43.7256851 }, isBlip: true },
+                { name: 'prop_atm_02', hash: 3113752420, position: { x: -95.870285, y: 6457.462, z: 30.473938 }, rotation: { x: 0, y: 0, z: 45.9272766 }, isBlip: true },
+                { name: 'prop_atm_02', hash: 2441561620, position: { x: -97.63721, y: 6455.732, z: 30.4679337 }, rotation: { x: 0, y: 0, z: 45.9272766 } },
+                { name: 'prop_atm_02', hash: 1410425274, position: { x: -132.66629, y: 6366.87646, z: 30.47258 }, rotation: { x: 0, y: 0, z: -43.0990028 }, isBlip: true },
+                { name: 'prop_atm_02', hash: 2184825683, position: { x: -386.4596, y: 6046.41064, z: 30.4739914 }, rotation: { x: 0, y: 0, z: -44.63107 }, isBlip: true },
+                { name: 'prop_atm_01', hash: 372857665, position: { x: 1700.69409, y: 6426.762, z: 31.6329651 }, rotation: { x: 0, y: 0, z: 64.8711548 }, isBlip: true },
+                { name: 'prop_atm_01', hash: 3424098598, position: { x: 1735.0105, y: 6410.01, z: 34.03717 }, rotation: { x: 0, y: 0, z: 153.640823 }, isBlip: true }
             ],
             gas: [
-                {
-                    name: 'prop_gas_pump_1a',
-                    hash: 3021084024,
-                    position: { x: 172.333359, y: 6603.63574, z: 31.0625 },
-                    rotation: { x: 0, y: 0, z: -80.00007 },
-                    isBlip: true
-                },
-                {
-                    name: 'prop_gas_pump_1a',
-                    hash: 2618130988,
-                    position: { x: 179.674652, y: 6604.93066, z: 31.0625 },
-                    rotation: { x: 0, y: 0, z: 99.99995 }
-                },
-                {
-                    name: 'prop_gas_pump_1a',
-                    hash: 2398319327,
-                    position: { x: 186.970917, y: 6606.218, z: 31.0625 },
-                    rotation: { x: 0, y: 0, z: 99.99995 }
-                },
+                { name: 'prop_gas_pump_1a', hash: 3021084024, position: { x: 172.333359, y: 6603.63574, z: 31.0625 }, rotation: { x: 0, y: 0, z: -80.00007 }, isBlip: true },
+                { name: 'prop_gas_pump_1a', hash: 2618130988, position: { x: 179.674652, y: 6604.93066, z: 31.0625 }, rotation: { x: 0, y: 0, z: 99.99995 } },
+                { name: 'prop_gas_pump_1a', hash: 2398319327, position: { x: 186.970917, y: 6606.218, z: 31.0625 }, rotation: { x: 0, y: 0, z: 99.99995 } },
                 {
                     name: 'prop_vintage_pump',
                     hash: 3736152160,

@@ -2,6 +2,7 @@ import * as alt from 'alt-server';
 import { Character } from '../../../shared/interfaces/character';
 import { SystemEvent } from '../../../shared/utility/enums';
 import { DefaultConfig } from '../../configs/settings';
+import { BlipManager } from '../../systems/blip';
 import { TlrpEvent } from '../../utility/enums';
 
 import emit from './emit';
@@ -51,6 +52,8 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
         sync.mood(p);
         sync.vehicles(p);
         setter.frozen(p, false);
+
+        BlipManager.populateGlobalBlips(p);
 
         alt.emit(SystemEvent.Voice_Add, p);
         alt.emit(TlrpEvent.PLAYER_SELECTED_CHARACTER, p);

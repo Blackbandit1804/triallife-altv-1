@@ -11,6 +11,7 @@ import './extensions/view';
 import './events/client';
 
 //systems
+import './systems/blip';
 import './systems/disable';
 import './systems/meta';
 import './systems/quick-token';

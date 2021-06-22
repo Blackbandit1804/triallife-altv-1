@@ -1,5 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
+import { InteractionManager } from '../systems/interaction';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
@@ -37,18 +38,18 @@ export const KEY_BINDS = {
 };
 
 const KEY_UP_BINDS = {
-    [KEY_BINDS.DEBUG_KEY]: { singlePress: handleDebugMessages }
-    /*[KEY_BINDS.INVENTORY]: { singlePress: InventoryController.handleView },
-    [KEY_BINDS.VEHICLE_LOCK]: { singlePress: VehicleController.handleToggleLock },
-    [KEY_BINDS.VEHICLE_ENGINE]: { singlePress: VehicleController.handleToggleEngine },
-    [KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleController.triggerVehicleFunction('pressedVehicleFunction') },
-    [KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleController.triggerVehicleFunction('pressedVehicleFunctionAlt') },
-    [KEY_BINDS.INTERACT]: { singlePress: InteractionController.triggerInteraction },
-    [KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarController.handleToolbarSwitch },
-    [KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarController.handleToolbarSwitch },
-    [KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarController.handleToolbarSwitch },
-    [KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarController.handleToolbarSwitch },
-    [KEY_BINDS.PHONE]: { singlePress: PhoneController.togglePhone }*/
+    [KEY_BINDS.DEBUG_KEY]: { singlePress: handleDebugMessages },
+    //[KEY_BINDS.INVENTORY]: { singlePress: InventoryManager.handleView },
+    //[KEY_BINDS.VEHICLE_LOCK]: { singlePress: VehicleManager.handleToggleLock },
+    //[KEY_BINDS.VEHICLE_ENGINE]: { singlePress: VehicleManager.handleToggleEngine },
+    //[KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction') },
+    //[KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt') },
+    [KEY_BINDS.INTERACT]: { singlePress: InteractionManager.triggerInteraction }
+    //[KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarController.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarController.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarController.handleToolbarSwitch },
+    //[KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarController.handleToolbarSwitch },
+    //[KEY_BINDS.PHONE]: { singlePress: PhoneController.togglePhone }
 };
 
 let keyPressTimes = {};
