@@ -32,14 +32,14 @@ export async function openCharSelect(player: Player): Promise<void> {
 export async function handleSelectCharacter(player: Player, id: string): Promise<void> {
     if (!id) return;
     if (!player.characters) {
-        alt.logWarning(`[Athena] Failed to get characters for a player. Sending them to character select again.`);
+        Logger.warning(`Failed to get characters for a player. Sending them to character select again.`);
         openCharSelect(player);
         return;
     }
     const index = player.characters.findIndex((x) => `${x._id}` === `${id}`);
-    if (index <= -1) return;
+    if (index === -1) return;
     if (!player.pendingCharSelect) {
-        alt.log(`${player.name} | Attempted to select a character when not asked to select one.`);
+        Logger.log(`${player.name} | Attempted to select a character when not asked to select one.`);
         return;
     }
     player.pendingCharSelect = false;
