@@ -20,10 +20,10 @@ let totalCharacters = 0;
 native.requestModel(fModel);
 native.requestModel(mModel);
 
-alt.onServer(ViewEvent.Creator_Sync, syncDesign);
-alt.onServer(ViewEvent.Creator_Show, chareditorShow);
-alt.onServer(ViewEvent.Creator_AwaitModel, finishSyncDesign);
-alt.onServer(ViewEvent.Creator_AwaitName, chareditorFinishName);
+alt.onServer(ViewEvent.CharEditor_Sync, syncDesign);
+alt.onServer(ViewEvent.CharEditor_Show, chareditorShow);
+alt.onServer(ViewEvent.CharEditor_AwaitModel, finishSyncDesign);
+alt.onServer(ViewEvent.CharEditor_AwaitName, chareditorFinishName);
 
 async function chareditorShow(_oldCharacterData = null, _noDiscard = true, _noName = true, _totalCharacters = 0) {
     oldCharacterData = _oldCharacterData;
@@ -54,12 +54,12 @@ function chareditorClose() {
 
 async function chareditorDone(newData, infoData, name: string) {
     await chareditorClose();
-    alt.emitServer(ViewEvent.Creator_Done, newData, infoData, name);
+    alt.emitServer(ViewEvent.CharEditor_Done, newData, infoData, name);
 }
 
 async function chareditorCancel() {
     chareditorClose();
-    alt.emitServer(ViewEvent.Creator_Done, oldCharacterData);
+    alt.emitServer(ViewEvent.CharEditor_Done, oldCharacterData);
 }
 
 function checkReady() {
@@ -76,7 +76,7 @@ function chareditorReadyDone() {
 }
 
 function chareditorCheckName(name: string): void {
-    alt.emitServer(ViewEvent.Creator_AwaitName, name);
+    alt.emitServer(ViewEvent.CharEditor_AwaitName, name);
 }
 
 function chareditorFinishName(result: boolean): void {
@@ -94,7 +94,7 @@ export async function syncDesign(data: Partial<Design>): Promise<void> {
     native.clearPedDecorations(alt.Player.local.scriptID);
     native.setPedHeadBlendData(alt.Player.local.scriptID, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
     const modelNeeded = data.sex === 0 ? fModel : mModel;
-    if (modelNeeded !== alt.Player.local.model) alt.emitServer(ViewEvent.Creator_AwaitModel, data.sex);
+    if (modelNeeded !== alt.Player.local.model) alt.emitServer(ViewEvent.CharEditor_AwaitModel, data.sex);
     else finishSyncDesign();
 }
 

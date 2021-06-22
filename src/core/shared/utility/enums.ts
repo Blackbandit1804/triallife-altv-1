@@ -47,12 +47,12 @@ export enum ItemType {
 export enum ViewEvent {
     Discord_Fail = 'Discord:Fail',
     Discord_Close = 'Discord:Close',
-    Creator_Done = 'creator:Done',
-    Creator_Close = 'creator:Close',
-    Creator_Show = 'creator:Show',
-    Creator_Sync = 'creator:Sync',
-    Creator_AwaitModel = 'creator:AwaitModel',
-    Creator_AwaitName = 'creator:AwaitName',
+    CharEditor_Done = 'chareditor:Done',
+    CharEditor_Close = 'chareditor:Close',
+    CharEditor_Show = 'chareditor:Show',
+    CharEditor_Sync = 'chareditor:Sync',
+    CharEditor_AwaitModel = 'chareditor:AwaitModel',
+    CharEditor_AwaitName = 'chareditor:AwaitName',
     Inventory_Process = 'inventory:Process',
     Inventory_Use = 'inventory:Use',
     Inventory_Split = 'inventory:Split',
@@ -61,11 +61,11 @@ export enum ViewEvent {
     Clothing_Sync = 'clothing:Sync',
     Clothing_Purchase = 'clothing:Purchase',
     Clothing_Exit = 'clothing:Exit',
-    Character_Select = 'characters:Select',
-    Character_Create = 'characters:Create',
-    Character_Show = 'characters:Show',
-    Character_Done = 'characters:Done',
-    Character_Delete = 'characters:Delete'
+    Character_Select = 'charselect:Select',
+    Character_Create = 'charselect:Create',
+    Character_Show = 'charselect:Show',
+    Character_Done = 'charselect:Done',
+    Character_Delete = 'charselect:Delete'
 }
 
 export enum SystemEvent {

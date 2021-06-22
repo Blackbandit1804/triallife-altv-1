@@ -12,7 +12,7 @@ function design(p: alt.Player): void {
     else p.model = 'mp_m_freemode_01';
     p.setSyncedMeta('Name', p.data.info.name);
     emit.meta(p, 'design', p.data.design);
-    alt.emitClient(p, ViewEvent.Creator_Sync, p.data.design);
+    alt.emitClient(p, ViewEvent.CharEditor_Sync, p.data.design);
 }
 
 function inventory(p: alt.Player): void {
