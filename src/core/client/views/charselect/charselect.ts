@@ -64,4 +64,7 @@ function charselectDone() {
     native.switchInPlayer(1500);
     view.close();
     open = false;
+    alt.setTimeout(() => {
+        if (native.isScreenFadedOut()) native.doScreenFadeIn(2000);
+    }, 1000);
 }
