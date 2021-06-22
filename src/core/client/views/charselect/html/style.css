@@ -1,0 +1,158 @@
+@import '../../css/common.css';
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter';
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    align-content: center;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    animation: fadein 2s;
+}
+
+.v-application .v-application--wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    background: transparent !important;
+    width: 100vw;
+    height: 100vh;
+}
+
+.v-application .grey.darken-4 {
+    border: 5px solid #1f1f1f !important;
+    border-color: #1f1f1f !important;
+    background: #2d2d2d !important;
+}
+
+.options {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    bottom: 3vh;
+}
+
+.grey {
+    background-color: #2d2d2d;
+}
+
+.options button {
+    height: 100%;
+}
+
+.infos {
+    position: fixed;
+    left: 3vh;
+    top: 3vh;
+    min-width: 20vw;
+    max-width: 20vw;
+    min-height: calc(100% - 6vh);
+    max-height: calc(100% - 6vh);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.v-sheet.v-card {
+    border-radius: 0;
+}
+
+.split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    justify-items: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.button-group {
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.outline {
+    border-radius: 0;
+    border: 2px solid #2d2d2d;
+}
+
+button {
+    padding-left: 5px;
+    font-size: 16px;
+    padding: 1vh 0vw;
+    font-variant: small-caps;
+    transition: 0.1s;
+    opacity: 0.75;
+    overflow: hidden;
+    outline: none;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.v-dialog {
+    border-radius: 0;
+}
+
+button:active {
+    color: white !important;
+    transform: unset !important;
+    background: #1f1f1f;
+    outline: none !important;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.active {
+    background: #1f1f1f !important;
+    opacity: 1 !important;
+}
+
+.selection {
+    position: fixed;
+    display: block;
+    flex-direction: row;
+    height: auto;
+    min-width: 75vh !important;
+    top: 3vh;
+}
+
+.selection .disabled-button {
+    opacity: 0.75 !important;
+}
+
+.selection .disabled-button:hover {
+    opacity: 0.75 !important;
+}
+
+.selection .disabled-button:active {
+    color: unset !important;
+    transform: unset !important;
+    background: unset !important;
+    user-select: none;
+}
+
+* {
+    user-select: none;
+}

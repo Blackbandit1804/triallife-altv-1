@@ -10,15 +10,17 @@ import { syncDesign } from '../chareditor/chareditor';
 const url = `http://resource/client/views/charselect/html/index.html`;
 let view: View;
 let characters: Partial<Character>[];
+let infos: string[];
 let open = false;
 
-alt.onServer(ViewEvent.Character_Show, charscelectOpen);
-alt.onServer(ViewEvent.Character_Done, charscelectDone);
+alt.onServer(ViewEvent.Character_Show, charselectOpen);
+alt.onServer(ViewEvent.Character_Done, charselectDone);
 
-async function charscelectOpen(_characters: Partial<Character>[]) {
+async function charselectOpen(_characters: Partial<Character>[], _infos: string[]) {
     characters = _characters;
+    infos = _infos;
     view = await View.getInstance(url, true);
-    view.on('charselect:load', charselectLoad);
+    view.on('load', charselectLoad);
     view.on('charselect:Select', charselectSelect);
     view.on('charselect:Create', charselectCreate);
     view.on('charselect:Update', syncDesign);
@@ -26,7 +28,7 @@ async function charscelectOpen(_characters: Partial<Character>[]) {
     view.on('charselect:Delete', charselectDelete);
 
     if (open) {
-        view.emit('charselect:Set', characters);
+        view.emit('charselect:SetData', characters, infos);
         return;
     }
     open = true;
@@ -53,7 +55,7 @@ function charselectDelete(id) {
     alt.emitServer(ViewEvent.Character_Delete, id);
 }
 
-function charscelectDone() {
+function charselectDone() {
     if (!view) {
         open = false;
         return;

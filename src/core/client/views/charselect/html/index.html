@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Character Selection by DeathNeroTV</title>
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/vuetify.min.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/icomoon.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    </head>
+    <body>
+        <div id="app" >
+            <v-app v-cloak v-if="characters[slot]">
+                <!-- Character Select Controller -->
+                <div class="grey darken-4 elevation-12 selection">
+                    <div class="pl-2 pr-2 split">
+                        <button class="pl-6 pr-6 mr-4 grey darken-3" @click="decrementIndex">
+                            <v-icon color="green">mdi-chevron-left</v-icon>
+                        </button>
+                        <v-card-title class="overline-2 justify-center light-blue--text">{{ characters[slot].info.name }}</v-card-title>
+                        <button class="pl-6 pr-6 ml-4 grey darken-3" @click="incrementIndex">
+                            <v-icon color="green">mdi-chevron-right</v-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Option Controller -->
+                <div class="grey darken-4 elevation-12 options">
+                    <div class="button-group">
+                        <div class="split">
+                            <button class="pl-6 pr-6 mr-4 flex-grow-1 grey darken-3" @click="selectCharacter">
+                                <v-icon class="green--text">mdi-account-check</v-icon>
+                            </button>
+                            <button class="pl-6 pr-6 flex-grow-1 grey darken-3" @click="createCharacter">
+                                <v-icon class="orange--text">mdi-account-plus</v-icon>
+                            </button>
+                            <button class="pl-6 pr-6 ml-4 flex-grow-1 grey darken-3" @click="showDeleteInterface">
+                                <v-icon class="red--text">mdi-account-minus</v-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Changelog & Events Controller -->
+                <div class="transparent infos">
+                    <v-card class="grey darken-4" v-for="(info, index) in infos" :key="index">
+                        <v-card-title class="grey darken-3 overline-2 green--text justify-center">{{ info.title }}</v-card-title>
+                        <v-card-text class="pa-2 grey darken-2 subtitle-2 white--text" v-html="info.message"></v-card-text>
+                    </v-card>
+                </div>
+                <v-dialog v-model="deleteDialog" persistent max-width="400">
+                    <v-card v-if="characters[slot]">
+                        <v-card-title class="overline-2 red--text justify-center grey darken-4">Löschvorgang</v-card-title>
+                        <v-card-text class="subtitle-2 mt-2 white--text">Möchten Sie den Charakter '{{ characters[slot].info.name }}' wirklich löschen ?</v-card-text>
+                        <v-card-actions>
+                            <div class="button-group">
+                                <div class="split">
+                                    <button class="pl-6 pr-6 mr-2 flex-grow-1 grey darken-3" @click="hideDeleteInterface">
+                                        <v-icon class="green--text">mdi-check-bold</v-icon>
+                                    </button>
+                                    <button class="pl-6 pr-6 ml-2 flex-grow-1 grey darken-3" @click="deleteCharacter">
+                                        <v-icon class="red--text">mdi-close-thick</v-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <div class="tlrp"></div>
+            </v-app>
+        </div>
+        <script src="../../js/vue.min.js"></script>
+        <script src="../../js/vuetify.js"></script>
+        <script src="./app.js" type="text/javascript"></script>
+    </body>
+</html>
