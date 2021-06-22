@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { DoorType, LockState } from '../../utility/enums';
+import { VehicleDoorList, VehicleLock_State } from '../../../shared/utility/enums';
 import { getClosestVectorByPos } from '../../utility/vector';
 import { DoorData } from '../vehicle';
 
@@ -26,14 +26,14 @@ function closestDoor(v: alt.Vehicle, position: alt.Vector3): DoorData {
     return { pos: closestPos.pos, seat: seat, isDoor: isDoor };
 }
 
-function doorOpen(v: alt.Vehicle, door: DoorType): boolean {
+function doorOpen(v: alt.Vehicle, door: VehicleDoorList): boolean {
     if (!v.doorStates) return false;
     if (!v.doorStates[door]) return false;
     return v.doorStates[door];
 }
 
 function canExit(v: alt.Vehicle) {
-    return v.lockStatus === LockState.UNLOCKED || v.lockStatus === LockState.NO_LOCK;
+    return v.lockStatus === VehicleLock_State.UNLOCKED || v.lockStatus === VehicleLock_State.NO_LOCK;
 }
 
 function owner(v: alt.Vehicle): boolean {

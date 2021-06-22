@@ -1,4 +1,4 @@
-import { EquipmentType, ItemType } from '../utility/enums';
+import { EquipmentType, ItemType } from '../../shared/utility/enums';
 
 export interface Item {
     name: string;
