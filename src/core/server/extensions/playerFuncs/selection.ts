@@ -14,7 +14,7 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
     sync.design(p);
     alt.emitClient(p, SystemEvent.Ticks_Start);
     p.dimension = 0;
-    setter.frozen(p, false);
+    setter.frozen(p, true);
     alt.setTimeout(() => {
         if (p.data.pos) save.setPosition(p, p.data.pos.x, p.data.pos.y, p.data.pos.z);
         else save.setPosition(p, DefaultConfig.PLAYER_CREATE_SPAWN_POS.x, DefaultConfig.PLAYER_CREATE_SPAWN_POS.y, DefaultConfig.PLAYER_CREATE_SPAWN_POS.z);
@@ -50,17 +50,11 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
         sync.thirst(p);
         sync.mood(p);
         sync.vehicles(p);
+        setter.frozen(p, false);
 
-        // Propagation
-        /*ChatController.populateCommands(p);
-        InteractionController.populateCustomInteractions(p);
-        BlipController.populateGlobalBlips(p);
-        MarkerController.populateGlobalMarkers(p);
-        TextLabelController.populateGlobalLabels(p);*/
         alt.emit(SystemEvent.Voice_Add, p);
         alt.emit(TlrpEvent.PLAYER_SELECTED_CHARACTER, p);
     }, 500);
-
     delete p.characters;
 }
 
