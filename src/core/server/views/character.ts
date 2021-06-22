@@ -55,7 +55,7 @@ export function handleCreateCharacter(player: Player): void {
     let totalCharacters = 0;
     if (player.characters) totalCharacters = player.characters.length;
     if (!player.pendingCharSelect) {
-        alt.log(`${player.name} | Attempted to select a character when not asked to select one.`);
+        Logger.log(`${player.name} | Attempted to select a character when not asked to select one.`);
         return;
     }
     const pos = { ...DefaultConfig.CHARACTER_CREATOR_POS };
@@ -65,7 +65,7 @@ export function handleCreateCharacter(player: Player): void {
     player.rot = { ...DefaultConfig.CHARACTER_CREATOR_ROT } as alt.Vector3;
     playerFuncs.save.setPosition(player, pos.x, pos.y, pos.z);
     alt.emitClient(player, ViewEvent.Character_Done);
-    alt.setTimeout(() => alt.emitClient(player, ViewEvent.Character_Show, null, true, false, totalCharacters), 1000);
+    alt.setTimeout(() => alt.emitClient(player, ViewEvent.CharEditor_Show, null, true, false, totalCharacters), 1000);
 }
 
 async function handleDeleteCharacter(player: Player, id: string): Promise<void> {
