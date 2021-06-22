@@ -119,6 +119,23 @@ export enum Permission {
     Admin = 4
 }
 
+export enum HudEventNames {
+    SetVehicle = 'hud:SetVehicle',
+    Seatbelt = 'hud:Seatbelt',
+    Fuel = 'hud:SetFuel',
+    Interact = 'hud:SetInteract',
+    Food = 'hud:SetFood',
+    Water = 'hud:SetWater',
+    Mood = 'hud:SetMood',
+    Blood = 'hud:SetBlood',
+    Voice = 'hud:SetVoice',
+    Speed = 'hud:Speed',
+    Lock = 'hud:SetLock',
+    Engine = 'hud:SetEngine',
+    Lights = 'hud:SetLights',
+    Objective = 'hud:SetObjective'
+}
+
 //#region vehicle
 export enum VehicleLock_State {
     NO_LOCK = 0,

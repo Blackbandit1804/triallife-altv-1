@@ -13,6 +13,12 @@ alt.on('connectionComplete', async () => {
     native.doScreenFadeOut(0);
     native.triggerScreenblurFadeOut(0);
     native.freezeEntityPosition(alt.Player.local.scriptID, true);
+    native.displayRadar(false);
+    native.setMinimapComponent(15, true, 0);
+    if (alt.beginScaleformMovieMethodMinimap('SETUP_HEALTH_ARMOUR')) {
+        native.scaleformMovieMethodAddParamInt(3);
+        native.endScaleformMovieMethod();
+    }
 });
 
 alt.on('disconnect', () => {
