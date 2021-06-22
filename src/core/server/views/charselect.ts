@@ -15,7 +15,7 @@ alt.onClient(ViewEvent.Character_Create, handleCreateCharacter);
 alt.onClient(ViewEvent.Character_Delete, handleDeleteCharacter);
 
 export async function openCharSelect(player: Player): Promise<void> {
-    const characters: Array<Character> = await db.fetchAllByField<Character>('account_id', player.account._id, Collections.Characters);
+    const characters: Array<Character> = await db.fetchAllByField<Character>('accId', player.account._id, Collections.Characters);
     player.pendingCharSelect = true;
     if (characters.length <= 0) {
         handleCreateCharacter(player);
@@ -26,7 +26,7 @@ export async function openCharSelect(player: Player): Promise<void> {
     player.characters = characters;
     player.rot = { ...DefaultConfig.CHARACTER_SELECT_ROT } as alt.Vector3;
     playerFuncs.save.setPosition(player, pos.x, pos.y, pos.z);
-    alt.setTimeout(() => alt.emitClient(player, ViewEvent.Character_Show, characters), 1000);
+    alt.setTimeout(() => alt.emitClient(player, ViewEvent.Character_Show, characters, []), 1000);
 }
 
 export async function handleSelectCharacter(player: Player, id: string): Promise<void> {

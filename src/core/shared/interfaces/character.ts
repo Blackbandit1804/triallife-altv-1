@@ -7,7 +7,7 @@ import { Vehicle } from './vehicle';
 
 export interface Character {
     _id?: any;
-    account_id: any;
+    accId: any;
     pos: Partial<Vector3>;
     bank: Partial<Bank>;
     info: Partial<CharacterInfo>;

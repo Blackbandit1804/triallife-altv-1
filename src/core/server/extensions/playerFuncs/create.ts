@@ -11,7 +11,7 @@ async function character(p: alt.Player, design: Partial<Design>, info: Partial<C
     const character: Partial<Character> = { ...CharacterDefaults };
     character.design = design;
     character.info = info;
-    character.account_id = p.account._id;
+    character.accId = p.account._id;
     character.info.name = name;
     const document = await db.insertData(character, Collections.Characters, true);
     document._id = document._id.toString();

@@ -19,8 +19,6 @@ const app = express();
 const port = 7800;
 
 app.use(cors());
-app.set('view engine', 'pug');
-app.set('views', htmlPath);
 app.get('/authenticate', handleAuthentication);
 app.use('/js', express.static(jsPath));
 app.use('/css', express.static(cssPath));
@@ -32,7 +30,7 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     let request;
 
     if (!token || !userToken) {
-        res.render('index', { success: false, info: 'Sie haben kein Token bekommen' });
+        res.sendFile(path.join(htmlPath, '/index.html?success=false&info=Sie haben kein Token bekommen'), (err) => {});
         return;
     }
 
@@ -48,7 +46,7 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
 
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) {
-        res.render('index', { success: false, info: 'Sie haben keinen gültigen Token' });
+        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Sie haben keinen gültigen Token`), (err) => {});
         return;
     }
 
@@ -59,18 +57,18 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     });
 
     if (!request.data || !request.data.id || !request.data.username) {
-        res.render('index', { success: false, info: 'Ihr Discordkonto wurde nicht gefunden' });
+        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Ihr Discordkonto wurde nicht gefunden`), (err) => {});
         return;
     }
 
     const player = [...alt.Player.all].find((x) => x.discordToken === userToken);
     if (!player || !player.valid) {
-        res.render('index', { success: false, info: 'Sie sind nicht auf dem Spieleserver' });
+        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Sie sind nicht auf dem Spieleserver`), (err) => {});
         return;
     }
 
     authenticated[userToken] = request.data;
-    res.render('index', { success: true, info: 'Sie können den Browser nun schließen und zurück ins Spiel' });
+    res.sendFile(path.join(htmlPath, `/index.html?success=true&info=Sie können den Browser nun schließen und zurück ins Spiel`), (err) => {});
 }
 
 export function getDiscordUser(userToken: string): DiscordUser {
