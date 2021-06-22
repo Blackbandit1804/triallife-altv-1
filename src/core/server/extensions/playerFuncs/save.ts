@@ -35,7 +35,7 @@ function setPosition(player: alt.Player, x: number, y: number, z: number): void 
 }
 
 function setStats(player: alt.Player, stats: Partial<CharacterStats>): void {
-    player.acStats = stats;
+    player.acStats = { ...stats };
 }
 
 function addArmour(p: alt.Player, value: number, exactValue: boolean = false): void {
