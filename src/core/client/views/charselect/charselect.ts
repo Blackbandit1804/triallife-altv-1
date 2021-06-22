@@ -48,7 +48,7 @@ function charselectCreate() {
 
 function charselectLoad() {
     if (!view) return;
-    view.emit('charselect:Set', characters);
+    view.emit('charselect:SetData', characters, infos);
 }
 
 function charselectDelete(id) {

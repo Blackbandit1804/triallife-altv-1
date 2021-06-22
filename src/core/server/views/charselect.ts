@@ -17,7 +17,7 @@ alt.onClient(ViewEvent.Character_Delete, handleDeleteCharacter);
 export async function openCharSelect(player: Player): Promise<void> {
     const characters: Array<Character> = await db.fetchAllByField<Character>('accId', player.account._id, Collections.Characters);
     player.pendingCharSelect = true;
-    if (characters.length <= 0) {
+    if (characters.length === 0) {
         handleCreateCharacter(player);
         return;
     }

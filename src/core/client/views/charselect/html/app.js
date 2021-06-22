@@ -74,7 +74,7 @@ const app = new Vue({
         },
         updateDesign() {
             if (!('alt' in window)) return;
-            alt.emit('charselect:Update', this.characters[this.slot].appearance);
+            alt.emit('charselect:Update', this.characters[this.slot].design);
             setTimeout(() => alt.emit('charselect:Equipment', this.characters[this.slot].equipment), 500);
         },
         selectCharacter() {
