@@ -1,7 +1,8 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
-import { DoorType, LockState } from '../../utility/enums';
-//import { BaseHUD, HudEventNames } from '../../views/hud/hud';
+import { HudEventNames } from '../../../shared/utility/enums';
+import { DoorType, LockState } from '../..//utility/enums';
+import { HUD } from '../../views/hud/hud';
 
 function owner(v: alt.Vehicle, id: number): void {
     v.owner = id;
@@ -10,7 +11,7 @@ function owner(v: alt.Vehicle, id: number): void {
 function engine(v: alt.Vehicle, value: boolean): void {
     v.engineStatus = value;
     native.setVehicleEngineOn(v.scriptID, value, false, false);
-    //if (alt.Player.local.vehicle === v) BaseHUD.setHudStatus(HudEventNames.Fuel, v.fuel);
+    if (alt.Player.local.vehicle === v) HUD.setHudStatus(HudEventNames.Fuel, v.fuel);
 }
 
 function allDoorsClosed(v: alt.Vehicle): void {
@@ -38,8 +39,8 @@ function lockStatus(v: alt.Vehicle, status: LockState | number) {
 
 function fuel(v: alt.Vehicle, value: number) {
     v.fuel = value;
-    //if (!alt.Player.local.vehicle) return;
-    //if (alt.Player.local.vehicle.id === v.id) BaseHUD.setHudStatus(HudEventNames.Fuel, value);
+    if (!alt.Player.local.vehicle) return;
+    if (alt.Player.local.vehicle.id === v.id) HUD.setHudStatus(HudEventNames.Fuel, value);
 }
 
 export default {
