@@ -24,7 +24,7 @@ const name = 'tlrp';
 const startTime = Date.now();
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const collections = [Collections.Accounts, Collections.Characters, Collections.Options, Collections.Interiors];
-const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './systems/world', './views/character', './express'];
+const imports = ['./extensions/player', './extensions/vehicle', './events/server', './systems/login', './systems/world', './views/chareditor', './views/charselect', './express'];
 
 neededValues.forEach((value) => {
     if (!(value in process.env)) {

@@ -116,9 +116,6 @@ const app = new Vue({
         },
         resetSelection() {
             this.selection = 0;
-        },
-        setLocales(localeObject) {
-            this.locales = localeObject;
         }
     },
     mounted() {
@@ -150,7 +147,6 @@ const app = new Vue({
         }
         alt.on('chareditor:Ready', this.setReady);
         alt.on('chareditor:SetData', this.setData);
-        alt.on('chareditor:SetLocales', this.setLocales);
         this.$nextTick(() => alt.emit('ready'));
     }
 });
