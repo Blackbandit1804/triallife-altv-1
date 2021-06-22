@@ -18,7 +18,7 @@ export interface Design {
     eyebrowsOpacity: number;
     eyebrowsColor1: number;
     eyes: number;
-    opacityOverlays: Design[];
+    opacityOverlays: DesignInfo[];
     colorOverlays: ColorInfo[];
 }
 

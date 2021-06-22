@@ -74,6 +74,8 @@ export enum SystemEvent {
     Hud_Particle_Play = 'hud:Particle:Play',
     Hud_Progress_Create = 'hud:Progress:Create',
     Hud_Progress_Remove = 'hud:Progress:Remove',
+    Meta_Emit = 'meta:Emit',
+    Meta_Changed = 'meta:Changed',
     Sound_2D = 'sound:2D',
     Sound_3D = 'sound:3D',
     Sound_FrontEnd = 'sound:FrontEnd',

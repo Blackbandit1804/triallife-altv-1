@@ -18,5 +18,7 @@ import './systems/sound';
 import './utility/notification';
 
 //views
-import './views/character/character';
+import './views/chareditor/chareditor';
+import './views/charselect/charselect';
+import './views/clothing/clothing';
 import './views/discord/discord';
