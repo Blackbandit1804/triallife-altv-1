@@ -11,6 +11,7 @@ import './extensions/view';
 import './events/client';
 
 //systems
+import './systems/meta';
 import './systems/quick-token';
 import './systems/sound';
 

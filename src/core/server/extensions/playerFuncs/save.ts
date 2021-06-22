@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { Database, getDatabase } from 'simplymongo';
-import { Character } from '../../../shared/interfaces/character';
+import { Character, CharacterStats } from '../../../shared/interfaces/character';
 import { Collections } from '../../interfaces/collection';
 import * as TlrpMath from '../../utility/math';
 import emit from './emit';
@@ -32,6 +32,10 @@ function setPosition(player: alt.Player, x: number, y: number, z: number): void 
     }
     player.acPosition = new alt.Vector3(x, y, z);
     player.pos = new alt.Vector3(x, y, z);
+}
+
+function setStats(player: alt.Player, stats: Partial<CharacterStats>): void {
+    player.acStats = stats;
 }
 
 function addArmour(p: alt.Player, value: number, exactValue: boolean = false): void {
@@ -97,4 +101,4 @@ function addMood(player: alt.Player, value: number, exactValue: boolean = false)
     field(player, 'stats', player.data.stats);
 }
 
-export default { field, partial, onTick, addHunger, addArmour, addHealth, addThirst, addMood, setPosition };
+export default { field, partial, onTick, addHunger, addArmour, addHealth, addThirst, addMood, setPosition, setStats };

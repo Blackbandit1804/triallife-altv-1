@@ -14,7 +14,7 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
     sync.design(p);
     alt.emitClient(p, SystemEvent.Ticks_Start);
     p.dimension = 0;
-    setter.frozen(p, true);
+    setter.frozen(p, false);
     alt.setTimeout(() => {
         if (p.data.pos) save.setPosition(p, p.data.pos.x, p.data.pos.y, p.data.pos.z);
         else save.setPosition(p, DefaultConfig.PLAYER_CREATE_SPAWN_POS.x, DefaultConfig.PLAYER_CREATE_SPAWN_POS.y, DefaultConfig.PLAYER_CREATE_SPAWN_POS.z);
@@ -24,7 +24,7 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
             p.data.exterior = null;
             save.field(p, 'exterior', p.data.exterior);
         }
-
+        if (p.data.stats) save.setStats(p, p.data.stats);
         if (p.data.stats.blood) save.addHealth(p, p.data.stats.blood, true);
         else save.addHealth(p, 7500, true);
 
