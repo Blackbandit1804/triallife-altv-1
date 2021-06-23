@@ -18,7 +18,6 @@ export class HUD {
         if (!HUD.view) {
             HUD.view = new alt.WebView(url, false);
             HUD.view.isVisible = false;
-            HUD.view.on('mouse:Focus', HUD.handleFocus);
             HUD.view.on('actions:Navigate', ActionManager.navigate);
             HUD.view.on('actions:Close', ActionManager.closed);
             HUD.view.on('actions:LeftRight', ActionManager.leftRight);
@@ -43,6 +42,8 @@ export class HUD {
         if (!value) return;
         HUD.setHudStatus(HudEventNames.Fuel, alt.Player.local.vehicle.fuel);
     }
+
+    static appendMessage(message: string) {}
 
     static updateSpeed(speed: string) {
         if (!HUD.view) return;
@@ -84,14 +85,13 @@ export class HUD {
         return;
     }
 
-    private static handleFocus(shouldFocus: boolean, focusName: string): void {
+    static handleFocus(shouldFocus: boolean, focusName: string): void {
         if (alt.isConsoleOpen()) return;
         try {
             alt.showCursor(shouldFocus);
         } catch (err) {
             return;
         }
-
         if (shouldFocus) {
             HUD.view.focus();
             interval = alt.setInterval(() => {
@@ -115,11 +115,7 @@ export class HUD {
             disableAllAttacks(true);
             return;
         }
-
-        if (interval) {
-            alt.clearInterval(interval);
-        }
-
+        if (interval) alt.clearInterval(interval);
         alt.Player.local[focusName] = false;
         HUD.view.unfocus();
         disableAllAttacks(false);
@@ -130,3 +126,4 @@ alt.on('enteredVehicle', () => HUD.setHudStatus(HudEventNames.SetVehicle, true))
 alt.on('leftVehicle', () => HUD.setHudStatus(HudEventNames.SetVehicle, false));
 alt.on(SystemEvent.Meta_Changed, HUD.processMetaChange);
 alt.onServer(SystemEvent.Ticks_Start, HUD.createView);
+alt.onServer(SystemEvent.Hud_Message_Append, HUD.appendMessage);

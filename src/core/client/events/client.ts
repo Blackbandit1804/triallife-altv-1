@@ -27,7 +27,6 @@ alt.on('disconnect', () => {
 });
 
 export const KEY_BINDS = {
-    INTERACTION_MODE: 18, // Left Alt
     TOOLBAR_ONE: 49, // 1
     TOOLBAR_TWO: 50, // 2
     TOOLBAR_THREE: 51, // 3
@@ -35,7 +34,7 @@ export const KEY_BINDS = {
     TOOLBAR_FIVE: 53, // 5
     INTERACT: 69, // E
     VEHICLE_FUNCS: 70, // F - Driver
-    VEHICLE_FUNCS_ALT: 71, // F - Passenger
+    VEHICLE_FUNCS_ALT: 71, // G - Passenger
     INVENTORY: 73, // I
     VEHICLE_LOCK: 88, // U
     VEHICLE_ENGINE: 89, // M

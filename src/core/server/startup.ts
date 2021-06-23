@@ -28,6 +28,7 @@ const imports = [
     './extensions/player',
     './extensions/vehicle',
     './events/server',
+    './systems/admin',
     './systems/blip',
     './systems/interaction',
     './systems/login',

@@ -18,6 +18,7 @@ import './systems/quick-token';
 import './systems/sound';
 
 //utility
+import './utility/reload';
 import './utility/notification';
 
 //views
