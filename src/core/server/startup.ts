@@ -18,7 +18,8 @@ const neededValues = [
     'DISCORD_BOT_SECRET',
     'DISCORD_BOT',
     'DISCORD_SERVER_ID',
-    'DISCORD_WHITELIST_ROLE'
+    'DISCORD_WHITELIST_ROLE',
+    'DISCORD_CHANNEL_ID'
 ];
 const name = 'tlrp';
 const startTime = Date.now();

@@ -29,17 +29,17 @@ export class HelpManager {
 
     private static drawKey() {
         if (!HelpManager.key) return;
-        drawText3D(`[${String.fromCharCode(HelpManager.key)}]`, HelpManager.position, 0.3, new alt.RGBA(255, 255, 255, 255));
+        drawText3D(`[~g~${String.fromCharCode(HelpManager.key)}~w~]`, HelpManager.position, 0.3, new alt.RGBA(255, 255, 255, 255));
     }
 
     private static drawShortPress() {
         if (!HelpManager.shortPress) return;
-        drawText3D(HelpManager.shortPress, new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1), 0.3, new alt.RGBA(255, 255, 255, 255));
+        drawText3D(`~b~${HelpManager.shortPress}`, new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1), 0.3, new alt.RGBA(255, 255, 255, 255));
     }
 
     private static drawLongPress() {
         if (!HelpManager.longPress) return;
-        drawText3D(HelpManager.longPress, new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1 * 2), 0.3, new alt.RGBA(255, 255, 255, 255));
+        drawText3D(`~b~${HelpManager.longPress}`, new alt.Vector3(HelpManager.position.x, HelpManager.position.y, HelpManager.position.z - 0.1 * 2), 0.3, new alt.RGBA(255, 255, 255, 255));
     }
 
     static isHelpShowing(): boolean {
