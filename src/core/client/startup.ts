@@ -18,7 +18,6 @@ import './systems/quick-token';
 import './systems/sound';
 
 //utility
-import './utility/freeze';
 import './utility/notification';
 
 //views
