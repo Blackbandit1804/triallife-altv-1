@@ -12,7 +12,7 @@ function animation(p: alt.Player, dictionary: string, name: string, flags: Anima
         Logger.warning(`Cannot play ${dictionary}@${name} while player is unconsciouse.`);
         return;
     }
-    alt.emitClient(p, 'animation:Play', dictionary, name, flags, duration);
+    alt.emitClient(p, SystemEvent.Animation_Play, dictionary, name, flags, duration);
 }
 
 function audioStream(stream: AudioStream) {

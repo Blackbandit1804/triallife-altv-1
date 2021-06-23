@@ -11,12 +11,16 @@ import './extensions/view';
 import './events/client';
 
 //systems
+import './systems/animation';
 import './systems/blip';
 import './systems/disable';
 import './systems/meta';
 import './systems/quick-token';
 import './systems/sound';
+import './systems/tick';
 import './systems/toolbar';
+import './systems/vehicle';
+import './systems/world';
 
 //utility
 import './utility/reload';

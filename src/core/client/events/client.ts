@@ -4,6 +4,7 @@ import { SystemEvent } from '../../shared/utility/enums';
 import { InteractionManager } from '../systems/interaction';
 import { InventoryManager } from '../views/inventory/inventory';
 import { ToolbarManager } from '../systems/toolbar';
+import { VehicleManager } from '../systems/vehicle';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
@@ -48,10 +49,10 @@ export const KEY_BINDS = {
 const KEY_UP_BINDS = {
     [KEY_BINDS.DEBUG_KEY]: { singlePress: handleDebugMessages },
     [KEY_BINDS.INVENTORY]: { singlePress: InventoryManager.handleView },
-    //[KEY_BINDS.VEHICLE_LOCK]: { singlePress: VehicleManager.handleToggleLock },
-    //[KEY_BINDS.VEHICLE_ENGINE]: { singlePress: VehicleManager.handleToggleEngine },
-    //[KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction') },
-    //[KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt') },
+    [KEY_BINDS.VEHICLE_LOCK]: { singlePress: VehicleManager.handleToggleLock },
+    [KEY_BINDS.VEHICLE_ENGINE]: { singlePress: VehicleManager.handleToggleEngine },
+    [KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction') },
+    [KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt') },
     [KEY_BINDS.INTERACT]: { singlePress: InteractionManager.triggerInteraction },
     [KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarManager.handleToolbarSwitch },
     [KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarManager.handleToolbarSwitch },
