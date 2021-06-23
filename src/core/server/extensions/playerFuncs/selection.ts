@@ -51,7 +51,6 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
         sync.thirst(p);
         sync.mood(p);
         sync.vehicles(p);
-        setter.frozen(p, false);
 
         BlipManager.populateGlobalBlips(p);
 
