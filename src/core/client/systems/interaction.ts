@@ -4,6 +4,8 @@ import { ActionMenu } from '../../shared/interfaces/action';
 import { Interaction } from '../../shared/interfaces/interaction';
 import { distance2d } from '../../shared/utility/usefull';
 import { KEY_BINDS } from '../events/client';
+import { HelpManager } from '../views/hud/managers/help';
+import { ActionManager } from '../views/hud/managers/action';
 
 const MAX_CHECKPOINT_DRAW = 8;
 const TIME_BETWEEN_CHECKS = 500;
@@ -48,7 +50,7 @@ export class InteractionManager {
         if (Date.now() > NEXT_HELP_CLEAR) {
             NEXT_HELP_CLEAR = Date.now() + 5000;
             delete alt.Player.local.otherInteraction;
-            //update help manager (null, null, null, null)
+            HelpManager.updateHelpText(null, null, null, null);
         }
 
         if (Date.now() > NEXT_MENU_UPDATE) {
@@ -70,16 +72,15 @@ export class InteractionManager {
         }
 
         if (Object.keys(dynamicActionMenu).length <= 0) return;
-        if (alt.Player.local.closestInteraction && alt.Player.local.closestInteraction.position) {
-            //send to helpmanager (alt.Player.local.closestInteraction.position, KEY_BINDS.INTERACT, alt.Player.local.closestInteraction.text, null)
-        } else if (alt.Player.local.otherInteraction) {
-            //send to helpmanager (alt.Player.local.otherInteraction.position, null, alt.Player.local.otherInteraction.short, alt.Player.local.otherInteraction.long)
-        }
+        if (alt.Player.local.closestInteraction && alt.Player.local.closestInteraction.position)
+            HelpManager.updateHelpText(alt.Player.local.closestInteraction.position, KEY_BINDS.INTERACT, alt.Player.local.closestInteraction.text, null);
+        else if (alt.Player.local.otherInteraction)
+            HelpManager.updateHelpText(alt.Player.local.otherInteraction.position, null, alt.Player.local.otherInteraction.short, alt.Player.local.otherInteraction.long);
 
         if (InteractionManager.pressedKey) {
             InteractionManager.pressedKey = false;
             InteractionManager.nextKeyPress = Date.now() + TIME_BETWEEN_CHECKS;
-            //send to action manager (dynamicActionMenu)
+            ActionManager.set(dynamicActionMenu);
         }
         return;
     }

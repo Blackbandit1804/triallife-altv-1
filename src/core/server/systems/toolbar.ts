@@ -9,23 +9,18 @@ export class ToolbarManager {
         if (slot == -1 || slot >= 5) return;
         const item = playerFuncs.inventory.getToolbarItem(player, slot);
         if (!item) {
-            playerFuncs.emit.message(player, LocaleController.get(LOCALE_KEYS.ITEM_NOT_EQUIPPED));
+            playerFuncs.emit.message(player, 'Sie haben kein Gegenstand in diesem Slot');
             return;
         }
         if (!isFlagEnabled(item.behavior, ItemType.IS_TOOLBAR)) return;
         if (isFlagEnabled(item.behavior, ItemType.IS_WEAPON)) {
-            ToolbarController.handleWeaponEquip(player, item);
+            ToolbarManager.handleWeaponEquip(player, item);
             return;
         }
-
-        // Handle Consume Item from Toolbar
         if (isFlagEnabled(item.behavior, ItemType.CONSUMABLE)) {
-            ToolbarController.handleToolbarUse(player, item);
+            ToolbarManager.handleToolbarUse(player, item);
             return;
         }
-
-        // Handle other item switch types
-        // No idea what this will be yet.
     }
 
     static handleWeaponEquip(player: alt.Player, item: Item) {
@@ -38,21 +33,21 @@ export class ToolbarManager {
             player.lastToolbarData = { equipped: true, slot: item.slot };
             player.giveWeapon(item.data.hash, 9999, true);
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.Player_Reload);
             return;
         }
         if (player.lastToolbarData.slot !== item.slot) {
             player.lastToolbarData = { equipped: true, slot: item.slot };
             player.giveWeapon(item.data.hash, 9999, true);
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.Player_Reload);
             return;
         }
         if (!player.lastToolbarData.equipped) {
             player.giveWeapon(item.data.hash, 9999, true);
             player.lastToolbarData.equipped = true;
             playerFuncs.emit.sound3D(player, 'item_equip', player);
-            alt.emitClient(player, SYSTEM_EVENTS.PLAYER_RELOAD);
+            alt.emitClient(player, SystemEvent.Player_Reload);
             return;
         }
         player.lastToolbarData.equipped = false;

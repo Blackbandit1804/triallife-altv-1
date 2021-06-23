@@ -4,7 +4,9 @@ import { HudEventNames, SystemEvent } from '../../../shared/utility/enums';
 import { handleFrontendSound } from '../../systems/sound';
 import { disableAllAttacks, disableAllControls } from '../../utility/disable-control';
 import { freezePlayer } from '../../utility/freeze';
-import { ActionManager } from './managers/action-manager';
+import { ActionManager } from './managers/action';
+import './managers/audio';
+import './managers/help';
 
 const url = `http://resource/client/views/hud/html/index.html`;
 

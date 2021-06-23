@@ -2,6 +2,8 @@ import * as alt from 'alt-client';
 import * as native from 'natives';
 import { SystemEvent } from '../../shared/utility/enums';
 import { InteractionManager } from '../systems/interaction';
+import { InventoryManager } from '../views/inventory/inventory';
+import { ToolbarManager } from '../systems/toolbar';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
@@ -36,8 +38,8 @@ export const KEY_BINDS = {
     VEHICLE_FUNCS: 70, // F - Driver
     VEHICLE_FUNCS_ALT: 71, // G - Passenger
     INVENTORY: 73, // I
-    VEHICLE_LOCK: 88, // U
-    VEHICLE_ENGINE: 89, // M
+    VEHICLE_LOCK: 85, // U
+    VEHICLE_ENGINE: 77, // M
     DEBUG_KEY: 112, // F1
     ADMINPANEL: 113, // F2
     PHONE: 190 // . or >
@@ -45,16 +47,17 @@ export const KEY_BINDS = {
 
 const KEY_UP_BINDS = {
     [KEY_BINDS.DEBUG_KEY]: { singlePress: handleDebugMessages },
-    //[KEY_BINDS.INVENTORY]: { singlePress: InventoryManager.handleView },
+    [KEY_BINDS.INVENTORY]: { singlePress: InventoryManager.handleView },
     //[KEY_BINDS.VEHICLE_LOCK]: { singlePress: VehicleManager.handleToggleLock },
     //[KEY_BINDS.VEHICLE_ENGINE]: { singlePress: VehicleManager.handleToggleEngine },
     //[KEY_BINDS.VEHICLE_FUNCS]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunction') },
     //[KEY_BINDS.VEHICLE_FUNCS_ALT]: { singlePress: (...args: any[]) => VehicleManager.triggerVehicleFunction('pressedVehicleFunctionAlt') },
-    [KEY_BINDS.INTERACT]: { singlePress: InteractionManager.triggerInteraction }
-    //[KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarManager.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarManager.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarManager.handleToolbarSwitch },
-    //[KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.INTERACT]: { singlePress: InteractionManager.triggerInteraction },
+    [KEY_BINDS.TOOLBAR_ONE]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.TOOLBAR_FIVE]: { singlePress: ToolbarManager.handleToolbarSwitch }
     //[KEY_BINDS.PHONE]: { singlePress: PhoneManager.togglePhone }
 };
 

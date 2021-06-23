@@ -18,3 +18,7 @@ export function sha256Random(data: string): string {
     const randomValue = TlrpMath.random(0, Number.MAX_SAFE_INTEGER);
     return sha256(`${data} + ${randomValue}`);
 }
+
+export function stripCategory(value: string): number {
+    return parseInt(value.replace(/.*-/gm, ''));
+}

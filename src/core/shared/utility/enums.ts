@@ -69,6 +69,7 @@ export enum ViewEvent {
 }
 
 export enum SystemEvent {
+    Items_Populate = 'items:Populate',
     Player_Reload = 'player:Reload',
     Player_Toolbar = 'player:Toolbar',
     Player_Ban = 'admin:Ban',

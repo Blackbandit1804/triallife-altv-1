@@ -9,6 +9,7 @@ export interface Item {
     behavior: ItemType;
     slot?: number;
     hash?: string;
+    weight?: number;
     equipment?: EquipmentType;
     data: { [key: string]: any };
 }
@@ -16,7 +17,6 @@ export interface Item {
 export interface ItemSpecial extends Item {
     dataName: string;
     dataIndex: number;
-    dataTab?: number;
     isInventory: boolean;
     isEquipment: boolean;
     isToolbar: boolean;

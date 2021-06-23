@@ -3,7 +3,9 @@ import { Character, CharacterStats } from '../../shared/interfaces/character';
 import { Account } from '../interfaces/account';
 import { DiscordUser } from '../interfaces/discord-user';
 import create from './playerFuncs/create';
+import economy from './playerFuncs/economy';
 import emit from './playerFuncs/emit';
+import inventory from './playerFuncs/inventory';
 import save from './playerFuncs/save';
 import select from './playerFuncs/selection';
 import set from './playerFuncs/setter';
@@ -48,4 +50,4 @@ declare module 'alt-server' {
     }
 }
 
-export const playerFuncs = { /*economy,*/ updater, emit /*, inventory*/, create, save, select, set, sync, utility };
+export const playerFuncs = { economy, updater, emit, inventory, create, save, select, set, sync, utility };
