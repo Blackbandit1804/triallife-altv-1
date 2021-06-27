@@ -1,5 +1,3 @@
-const { textSpanIntersectsWithPosition } = require('typescript');
-
 Vue.config.devtools = true;
 Vue.prototype.window = window;
 
