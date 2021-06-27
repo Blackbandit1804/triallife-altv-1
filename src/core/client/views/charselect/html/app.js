@@ -1,3 +1,5 @@
+const { textSpanIntersectsWithPosition } = require('typescript');
+
 Vue.config.devtools = true;
 Vue.prototype.window = window;
 
@@ -108,15 +110,6 @@ const app = new Vue({
         if ('alt' in window) {
             alt.on('charselect:SetData', this.setData);
             alt.emit('ready');
-        } else {
-            this.characters = [exampleCharacter, { ...exampleCharacter, ...{ design: { sex: 0 }, ...{ info: { name: 'Gina Banks', gender: 'female' } } } }];
-            this.infos = [
-                {
-                    title: 'Trial Life Alpha v1',
-                    message:
-                        'Willkommen zur ersten Alpha<br/><br/>Dieser Spielmodus ist in Arbeit.<br/>Dies bedeutet, dass es zu Fehlern kommen kann/wird.<br/><br/>Solltet ihr welche entdecken, dann meldet diese beim Team.<br/><br/>Mit freundlichen Grüßen<br/>euer Trial Life Team'
-                }
-            ];
-        }
+        } else this.setData([exampleCharacter, { ...exampleCharacter, ...{ design: { sex: 0 }, ...{ info: { name: 'Gina Banks', gender: 'female' } } } }], []);
     }
 });
