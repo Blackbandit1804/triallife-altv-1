@@ -8,68 +8,56 @@ const app = new Vue({
         return {
             pluginAddress: '127.0.0.1:38088',
             isConnected: false,
-            serverUniqueIdentifierFilter: null,
-            packetsSent: 0,
-            packetsReceived: 0,
-            lastCommand: '',
+            serverUniqueIdentifier: null,
             isErrored: false,
-            info: ''
+            ts3ip: '',
+            show: false
         };
     },
     methods: {
         connect() {
             try {
-                window.WebSocket = new window.WebSocket(`ws://${pluginAddress}/`);
-                webSocket.onerror = function (err) {
-                    isErrored = true;
-                    console.error('Teamspeak not running or wrong Plugin Version');
-                };
-                webSocket.onmessage = function (evt) {
+                this.window.webSocket = new window.WebSocket(`ws://${this.pluginAddress}/`);
+                this.window.webSocket.onmessage = function (evt) {
                     let object = JSON.parse(evt.data);
                     if (!('alt' in window)) return;
-                    if (typeof serverUniqueIdentifierFilter === 'string') {
-                        if (object.ServerUniqueIdentifier === serverUniqueIdentifierFilter) alt.emit('SaltyChat_OnMessage', evt.data);
-                        else if (typeof object.ServerUniqueIdentifier === 'undefined') alt.emit('SaltyChat_OnError', evt.data);
+                    if (typeof this.serverUniqueIdentifier === 'string') {
+                        if (object.ServerUniqueIdentifier === this.serverUniqueIdentifier) alt.emit('onMessage', evt.data);
+                        else if (typeof object.ServerUniqueIdentifier === 'undefined') alt.emit('onError', evt.data);
                     } else {
-                        if (typeof object.ServerUniqueIdentifier === 'string') alt.emit('SaltyChat_OnMessage', evt.data);
-                        else alt.emit('SaltyChat_OnError', evt.data);
+                        if (typeof object.ServerUniqueIdentifier === 'string') alt.emit('onMessage', evt.data);
+                        else alt.emit('onError', evt.data);
                     }
-                    packetsReceived++;
-                    updateHtml();
                 };
-                webSocket.onopen = function () {
-                    isConnected = true;
-                    if ('alt' in window) alt.emit('SaltyChat_OnConnected');
+                this.window.webSocket.onopen = function () {
+                    this.isConnected = true;
+                    if (!('alt' in window)) return;
+                    alt.emit('onConnected');
                 };
-                webSocket.onclose = function () {
-                    isConnected = false;
-                    if ('alt' in window) alt.emit('SaltyChat_OnDisconnected');
-                    if (!isErrored) connect();
+                this.window.webSocket.onclose = function () {
+                    this.isConnected = false;
+                    setTimeout(() => connect(), 500);
+                    if (!('alt' in window)) return;
+                    alt.emit('onDisconnected');
                 };
             } catch (err) {
                 return;
             }
         },
-        setWebSocketAddress(address) {
-            if (typeof address === 'string') pluginAddress = address;
-        },
-        setServerUniqueIdentifierFilter(serverUniqueIdentifier) {
-            if (typeof serverUniqueIdentifier === 'string') serverUniqueIdentifierFilter = serverUniqueIdentifier;
-        },
         runCommand(command) {
             if (!isConnected || typeof command !== 'string') return;
-            webSocket.send(command);
-            packetsSent++;
-            lastCommand = command;
-            updateHtml();
+            this.window.webSocket.send(command);
         },
-        updateHtml() {
-            this.info = `Last Command: ${lastCommand}</br>Packets Sent: ${packetsSent}</br>Packets Received ${packetsReceived}`;
+        nui(state, ts3ip = null) {
+            this.ts3ip = ts3ip;
+            this.show = state;
         }
     },
     mounted() {
-        if ('alt' in window) alt.on('salty:runCommand', this.runCommand);
         this.connect();
-        this.updateHtml();
+        this.nui(true, 'gremmler86.zap-ts3.com');
+        if (!('alt' in window)) return;
+        alt.on('runCommand', this.runCommand);
+        alt.on('showOverlay', this.nui);
     }
 });

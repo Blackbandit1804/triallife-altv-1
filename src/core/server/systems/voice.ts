@@ -5,39 +5,43 @@ import { playerFuncs } from '../extensions/player';
 import { getUniquePlayerHash } from '../utility/usefull';
 import { SaltyChat, SystemEvent } from '../../shared/utility/enums';
 import Logger from '../utility/Logger';
+import { send } from 'process';
+import { clearDrivebyTaskUnderneathDrivingTask } from 'natives';
 
-const voiceRanges: Array<number> = [0, 3.0, 8.0, 15.0, 32.0];
-
-class VoiceClient {
-    player: alt.Player;
-    TeamspeakName: string;
-    VoiceRange: number;
-    PhoneSpeaker: boolean;
-    RadioSpeaker: boolean;
-
-    constructor(player: alt.Player, tsName: string, voiceRange: number) {
-        this.player = player;
-        this.TeamspeakName = tsName;
-        this.VoiceRange = voiceRange;
-    }
+class Configuration {
+    ServerIdentifier: string;
+    SoundPack: string;
+    IngameChannel: number;
+    IngameChannelPassword: string;
+    SwissChannels: number[];
+    VoiceRanges: number[];
+    RadioTowers: RadioTower[];
+    RequestTalkStates: boolean;
+    RequestRadioTrafficStates: boolean;
+    MinimumPluginVersion: string;
+    MegaphoneRange: number;
+    NamePattern: string;
+    RadioRangeUltraShort: number;
+    RadioRangeShort: number;
+    RadioRangeLong: number;
 }
 
 class RadioChannel {
     name: string;
-    members: Array<Partial<{ radioChannel: RadioChannel; voiceClient: Partial<VoiceClient>; isSending: boolean }>>;
+    members: Array<Partial<RadioChannelMember>> = new Array<Partial<RadioChannelMember>>();
 
-    constructor(name) {
+    constructor(name: string, members: Array<Partial<RadioChannelMember>>) {
         this.name = name;
-        this.members = new Array<Partial<{ radioChannel: RadioChannel; voiceClient: Partial<VoiceClient>; isSending: boolean }>>();
+        if (members && members.length > 0) members.forEach((x) => this.members.push(x));
     }
 
     isMember(voiceClient: Partial<VoiceClient>): boolean {
         return this.members.findIndex((x) => x.voiceClient === voiceClient) !== -1;
     }
 
-    addMember(voiceClient: Partial<VoiceClient>): void {
+    addMember(voiceClient: Partial<VoiceClient>, isPrimary: boolean): void {
         if (this.members.findIndex((x) => x.voiceClient === voiceClient) !== -1) return;
-        this.members.push({ radioChannel: this, voiceClient });
+        this.members.push({ radioChannel: this, voiceClient, isPrimary });
         alt.emitClient(voiceClient.player, SaltyChat.SetRadioChannel, this.name);
         this.members.filter((x) => x.isSending).forEach((x) => alt.emitClient(x.voiceClient.player, SaltyChat.IsSending, x.voiceClient.player.id, true, false));
     }
@@ -46,183 +50,278 @@ class RadioChannel {
         const index = this.members.findIndex((x) => x.voiceClient === voiceClient);
         if (index === -1) return;
         const member = this.members[index];
-        this.members.splice(index, 1);
         if (!member) return;
-        if (member.voiceClient.RadioSpeaker) VoiceManager.voiceClients.forEach((x) => alt.emitClient(x.player, SaltyChat.IsSendingRelayed, voiceClient.player.id, false, true, false, '{}'));
-        else this.members.forEach((x) => alt.emitClient(x.voiceClient.player, SaltyChat.IsSending, voiceClient.player.id, false, true));
-        alt.emitClient(voiceClient.player, SaltyChat.SetRadioChannel, '');
-        this.members.filter((x) => x.isSending).forEach((x) => alt.emitClient(x.voiceClient.player, SaltyChat.IsSending, x.voiceClient.player.id, true, false));
+        if (member.isSending) {
+            if (member.voiceClient.isRadioSpeakerEnabled)
+                VoiceManager.voiceClients.forEach((client) =>
+                    alt.emitClient(client.player, 'SaltyChat:PlayerIsSendingRelayed', voiceClient.player, this.name, false, true, voiceClient.player.pos, false, new Array<string>())
+                );
+            else
+                VoiceManager.voiceClients.forEach((client) => alt.emitClient(client.player, 'SaltyChat:PlayerIsSending', voiceClient.player, this.name, false, true, voiceClient.player.pos));
+        }
+        this.members.splice(index, 1);
+        this.members
+            .filter((x) => x.isSending)
+            .forEach((client) => alt.emitClient(voiceClient.player, 'SaltyChat:PlayerIsSending', client.voiceClient.player, this.name, false, false, client.voiceClient.player.pos));
+        alt.emitClient(voiceClient.player, 'SaltyChat:RadioLeaveChannel', null, member.isPrimary);
     }
 
-    send(voiceClient: Partial<VoiceClient>, isSending: boolean): void {
-        const index = this.members.findIndex((x) => x.voiceClient === voiceClient);
-        if (index === -1) return;
-        const member = this.members[index];
-        let stateChanged: boolean = member.isSending !== isSending;
-        member.isSending = isSending;
-        let members: Array<Partial<{ radioChannel: RadioChannel; voiceClient: Partial<VoiceClient>; isSending: boolean }>> = this.members;
-        let onSpeaker: Array<Partial<{ radioChannel: RadioChannel; voiceClient: Partial<VoiceClient>; isSending: boolean }>> = this.members.filter(
-            (x) => x.voiceClient.RadioSpeaker && x.voiceClient != voiceClient
-        );
-        if (onSpeaker.length == 0) {
-            members.forEach((x) => alt.emitClient(x.voiceClient.player, SaltyChat.IsSending, voiceClient.player.id, isSending, stateChanged));
+    setSpeaker(voiceClient: VoiceClient, isEnabled: boolean) {
+        const member = this.members.find((x) => x.voiceClient == voiceClient);
+        if (!member || member.isSpeakerEnabled == isEnabled) return;
+        member.isSpeakerEnabled = isEnabled;
+        const sendingMembers = this.members.filter((x) => x.isSending);
+        if (!sendingMembers || sendingMembers.length === 0) return;
+        if (isEnabled || this.members.findIndex((x) => x.isSpeakerEnabled) !== -1) {
+            sendingMembers.forEach((sendingMember) => send(sendingMember.voiceClient, true));
+        } else {
+            sendingMembers.forEach((sendingMember) => {
+                VoiceManager.voiceClients
+                    .filter((x) => this.members.filter((m) => m.voiceClient != x))
+                    .forEach((client) => {
+                        alt.emitClient(
+                            client.player,
+                            'SaltyChat:PlayerIsSendingRelayed',
+                            sendingMember.voiceClient.player,
+                            this.name,
+                            false,
+                            false,
+                            sendingMember.voiceClient.player.pos,
+                            false,
+                            new Array<string>(0)
+                        );
+                    });
+            });
+        }
+    }
+
+    send(voiceClient: VoiceClient, isSending: boolean) {
+        const radioMember = this.members.find((x) => x.voiceClient === voiceClient);
+        if (!radioMember) return;
+        const stateChanged = radioMember.isSending != isSending;
+        radioMember.isSending = isSending;
+        const members = this.members;
+        const onSpeaker = members.filter((x) => x.voiceClient.isRadioSpeakerEnabled && x.voiceClient !== voiceClient);
+        if (onSpeaker.length === 0) {
+            members.forEach((member) =>
+                alt.emitClient(member.voiceClient.player, 'SaltyChat:PlayerIsSending', voiceClient.player, this.name, isSending, stateChanged, voiceClient.player.pos)
+            );
             return;
         }
-        let memberNames: string[] = onSpeaker.map((x) => x.voiceClient.TeamspeakName);
-        VoiceManager.voiceClients.forEach((x) =>
-            alt.emitClient(x.player, SaltyChat.IsSendingRelayed, voiceClient.player.id, isSending, stateChanged, this.isMember(x), JSON.stringify(memberNames))
+        const names = members.map((x) => x.voiceClient.teamspeakName);
+        VoiceManager.voiceClients.forEach((client) =>
+            alt.emitClient(client.player, 'SaltyChat:PlayerIsSendingRelayed', voiceClient.player, this.name, isSending, stateChanged, client.player.pos, this.isMember(client), names)
         );
+    }
+}
+
+class RadioChannelMember {
+    radioChannel: RadioChannel;
+    voiceClient: Partial<VoiceClient>;
+    isPrimary: boolean;
+    isSending: boolean;
+    isSpeakerEnabled: boolean;
+
+    constructor(radioChannel: RadioChannel, voiceClient: VoiceClient, isPrimary: boolean) {
+        this.radioChannel = radioChannel;
+        this.voiceClient = voiceClient;
+        this.isPrimary = isPrimary;
+    }
+}
+
+class RadioTower {
+    x: number;
+    y: number;
+    z: number;
+    range: number = 8000;
+}
+
+class VoiceClient {
+    player: alt.Player;
+    teamspeakName: string;
+    voiceRange: number;
+    isAlive: boolean;
+    isRadioSpeakerEnabled: boolean;
+    position: alt.Vector3;
+
+    constructor(player: alt.Player, tsName: string, voiceRange: number, isAlive: boolean, pos: alt.Vector3 = null) {
+        this.player = player;
+        this.teamspeakName = tsName;
+        this.voiceRange = voiceRange;
+        this.isAlive = isAlive;
+        if (pos) this.position = pos;
+    }
+}
+
+class ClientInitData {
+    teamSpeakName: string;
+    serverIdentifier: string;
+    soundPack: string;
+    ingameChannel: number;
+    ingameChannelPassword: string;
+
+    constructor(teamspeakName: string) {
+        this.teamSpeakName = teamspeakName;
+        this.serverIdentifier = VoiceManager.configuration.ServerIdentifier;
+        this.soundPack = VoiceManager.configuration.SoundPack;
+        this.ingameChannel = VoiceManager.configuration.IngameChannel;
+        this.ingameChannelPassword = VoiceManager.configuration.IngameChannelPassword;
+    }
+}
+
+class ClientSyncData {
+    voiceClients: Array<{ id: number; teamSpeakName: string; voiceRange: number; isAlive: boolean; position: { x: number; y: number; z: number } }>;
+    constructor(voiceClients: Array<VoiceClient>) {
+        voiceClients.forEach((client) => {
+            this.voiceClients.push({
+                id: client.player.id,
+                teamSpeakName: client.teamspeakName,
+                voiceRange: client.voiceRange,
+                isAlive: client.isAlive,
+                position: { x: client.position.x, y: client.position.y, z: client.position.z }
+            });
+        });
     }
 }
 
 export class VoiceManager {
-    static identifier: string;
-    static pluginVersion: string;
-    static soundPack: string;
-    static ingameChannel: string;
-    static ingameChannelPassword: string;
-    static swissChannels: Array<number>;
-    static radioTowers: Array<{ x: number; y: number; z: number }>;
-    static voiceClients: Array<Partial<VoiceClient>> = [];
-    static radioChannels: Array<RadioChannel> = [];
+    version: string = '2.3.5';
+
+    static configuration: Configuration;
+    static voiceClients: Array<VoiceClient> = new Array<VoiceClient>();
+    static radioChannels: Array<RadioChannel> = new Array<RadioChannel>();
 
     static initialize() {
-        VoiceManager.identifier = DefaultConfig.VOICE_SERVER_ID;
-        VoiceManager.pluginVersion = DefaultConfig.VOICE_PLUGIN_VERSION;
-        VoiceManager.soundPack = DefaultConfig.VOICE_SOUNDPACK;
-        VoiceManager.ingameChannel = DefaultConfig.VOICE_INGAME_CHANNEL;
-        VoiceManager.ingameChannelPassword = DefaultConfig.VOICE_INGAME_CHANNEL_PASSWORD;
-        VoiceManager.swissChannels = DefaultConfig.VOICE_SWISS_CHANNELS;
-        VoiceManager.radioTowers = DefaultConfig.VOICE_RADIO_TOWERS;
-        Logger.info('voice api initialized');
+        VoiceManager.configuration = new Configuration();
+        VoiceManager.configuration.ServerIdentifier = DefaultConfig.VOICE_SERVER_ID;
+        VoiceManager.configuration.SoundPack = DefaultConfig.VOICE_INGAME_CHANNEL_PASSWORD;
+        VoiceManager.configuration.IngameChannel = DefaultConfig.VOICE_INGAME_CHANNEL;
+        VoiceManager.configuration.IngameChannelPassword = DefaultConfig.VOICE_INGAME_CHANNEL_PASSWORD;
+        VoiceManager.configuration.SwissChannels = DefaultConfig.VOICE_SWISS_CHANNELS;
+        VoiceManager.configuration.VoiceRanges = [0, 3.0, 8.0, 15.0, 32.0];
+        VoiceManager.configuration.RadioTowers = DefaultConfig.VOICE_RADIO_TOWERS;
+        VoiceManager.configuration.RequestTalkStates = true;
+        VoiceManager.configuration.RequestRadioTrafficStates = false;
+        VoiceManager.configuration.MinimumPluginVersion = DefaultConfig.VOICE_PLUGIN_VERSION;
+        VoiceManager.configuration.MegaphoneRange = 50.0;
+        VoiceManager.configuration.NamePattern = 'TLRP_{guid}';
+        VoiceManager.configuration.RadioRangeUltraShort = 1800.0;
+        VoiceManager.configuration.RadioRangeShort = 3000.0;
+        VoiceManager.configuration.RadioRangeLong = 8000.0;
     }
 
-    static connect(player: alt.Player) {
+    static connect(player: alt.Player): void {
         const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
-        if (index !== -1) VoiceManager.voiceClients.splice(index, 1);
-        const voiceClient: VoiceClient = new VoiceClient(player, `TLRP_${getUniquePlayerHash(player, player.discord.id).substring(0, 24)}`, 3);
-        VoiceManager.voiceClients.push(voiceClient);
-        playerFuncs.emit.meta(player, 'voice', voiceClient.VoiceRange);
-        alt.emitClient(player, 'client::updateVoiceRange', voiceClient.VoiceRange);
-        alt.emitClient(
-            player,
-            SaltyChat.Initialize,
-            voiceClient.TeamspeakName,
-            VoiceManager.identifier,
-            VoiceManager.soundPack,
-            VoiceManager.ingameChannel,
-            VoiceManager.ingameChannelPassword,
-            JSON.stringify(VoiceManager.swissChannels),
-            JSON.stringify(VoiceManager.radioTowers)
-        );
+        const voiceClient = new VoiceClient(player, getTeamspeakName(player), VoiceManager.configuration.VoiceRanges[1], player.data.stats.blood > 2500);
+        if (index !== -1) VoiceManager.voiceClients[index] = voiceClient;
+        else VoiceManager.voiceClients.push(voiceClient);
+        alt.emitClient(player, 'SaltyChat:Initialize', new ClientInitData(voiceClient.teamspeakName));
+        const voiceClients = new Array<VoiceClient>();
         VoiceManager.voiceClients
             .filter((x) => x.player.discord.id !== player.discord.id)
-            .forEach((x) => {
-                alt.emitClient(player, SaltyChat.UpdateClient, x.player.id, x.TeamspeakName, x.VoiceRange);
-                alt.emitClient(x.player, SaltyChat.UpdateClient, voiceClient.TeamspeakName, voiceClient.player.id, voiceClient.VoiceRange);
+            .forEach((client) => {
+                voiceClients.push(new VoiceClient(client.player, client.teamspeakName, client.voiceRange, client.isAlive, client.position));
+                alt.emitClient(client.player, 'SaltyChat:UpdateClient', player, voiceClient.teamspeakName, voiceClient.voiceRange, voiceClient.isAlive, voiceClient.position);
             });
-        Logger.log(`Salty Chat -> Player ${player.discord.id} connected to Salty Chat`);
+        alt.emitClient(player, 'SaltyChat:SyncClients', new ClientSyncData(voiceClients));
     }
 
-    static disconnect(player: alt.Player, reason: string) {
+    static disconnect(player: alt.Player, reason: string = ''): void {
+        alt.emitAllClients('SaltyChat:RemoveClient', player.id);
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient: VoiceClient = VoiceManager.voiceClients[index];
+        VoiceManager.radioChannels.forEach((channel) => channel.removeMember(voiceClient));
+        VoiceManager.voiceClients.splice(index, 1);
+    }
+
+    static checkVersion(player: alt.Player, version: string): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        if (!isVersionAccepted(version)) player.kick(`[Salty Chat] Mindestversion benötigt: ${VoiceManager.configuration.MinimumPluginVersion}`);
+    }
+
+    static playerIsSending(player: alt.Player, radioChannelName: string, isSending: boolean): void {
         const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
         if (index === -1) return;
         const voiceClient = VoiceManager.voiceClients[index];
-        VoiceManager.voiceClients.splice(index, 1);
-        VoiceManager.radioChannels.filter((x) => x.isMember(voiceClient)).forEach((x) => x.removeMember(voiceClient));
-        VoiceManager.voiceClients.forEach((x) => alt.emitClient(x.player, SaltyChat.Disconnected, x.player.id));
-        alt.emitClient(player, SaltyChat.Disconnected, player.id);
-        Logger.log(`Salty Chat -> Player ${player.discord.id} disconnected from Salty Chat`);
-    }
-
-    static checkVersion(player: alt.Player, version: string) {
-        if (!isVersionAccepted(version)) player.kick(`[Salty Chat] Sie benötigen mindestens folgende Version: ${VoiceManager.pluginVersion}`);
-    }
-
-    static setVoiceRange(player: alt.Player, voiceRange: number): void {
-        const voiceClient = VoiceManager.voiceClients.find((x) => x.player.discord.id === player.discord.id);
-        if (!voiceClient) return;
-        if (voiceRanges.findIndex((x) => x === voiceRange) !== -1) {
-            voiceClient.VoiceRange = voiceRange;
-            VoiceManager.voiceClients.forEach((x) => alt.emitClient(x.player, SaltyChat.UpdateClient, player.id, voiceClient.TeamspeakName, voiceClient.VoiceRange));
-        }
-        playerFuncs.emit.meta(player, 'voice', voiceRange);
-        alt.emitClient(player, 'client::updateVoiceRange', voiceRange);
-    }
-
-    static joinRadio(player: alt.Player, name: string): void {
-        const voiceClient = VoiceManager.voiceClients.find((x) => x.player.discord.id === player.discord.id);
-        if (!voiceClient) return;
-        let radioChannel = VoiceManager.radioChannels.find((x) => x.isMember(voiceClient));
-        if (radioChannel) return;
-        radioChannel = getRadioChannel(name, true);
-        radioChannel.addMember(voiceClient);
-    }
-
-    static leaveRadio(player: alt.Player, name: string): void {
-        const voiceClient = VoiceManager.voiceClients.find((x) => x.player.discord.id === player.discord.id);
-        if (!voiceClient) return;
-        const radioChannel = getRadioChannel(name, false);
-        if (!radioChannel) return;
-        radioChannel.removeMember(voiceClient);
-        if (radioChannel.members.length == 0) {
-            const index = VoiceManager.radioChannels.findIndex((x) => x.name === name);
-            VoiceManager.radioChannels.splice(index, 1);
-        }
-    }
-
-    static sendingOnRadio(player: alt.Player, name: string, isSending: boolean): void {
-        const voiceClient = VoiceManager.voiceClients.find((x) => x.player.discord.id === player.discord.id);
-        if (!voiceClient) return;
-        const radioChannel = getRadioChannel(name, false);
+        const radioChannel = getRadioChannel(radioChannelName, false);
         if (!radioChannel || !radioChannel.isMember(voiceClient)) return;
         radioChannel.send(voiceClient, isSending);
     }
 
-    static setRadioSpeaker(player: alt.Player, toggle: boolean) {
-        const voiceClient = VoiceManager.voiceClients.find((x) => x.player.discord.id === player.discord.id);
-        if (!voiceClient) return;
-        voiceClient.RadioSpeaker = toggle;
+    static setVoiceRange(player: alt.Player, range: number): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        if (VoiceManager.configuration.VoiceRanges.findIndex((x) => x === range) == -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        voiceClient.voiceRange = range;
+        alt.emitAllClients('SaltyChat:UpdateClientRange', player, range);
+    }
+
+    static isUsingMegaphone(player: alt.Player, state: boolean): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        alt.emitAllClients('SaltyChat:IsUsingMegaphone', player, VoiceManager.configuration.MegaphoneRange, state, player.pos);
+    }
+
+    static toggleRadioSpeaker(player: alt.Player, state: boolean): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        voiceClient.isRadioSpeakerEnabled = state;
+        getRadioChannelMembership(voiceClient).forEach((member) => member.radioChannel.setSpeaker(voiceClient, state));
+    }
+
+    static setPlayerAlive(player: alt.Player, isAlive: boolean): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        voiceClient.isAlive = isAlive;
+        alt.emitAllClients('SaltyChat:UpdateClientAlive', voiceClient.player, isAlive);
+    }
+
+    static updateRadioTowers(): void {
+        alt.emitAllClients('SaltyChat:UpdateRadioTowers', VoiceManager.configuration.RadioTowers);
     }
 }
 
+function getRadioChannelMembership(voiceClient: VoiceClient): Array<Partial<RadioChannelMember>> {
+    const memberships = new Array<Partial<RadioChannelMember>>();
+    const channels = VoiceManager.radioChannels.filter((radioChannel) => radioChannel.members.findIndex((m) => m.voiceClient === voiceClient) && radioChannel);
+    channels.forEach((channel) => {
+        channel.members.forEach((member) => memberships.push(member));
+    });
+    return memberships;
+}
+
+function getRadioChannel(name: string, create: boolean): RadioChannel {
+    let radioChannel = VoiceManager.radioChannels.find((x) => x.name === name);
+    if (!radioChannel && create) {
+        radioChannel = new RadioChannel(name, new Array<RadioChannelMember>());
+        VoiceManager.radioChannels.push(radioChannel);
+    }
+    return radioChannel;
+}
+
+function getTeamspeakName(player: alt.Player) {
+    let name = getUniquePlayerHash(player, player.discord.id).substring(0, 24);
+    return name;
+}
+
 function isVersionAccepted(version: string): boolean {
-    if (!version || version === '') return true;
+    if (!version || version === '') return false;
     try {
-        let minVersion: string[] = VoiceManager.pluginVersion.split('.');
-        let actVersion: string[] = version.split('.');
-        let counter: number = 0;
-        if (actVersion.length >= minVersion.length) counter = minVersion.length;
-        else actVersion.length;
+        const minVersion: string[] = VoiceManager.configuration.MinimumPluginVersion.split('.');
+        const curVersion: string[] = version.split('.');
+        const counter = curVersion.length >= minVersion.length ? curVersion.length : minVersion.length;
         for (let i = 0; i < counter; i++) {
-            let min: number = parseInt(minVersion[i]);
-            let cur: number = parseInt(actVersion[i]);
+            const min = parseInt(minVersion[i]);
+            const cur = parseInt(curVersion[i]);
             return cur > min;
         }
     } catch (err) {
         return false;
     }
     return true;
-}
-
-function getRadioChannel(name: string, create: boolean): RadioChannel {
-    let radioChannel: RadioChannel = VoiceManager.radioChannels.find((x) => x.name === name);
-    if (!radioChannel) {
-        radioChannel = new RadioChannel(name);
-        VoiceManager.radioChannels.push(radioChannel);
-    }
-    return radioChannel;
-}
-
-alt.on('playerDisconnect', VoiceManager.disconnect);
-alt.on(SystemEvent.Voice_Add, VoiceManager.connect);
-alt.on(SystemEvent.Voice_Remove, VoiceManager.disconnect);
-alt.onClient(SaltyChat.CheckVersion, VoiceManager.checkVersion);
-alt.onClient(SaltyChat.SetVoiceRange, VoiceManager.setVoiceRange);
-alt.onClient(SaltyChat.IsSending, VoiceManager.sendingOnRadio);
-alt.onClient('voice:RadioJoin', VoiceManager.joinRadio);
-alt.onClient('voice:RadioLeave', VoiceManager.leaveRadio);
-
-export default function loader() {
-    VoiceManager.initialize();
 }
