@@ -37,7 +37,7 @@ declare module 'alt-server' {
         nextUnconsciouseSpawn: number;
         nextPingTime: number;
         nextItemSync: number;
-        nextFoodSync: number;
+        nextStatSync: number;
         nextPlayTime: number;
 
         lastToolbarData: { equipped: boolean; slot: number };

@@ -33,6 +33,7 @@ const imports = [
     './systems/blip',
     './systems/interaction',
     './systems/login',
+    './systems/tick',
     './systems/world',
     './views/chareditor',
     './views/charselect',
