@@ -17,7 +17,7 @@
         "allowSyntheticDefaultImports": true,
         "composite": true
     },
-    "include": ["./src/**/*.ts"],
+    "include": ["./src/**/*.ts", "./src/core/server/configs/changelog.json"],
     "watchOptions": {
         "watchFile": "useFsEvents",
         "watchDirectory": "useFsEvents",

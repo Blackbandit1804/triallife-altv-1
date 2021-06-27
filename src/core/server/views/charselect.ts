@@ -7,6 +7,7 @@ import { playerFuncs } from '../extensions/player';
 import * as sm from 'simplymongo';
 import { Collections } from '../interfaces/collection';
 import Logger from '../utility/Logger';
+import changelogs from '../configs/changelog.json';
 
 const db: sm.Database = sm.getDatabase();
 
@@ -26,7 +27,7 @@ export async function openCharSelect(player: Player): Promise<void> {
     player.characters = characters;
     player.rot = { ...DefaultConfig.CHARACTER_SELECT_ROT } as alt.Vector3;
     playerFuncs.save.setPosition(player, pos.x, pos.y, pos.z);
-    alt.setTimeout(() => alt.emitClient(player, ViewEvent.Character_Show, characters, []), 1000);
+    alt.setTimeout(() => alt.emitClient(player, ViewEvent.Character_Show, characters, changelogs), 1000);
 }
 
 export async function handleSelectCharacter(player: Player, id: string): Promise<void> {
@@ -75,9 +76,9 @@ async function handleDeleteCharacter(player: Player, id: string): Promise<void> 
     }
     const character_uid = id;
     await db.deleteById(character_uid, Collections.Characters);
-    const characters: Array<Character> = await db.fetchAllByField<Character>('account_id', player.account._id, Collections.Characters);
+    const characters: Array<Character> = await db.fetchAllByField<Character>('accId', player.account._id, Collections.Characters);
     player.pendingCharSelect = true;
-    if (characters.length <= 0) {
+    if (characters.length == 0) {
         player.characters = [];
         handleCreateCharacter(player);
         return;
@@ -86,5 +87,5 @@ async function handleDeleteCharacter(player: Player, id: string): Promise<void> 
     const pos = { ...DefaultConfig.CHARACTER_SELECT_POS };
     playerFuncs.save.setPosition(player, pos.x, pos.y, pos.z);
     player.characters = characters;
-    alt.emitClient(player, ViewEvent.Character_Show, characters);
+    alt.emitClient(player, ViewEvent.Character_Show, characters, changelogs);
 }
