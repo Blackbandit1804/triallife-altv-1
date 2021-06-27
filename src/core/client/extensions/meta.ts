@@ -9,6 +9,8 @@ export interface Meta {
     food: number;
     water: number;
     mood: number;
+    blood: number;
+    voice: number;
     design: Design;
     inventory: { maxWeight: number; money: number; items: Array<Partial<Item>> };
     equipment: Array<Partial<Item>>;
