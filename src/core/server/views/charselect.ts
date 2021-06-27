@@ -1,7 +1,7 @@
 import * as alt from 'alt-server';
 import { Player } from 'alt-server';
 import { Character } from '../../shared/interfaces/character';
-import { ViewEvent } from '../../shared/utility/enums';
+import { SystemEvent, ViewEvent } from '../../shared/utility/enums';
 import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/player';
 import * as sm from 'simplymongo';
@@ -16,6 +16,7 @@ alt.onClient(ViewEvent.Character_Create, handleCreateCharacter);
 alt.onClient(ViewEvent.Character_Delete, handleDeleteCharacter);
 
 export async function openCharSelect(player: Player): Promise<void> {
+    alt.emit(SystemEvent.Voice_Remove, player, 'charselect');
     const characters: Array<Character> = await db.fetchAllByField<Character>('accId', player.account._id, Collections.Characters);
     player.pendingCharSelect = true;
     if (characters.length === 0) {

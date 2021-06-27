@@ -106,11 +106,12 @@ export enum SystemEvent {
     Ticks_Start = 'ticks:Start',
     Time_Update = 'time:Update',
     Weather_Update = 'weather:Update',
-    Voice_Add = 'voice:Add',
-    Voice_Joined = 'voice:Joined'
+    Voice_Add = 'voice:connect',
+    Voice_Remove = 'voice:disconnect'
 }
 
 export enum SaltyChat {
+    Connected = 'SaltyChat_OnConnected',
     Initialize = 'SaltyChat_Initialize',
     CheckVersion = 'SaltyChat_CheckVersion',
     UpdateClient = 'SaltyChat_UpdateClient',

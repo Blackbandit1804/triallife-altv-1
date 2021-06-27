@@ -12,7 +12,8 @@ const app = new Vue({
             packetsSent: 0,
             packetsReceived: 0,
             lastCommand: '',
-            isErrored: false
+            isErrored: false,
+            info: ''
         };
     },
     methods: {
@@ -34,6 +35,7 @@ const app = new Vue({
                         else alt.emit('SaltyChat_OnError', evt.data);
                     }
                     packetsReceived++;
+                    updateHtml();
                 };
                 webSocket.onopen = function () {
                     isConnected = true;
@@ -59,10 +61,15 @@ const app = new Vue({
             webSocket.send(command);
             packetsSent++;
             lastCommand = command;
+            updateHtml();
+        },
+        updateHtml() {
+            this.info = `Last Command: ${lastCommand}</br>Packets Sent: ${packetsSent}</br>Packets Received ${packetsReceived}`;
         }
     },
     mounted() {
         if ('alt' in window) alt.on('salty:runCommand', this.runCommand);
         this.connect();
+        this.updateHtml();
     }
 });

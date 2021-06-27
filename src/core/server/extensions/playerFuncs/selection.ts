@@ -1,9 +1,10 @@
 import * as alt from 'alt-server';
 import { Character } from '../../../shared/interfaces/character';
-import { SystemEvent } from '../../../shared/utility/enums';
+import { SaltyChat, SystemEvent } from '../../../shared/utility/enums';
 import { DefaultConfig } from '../../configs/settings';
 import { BlipManager } from '../../systems/blip';
 import { TlrpEvent } from '../../utility/enums';
+import { getUniquePlayerHash } from '../../utility/usefull';
 
 import emit from './emit';
 import save from './save';
@@ -55,6 +56,7 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
 
         BlipManager.populateGlobalBlips(p);
 
+        alt.emitClient(p, SaltyChat.Connected);
         alt.emit(SystemEvent.Voice_Add, p);
         alt.emit(TlrpEvent.PLAYER_SELECTED_CHARACTER, p);
     }, 500);
