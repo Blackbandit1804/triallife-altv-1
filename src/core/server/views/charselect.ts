@@ -16,7 +16,7 @@ alt.onClient(ViewEvent.Character_Create, handleCreateCharacter);
 alt.onClient(ViewEvent.Character_Delete, handleDeleteCharacter);
 
 export async function openCharSelect(player: Player): Promise<void> {
-    alt.emit(SystemEvent.Voice_Remove, player, 'charselect');
+    alt.emit(SystemEvent.Voice_Remove, player);
     const characters: Array<Character> = await db.fetchAllByField<Character>('accId', player.account._id, Collections.Characters);
     player.pendingCharSelect = true;
     if (characters.length === 0) {
