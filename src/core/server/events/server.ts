@@ -1,5 +1,7 @@
 import * as alt from 'alt-server';
+import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/player';
+import { TlrpEvent } from '../utility/enums';
 
 alt.on('Discord:Opened', async (player: alt.Player): Promise<void> => {
     alt.setTimeout(() => {

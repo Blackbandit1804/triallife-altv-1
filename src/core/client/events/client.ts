@@ -5,29 +5,11 @@ import { InteractionManager } from '../systems/interaction';
 import { InventoryManager } from '../views/inventory/inventory';
 import { ToolbarManager } from '../systems/toolbar';
 import { VehicleManager } from '../systems/vehicle';
+import { SharedConfig } from '../../shared/configs/settings';
+import { drawText2D } from '../utility/text';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
-
-alt.on('connectionComplete', async () => {
-    native.destroyAllCams(true);
-    native.renderScriptCams(false, false, 0, false, false, false);
-    native.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
-    native.doScreenFadeOut(0);
-    native.triggerScreenblurFadeOut(0);
-    native.freezeEntityPosition(alt.Player.local.scriptID, true);
-    native.displayRadar(false);
-    native.setMinimapComponent(15, true, 0);
-    if (alt.beginScaleformMovieMethodMinimap('SETUP_HEALTH_ARMOUR')) {
-        native.scaleformMovieMethodAddParamInt(3);
-        native.endScaleformMovieMethod();
-    }
-});
-
-alt.on('disconnect', () => {
-    native.stopAudioScenes();
-    native.freezeEntityPosition(alt.Player.local.scriptID, false);
-});
 
 export const KEY_BINDS = {
     TOOLBAR_ONE: 49, // 1
@@ -66,12 +48,42 @@ const KEY_UP_BINDS = {
 
 let keyPressTimes = {};
 let nextKeyPress = Date.now() + DELAY_BETWEEN_PRESSES;
+let interval: number;
+let deathTime: number;
+
+//#region server-calls
 
 alt.onServer(SystemEvent.Ticks_Start, () => {
     alt.on('keyup', handleKeyUp);
     alt.on('keydown', handleKeyDown);
     alt.everyTick(handleIdleCam);
 });
+
+//#endregion
+
+//#region client-calls
+alt.on('connectionComplete', async () => {
+    native.destroyAllCams(true);
+    native.renderScriptCams(false, false, 0, false, false, false);
+    native.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
+    native.doScreenFadeOut(0);
+    native.triggerScreenblurFadeOut(0);
+    native.freezeEntityPosition(alt.Player.local.scriptID, true);
+    native.displayRadar(false);
+    native.setMinimapComponent(15, true, 0);
+    if (alt.beginScaleformMovieMethodMinimap('SETUP_HEALTH_ARMOUR')) {
+        native.scaleformMovieMethodAddParamInt(3);
+        native.endScaleformMovieMethod();
+    }
+});
+
+alt.on('disconnect', () => {
+    native.stopAudioScenes();
+    native.freezeEntityPosition(alt.Player.local.scriptID, false);
+});
+
+alt.on(SystemEvent.Meta_Changed, handleMetaChanged);
+//#endregion
 
 function handleDebugMessages(key: number) {
     alt.log(`POSITION:`);
@@ -122,4 +134,27 @@ function handleKeyUp(key: number) {
 function handleIdleCam() {
     native.invalidateIdleCam();
     native.invalidateVehicleIdleCam();
+}
+
+function handleMetaChanged(key: string, newValue: any, oldValue: any): void {
+    if (key !== 'isUnconsciouse') return;
+    if (newValue) {
+        if (!interval) {
+            interval = alt.setInterval(handleUnconsciouseMovement, 0);
+            deathTime = Date.now() + SharedConfig.RESPAWN_TIME;
+            native.switchOutPlayer(alt.Player.local.scriptID, 0, 1);
+        }
+        return;
+    }
+    if (!interval) return;
+    native.clearPedTasksImmediately(alt.Player.local.scriptID);
+    alt.clearInterval(interval);
+    native.switchInPlayer(alt.Player.local.scriptID);
+    interval = null;
+}
+
+function handleUnconsciouseMovement() {
+    if (!native.isPedRagdoll(alt.Player.local.scriptID)) native.setPedToRagdoll(alt.Player.local.scriptID, -1, -1, 0, false, false, false);
+    const timeLeft = deathTime - Date.now();
+    if (timeLeft > 0) drawText2D(`${(timeLeft / 1000).toFixed(2)} Sekunden bis Sie wieder aufwachen`, { x: 0.5, y: 0.2 }, 0.5, new alt.RGBA(255, 255, 255, 255));
 }
