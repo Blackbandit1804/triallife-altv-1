@@ -52,7 +52,6 @@ export class GameInstance {
     public ultraShortRangeDistance: number;
     public shortRangeDistance: number;
     public longRangeDistance: number;
-    public readonly versionInfo: string = '2.0.1';
 
     constructor(
         serverUniqueIdentifier: string,
