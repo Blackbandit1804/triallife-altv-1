@@ -28,9 +28,8 @@ app.use('/img', express.static(imgPath));
 async function handleAuthentication(req: any, res: any): Promise<void> {
     const token: any = req.query.code;
     const userToken: any = req.query.state;
-    let request;
     const html = fs.readFileSync(path.join(htmlPath, '/index.html'));
-
+    let request;
     if (!token || !userToken) {
         res.json({ html: html.toString(), data: { success: false, info: 'Sie haben kein Token bekommen' } }, (err) => {});
         return;
