@@ -97,6 +97,7 @@ const app = new Vue({
         },
         selectItem(e, index) {
             if (this.dragging) return;
+
             if (e.button === 2) {
                 if (!e.target.id || e.target.id === '') return;
                 if (e.shiftKey) {
@@ -123,16 +124,21 @@ const app = new Vue({
                 alt.emit('inventory:Use', e.target.id);
                 return;
             }
+
             this.dragging = true;
+
             const element = document.getElementById(e.target.id);
+
             if (!element) {
                 this.dragging = false;
                 return;
             }
+
             this.dragAndDrop.shiftX = e.clientX - element.getBoundingClientRect().left;
             this.dragAndDrop.shiftY = e.clientY - element.getBoundingClientRect().top;
             this.dragAndDrop.selectedElement = { style: element.style, classList: element.classList.toString() };
             this.dragAndDrop.itemIndex = e.target.id;
+
             const clonedElement = element.cloneNode(true);
             clonedElement.id = `cloned-${element.id}`;
             document.body.append(clonedElement);
@@ -141,14 +147,17 @@ const app = new Vue({
             this.clonedElement.classList.add('no-animation');
             this.clonedElement.style.left = `${e.clientX - this.dragAndDrop.shiftX}px`;
             this.clonedElement.style.top = `${e.clientY - this.dragAndDrop.shiftY}px`;
+
             element.style.pointerEvents = 'none';
             element.style.setProperty('border', '2px dashed #2d2d2d', 'important');
             element.style.setProperty('opacity', '0.2', 'important');
             element.classList.add('grey', 'darken-4');
             element.classList.remove('grey', 'darken-3');
+
             document.addEventListener('mouseup', this.dropItem);
             document.addEventListener('mouseover', this.mouseOver);
             document.addEventListener('mousemove', this.updatePosition);
+
             if (!('alt' in window)) return;
             alt.emit('play:Sound', 'TOGGLE_ON', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
         },
@@ -171,34 +180,47 @@ const app = new Vue({
         },
         async dropItem(e) {
             this.dragging = false;
+
             document.removeEventListener('mouseover', this.mouseOver);
             document.removeEventListener('mouseup', this.dropItem);
             document.removeEventListener('mousemove', this.updatePosition);
+
             if (this.lastHoverID) {
                 const element = document.getElementById(this.lastHoverID);
                 element.style.removeProperty('border');
                 element.style.removeProperty('box-shadow');
                 this.lastHoverID = null;
             }
+
             this.clonedElement.remove();
+
             const selectElement = document.getElementById(this.dragAndDrop.itemIndex);
             selectElement.style = this.dragAndDrop.selectedElement.style;
             selectElement.style.pointerEvents = 'all';
             selectElement.classList.remove(...selectElement.classList);
             selectElement.classList.add(...this.dragAndDrop.selectedElement.classList.split(' '));
+
             this.x = 0;
             this.y = 0;
+
             if (!e || !e.target || !e.target.id || e.target.id === '') return;
+
             const selectedSlot = this.dragAndDrop.itemIndex;
             const endSlot = e.target.id;
             const endElement = document.getElementById(endSlot);
+
             const isGroundItem = this.dragAndDrop.itemIndex.includes('g-');
             const isNullEndSlot = endElement.classList.contains('is-null-item');
             const isInventoryEndSlot = !endElement.id.includes('i-');
+
             if (isGroundItem && !isNullEndSlot && !isInventoryEndSlot) return;
+
             if (selectedSlot === endSlot) return;
+
             const hash = selectElement.dataset.hash ? `${selectElement.dataset.hash}` : null;
+
             if ('alt' in window) alt.emit('inventory:Process', selectedSlot, endSlot, hash);
+
             await this.updateLocalData(selectedSlot, endSlot);
         },
         updateLocalData(selectedSlot, endSlot) {
@@ -252,7 +274,8 @@ const app = new Vue({
         isFlagEnabled(flags, flagToCheck) {
             let currentFlags = flags;
             let currentFlagToCheck = flagToCheck;
-            return (currentFlags & currentFlagToCheck) !== 0;
+            if ((currentFlags & currentFlagToCheck) !== 0) return true;
+            return false;
         },
         setLocales(locales) {
             this.locales = locales;

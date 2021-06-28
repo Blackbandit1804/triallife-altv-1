@@ -63,6 +63,7 @@ export class InventoryManager {
             playerFuncs.sync.inventory(player);
             return;
         }
+        alt.log(`processItemMovement | selectData: ${JSON.stringify(selectData)}\tendData: ${JSON.stringify(endData)}`);
         playerFuncs.save.field(player, selectData.name, player.data[selectData.name]);
         playerFuncs.save.field(player, endData.name, player.data[endData.name]);
         playerFuncs.sync.inventory(player);
