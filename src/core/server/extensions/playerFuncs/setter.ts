@@ -50,6 +50,7 @@ function unconsciouse(p: alt.Player, killer: alt.Player = null, weaponHash: any 
         save.field(p, 'isUnconsciouse', true);
         alt.log(`(${p.id}) ${p.data.info.name} has become unconsciouse.`);
     }
+    alt.setTimeout(() => respawned(p, null), DefaultConfig.RESPAWN_TIME);
     if (!p.nextUnconsciouseSpawn) p.nextUnconsciouseSpawn = Date.now() + DefaultConfig.RESPAWN_TIME;
     alt.emit(TlrpEvent.PLAYER_UNCONSCIOUSE, p);
 }
