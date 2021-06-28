@@ -62,6 +62,7 @@ function handleEarlyConnect(player: alt.Player): void {
 function handleBootup() {
     alt.off('playerConnect', handleEarlyConnect);
     Logger.info(`Server Warmup Complete. Now accepting connections.`);
+    Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
 }
 
 async function handleFinish() {
@@ -72,7 +73,6 @@ async function handleFinish() {
     import('./utility/console');
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
-    Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
     alt.emit(TlrpEvent.TLRP_READY);
 }
 
