@@ -110,30 +110,6 @@ export enum SystemEvent {
     Voice_Remove = 'voice:disconnect'
 }
 
-export enum SaltyChat {
-    Connected = 'SaltyChat_OnConnected',
-    Initialize = 'SaltyChat_Initialize',
-    CheckVersion = 'SaltyChat_CheckVersion',
-    UpdateClient = 'SaltyChat_UpdateClient',
-    Disconnected = 'SaltyChat_Disconnected',
-    TalkStateChanged = 'SaltyChat_TalkStateChanged',
-    MicStateChanged = 'SaltyChat_MicStateChanged',
-    MicEnabledChanged = 'SaltyChat_MicEnabledChanged',
-    SoundStateChanged = 'SaltyChat_SoundStateChanged',
-    SoundEnabledChanged = 'SaltyChat_SoundEnabledChanged',
-    PlayerDied = 'SaltyChat_PlayerDied',
-    PlayerRevived = 'SaltyChat_PlayerRevived',
-    SetVoiceRange = 'SaltyChat_SetVoiceRange',
-    EstablishedCall = 'SaltyChat_EstablishedCall',
-    EstablishedCallRelayed = 'SaltyChat_EstablishedCallRelayed',
-    EndCall = 'SaltyChat_EndCall',
-    SetRadioChannel = 'SaltyChat_SetRadioChannel',
-    IsSending = 'SaltyChat_IsSending',
-    IsSendingRelayed = 'SaltyChat_IsSendingRelayed',
-    UpdateRadioTowers = 'SaltyChat_UpdateRadioTowers',
-    IsUsingMegaphone = 'SaltyChat_IsUsingMegaphone'
-}
-
 export enum AnimationFlag {
     NORMAL = 0,
     REPEAT = 1,

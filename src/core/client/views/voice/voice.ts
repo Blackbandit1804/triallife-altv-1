@@ -379,7 +379,7 @@ export class Voice {
                 }
             } else {
                 if (voiceClient.distanceCulled) voiceClient.distanceCulled = false;
-                if (Config.automaticPlayerHealth) voiceClient.isAlive = nextPlayer.health > 0;
+                if (Config.automaticPlayerHealth) voiceClient.isAlive = nextPlayer.meta.blood > 2500;
                 voiceClient.lastPosition = nextPlayer.pos;
                 let muffleIntensity = null;
                 if (Config.enableMuffling) {
