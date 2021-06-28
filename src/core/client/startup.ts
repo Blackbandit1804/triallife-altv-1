@@ -34,4 +34,3 @@ import './views/charselect/charselect';
 import './views/clothing/clothing';
 import './views/discord/discord';
 import './views/inventory/inventory';
-import './views/voice/voice';
