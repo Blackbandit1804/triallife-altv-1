@@ -38,9 +38,8 @@ function handlePurchase(player: alt.Player, equipmentSlot: number, component: Cl
     newItem.quantity = 1;
     newItem.equipment = equipmentSlot;
     let didGetAdded = false;
-    if (playerFuncs.inventory.isEquipmentSlotFree(player, equipmentSlot)) {
-        didGetAdded = playerFuncs.inventory.equipmentAdd(player, newItem, equipmentSlot);
-    } else {
+    if (playerFuncs.inventory.isEquipmentSlotFree(player, equipmentSlot)) didGetAdded = playerFuncs.inventory.equipmentAdd(player, newItem, equipmentSlot);
+    else {
         const openSlot = playerFuncs.inventory.getFreeInventorySlot(player);
         if (!openSlot) {
             playerFuncs.emit.sound2D(player, 'item_error');

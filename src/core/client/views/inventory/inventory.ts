@@ -38,11 +38,6 @@ export class InventoryManager {
     }
 
     static handleProcess(selectedSlot, endSlot, hash): void {
-        alt.log(`
-            selectedSlot: ${selectedSlot}\n
-            endSlot: ${endSlot}\n
-            hash: ${hash}\n
-        `);
         alt.emitServer(ViewEvent.Inventory_Process, selectedSlot, endSlot, hash);
     }
 

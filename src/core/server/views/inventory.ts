@@ -63,7 +63,6 @@ export class InventoryManager {
             playerFuncs.sync.inventory(player);
             return;
         }
-        alt.log(`processItemMovement | selectData: ${JSON.stringify(selectData)}\tendData: ${JSON.stringify(endData)}`);
         playerFuncs.save.field(player, selectData.name, player.data[selectData.name]);
         playerFuncs.save.field(player, endData.name, player.data[endData.name]);
         playerFuncs.sync.inventory(player);
@@ -343,3 +342,8 @@ const DataHelpers: Array<CategoryData> = [
     },
     { abbrv: 'g-', name: 'ground', emptyCheck: null, getItem: null, removeItem: null, addItem: null }
 ];
+
+alt.onClient(ViewEvent.Inventory_Use, InventoryManager.processUse);
+alt.onClient(ViewEvent.Inventory_Process, InventoryManager.processItemMovement);
+alt.onClient(ViewEvent.Inventory_Split, InventoryManager.processSplit);
+alt.onClient(ViewEvent.Inventory_Pickup, InventoryManager.handleProcessPickup);
