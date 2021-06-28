@@ -37,7 +37,7 @@ const app = new Vue({
                 };
                 window.webSocket.onclose = function () {
                     this.isConnected = false;
-                    setTimeout(() => this.connect(), 500);
+                    setTimeout(this.connect, 500);
                     if (!('alt' in window)) return;
                     alt.emit('onDisconnected');
                 };
