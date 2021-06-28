@@ -156,5 +156,9 @@ function handleMetaChanged(key: string, newValue: any, oldValue: any): void {
 function handleUnconsciouseMovement() {
     if (!native.isPedRagdoll(alt.Player.local.scriptID)) native.setPedToRagdoll(alt.Player.local.scriptID, -1, -1, 0, false, false, false);
     const timeLeft = deathTime - Date.now();
-    if (timeLeft > 0) drawText2D(`${(timeLeft / 1000).toFixed(2)} Sekunden bis Sie wieder aufwachen`, { x: 0.5, y: 0.2 }, 0.5, new alt.RGBA(255, 255, 255, 255));
+    if (timeLeft > 0) {
+        const minutes = (timeLeft / 1000) * 60;
+        const seconds = minutes * 60 - timeLeft / 1000;
+        drawText2D(`${minutes.toFixed(0).padStart(2, '0')}:${seconds.toFixed(0).padStart(2, '0')} bis Sie wieder aufwachen`, { x: 0.5, y: 0.2 }, 0.5, new alt.RGBA(255, 255, 255, 255));
+    }
 }
