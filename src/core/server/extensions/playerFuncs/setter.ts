@@ -43,6 +43,7 @@ function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
 
 function unconsciouse(p: alt.Player, killer: alt.Player = null, weaponHash: any = null): void {
     p.spawn(p.pos.x, p.pos.y, p.pos.z, 0);
+    alt.emit('SaltyChat:SetPlayerAlive', p, false);
     if (!p.data.isUnconsciouse) {
         p.data.isUnconsciouse = true;
         emit.meta(p, 'isUnconsciouse', true);
@@ -93,14 +94,18 @@ function respawned(p: alt.Player, position: alt.Vector3 = null): void {
             index = i;
         }
         nearestHopsital = hospitals[index] as alt.Vector3;
-        //if (DefaultConfig.RESPAWN_LOSE_WEAPONS) playerFuncs.inventory.removeAllWeapons(p);
+        if (DefaultConfig.RESPAWN_LOSE_WEAPONS) playerFuncs.inventory.removeAllWeapons(p);
     }
     save.setPosition(p, nearestHopsital.x, nearestHopsital.y, nearestHopsital.z);
     p.spawn(nearestHopsital.x, nearestHopsital.y, nearestHopsital.z, 0);
     alt.nextTick(() => {
         p.clearBloodDamage();
         save.addHealth(p, DefaultConfig.RESPAWN_HEALTH, true);
+        save.addHunger(p, 100, true);
+        save.addThirst(p, 100, true);
+        save.addMood(p, 100, true);
         save.addArmour(p, DefaultConfig.RESPAWN_ARMOUR, true);
+        alt.emit('SaltyChat:SetPlayerAlive', p, true);
     });
     alt.emit(TlrpEvent.PLAYER_SPAWNED, p);
 }

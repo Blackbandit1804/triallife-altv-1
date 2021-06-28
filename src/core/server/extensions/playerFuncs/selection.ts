@@ -1,4 +1,5 @@
 import * as alt from 'alt-server';
+import { playerAttachVirtualBound } from 'natives';
 import { Character } from '../../../shared/interfaces/character';
 import { SystemEvent } from '../../../shared/utility/enums';
 import { DefaultConfig } from '../../configs/settings';
