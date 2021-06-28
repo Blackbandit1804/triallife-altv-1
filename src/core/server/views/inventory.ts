@@ -74,8 +74,8 @@ export class InventoryManager {
     }
 
     static handleMoveTabs(player: alt.Player, item: Item, selectSlotIndex: number, selectName: string, endName: string) {
-        const hasSpace = playerFuncs.inventory.hasInventoryPlace(player, item.weight * item.quantity);
-        if (!hasSpace) {
+        const openSlot = playerFuncs.inventory.getFreeInventorySlot(player);
+        if (!openSlot) {
             playerFuncs.sync.inventory(player);
             return;
         }
@@ -83,7 +83,7 @@ export class InventoryManager {
             playerFuncs.sync.inventory(player);
             return;
         }
-        if (!playerFuncs.inventory.inventoryAdd(player, item)) {
+        if (!playerFuncs.inventory.inventoryAdd(player, item, openSlot.slot)) {
             playerFuncs.sync.inventory(player);
             return;
         }
@@ -153,11 +153,6 @@ export class InventoryManager {
     }
 
     static handleProcessPickup(player: alt.Player, hash: string) {
-        const hasSpace = playerFuncs.inventory.hasInventoryPlace(player, 0);
-        if (!hasSpace) {
-            playerFuncs.sync.inventory(player);
-            return;
-        }
         const openSlot = playerFuncs.inventory.getFreeInventorySlot(player);
         if (!openSlot) {
             playerFuncs.sync.inventory(player);
@@ -260,7 +255,7 @@ export class InventoryManager {
                     playerFuncs.sync.inventory(player);
                     return;
                 }
-                playerFuncs.inventory.inventoryAdd(player, item);
+                playerFuncs.inventory.inventoryAdd(player, item, openSlot.slot);
             } else {
                 if (!playerFuncs.inventory.inventoryRemove(player, item.slot)) {
                     playerFuncs.sync.inventory(player);
@@ -274,7 +269,7 @@ export class InventoryManager {
                         playerFuncs.sync.inventory(player);
                         return;
                     }
-                    playerFuncs.inventory.inventoryAdd(player, removedItem);
+                    playerFuncs.inventory.inventoryAdd(player, removedItem, item.slot);
                 }
                 playerFuncs.inventory.equipmentAdd(player, item, item.equipment);
             }
@@ -338,7 +333,7 @@ export class InventoryManager {
         }
         player.data.inventory.items[index].quantity -= amount;
         clonedItem.quantity = amount;
-        playerFuncs.inventory.inventoryAdd(player, clonedItem);
+        playerFuncs.inventory.inventoryAdd(player, clonedItem, inventorySlot.slot);
         playerFuncs.save.field(player, 'inventory', player.data.inventory);
         playerFuncs.sync.inventory(player);
     }

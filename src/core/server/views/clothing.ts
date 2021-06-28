@@ -47,7 +47,7 @@ function handlePurchase(player: alt.Player, equipmentSlot: number, component: Cl
             return;
         }
         playerFuncs.emit.notification(player, 'Gegenstand wurde hinzugefügt');
-        didGetAdded = playerFuncs.inventory.inventoryAdd(player, newItem);
+        didGetAdded = playerFuncs.inventory.inventoryAdd(player, newItem, openSlot.slot);
     }
     if (!didGetAdded) {
         playerFuncs.emit.sound2D(player, 'item_error');

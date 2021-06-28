@@ -8,13 +8,6 @@ import emit from './emit';
 import save from './save';
 import sync from './synchronize';
 import Logger from '../../utility/Logger';
-import { AsyncLocalStorage } from 'async_hooks';
-
-function hasInventoryPlace(player: alt.Player, weight: number): boolean {
-    let actWeight = 0;
-    player.data.inventory.items.forEach((x) => (actWeight += x.weight * x.quantity));
-    return actWeight + weight <= player.data.inventory.maxWeight;
-}
 
 function getFreeInventorySlot(p: alt.Player): { slot: number } | null {
     for (let x = 0; x < parseInt(p.data.inventory.maxWeight.toFixed(0)); x++) {
@@ -122,11 +115,12 @@ function isInventorySlotFree(p: alt.Player, slot: number): boolean {
     return false;
 }
 
-function inventoryAdd(p: alt.Player, item: Item): boolean {
+function inventoryAdd(p: alt.Player, item: Item, slot: number): boolean {
     if (!p.data.inventory.items) return false;
-    if (!hasInventoryPlace(p, item.weight * item.quantity)) return false;
-    const index = p.data.inventory.items.findIndex((item) => item.uuid === item.uuid);
+    if (slot >= parseInt(p.data.inventory.maxWeight.toFixed(0))) return false;
+    const index = p.data.inventory.items.findIndex((item) => item.slot === item.slot);
     if (index !== -1) return stackInventoryItem(p, item);
+    if (item.slot === slot) item.slot = slot;
     const safeItemCopy = deepCloneObject(item);
     p.data.inventory.items.push(safeItemCopy);
     return true;
@@ -423,7 +417,6 @@ import('../../views/inventory').catch((err) => {
 
 export default {
     getFreeInventorySlot,
-    hasInventoryPlace,
     allItemRulesValid,
     equipmentAdd,
     equipmentRemove,
