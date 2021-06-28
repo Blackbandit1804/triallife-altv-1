@@ -31,7 +31,7 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     const html = fs.readFileSync(path.join(htmlPath, '/index.html'));
     let request;
     if (!token || !userToken) {
-        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben kein Token bekommen' } }, (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben kein Token bekommen' } });
         return;
     }
 
@@ -47,7 +47,7 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
 
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) {
-        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben keinen gültigen Token' } }, (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben keinen gültigen Token' } });
         return;
     }
 
@@ -58,18 +58,18 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     });
 
     if (!request.data || !request.data.id || !request.data.username) {
-        res.json({ html: html.toString(), data: { success: false, info: 'Ihr Discordkonto wurde nicht gefunden' } }, (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Ihr Discordkonto wurde nicht gefunden' } });
         return;
     }
 
     const player = [...alt.Player.all].find((x) => x.discordToken === userToken);
     if (!player || !player.valid) {
-        res.json({ html: html.toString(), data: { success: false, info: 'Sie sind nicht auf dem Spieleserver' } }, (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie sind nicht auf dem Spieleserver' } });
         return;
     }
 
     authenticated[userToken] = request.data;
-    res.json({ html: html.toString(), data: { success: true, info: 'Sie können den Browser nun schließen und zurück ins Spiel' } }, (err) => {});
+    res.json({ html: html.toString(), data: { success: true, info: 'Sie können den Browser nun schließen und zurück ins Spiel' } });
 }
 
 export function getDiscordUser(userToken: string): DiscordUser {
