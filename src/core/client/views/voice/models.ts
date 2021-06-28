@@ -303,7 +303,6 @@ export class Config {
     public static enableSignalStrength: boolean = true;
     public static enableRadioSound: boolean = true;
     public static enableOverlay: boolean = true;
-    public static overlayLanguage: string = 'de';
     public static overlayAddress: string = 'gremmler86.zap-ts3.com';
     public static automaticPlayerHealth: boolean = true;
 }
