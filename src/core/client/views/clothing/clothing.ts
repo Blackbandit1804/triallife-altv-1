@@ -23,7 +23,7 @@ async function clothingOpen() {
     view.on('clothing:DisableControls', clothingControls);
     open = true;
     HUD.setHudVisibility(false);
-    createPedEditCamera({ x: 0.15, y: -0.5, z: 0 });
+    createPedEditCamera({ x: -0.15, y: -0.5, z: 0 });
     setFov(70);
     setZPos(0.6);
 }

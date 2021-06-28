@@ -26,13 +26,13 @@ const app = new Vue({
     },
     methods: {
         updateInventory(inventoryItems) {
-            const newInventory = new Array(parseInt(this.inventory.maxWeight.toFixed(0))).fill(null);
+            const items = new Array(parseInt(this.inventory.maxWeight.toFixed(0))).fill(null);
             for (let i = 0; i < inventoryItems.length; i++) {
                 if (!inventoryItems[i]) continue;
                 const slot = inventoryItems[i].slot;
-                newInventory[slot] = inventoryItems[i];
+                items[slot] = inventoryItems[i];
             }
-            this.inventory.items = newInventory;
+            this.inventory.items = items;
         },
         updateGround(groundItems) {
             const newGround = new Array(8).fill(null);
