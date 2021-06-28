@@ -24,16 +24,22 @@ body {
     position: relative;
 }
 
+.tlrp {
+    left: 3vh;
+    top: 3vh;
+}
+
 .panel {
     display: flex;
     position: fixed;
+    right: 0;
     flex-direction: column;
     width: 100%;
     min-width: 350px;
     max-width: 35vh;
     min-height: calc(100vh);
     max-height: calc(100vh);
-    animation: slideinleft ease 0.75s;
+    animation: slideinright ease 0.75s;
 }
 
 .content {
@@ -163,9 +169,9 @@ input:focus-within {
     cursor: pointer;
 }
 
-@keyframes slideinleft {
+@keyframes slideinright {
     from {
-        transform: translateX(-100vw);
+        transform: translateX(100vw);
     }
     to {
         transform: unset;
