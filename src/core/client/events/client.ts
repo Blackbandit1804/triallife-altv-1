@@ -5,7 +5,6 @@ import { InteractionManager } from '../systems/interaction';
 import { InventoryManager } from '../views/inventory/inventory';
 import { ToolbarManager } from '../systems/toolbar';
 import { VehicleManager } from '../systems/vehicle';
-import { FromClient } from '../views/voice/salty-chat';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
@@ -44,7 +43,7 @@ export const KEY_BINDS = {
     VEHICLE_ENGINE: 77, // M
     DEBUG_KEY: 112, // F1
     ADMINPANEL: 113, // F2
-    PHONE: 190, // . or >
+    PHONE: 190, // ^
     VOICE: 220 // . or >
 };
 
@@ -93,7 +92,7 @@ function handleDebugMessages(key: number) {
 }
 
 function handleVoiceChange(key: number) {
-    alt.emit(FromClient.toggleRange);
+    alt.emit('SaltyChat:ToggleRange');
 }
 
 function handleKeyDown(key: number) {
