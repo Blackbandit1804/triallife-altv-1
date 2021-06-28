@@ -144,10 +144,6 @@ const app = new Vue({
             alt.emit('play:Sound', 'TOGGLE_ON', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
             alt.emit('clothing:DisableControls', this.inputSelected);
         },
-        setLocales(localeObject) {
-            this.locales = localeObject;
-            this.updateLocales();
-        },
         updateLocales() {
             this.shirtNames = [this.locales.LABEL_TOP, this.locales.LABEL_UNDERSHIRT, this.locales.LABEL_TORSO];
             this.components = [
@@ -205,7 +201,6 @@ const app = new Vue({
     mounted() {
         this.updateLocales();
         if ('alt' in window) {
-            alt.on('clothing:SetLocales', this.setLocales);
             alt.on('clothing:Propagate', this.handlePropagation);
             alt.emit('ready');
             alt.emit('clothing:Populate', this.components);
