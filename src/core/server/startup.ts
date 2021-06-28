@@ -73,6 +73,7 @@ async function handleFinish() {
     import('./systems/options').then((res) => res.default());
     import('./systems/discord').then((res) => res.default());
     import('./systems/voice').then((res) => res.default(startTime));
+    alt.emit(TlrpEvent.TLRP_READY);
 }
 
 async function startup() {
