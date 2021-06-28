@@ -222,7 +222,7 @@ export class VoiceManager {
     }
 
     static disconnect(player: alt.Player, reason: string = ''): void {
-        alt.emitAllClients('SaltyChat:RemoveClient', player.id);
+        alt.emitClient(null, 'SaltyChat:RemoveClient', player.id);
         const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
         if (index === -1) return;
         const voiceClient: VoiceClient = VoiceManager.voiceClients[index];
@@ -251,13 +251,13 @@ export class VoiceManager {
         if (VoiceManager.configuration.VoiceRanges.findIndex((x) => x === range) == -1) return;
         const voiceClient = VoiceManager.voiceClients[index];
         voiceClient.voiceRange = range;
-        alt.emitAllClients('SaltyChat:UpdateClientRange', player, range);
+        alt.emitClient(null, 'SaltyChat:UpdateClientRange', player, range);
     }
 
     static isUsingMegaphone(player: alt.Player, state: boolean): void {
         const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
         if (index === -1) return;
-        alt.emitAllClients('SaltyChat:IsUsingMegaphone', player, VoiceManager.configuration.MegaphoneRange, state, player.pos);
+        alt.emitClient(null, 'SaltyChat:IsUsingMegaphone', player, VoiceManager.configuration.MegaphoneRange, state, player.pos);
     }
 
     static toggleRadioSpeaker(player: alt.Player, state: boolean): void {
@@ -273,11 +273,11 @@ export class VoiceManager {
         if (index === -1) return;
         const voiceClient = VoiceManager.voiceClients[index];
         voiceClient.isAlive = isAlive;
-        alt.emitAllClients('SaltyChat:UpdateClientAlive', voiceClient.player, isAlive);
+        alt.emitClient(null, 'SaltyChat:UpdateClientAlive', voiceClient.player, isAlive);
     }
 
     static updateRadioTowers(): void {
-        alt.emitAllClients('SaltyChat:UpdateRadioTowers', VoiceManager.configuration.RadioTowers);
+        alt.emitClient(null, 'SaltyChat:UpdateRadioTowers', VoiceManager.configuration.RadioTowers);
     }
 
     static joinRadioChannel(player: alt.Player, channelName: string, isPrimary: boolean): void {
