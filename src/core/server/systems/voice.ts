@@ -221,14 +221,14 @@ export class VoiceManager {
         if (index !== -1) VoiceManager.voiceClients[index] = voiceClient;
         else VoiceManager.voiceClients.push(voiceClient);
         alt.emitClient(player, 'SaltyChat:Initialize', new ClientInitData(voiceClient.teamspeakName));
-        const voiceClients = new Array<VoiceClient>();
+        const voiceClients: VoiceClient[] = [];
         VoiceManager.voiceClients
             .filter((x) => x.player.discord.id !== player.discord.id)
             .forEach((client) => {
                 voiceClients.push(new VoiceClient(client.player, client.teamspeakName, client.voiceRange, client.isAlive, client.position));
                 alt.emitClient(client.player, 'SaltyChat:UpdateClient', player, voiceClient.teamspeakName, voiceClient.voiceRange, voiceClient.isAlive, voiceClient.position);
             });
-        alt.emitClient(player, 'SaltyChat:SyncClients', new ClientSyncData(voiceClients));
+        alt.emitClient(player, 'SaltyChat:SyncClients', new ClientSyncData(voiceClients).voiceClients);
     }
 
     static disconnect(player: alt.Player, reason: string = ''): void {
