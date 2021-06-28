@@ -3,6 +3,7 @@ import { SystemEvent } from '../../shared/utility/enums';
 import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/player';
 import { vehicleFuncs } from '../extensions/vehicle';
+import { InventoryManager } from '../views/inventory';
 
 alt.onClient(SystemEvent.Player_Tick, (player: alt.Player) => {
     if (!player.nextPingTime) player.nextPingTime = Date.now() + 4950;
@@ -15,7 +16,7 @@ alt.onClient(SystemEvent.Player_Tick, (player: alt.Player) => {
 
     if (!player.nextItemSync || Date.now() > player.nextItemSync) {
         player.nextItemSync = Date.now() + DefaultConfig.TIME_BETWEEN_INVENTORY_UPDATES;
-        //InventoryController.updateDroppedItemsAroundPlayer(player, false);
+        InventoryManager.updateDroppedItemsAroundPlayer(player, false);
     }
 
     if (!player.nextStatSync || Date.now() > player.nextStatSync) {

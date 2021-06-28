@@ -44,10 +44,6 @@ export class InventoryManager {
             playerFuncs.sync.inventory(player);
             return;
         }
-        if (endData.name === InventoryType.TAB) {
-            InventoryManager.handleMoveTabs(player, itemClone, selectSlotIndex, selectData.name, endData.name);
-            return;
-        }
         if (!playerFuncs.inventory.allItemRulesValid(player, itemClone, endData, endSlotIndex, InventoryManager.customItemRules)) {
             playerFuncs.sync.inventory(player);
             return;
@@ -69,26 +65,6 @@ export class InventoryManager {
         }
         playerFuncs.save.field(player, selectData.name, player.data[selectData.name]);
         playerFuncs.save.field(player, endData.name, player.data[endData.name]);
-        playerFuncs.sync.inventory(player);
-        playerFuncs.emit.sound2D(player, 'item_shuffle_1', Math.random() * 0.45 + 0.1);
-    }
-
-    static handleMoveTabs(player: alt.Player, item: Item, selectSlotIndex: number, selectName: string, endName: string) {
-        const freeSlot = playerFuncs.inventory.getFreeInventorySlot(player);
-        if (!freeSlot) {
-            playerFuncs.sync.inventory(player);
-            return;
-        }
-        if (!playerFuncs.inventory.inventoryRemove(player, selectSlotIndex)) {
-            playerFuncs.sync.inventory(player);
-            return;
-        }
-        if (!playerFuncs.inventory.inventoryAdd(player, item, freeSlot.slot)) {
-            playerFuncs.sync.inventory(player);
-            return;
-        }
-        playerFuncs.save.field(player, selectName, player.data[selectName]);
-        playerFuncs.save.field(player, endName, player.data[endName]);
         playerFuncs.sync.inventory(player);
         playerFuncs.emit.sound2D(player, 'item_shuffle_1', Math.random() * 0.45 + 0.1);
     }
@@ -364,6 +340,5 @@ const DataHelpers: Array<CategoryData> = [
         removeItem: playerFuncs.inventory.equipmentRemove,
         addItem: playerFuncs.inventory.equipmentAdd
     },
-    { abbrv: 'g-', name: 'ground', emptyCheck: null, getItem: null, removeItem: null, addItem: null },
-    { abbrv: 'tab-', name: 'tab', emptyCheck: null, getItem: null, removeItem: null, addItem: null }
+    { abbrv: 'g-', name: 'ground', emptyCheck: null, getItem: null, removeItem: null, addItem: null }
 ];

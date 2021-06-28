@@ -49,13 +49,13 @@ function hasWeapon(player: alt.Player): Item | null {
 function getInventoryItem(p: alt.Player, slot: number): Item | null {
     if (slot >= parseInt(p.data.inventory.maxWeight.toFixed(0))) return null;
     const index = p.data.inventory.items.findIndex((item) => item.slot === slot);
-    if (index <= -1) return null;
+    if (index === -1) return null;
     return deepCloneObject<Item>(p.data.inventory.items[index]);
 }
 
 function replaceInventoryItem(p: alt.Player, item: Item): boolean {
     const itemIndex = p.data.inventory.items.findIndex((existingItem) => existingItem.uuid === item.uuid);
-    if (itemIndex <= -1) return false;
+    if (itemIndex === -1) return false;
     p.data.inventory.items[itemIndex] = item;
     return true;
 }
@@ -63,14 +63,14 @@ function replaceInventoryItem(p: alt.Player, item: Item): boolean {
 function getEquipmentItem(p: alt.Player, slot: number): Item | null {
     if (slot >= 11) return null;
     const index = p.data.equipment.findIndex((item) => item.slot === slot);
-    if (index <= -1) return null;
+    if (index === -1) return null;
     return deepCloneObject<Item>(p.data.equipment[index]);
 }
 
 function getToolbarItem(p: alt.Player, slot: number): Item | null {
     if (slot >= 5) return null;
     const index = p.data.toolbar.findIndex((item) => item.slot === slot);
-    if (index <= -1) return null;
+    if (index === -1) return null;
     return deepCloneObject<Item>(p.data.toolbar[index]);
 }
 
@@ -82,7 +82,7 @@ function isInInventory(p: alt.Player, item: Partial<Item>): { index: number } | 
         if (!item) continue;
         const objectKeys = Object.keys(item);
         const keyIndex = objectKeys.findIndex((key) => item[key] === inventoryItem[key]);
-        if (keyIndex <= -1) continue;
+        if (keyIndex === -1) continue;
         return { index: i };
     }
     return null;
@@ -96,7 +96,7 @@ function isInEquipment(p: alt.Player, item: Partial<Item>): { index: number } | 
         if (!equipmentItem) continue;
         const objectKeys = Object.keys(item);
         const keyIndex = objectKeys.findIndex((key) => item[key] === equipmentItem[key]);
-        if (keyIndex <= -1) continue;
+        if (keyIndex === -1) continue;
         return { index: i };
     }
     return null;
@@ -111,7 +111,7 @@ function isEquipmentSlotFree(p: alt.Player, slot: EquipmentType): boolean {
 function isInventorySlotFree(p: alt.Player, slot: number): boolean {
     if (slot >= parseInt(p.data.inventory.maxWeight.toFixed(0))) return false;
     const index = p.data.inventory.items.findIndex((item) => item.slot === slot);
-    if (index <= -1) return true;
+    if (index === -1) return true;
     return false;
 }
 
@@ -178,14 +178,14 @@ function toolbarAdd(p: alt.Player, item: Item, slot: number): boolean {
 function toolbarRemove(p: alt.Player, slot: number): boolean {
     if (slot >= 5) return false;
     const index = p.data.toolbar.findIndex((item) => item.slot === slot);
-    if (index <= -1) return false;
+    if (index === -1) return false;
     p.data.toolbar.splice(index, 1);
     return true;
 }
 
 function replaceToolbarItem(p: alt.Player, item: Item): boolean {
     const itemIndex = p.data.toolbar.findIndex((existingItem) => existingItem.slot === item.slot);
-    if (itemIndex <= -1) return false;
+    if (itemIndex === -1) return false;
     p.data.toolbar[itemIndex] = item;
     return true;
 }
@@ -198,7 +198,7 @@ function isInToolbar(p: alt.Player, item: Partial<Item>): { index: number } | nu
         if (!toolbarItem) continue;
         const objectKeys = Object.keys(item);
         const keyIndex = objectKeys.findIndex((key) => item[key] === toolbarItem[key]);
-        if (keyIndex <= -1) continue;
+        if (keyIndex === -1) continue;
         return { index: i };
     }
     return null;
