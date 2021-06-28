@@ -19,6 +19,7 @@ const app = new Vue({
             try {
                 this.window.webSocket = new window.WebSocket(`ws://${this.pluginAddress}/`);
                 this.window.webSocket.onmessage = function (evt) {
+                    console.log(`Salty Chat Message: ${evt.data}`);
                     let object = JSON.parse(evt.data);
                     if (!('alt' in window)) return;
                     if (typeof this.serverUniqueIdentifier === 'string') {

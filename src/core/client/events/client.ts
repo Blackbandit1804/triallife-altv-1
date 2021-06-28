@@ -71,6 +71,7 @@ let nextKeyPress = Date.now() + DELAY_BETWEEN_PRESSES;
 alt.onServer(SystemEvent.Ticks_Start, () => {
     alt.on('keyup', handleKeyUp);
     alt.on('keydown', handleKeyDown);
+    alt.everyTick(() => handleIdleCam());
 });
 
 function handleDebugMessages(key: number) {
@@ -117,4 +118,9 @@ function handleKeyUp(key: number) {
     const isLongPressReady = keyPressTimes[key] + DELAY_BETWEEN_LONG_PRESSES < Date.now();
     if (keyPressTimes[key] && isLongPressReady && KEY_UP_BINDS[key]['longPress']) KEY_UP_BINDS[key]['longPress'](key);
     if (KEY_UP_BINDS[key] && KEY_UP_BINDS[key].singlePress) KEY_UP_BINDS[key].singlePress(key);
+}
+
+function handleIdleCam() {
+    native.invalidateIdleCam();
+    native.invalidateVehicleIdleCam();
 }
