@@ -80,7 +80,7 @@ export class View extends alt.WebView {
         this.isVisible = false;
         alt.Player.local.isMenuOpen = false;
         native.triggerScreenblurFadeOut(100);
-        native.displayRadar(true);
+        if (alt.Player.local.vehicle) native.displayRadar(true);
         for (let i = 0; i < _currentEvents.length; i++) {
             const eventData = _currentEvents[i];
             super.off(eventData.eventName, eventData.callback);
