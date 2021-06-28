@@ -71,7 +71,7 @@ let nextKeyPress = Date.now() + DELAY_BETWEEN_PRESSES;
 alt.onServer(SystemEvent.Ticks_Start, () => {
     alt.on('keyup', handleKeyUp);
     alt.on('keydown', handleKeyDown);
-    alt.everyTick(() => handleIdleCam());
+    alt.everyTick(handleIdleCam);
 });
 
 function handleDebugMessages(key: number) {
