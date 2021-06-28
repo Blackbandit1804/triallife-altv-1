@@ -3,6 +3,7 @@ import axios from 'axios';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import fs from 'fs';
 import path from 'path';
 import { DiscordUser } from './interfaces/discord-user';
 import Logger from './utility/Logger';
@@ -28,9 +29,10 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     const token: any = req.query.code;
     const userToken: any = req.query.state;
     let request;
+    const html = fs.readFileSync(path.join(htmlPath, '/index.html'));
 
     if (!token || !userToken) {
-        res.sendFile(path.join(htmlPath, '/index.html?success=false&info=Sie haben kein Token bekommen'), (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben kein Token bekommen' } }, (err) => {});
         return;
     }
 
@@ -46,7 +48,7 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
 
     request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     if (!request.data || !request.data.access_token) {
-        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Sie haben keinen gültigen Token`), (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie haben keinen gültigen Token' } }, (err) => {});
         return;
     }
 
@@ -57,18 +59,18 @@ async function handleAuthentication(req: any, res: any): Promise<void> {
     });
 
     if (!request.data || !request.data.id || !request.data.username) {
-        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Ihr Discordkonto wurde nicht gefunden`), (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Ihr Discordkonto wurde nicht gefunden' } }, (err) => {});
         return;
     }
 
     const player = [...alt.Player.all].find((x) => x.discordToken === userToken);
     if (!player || !player.valid) {
-        res.sendFile(path.join(htmlPath, `/index.html?success=false&info=Sie sind nicht auf dem Spieleserver`), (err) => {});
+        res.json({ html: html.toString(), data: { success: false, info: 'Sie sind nicht auf dem Spieleserver' } }, (err) => {});
         return;
     }
 
     authenticated[userToken] = request.data;
-    res.sendFile(path.join(htmlPath, `/index.html?success=true&info=Sie können den Browser nun schließen und zurück ins Spiel`), (err) => {});
+    res.json({ html: html.toString(), data: { success: true, info: 'Sie können den Browser nun schließen und zurück ins Spiel' } }, (err) => {});
 }
 
 export function getDiscordUser(userToken: string): DiscordUser {
