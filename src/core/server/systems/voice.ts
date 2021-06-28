@@ -157,6 +157,14 @@ class ClientInitData {
     soundPack: string;
     ingameChannel: number;
     ingameChannelPassword: string;
+    swissChannels: number[];
+    voiceRanges: number[];
+    radioTowers: RadioTower[];
+    requestTalkStates: boolean;
+    requestRadioTrafficStates: boolean;
+    radioRangeUltraShort: number;
+    radioRangeShort: number;
+    radioRangeLong: number;
 
     constructor(teamspeakName: string) {
         this.teamSpeakName = teamspeakName;
@@ -164,20 +172,22 @@ class ClientInitData {
         this.soundPack = VoiceManager.configuration.SoundPack;
         this.ingameChannel = VoiceManager.configuration.IngameChannel;
         this.ingameChannelPassword = VoiceManager.configuration.IngameChannelPassword;
+        this.swissChannels = VoiceManager.configuration.SwissChannels;
+        this.voiceRanges = VoiceManager.configuration.VoiceRanges;
+        this.radioTowers = VoiceManager.configuration.RadioTowers;
+        this.requestTalkStates = VoiceManager.configuration.RequestTalkStates;
+        this.requestRadioTrafficStates = VoiceManager.configuration.RequestRadioTrafficStates;
+        this.radioRangeUltraShort = VoiceManager.configuration.RadioRangeUltraShort;
+        this.radioRangeShort = VoiceManager.configuration.RadioRangeShort;
+        this.radioRangeLong = VoiceManager.configuration.RadioRangeLong;
     }
 }
 
 class ClientSyncData {
-    voiceClients: Array<{ id: number; teamSpeakName: string; voiceRange: number; isAlive: boolean; position: { x: number; y: number; z: number } }>;
+    voiceClients: Array<{ id: number; teamSpeakName: string; voiceRange: number; isAlive: boolean; position: alt.Vector3 }>;
     constructor(voiceClients: Array<VoiceClient>) {
         voiceClients.forEach((client) => {
-            this.voiceClients.push({
-                id: client.player.id,
-                teamSpeakName: client.teamspeakName,
-                voiceRange: client.voiceRange,
-                isAlive: client.isAlive,
-                position: { x: client.position.x, y: client.position.y, z: client.position.z }
-            });
+            this.voiceClients.push({ id: client.player.id, teamSpeakName: client.teamspeakName, voiceRange: client.voiceRange, isAlive: client.isAlive, position: client.position });
         });
     }
 }
@@ -194,7 +204,7 @@ export class VoiceManager {
         VoiceManager.configuration.IngameChannel = DefaultConfig.VOICE_INGAME_CHANNEL;
         VoiceManager.configuration.IngameChannelPassword = DefaultConfig.VOICE_INGAME_CHANNEL_PASSWORD;
         VoiceManager.configuration.SwissChannels = DefaultConfig.VOICE_SWISS_CHANNELS;
-        VoiceManager.configuration.VoiceRanges = [0, 3.0, 8.0, 15.0, 32.0];
+        VoiceManager.configuration.VoiceRanges = [0.0, 3.0, 8.0, 15.0, 32.0];
         VoiceManager.configuration.RadioTowers = DefaultConfig.VOICE_RADIO_TOWERS;
         VoiceManager.configuration.RequestTalkStates = true;
         VoiceManager.configuration.RequestRadioTrafficStates = false;
