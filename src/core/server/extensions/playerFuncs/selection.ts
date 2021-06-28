@@ -56,7 +56,6 @@ async function character(p: alt.Player, characterData: Partial<Character>): Prom
 
         BlipManager.populateGlobalBlips(p);
 
-        alt.emitClient(p, SaltyChat.Connected);
         alt.emit(SystemEvent.Voice_Add, p);
         alt.emit(TlrpEvent.PLAYER_SELECTED_CHARACTER, p);
     }, 500);

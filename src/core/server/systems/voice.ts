@@ -2,7 +2,7 @@
 import * as alt from 'alt-server';
 import { DefaultConfig } from '../configs/settings';
 import { getUniquePlayerHash } from '../utility/usefull';
-import { SaltyChat, SystemEvent } from '../../shared/utility/enums';
+import { SystemEvent } from '../../shared/utility/enums';
 import Logger from '../utility/Logger';
 import { TlrpEvent } from '../utility/enums';
 import { playerFuncs } from '../extensions/player';
