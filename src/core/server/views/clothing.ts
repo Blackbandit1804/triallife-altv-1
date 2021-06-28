@@ -46,7 +46,7 @@ function handlePurchase(player: alt.Player, equipmentSlot: number, component: Cl
             playerFuncs.emit.sound2D(player, 'item_error');
             return;
         }
-        playerFuncs.emit.message(player, 'Gegenstand wurde hinzugefügt');
+        playerFuncs.emit.notification(player, 'Gegenstand wurde hinzugefügt');
         didGetAdded = playerFuncs.inventory.inventoryAdd(player, newItem);
     }
     if (!didGetAdded) {

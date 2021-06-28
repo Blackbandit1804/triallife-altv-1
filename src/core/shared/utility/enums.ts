@@ -93,6 +93,7 @@ export enum SystemEvent {
     Hud_Progress_Remove = 'hud:Progress:Remove',
     Meta_Emit = 'meta:Emit',
     Meta_Changed = 'meta:Changed',
+    Audio_Stream = 'audio:Stream',
     Sound_2D = 'sound:2D',
     Sound_3D = 'sound:3D',
     Sound_FrontEnd = 'sound:FrontEnd',
