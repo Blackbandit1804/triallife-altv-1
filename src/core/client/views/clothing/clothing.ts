@@ -5,6 +5,7 @@ import { ClothingComponent } from '../../../shared/interfaces/clothing';
 import { Item } from '../../../shared/interfaces/item';
 import { View } from '../../extensions/view';
 import { createPedEditCamera, destroyPedEditCamera, setFov, setShouldDisableControls, setZPos } from '../../utility/camera';
+import { HUD } from '../hud/hud';
 
 const url = `http://resource/client/views/clothing/html/index.html`;
 let view: View;
@@ -21,7 +22,7 @@ async function clothingOpen() {
     view.on('clothing:Exit', clothingClose);
     view.on('clothing:DisableControls', clothingControls);
     open = true;
-    //set hud invisible
+    HUD.setHudVisibility(false);
     createPedEditCamera({ x: 0.15, y: -0.5, z: 0 });
     setFov(70);
     setZPos(0.6);
@@ -74,7 +75,7 @@ function clothingClose() {
     alt.emitServer(ViewEvent.Clothing_Exit);
     view.close();
     open = false;
-    //set hud visible again
+    HUD.setHudVisibility(true);
 }
 
 function clothingPurchase(index: number, component: ClothingComponent, name: string, desc: string) {
