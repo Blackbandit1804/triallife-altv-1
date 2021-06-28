@@ -183,15 +183,6 @@ class ClientInitData {
     }
 }
 
-class ClientSyncData {
-    voiceClients: Array<{ id: number; teamSpeakName: string; voiceRange: number; isAlive: boolean; position: alt.Vector3 }>;
-    constructor(voiceClients: Array<VoiceClient>) {
-        voiceClients.forEach((client) => {
-            this.voiceClients.push({ id: client.player.id, teamSpeakName: client.teamspeakName, voiceRange: client.voiceRange, isAlive: client.isAlive, position: client.position });
-        });
-    }
-}
-
 export class VoiceManager {
     static configuration: Configuration;
     static voiceClients: Array<VoiceClient> = new Array<VoiceClient>();
@@ -221,14 +212,14 @@ export class VoiceManager {
         if (index !== -1) VoiceManager.voiceClients[index] = voiceClient;
         else VoiceManager.voiceClients.push(voiceClient);
         alt.emitClient(player, 'SaltyChat:Initialize', new ClientInitData(voiceClient.teamspeakName));
-        const voiceClients: VoiceClient[] = [];
+        const voiceClients: Array<{ id: number; teamSpeakName: string; voiceRange: number; isAlive: boolean; position: alt.Vector3 }> = [];
         VoiceManager.voiceClients
             .filter((x) => x.player.discord.id !== player.discord.id)
             .forEach((client) => {
-                voiceClients.push(new VoiceClient(client.player, client.teamspeakName, client.voiceRange, client.isAlive, client.position));
+                voiceClients.push({ id: client.player.id, teamSpeakName: client.teamspeakName, voiceRange: client.voiceRange, isAlive: client.isAlive, position: client.position });
                 alt.emitClient(client.player, 'SaltyChat:UpdateClient', player, voiceClient.teamspeakName, voiceClient.voiceRange, voiceClient.isAlive, voiceClient.position);
             });
-        alt.emitClient(player, 'SaltyChat:SyncClients', new ClientSyncData(voiceClients).voiceClients);
+        alt.emitClient(player, 'SaltyChat:SyncClients', voiceClients);
     }
 
     static disconnect(player: alt.Player, reason: string = ''): void {
