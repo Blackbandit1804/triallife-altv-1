@@ -41,8 +41,10 @@ class RadioChannel {
     addMember(voiceClient: Partial<VoiceClient>, isPrimary: boolean): void {
         if (this.members.findIndex((x) => x.voiceClient === voiceClient) !== -1) return;
         this.members.push({ radioChannel: this, voiceClient, isPrimary });
-        alt.emitClient(voiceClient.player, SaltyChat.SetRadioChannel, this.name);
-        this.members.filter((x) => x.isSending).forEach((x) => alt.emitClient(x.voiceClient.player, SaltyChat.IsSending, x.voiceClient.player.id, true, false));
+        alt.emitClient(voiceClient.player, 'SaltyChat:RadioSetChannel', this.name, isPrimary);
+        this.members
+            .filter((x) => x.isSending)
+            .forEach((x) => alt.emitClient(x.voiceClient.player, 'SaltyChat:PlayerIsSending', x.voiceClient.player, this.name, true, false, x.voiceClient.player.pos));
     }
 
     removeMember(voiceClient: Partial<VoiceClient>): void {

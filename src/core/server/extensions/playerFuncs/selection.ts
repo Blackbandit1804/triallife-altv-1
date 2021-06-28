@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { Character } from '../../../shared/interfaces/character';
-import { SaltyChat, SystemEvent } from '../../../shared/utility/enums';
+import { SystemEvent } from '../../../shared/utility/enums';
 import { DefaultConfig } from '../../configs/settings';
 import { BlipManager } from '../../systems/blip';
 import { TlrpEvent } from '../../utility/enums';
