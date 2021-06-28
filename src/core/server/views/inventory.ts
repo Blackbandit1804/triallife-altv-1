@@ -74,8 +74,8 @@ export class InventoryManager {
     }
 
     static handleMoveTabs(player: alt.Player, item: Item, selectSlotIndex: number, selectName: string, endName: string) {
-        const openSlot = playerFuncs.inventory.getFreeInventorySlot(player);
-        if (!openSlot) {
+        const freeSlot = playerFuncs.inventory.getFreeInventorySlot(player);
+        if (!freeSlot) {
             playerFuncs.sync.inventory(player);
             return;
         }
@@ -83,7 +83,7 @@ export class InventoryManager {
             playerFuncs.sync.inventory(player);
             return;
         }
-        if (!playerFuncs.inventory.inventoryAdd(player, item, openSlot.slot)) {
+        if (!playerFuncs.inventory.inventoryAdd(player, item, freeSlot.slot)) {
             playerFuncs.sync.inventory(player);
             return;
         }

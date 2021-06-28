@@ -37,8 +37,8 @@ export class InventoryManager {
         HUD.setHudVisibility(false);
     }
 
-    static handleProcess(selectedSlot, endSlot, page, hash): void {
-        alt.emitServer(ViewEvent.Inventory_Process, selectedSlot, endSlot, page, hash);
+    static handleProcess(selectedSlot, endSlot, hash): void {
+        alt.emitServer(ViewEvent.Inventory_Process, selectedSlot, endSlot, hash);
     }
 
     static handlePickup(hash: string) {
