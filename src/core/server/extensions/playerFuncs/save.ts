@@ -60,10 +60,10 @@ function addHealth(player: alt.Player, value: number, exactValue: boolean = fals
         player.health = value <= 2500 ? 0 : 199;
         return;
     }
-    player.health = value <= 2500 ? 0 : 199;
     if (player.data.stats.blood === undefined || player.data.stats.blood === null) player.data.stats.blood = 7500;
     player.data.stats.blood = Math.max(2500, Math.min(7500, player.data.stats.blood + value));
     player.acStats.blood = player.data.stats.blood;
+    player.health = player.data.stats.blood <= 2500 ? 0 : 199;
     emit.meta(player, 'blood', player.data.stats.blood);
     field(player, 'stats', player.data.stats);
 }

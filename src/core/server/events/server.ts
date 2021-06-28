@@ -14,4 +14,13 @@ alt.on('playerDeath', (player: alt.Player, killer: alt.Player, weaponHash: any) 
     playerFuncs.set.unconsciouse(player, killer, weaponHash);
 });
 
+alt.on('playerDamage', (player: alt.Player, attacker: alt.Entity, damage: number, weaponHash: any) => {
+    if (!player || !player.valid) return;
+    if (player.data.isUnconsciouse) {
+        player.health = 199;
+        return;
+    }
+    playerFuncs.save.addHealth(player, -damage, false);
+});
+
 alt.onClient('SaltyChat:SetRange', (player: alt.Player, range: number) => playerFuncs.emit.meta(player, 'voice', range));
