@@ -45,7 +45,7 @@ const app = new Vue({
             }
         },
         runCommand(command) {
-            if (!isConnected || typeof command !== 'string') return;
+            if (!this.isConnected || typeof command !== 'string') return;
             this.window.webSocket.send(command);
         },
         nui(state, ts3ip = null) {
@@ -55,8 +55,10 @@ const app = new Vue({
     },
     mounted() {
         this.connect();
-        this.nui(true, 'gremmler86.zap-ts3.com');
-        if (!('alt' in window)) return;
+        if (!('alt' in window)) {
+            this.nui(true, 'gremmler86.zap-ts3.com');
+            return;
+        }
         alt.on('runCommand', this.runCommand);
         alt.on('showOverlay', this.nui);
     }

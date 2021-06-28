@@ -305,9 +305,7 @@ export class Voice {
                 break;
             case Command.instanceState:
                 this._gameInstanceState = message.Parameter.State;
-                if (Config.enableOverlay) {
-                    this._webView.emit('showOverlay', this._gameInstanceState <= GameInstanceState.notConnected, Config.overlayLanguage, Config.overlayAddress);
-                }
+                if (Config.enableOverlay) this._webView.emit('showOverlay', this._gameInstanceState <= GameInstanceState.notConnected, Config.overlayAddress);
                 alt.emit(ToClient.stateChanged, this._gameInstanceState, this._soundState.microphone, this._soundState.speaker);
                 break;
             case Command.soundState:
