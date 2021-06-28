@@ -71,10 +71,6 @@ alt.on('connectionComplete', async () => {
     native.freezeEntityPosition(alt.Player.local.scriptID, true);
     native.displayRadar(false);
     native.setMinimapComponent(15, true, 0);
-    if (alt.beginScaleformMovieMethodMinimap('SETUP_HEALTH_ARMOUR')) {
-        native.scaleformMovieMethodAddParamInt(3);
-        native.endScaleformMovieMethod();
-    }
 });
 
 alt.on('disconnect', () => {
@@ -134,6 +130,10 @@ function handleKeyUp(key: number) {
 function handleIdleCam() {
     native.invalidateIdleCam();
     native.invalidateVehicleIdleCam();
+    if (alt.beginScaleformMovieMethodMinimap('SETUP_HEALTH_ARMOUR')) {
+        native.scaleformMovieMethodAddParamInt(3);
+        native.endScaleformMovieMethod();
+    }
 }
 
 function handleMetaChanged(key: string, newValue: any, oldValue: any): void {
