@@ -106,8 +106,8 @@ export enum SystemEvent {
     Ticks_Start = 'ticks:Start',
     Time_Update = 'time:Update',
     Weather_Update = 'weather:Update',
-    Voice_Add = 'voice:connect',
-    Voice_Remove = 'voice:disconnect'
+    Voice_Add = 'SaltyChat:EnablePlayer',
+    Voice_Remove = 'SaltyChat:DisablePlayer'
 }
 
 export enum AnimationFlag {

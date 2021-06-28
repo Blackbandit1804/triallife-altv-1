@@ -9,7 +9,6 @@ export const SharedConfig = {
     INTERACTION_ALWAYS_ON: false,
     MAX_INTERACTION_RANGE: 8,
     MAX_AUDIO_STREAM_DISTANCE: 50,
-    VOICE_ON: true,
     FUEL_TIME: 30000,
     FUEL_PRICE: 1.49
 };

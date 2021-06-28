@@ -4,25 +4,6 @@ export const DefaultConfig = {
     WHITELIST: true,
     USE_DISCORD_BOT: true,
 
-    VOICE_ON: SharedConfig.VOICE_ON,
-    VOICE_RANGES: [0, 3, 8, 15, 32],
-    VOICE_SERVER_ID: 'CfDSgb3CYyMCMLMrvATGSwIAwbM=',
-    VOICE_PLUGIN_VERSION: '2.0.1',
-    VOICE_SOUNDPACK: 'default',
-    VOICE_INGAME_CHANNEL: 409598,
-    VOICE_INGAME_CHANNEL_PASSWORD: 'mgc1234',
-    VOICE_SWISS_CHANNELS: [394764, 398790, 394897, 394990],
-    VOICE_RADIO_TOWERS: [
-        { x: 450.932, y: 5566.451, z: 795.442, range: 8000.0 },
-        { x: 1695.486, y: 3614.863, z: 37.797, range: 8000.0 },
-        { x: 758.466, y: 1273.721, z: 405.945, range: 8000.0 },
-        { x: -2050.939, y: 3178.414, z: 54.331, range: 8000.0 },
-        { x: 551.996, y: -28.199, z: 93.862, range: 8000.0 },
-        { x: -598.834, y: -917.809, z: 35.844, range: 8000.0 },
-        { x: 548.352, y: -2219.756, z: 67.947, range: 8000.0 },
-        { x: -1308.23, y: -2626.368, z: 36.089, range: 8000.0 }
-    ],
-
     CHARACTER_SELECT_POS: { x: 36.19486618041992, y: 859.3850708007812, z: 197.71343994140625 },
     CHARACTER_SELECT_ROT: { x: 0, y: 0, z: -0.1943807601928711 },
     PLAYER_MAX_CHARACTER_SLOTS: 3,
