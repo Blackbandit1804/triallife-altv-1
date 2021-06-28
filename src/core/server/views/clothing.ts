@@ -49,6 +49,7 @@ function handlePurchase(player: alt.Player, equipmentSlot: number, component: Cl
         didGetAdded = playerFuncs.inventory.inventoryAdd(player, newItem, openSlot.slot);
     }
     if (!didGetAdded) {
+        alt.log('item not added from shop for ' + player.discord.username);
         playerFuncs.emit.sound2D(player, 'item_error');
         return;
     }

@@ -75,7 +75,7 @@ function getToolbarItem(p: alt.Player, slot: number): Item | null {
 }
 
 function isInInventory(p: alt.Player, item: Partial<Item>): { index: number } | null {
-    if (p.data.inventory.items.length <= 0) return null;
+    if (p.data.inventory.items.length === 0) return null;
     if (!item) throw new Error(`[3L:RP] Specified item is null for isInInventory`);
     for (let i = 0; i < p.data.inventory.items.length; i++) {
         const inventoryItem = p.data.inventory.items[i];
@@ -89,7 +89,7 @@ function isInInventory(p: alt.Player, item: Partial<Item>): { index: number } | 
 }
 
 function isInEquipment(p: alt.Player, item: Partial<Item>): { index: number } | null {
-    if (p.data.equipment.length <= 0) return null;
+    if (p.data.equipment.length === 0) return null;
     if (!item) throw new Error(`[3L:RP] Specified item is null for isInEquipment`);
     for (let i = 0; i < p.data.equipment.length; i++) {
         const equipmentItem = p.data.equipment[i];
@@ -104,8 +104,8 @@ function isInEquipment(p: alt.Player, item: Partial<Item>): { index: number } | 
 
 function isEquipmentSlotFree(p: alt.Player, slot: EquipmentType): boolean {
     if (slot >= 11) return false;
-    if (p.data.equipment.length <= 0) return true;
-    return p.data.equipment.findIndex((item) => item.slot === slot) === -1 ? true : false;
+    if (p.data.equipment.length === 0) return true;
+    return p.data.equipment.findIndex((item) => item.slot === slot) === -1;
 }
 
 function isInventorySlotFree(p: alt.Player, slot: number): boolean {
@@ -116,11 +116,11 @@ function isInventorySlotFree(p: alt.Player, slot: number): boolean {
 }
 
 function inventoryAdd(p: alt.Player, item: Item, slot: number): boolean {
-    if (!p.data.inventory.items) return false;
     if (slot >= parseInt(p.data.inventory.maxWeight.toFixed(0))) return false;
+    if (!p.data.inventory.items) return false;
     const index = p.data.inventory.items.findIndex((item) => item.slot === item.slot);
-    if (index !== -1) return stackInventoryItem(p, item);
-    if (item.slot === slot) item.slot = slot;
+    if (index !== -1) return false;
+    if (item.slot !== slot) item.slot = slot;
     const safeItemCopy = deepCloneObject(item);
     p.data.inventory.items.push(safeItemCopy);
     return true;
@@ -151,7 +151,6 @@ function isEquipmentSlotValid(item: Item, slot: EquipmentType) {
 }
 
 function equipmentAdd(p: alt.Player, item: Item, slot: EquipmentType): boolean {
-    if (slot >= 11) return false;
     if (!isEquipmentSlotFree(p, slot)) return false;
     if (item.equipment !== slot) return false;
     if (item.slot !== slot) item.slot = slot;
