@@ -1,12 +1,10 @@
 /// <reference types="@altv/types-server" />
 import * as alt from 'alt-server';
 import { DefaultConfig } from '../configs/settings';
-import { playerFuncs } from '../extensions/player';
 import { getUniquePlayerHash } from '../utility/usefull';
 import { SaltyChat, SystemEvent } from '../../shared/utility/enums';
 import Logger from '../utility/Logger';
-import { send } from 'process';
-import { clearDrivebyTaskUnderneathDrivingTask } from 'natives';
+import { TlrpEvent } from '../utility/enums';
 
 class Configuration {
     ServerIdentifier: string;
@@ -73,7 +71,7 @@ class RadioChannel {
         const sendingMembers = this.members.filter((x) => x.isSending);
         if (!sendingMembers || sendingMembers.length === 0) return;
         if (isEnabled || this.members.findIndex((x) => x.isSpeakerEnabled) !== -1) {
-            sendingMembers.forEach((sendingMember) => send(sendingMember.voiceClient, true));
+            sendingMembers.forEach((sendingMember) => this.send(sendingMember.voiceClient, true));
         } else {
             sendingMembers.forEach((sendingMember) => {
                 VoiceManager.voiceClients
@@ -95,7 +93,7 @@ class RadioChannel {
         }
     }
 
-    send(voiceClient: VoiceClient, isSending: boolean) {
+    send(voiceClient: Partial<VoiceClient>, isSending: boolean) {
         const radioMember = this.members.find((x) => x.voiceClient === voiceClient);
         if (!radioMember) return;
         const stateChanged = radioMember.isSending != isSending;
@@ -185,8 +183,6 @@ class ClientSyncData {
 }
 
 export class VoiceManager {
-    version: string = '2.3.5';
-
     static configuration: Configuration;
     static voiceClients: Array<VoiceClient> = new Array<VoiceClient>();
     static radioChannels: Array<RadioChannel> = new Array<RadioChannel>();
@@ -204,7 +200,6 @@ export class VoiceManager {
         VoiceManager.configuration.RequestRadioTrafficStates = false;
         VoiceManager.configuration.MinimumPluginVersion = DefaultConfig.VOICE_PLUGIN_VERSION;
         VoiceManager.configuration.MegaphoneRange = 50.0;
-        VoiceManager.configuration.NamePattern = 'TLRP_{guid}';
         VoiceManager.configuration.RadioRangeUltraShort = 1800.0;
         VoiceManager.configuration.RadioRangeShort = 3000.0;
         VoiceManager.configuration.RadioRangeLong = 8000.0;
@@ -284,6 +279,52 @@ export class VoiceManager {
     static updateRadioTowers(): void {
         alt.emitAllClients('SaltyChat:UpdateRadioTowers', VoiceManager.configuration.RadioTowers);
     }
+
+    static joinRadioChannel(player: alt.Player, channelName: string, isPrimary: boolean): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        if (!channelName) return;
+        if (VoiceManager.radioChannels.findIndex((x) => x.members.findIndex((m) => m.voiceClient === voiceClient && m.isPrimary === isPrimary) !== -1) === -1) return;
+        const radioChannel = getRadioChannel(channelName, true);
+        radioChannel.addMember(voiceClient, isPrimary);
+    }
+
+    static leaveRadioChannel(player: alt.Player, channelName: string): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        getRadioChannelMembership(voiceClient)
+            .filter((m) => m.radioChannel.name === channelName)
+            .forEach((membership) => {
+                membership.radioChannel.removeMember(voiceClient);
+                if (membership.radioChannel.members.length !== 0) return;
+                const idx = VoiceManager.radioChannels.findIndex((x) => x.name === membership.radioChannel.name);
+                if (idx !== -1) VoiceManager.radioChannels.splice(idx, 1);
+            });
+    }
+
+    static leaveAllRadioChannel(player: alt.Player): void {
+        const index = VoiceManager.voiceClients.findIndex((x) => x.player.discord.id === player.discord.id);
+        if (index === -1) return;
+        const voiceClient = VoiceManager.voiceClients[index];
+        getRadioChannelMembership(voiceClient).forEach((membership) => {
+            membership.radioChannel.removeMember(voiceClient);
+            if (membership.radioChannel.members.length !== 0) return;
+            const idx = VoiceManager.radioChannels.findIndex((x) => x.name === membership.radioChannel.name);
+            if (idx !== -1) VoiceManager.radioChannels.splice(idx, 1);
+        });
+    }
+
+    static startCall(caller: alt.Player, called: alt.Player): void {
+        alt.emitClient(caller, 'SaltyChat:PhoneEstablish', called, called.pos);
+        alt.emitClient(called, 'SaltyChat:PhoneEstablish', caller, caller.pos);
+    }
+
+    static endCall(caller: alt.Player, called: alt.Player): void {
+        if (caller && caller.valid) alt.emitClient(caller, 'SaltyChat:PhoneEnd', called.id);
+        if (called && called.valid) alt.emitClient(called, 'SaltyChat:PhoneEnd', caller.id);
+    }
 }
 
 function getRadioChannelMembership(voiceClient: VoiceClient): Array<Partial<RadioChannelMember>> {
@@ -306,7 +347,7 @@ function getRadioChannel(name: string, create: boolean): RadioChannel {
 
 function getTeamspeakName(player: alt.Player) {
     let name = getUniquePlayerHash(player, player.discord.id).substring(0, 24);
-    return name;
+    return `TLRP_${name}`;
 }
 
 function isVersionAccepted(version: string): boolean {
@@ -324,4 +365,27 @@ function isVersionAccepted(version: string): boolean {
         return false;
     }
     return true;
+}
+
+alt.onClient('SaltyChat:CheckVersion', VoiceManager.checkVersion);
+alt.onClient('SaltyChat:IsUsingMegaphone', VoiceManager.isUsingMegaphone);
+alt.onClient('SaltyChat:PlayerIsSending', VoiceManager.playerIsSending);
+alt.onClient('SaltyChat:SetRange', VoiceManager.setVoiceRange);
+alt.onClient('SaltyChat:ToggleRadioSpeaker', VoiceManager.toggleRadioSpeaker);
+alt.on('playerDisconnect', VoiceManager.disconnect);
+alt.on(SystemEvent.Voice_Add, VoiceManager.connect);
+alt.on(SystemEvent.Voice_Remove, VoiceManager.disconnect);
+alt.on('SaltyChat:SetPlayerAlive', VoiceManager.setPlayerAlive);
+alt.on('SaltyChat:UpdateRadioTowers', VoiceManager.updateRadioTowers);
+alt.on('SaltyChat:JoinRadioChannel', VoiceManager.joinRadioChannel);
+alt.on('SaltyChat:LeaveRadioChannel', VoiceManager.leaveRadioChannel);
+alt.on('SaltyChat:LeaveAllRadioChannel', VoiceManager.leaveAllRadioChannel);
+alt.on('SaltyChat:StartCall', VoiceManager.startCall);
+alt.on('SaltyChat:EndCall', VoiceManager.endCall);
+
+export default function loader(startTime: number) {
+    VoiceManager.initialize();
+    Logger.info(`voice api loaded`);
+    Logger.info(`Total Bootup Time -- ${Date.now() - startTime}ms`);
+    alt.emit(TlrpEvent.TLRP_READY);
 }
