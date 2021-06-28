@@ -5,6 +5,7 @@ import { getUniquePlayerHash } from '../utility/usefull';
 import { SaltyChat, SystemEvent } from '../../shared/utility/enums';
 import Logger from '../utility/Logger';
 import { TlrpEvent } from '../utility/enums';
+import { playerFuncs } from '../extensions/player';
 
 class Configuration {
     ServerIdentifier: string;
@@ -252,6 +253,7 @@ export class VoiceManager {
         if (VoiceManager.configuration.VoiceRanges.findIndex((x) => x === range) == -1) return;
         const voiceClient = VoiceManager.voiceClients[index];
         voiceClient.voiceRange = range;
+        playerFuncs.emit.meta(player, 'voice', range);
         alt.emitClient(null, 'SaltyChat:UpdateClientRange', player, range);
     }
 

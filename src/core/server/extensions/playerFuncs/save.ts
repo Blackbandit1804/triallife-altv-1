@@ -61,7 +61,8 @@ function addHealth(player: alt.Player, value: number, exactValue: boolean = fals
     }
     if (player.data.stats.blood === undefined || player.data.stats.blood === null) player.data.stats.blood = 7500;
     player.data.stats.blood = Math.max(2500, Math.min(7500, player.data.stats.blood + value));
-    emit.meta(player, 'stats', player.data.stats);
+    player.acStats.blood = player.data.stats.blood;
+    emit.meta(player, 'blood', player.data.stats.blood);
     field(player, 'stats', player.data.stats);
 }
 
@@ -73,7 +74,8 @@ function addHunger(player: alt.Player, value: number, exactValue: boolean = fals
     }
     if (player.data.stats.hunger === undefined || player.data.stats.hunger === null) player.data.stats.hunger = 100;
     player.data.stats.hunger = Math.max(0, Math.min(100, player.data.stats.hunger + value));
-    emit.meta(player, 'stats', player.data.stats);
+    player.acStats.hunger = player.data.stats.hunger;
+    emit.meta(player, 'hunger', player.data.stats.hunger);
     field(player, 'stats', player.data.stats);
 }
 
@@ -85,7 +87,8 @@ function addThirst(player: alt.Player, value: number, exactValue: boolean = fals
     }
     if (player.data.stats.thirst === undefined || player.data.stats.thirst === null) player.data.stats.thirst = 100;
     player.data.stats.thirst = Math.max(0, Math.min(100, player.data.stats.thirst + value));
-    emit.meta(player, 'stats', player.data.stats);
+    player.acStats.thirst = player.data.stats.thirst;
+    emit.meta(player, 'thirst', player.data.stats.thirst);
     field(player, 'stats', player.data.stats);
 }
 
@@ -97,7 +100,8 @@ function addMood(player: alt.Player, value: number, exactValue: boolean = false)
     }
     if (player.data.stats.mood === undefined || player.data.stats.mood === null) player.data.stats.mood = 100;
     player.data.stats.mood = Math.max(0, Math.min(100, player.data.stats.mood + value));
-    emit.meta(player, 'stats', player.data.stats);
+    player.acStats.mood = player.data.stats.mood;
+    emit.meta(player, 'mood', player.data.stats.mood);
     field(player, 'stats', player.data.stats);
 }
 

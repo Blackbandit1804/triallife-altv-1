@@ -312,15 +312,12 @@ export class Voice {
                 if (message.Parameter.IsMicrophoneMuted != this._soundState.microphoneMuted) {
                     this._soundState.microphoneMuted = message.Parameter.IsMicrophoneMuted;
                 }
-
                 if (message.Parameter.IsMicrophoneEnabled != this._soundState.microphoneEnabled) {
                     this._soundState.microphoneEnabled = message.Parameter.IsMicrophoneEnabled;
                 }
-
                 if (message.Parameter.IsSoundMuted != this._soundState.soundMuted) {
                     this._soundState.soundMuted = message.Parameter.IsSoundMuted;
                 }
-
                 if (message.Parameter.IsSoundEnabled != this._soundState.soundEnabled) {
                     this._soundState.soundEnabled = message.Parameter.IsSoundEnabled;
                 }
@@ -358,7 +355,7 @@ export class Voice {
     // Internals
     private onTick(): void {
         if (this._gameInstanceState <= 0 || !this._configuration) return;
-        if (alt.Player.local.health > 100) this.controlTick();
+        if (alt.Player.local.meta.blood > 2500) this.controlTick();
         this.stateUpdateTick();
     }
 
@@ -370,10 +367,8 @@ export class Voice {
 
     private stateUpdateTick(): void {
         let playerStates = [];
-
         let localRoomId = native.getRoomKeyFromEntity(alt.Player.local.scriptID);
         let localScriptId = alt.Player.local.scriptID;
-
         this.VoiceClients.forEach((voiceClient) => {
             let nextPlayer = voiceClient.player;
             if (!nextPlayer.valid) return;
@@ -386,14 +381,11 @@ export class Voice {
                 if (voiceClient.distanceCulled) voiceClient.distanceCulled = false;
                 if (Config.automaticPlayerHealth) voiceClient.isAlive = nextPlayer.health > 0;
                 voiceClient.lastPosition = nextPlayer.pos;
-
                 let muffleIntensity = null;
                 if (Config.enableMuffling) {
                     let npRoomId = native.getRoomKeyFromEntity(nextPlayer.scriptID);
-
-                    if (localRoomId != npRoomId && !native.hasEntityClearLosToEntity(localScriptId, nextPlayer.scriptID, 17)) {
-                        muffleIntensity = 10;
-                    } else {
+                    if (localRoomId != npRoomId && !native.hasEntityClearLosToEntity(localScriptId, nextPlayer.scriptID, 17)) muffleIntensity = 10;
+                    else {
                         let pVehicle = alt.Player.local.vehicle;
                         let nVehicle = nextPlayer.vehicle;
                         if (pVehicle != nVehicle) {
@@ -402,7 +394,6 @@ export class Voice {
                         }
                     }
                 }
-
                 playerStates.push(
                     new PlayerState(voiceClient.teamSpeakName, voiceClient.lastPosition, voiceClient.voiceRange, voiceClient.isAlive, voiceClient.distanceCulled, muffleIntensity)
                 );
@@ -419,7 +410,6 @@ export class Voice {
             let voiceClient = this.VoiceClients.get(this._clientIdMap.get(teamSpeakName));
             if (voiceClient != null) playerId = voiceClient.player.scriptID;
         }
-
         if (playerId && Config.enableLipSync) {
             if (isTalking) native.playFacialAnim(playerId, 'mic_chatter', 'mp_facial');
             else native.playFacialAnim(playerId, 'mood_normal_1', 'facials@gen_male@variations@normal');
@@ -479,7 +469,6 @@ export class Voice {
         else if (index + 1 >= this._configuration.voiceRanges.length) newIndex = 0;
         else newIndex = index + 1;
         this._voiceRange = this._configuration.voiceRanges[newIndex];
-
         alt.emitServer(ToServer.setRange, this._voiceRange);
         alt.emit(ToClient.voiceRangeChanged, this._voiceRange, newIndex);
     }

@@ -60,10 +60,10 @@ export class HUD {
         }
     }
 
-    static processMetaChange(key: string, value: any, oldValue: any) {
+    static processMetaChange(key: string, value: any) {
         if (!HUD.view) return;
-        if (key === 'food') HUD.view.emit(HudEventNames.Food, value);
-        if (key === 'water') HUD.view.emit(HudEventNames.Water, value);
+        if (key === 'hunger') HUD.view.emit(HudEventNames.Food, value);
+        if (key === 'thirst') HUD.view.emit(HudEventNames.Water, value);
         if (key === 'mood') HUD.view.emit(HudEventNames.Mood, value);
         if (key === 'blood') HUD.view.emit(HudEventNames.Blood, value);
         if (key === 'voice') HUD.view.emit(HudEventNames.Voice, value);
