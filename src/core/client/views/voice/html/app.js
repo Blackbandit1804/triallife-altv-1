@@ -47,6 +47,7 @@ const app = new Vue({
         },
         runCommand(command) {
             if (!this.isConnected || typeof command !== 'string') return;
+            console.log(`Voice runCommand: ${command}`);
             webSocket.send(command);
         },
         nui(state, ts3ip = null) {
