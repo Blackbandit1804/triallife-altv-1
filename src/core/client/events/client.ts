@@ -5,6 +5,7 @@ import { InteractionManager } from '../systems/interaction';
 import { InventoryManager } from '../views/inventory/inventory';
 import { ToolbarManager } from '../systems/toolbar';
 import { VehicleManager } from '../systems/vehicle';
+import { FromClient } from '../views/voice/salty-chat';
 
 const DELAY_BETWEEN_LONG_PRESSES = 800;
 const DELAY_BETWEEN_PRESSES = 500;
@@ -43,7 +44,8 @@ export const KEY_BINDS = {
     VEHICLE_ENGINE: 77, // M
     DEBUG_KEY: 112, // F1
     ADMINPANEL: 113, // F2
-    PHONE: 190 // . or >
+    PHONE: 190, // . or >
+    VOICE: 220 // . or >
 };
 
 const KEY_UP_BINDS = {
@@ -58,7 +60,8 @@ const KEY_UP_BINDS = {
     [KEY_BINDS.TOOLBAR_TWO]: { singlePress: ToolbarManager.handleToolbarSwitch },
     [KEY_BINDS.TOOLBAR_THREE]: { singlePress: ToolbarManager.handleToolbarSwitch },
     [KEY_BINDS.TOOLBAR_FOUR]: { singlePress: ToolbarManager.handleToolbarSwitch },
-    [KEY_BINDS.TOOLBAR_FIVE]: { singlePress: ToolbarManager.handleToolbarSwitch }
+    [KEY_BINDS.TOOLBAR_FIVE]: { singlePress: ToolbarManager.handleToolbarSwitch },
+    [KEY_BINDS.VOICE]: { singlePress: handleVoiceChange }
     //[KEY_BINDS.PHONE]: { singlePress: PhoneManager.togglePhone }
 };
 
@@ -86,6 +89,10 @@ function handleDebugMessages(key: number) {
         alt.log(JSON.stringify(aimPos));
     }
     alt.emit('debug:Time');
+}
+
+function handleVoiceChange(key: number) {
+    alt.emit(FromClient.toggleRange);
 }
 
 function handleKeyDown(key: number) {

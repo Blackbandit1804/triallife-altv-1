@@ -7,7 +7,7 @@ export const DefaultConfig = {
     VOICE_ON: SharedConfig.VOICE_ON,
     VOICE_RANGES: [0, 3, 8, 15, 32],
     VOICE_SERVER_ID: 'CfDSgb3CYyMCMLMrvATGSwIAwbM=',
-    VOICE_PLUGIN_VERSION: '2.3.5',
+    VOICE_PLUGIN_VERSION: '2.0.1',
     VOICE_SOUNDPACK: 'default',
     VOICE_INGAME_CHANNEL: 409598,
     VOICE_INGAME_CHANNEL_PASSWORD: 'mgc1234',

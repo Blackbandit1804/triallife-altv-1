@@ -17,8 +17,8 @@ const app = new Vue({
     methods: {
         connect() {
             try {
-                window.webSocket = new window.WebSocket(`ws://${this.pluginAddress}/`);
-                webSocket.onmessage = function (evt) {
+                this.window.webSocket = new window.WebSocket(`ws://${this.pluginAddress}/`);
+                this.window.webSocket.onmessage = function (evt) {
                     let object = JSON.parse(evt.data);
                     if (!('alt' in window)) return;
                     if (typeof this.serverUniqueIdentifier === 'string') {
@@ -29,14 +29,14 @@ const app = new Vue({
                         else alt.emit('onError', evt.data);
                     }
                 };
-                webSocket.onopen = function () {
+                this.window.webSocket.onopen = function () {
                     this.isConnected = true;
                     if (!('alt' in window)) return;
                     alt.emit('onConnected');
                 };
-                webSocket.onclose = function () {
+                this.window.webSocket.onclose = function () {
                     this.isConnected = false;
-                    setTimeout(() => connect(), 500);
+                    setTimeout(() => this.connect(), 500);
                     if (!('alt' in window)) return;
                     alt.emit('onDisconnected');
                 };
