@@ -47,7 +47,7 @@ const app = new Vue({
         },
         runCommand(command) {
             if (!this.isConnected || typeof command !== 'string') return;
-            this.window.webSocket.send(command);
+            window.webSocket.send(command);
         },
         nui(state, ts3ip = null) {
             this.ts3ip = ts3ip;
