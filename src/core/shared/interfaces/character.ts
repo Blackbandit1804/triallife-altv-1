@@ -25,7 +25,7 @@ export interface Character {
 
 export const CharacterDefaults: Partial<Character> = {
     pos: DefaultConfig.PLAYER_CREATE_SPAWN_POS as Vector3,
-    inventory: { maxWeight: 15.0, money: DefaultConfig.PLAYER_CASH, items: new Array<Partial<Item>>() },
+    inventory: { maxWeight: 15.0, money: DefaultConfig.PLAYER_CASH, items: [] },
     bank: {},
     design: {},
     info: {},

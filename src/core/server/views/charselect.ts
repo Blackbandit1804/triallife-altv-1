@@ -5,6 +5,7 @@ import { SystemEvent, ViewEvent } from '../../shared/utility/enums';
 import { DefaultConfig } from '../configs/settings';
 import { playerFuncs } from '../extensions/player';
 import * as sm from 'simplymongo';
+import './clothing';
 import { Collections } from '../interfaces/collection';
 import Logger from '../utility/Logger';
 import changelogs from '../configs/changelog.json';

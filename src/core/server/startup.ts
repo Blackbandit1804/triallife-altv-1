@@ -37,7 +37,6 @@ const imports = [
     './systems/world',
     './views/chareditor',
     './views/charselect',
-    './views/clothing',
     './express'
 ];
 
