@@ -15,8 +15,12 @@
         "outDir": "./tlrp-cache",
         "rootDir": "./src",
         "allowSyntheticDefaultImports": true,
-        "declaration": false
+        "composite": true
     },
     "include": ["./src/**/*.ts", "./src/core/server/configs/changelog.json"],
-    "exclude": ["node_modules", "resources", "**/*.json"]
+    "watchOptions": {
+        "watchFile": "useFsEvents",
+        "watchDirectory": "useFsEvents",
+        "fallbackPolling": "dynamicPriority"
+    }
 }
