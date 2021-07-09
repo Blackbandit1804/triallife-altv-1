@@ -7,6 +7,7 @@ export interface Weapon {
     clip?: number;
     stats?: { damage?: number; rate?: number; accuracy?: number; range?: number };
     overall?: number;
+    ammoType?: string;
 }
 
 const WeaponList: { [key: string]: Weapon } = {
@@ -24,6 +25,7 @@ const WeaponList: { [key: string]: Weapon } = {
             range: 45
         },
         overall: 47.8
+        //ammoType: '7.52mm'
     },
     appistol: {
         hash: 0x22d8fe39,
@@ -492,7 +494,8 @@ const WeaponList: { [key: string]: Weapon } = {
             rate: 10,
             range: 1
         },
-        overall: 10.33
+        overall: 10.33,
+        ammoType: '9mm'
     },
     grenade: {
         hash: 0x93e220bd,
