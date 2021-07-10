@@ -12,7 +12,8 @@ export function deepCloneObject<T>(data: object): T {
 export function isFlagEnabled(flags: Permissions | number, flagToCheck: Permissions | number): boolean {
     let currentFlags: number = flags as number;
     let currentFlagToCheck: number = flagToCheck as number;
-    return (currentFlags & currentFlagToCheck) !== 0;
+    if ((currentFlags & currentFlagToCheck) !== 0) return true;
+    return false;
 }
 
 export function distance(vector1: Vector3, vector2: Vector3) {
